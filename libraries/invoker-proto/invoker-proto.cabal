@@ -17,13 +17,7 @@ Library
     -ddump-to-file
     -ddump-timings
   build-depends:
-    -- GHC included libraries
-      base >= 4.7 && <5
-
-    , microlens
-    , proto-lens
-    , proto-lens-runtime
-    , lens-family
+    proto-lens-runtime
 
   exposed-modules:
     Proto.BaseGcmessages
