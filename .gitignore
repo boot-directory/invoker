@@ -4,3 +4,9 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# Local builds
+dist*
+
+# demos
+libraries/invoker/demos
