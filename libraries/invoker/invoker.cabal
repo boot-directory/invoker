@@ -10,6 +10,8 @@ license:            BSD-3-Clause
 Library
   exposed-modules:
     Invoker
+    Invoker.Binary
+    Invoker.Parser
   hs-source-dirs:
     ./library/
   ghc-options:
@@ -18,9 +20,15 @@ Library
   build-depends:
     -- GHC included libraries
       base >= 4.7 && <5
+    , binary
+    , bytestring
 
     -- Internal
     , invoker-proto
+
+    -- External
+    , snappy
+    , proto-lens
 
 executable invoker
   default-language: Haskell2010

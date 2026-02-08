@@ -1,6 +1,5 @@
 module Main where
 
--- import Invoker ()
 import Data.ByteString.Lazy as BSL (readFile, take)
 
 main :: IO ()

@@ -31,6 +31,7 @@
               pkgs.nil
               pkgs.zlib
               pkgs.pkg-config
+              pkgs.snappy
             ];
           };
         };
