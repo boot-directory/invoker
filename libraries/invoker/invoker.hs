@@ -1,13 +1,13 @@
 module Main where
 
-import System.IO (openBinaryFile, IOMode (..), Handle, hClose)
+import Control.Exception (onException)
 import Control.Monad (forever)
 import Data.ByteString as BS (hGetSome)
-import Data.IORef (newIORef, modifyIORef, readIORef)
+import Data.IORef (modifyIORef, newIORef, readIORef)
 import Data.Word (Word64)
+import System.IO (Handle, IOMode (..), hClose, openBinaryFile)
 
 import Invoker (readOuterMessage, readHeader, mkBuffer, readFromBuffer, BufferArgs(..))
-import Control.Exception (bracket, onException)
 
 main :: IO ()
 main = do

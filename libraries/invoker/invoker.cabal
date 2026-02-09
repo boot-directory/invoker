@@ -30,7 +30,7 @@ Library
 
     -- External
     , snappy
-    , proto-lens
+    --, proto-lens
 
 executable invoker
   default-language: GHC2021
@@ -45,4 +45,3 @@ executable invoker
     -Wall
     -Wunused-packages
     -rtsopts
-    "-with-rtsopts=-T -A8m -AL32m -N2"
