@@ -1,34 +1,44 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE
+    OverloadedStrings
+  , RecordWildCards
+#-}
 
 module Invoker.Parser where
 
 -- GHC included
 import Control.Monad (when)
-import Data.Binary.Get (Get, getByteString)
-import Data.Binary.Put ()
-import Data.Bits
-import Data.ByteString
-import Data.Int
-import Data.Word
+import Data.Binary.Get (Get, getByteString, getInt32le, getWord32le)
+import Data.Bits (Bits((.&.), complement))
+import Data.ByteString (ByteString)
+import Data.Int (Int32)
+import Data.Word (Word32)
 
 -- Internal
-import Invoker.Binary
+import Invoker.Binary (getUVarInt)
+import Proto.Demo (EDemoCommands(..))
 
 -- External
 import Codec.Compression.Snappy as Snappy (decompress)
-import Proto.Demo (EDemoCommands(..))
 
 
 -------------------------------------------------------------------------------
 -- * Header
 -------------------------------------------------------------------------------
 
-readHeader :: Get ()
+data Header = MkHeader
+  { version :: Int32
+  , size :: Word32
+  } deriving (Show)
+
+readHeader :: Get Header
 readHeader = do
   magicBytes <- getByteString 8
   when (magicBytes /= magicBytesSource2) (fail "Magic bytes reading error")
-  pure ()
+
+  version <- getInt32le
+  size <- getWord32le
+
+  pure MkHeader{..}
 
 
 magicBytesSource2 :: ByteString
@@ -39,20 +49,22 @@ magicBytesSource2 = "PBDEMS2\0"
 -- * Outer message
 -------------------------------------------------------------------------------
 
-data OuterMessage = OuterMessage
+data OuterMessage = MkOuterMessage
   { omTick   :: !Word32
   , omTypeId :: !Int32
   , omData   :: !ByteString
-  }
+  } deriving (Show)
 
-demIsCompressed :: Int32
+-- >>> demIsCompressed
+-- 64
+demIsCompressed :: Word32
 demIsCompressed = fromIntegral $ fromEnum DEM_IsCompressed
 
-getOuterMessage :: Get OuterMessage
-getOuterMessage = do
-  command <- getVarInt
-  let omTypeId = command .&. complement demIsCompressed
-      compressed = command .&. demIsCompressed /= 0
+readOuterMessage :: Get OuterMessage
+readOuterMessage = do
+  command <- fromIntegral <$> getUVarInt
+  let omTypeId = fromIntegral (command .&. complement demIsCompressed)
+      compressed = command .&. demIsCompressed == demIsCompressed
 
   tick <- getUVarInt
   let omTick = if tick == maxBound then 0 else tick
@@ -61,4 +73,4 @@ getOuterMessage = do
   size <- getUVarInt
   omData <- decompressor <$> getByteString (fromIntegral size)
 
-  pure $ OuterMessage{..}
+  pure $ MkOuterMessage{..}

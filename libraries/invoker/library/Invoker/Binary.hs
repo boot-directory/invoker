@@ -1,3 +1,10 @@
+{-# LANGUAGE
+    NamedFieldPuns
+  , OverloadedStrings
+  , RecordWildCards
+  , DeriveAnyClass
+#-}
+
 module Invoker.Binary where
 
 import Data.Binary.Get
@@ -5,7 +12,63 @@ import Data.Word
 import Data.Bits
 import Data.Binary (Put, putWord8)
 import Data.Int
+import Data.ByteString as BS
+import Data.IORef (newIORef, readIORef, writeIORef)
+import Control.Exception (throwIO, Exception)
 
+
+-------------------------------------------------------------------------------
+-- * Buffered IO
+-------------------------------------------------------------------------------
+
+data Buffer = MkBuffer
+  { readBuff :: IO BS.ByteString
+  , updateReadBuff :: BS.ByteString -> IO ()
+  , destroyBuff :: IO ()
+  }
+
+data BufferArgs = MkBufferArgs
+  { readChunk     :: IO ByteString
+  , closeResourse :: IO ()
+  }
+
+mkBuffer :: BufferArgs -> IO Buffer
+mkBuffer MkBufferArgs{..} = do
+  buff <- newIORef mempty
+  let updateReadBuff bs = writeIORef buff bs
+
+  pure MkBuffer
+    { updateReadBuff
+    , readBuff = do
+      currentBuffer <- readIORef buff
+      if (not . BS.null) currentBuffer
+      then updateReadBuff mempty *> pure currentBuffer
+      else do
+        sockBytes <- readChunk
+        if BS.null sockBytes
+        then throwIO UnexpectedEof
+        else pure sockBytes
+    , destroyBuff = do
+      closeResourse
+      updateReadBuff mempty
+    }
+
+data IoErrors = UnexpectedEof
+  deriving (Show, Exception)
+
+readFromBuffer :: Buffer -> Get a -> IO a
+readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runGetIncremental parser)
+  where
+  runBufferReader :: Decoder packet -> IO packet
+  runBufferReader dec = case dec of
+    (Partial decoder) -> readBuff >>= runBufferReader . decoder . Just
+    (Done leftover _consumed packet) -> packet <$ updateReadBuff leftover
+    (Fail _leftover _consumed msg) -> error msg
+
+
+-------------------------------------------------------------------------------
+-- * Encoding
+-------------------------------------------------------------------------------
 
 putUVarInt :: Word32 -> Put
 putUVarInt = goUVarIntSer
