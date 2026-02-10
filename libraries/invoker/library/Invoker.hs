@@ -1,17 +1,19 @@
 module Invoker
   ( -- * Buffer
-    Buffer, readFromBuffer
+    Buffer, readFromBuffer, IoErrors(..)
   , BufferArgs(..), mkBuffer
     -- * Demo parsing
   , Header, readHeader
-  , OuterMessage, readOuterMessage
+  , OuterMessage(..), readOuterMessage
+  , MessageType(..)
   ) where
 
 import Invoker.Parser
   ( Header, readHeader
-  , OuterMessage, readOuterMessage
+  , OuterMessage(..), readOuterMessage
+  , MessageType(..)
   )
 import Invoker.Binary
-  ( Buffer, readFromBuffer
+  ( Buffer, readFromBuffer, IoErrors(..)
   , BufferArgs(..), mkBuffer
   )

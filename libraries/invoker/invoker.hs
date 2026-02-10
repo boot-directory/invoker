@@ -1,31 +1,37 @@
 module Main where
 
-import Control.Exception (onException)
+import Control.Exception (catch)
 import Control.Monad (forever)
 import Data.ByteString as BS (hGetSome)
 import Data.IORef (modifyIORef, newIORef, readIORef)
 import Data.Word (Word64)
 import System.IO (Handle, IOMode (..), hClose, openBinaryFile)
 
-import Invoker (readOuterMessage, readHeader, mkBuffer, readFromBuffer, BufferArgs(..))
+import Invoker (readOuterMessage, readHeader, mkBuffer, readFromBuffer, BufferArgs(..), OuterMessage(..), MessageType(..), IoErrors)
 
 main :: IO ()
 main = do
   counter <- newIORef (0 :: Word64)
 
-  h <- openBinaryFile "./libraries/invoker/demos/8540916823.dem" ReadMode
-  buf <- mkBuffer (fileBufferArgs h)
+  buf <-
+    mkBuffer . fileBufferArgs
+    =<< openBinaryFile "./libraries/invoker/demos/8540916823.dem" ReadMode
 
-  header <- readFromBuffer buf readHeader
-  print header
-
-  onException
-    ( forever $ do
-      _msg <- readFromBuffer buf readOuterMessage
-      modifyIORef counter (+1)
-      pure ()
+  catch @IoErrors
+    ( do
+      _header <- readFromBuffer buf readHeader
+      forever $ do
+        msg <- readFromBuffer buf readOuterMessage
+        case omMsg msg of
+          message@UnknownMessage{}       -> print message
+          message@FailedParsingMessage{} -> print message
+          message@MkRecovery{}           -> print message
+          _                              -> pure ()
+        modifyIORef counter (+1)
+        pure ()
     )
-    (print =<< readIORef counter)
+    (\_e -> print =<< readIORef counter)
+
 
 fileBufferArgs :: Handle -> BufferArgs
 fileBufferArgs h = MkBufferArgs
