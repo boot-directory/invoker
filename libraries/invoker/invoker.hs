@@ -5,7 +5,7 @@ import Control.Monad (forever)
 import Data.ByteString as BS (hGetSome)
 import Data.IORef (modifyIORef, newIORef, readIORef)
 import Data.Word (Word64)
-import System.IO (Handle, IOMode (..), hClose, openBinaryFile)
+import System.IO (IOMode (..), hClose, openBinaryFile)
 
 import Invoker (readOuterMessage, readHeader, mkBuffer, readFromBuffer, BufferArgs(..), OuterMessage(..), MessageType(..), IoErrors)
 
@@ -13,9 +13,7 @@ main :: IO ()
 main = do
   counter <- newIORef (0 :: Word64)
 
-  buf <-
-    mkBuffer . fileBufferArgs
-    =<< openBinaryFile "./libraries/invoker/demos/8540916823.dem" ReadMode
+  buf <- mkBuffer =<< mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
 
   catch @IoErrors
     ( do
@@ -28,13 +26,14 @@ main = do
           message@MkRecovery{}           -> print message
           _                              -> pure ()
         modifyIORef counter (+1)
-        pure ()
     )
     (\_e -> print =<< readIORef counter)
 
 
-fileBufferArgs :: Handle -> BufferArgs
-fileBufferArgs h = MkBufferArgs
-  { readChunk     = BS.hGetSome h 4096
-  , closeResourse = hClose h
-  }
+mkFileBufferArgs :: FilePath -> IO BufferArgs
+mkFileBufferArgs fp = do
+  h <- openBinaryFile fp ReadMode
+  pure MkBufferArgs
+    { readChunk     = BS.hGetSome h 4096
+    , closeResourse = hClose h
+    }
