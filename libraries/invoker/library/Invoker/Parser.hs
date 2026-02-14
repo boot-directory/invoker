@@ -86,50 +86,50 @@ readOuterMessage = do
 parseMessage :: Int32 -> ByteString -> Get MessageType
 parseMessage typeId bytes = do
   pure $ case typeId of
-    0 -> errorHandledMsg MkDemoStop
-    1 -> errorHandledMsg MkFileHeader
-    2 -> errorHandledMsg MkFileInfo
-    3 -> errorHandledMsg MkSyncTick
-    4 -> errorHandledMsg MkSendTables
-    5 -> errorHandledMsg MkClassInfo
-    6 -> errorHandledMsg MkStringTables
-    7 -> errorHandledMsg MkPacket
-    8 -> errorHandledMsg MkSignonPacket
-    9 -> errorHandledMsg MkConsoleCmd
-    10 -> errorHandledMsg MkCustomData
-    11 -> errorHandledMsg MkCustomDataCallbacks
-    12 -> errorHandledMsg MkUserCmd
-    13 -> errorHandledMsg MkFullPacket
-    14 -> errorHandledMsg MkSaveGame
-    15 -> errorHandledMsg MkSpawnGroups
-    16 -> errorHandledMsg MkAnimationData
-    17 -> errorHandledMsg MkAnimationHeader
-    18 -> errorHandledMsg MkRecovery
+    0  -> errorHandledMsg @CDemoStop (const DemoStop)
+    1  -> errorHandledMsg @CDemoFileHeader FileHeader
+    2  -> errorHandledMsg @CDemoFileInfo FileInfo
+    3  -> errorHandledMsg @CDemoSyncTick SyncTick
+    4  -> errorHandledMsg @CDemoSendTables SendTables
+    5  -> errorHandledMsg @CDemoClassInfo ClassInfo
+    6  -> errorHandledMsg @CDemoStringTables StringTables
+    7  -> errorHandledMsg @CDemoPacket Packet
+    8  -> errorHandledMsg @CDemoPacket SignonPacket
+    9  -> errorHandledMsg @CDemoConsoleCmd ConsoleCmd
+    10 -> errorHandledMsg @CDemoCustomData CustomData
+    11 -> errorHandledMsg @CDemoCustomDataCallbacks CustomDataCallbacks
+    12 -> errorHandledMsg @CDemoUserCmd UserCmd
+    13 -> errorHandledMsg @CDemoFullPacket FullPacket
+    14 -> errorHandledMsg @CDemoSaveGame SaveGame
+    15 -> errorHandledMsg @CDemoSpawnGroups SpawnGroups
+    16 -> errorHandledMsg @CDemoAnimationData AnimationData
+    17 -> errorHandledMsg @CDemoAnimationHeader AnimationHeader
+    18 -> errorHandledMsg @CDemoRecovery Recovery
     _ -> UnknownMessage typeId bytes
   where
   errorHandledMsg :: forall msg . Message msg => (msg -> MessageType) -> MessageType
   errorHandledMsg mkMsg = either (FailedParsingMessage typeId bytes) mkMsg $ decodeMessage @msg bytes
 
 data MessageType where
-  MkDemoStop     :: CDemoStop -> MessageType
-  MkFileHeader   :: CDemoFileHeader -> MessageType
-  MkFileInfo     :: CDemoFileInfo -> MessageType
-  MkSyncTick     :: CDemoSyncTick -> MessageType
-  MkSendTables   :: CDemoSendTables -> MessageType
-  MkClassInfo    :: CDemoClassInfo -> MessageType
-  MkStringTables :: CDemoStringTables -> MessageType
-  MkPacket       :: CDemoPacket -> MessageType
-  MkSignonPacket :: CDemoPacket -> MessageType
-  MkConsoleCmd   :: CDemoConsoleCmd -> MessageType
-  MkCustomData   :: CDemoCustomData -> MessageType
-  MkCustomDataCallbacks :: CDemoCustomDataCallbacks -> MessageType
-  MkUserCmd    :: CDemoUserCmd -> MessageType
-  MkFullPacket :: CDemoFullPacket -> MessageType
-  MkSaveGame   :: CDemoSaveGame -> MessageType
-  MkSpawnGroups :: CDemoSpawnGroups -> MessageType
-  MkAnimationData :: CDemoAnimationData -> MessageType
-  MkAnimationHeader :: CDemoAnimationHeader -> MessageType
-  MkRecovery :: CDemoRecovery -> MessageType
+  DemoStop     :: MessageType
+  FileHeader   :: CDemoFileHeader -> MessageType
+  FileInfo     :: CDemoFileInfo -> MessageType
+  SyncTick     :: CDemoSyncTick -> MessageType
+  SendTables   :: CDemoSendTables -> MessageType
+  ClassInfo    :: CDemoClassInfo -> MessageType
+  StringTables :: CDemoStringTables -> MessageType
+  Packet       :: CDemoPacket -> MessageType
+  SignonPacket :: CDemoPacket -> MessageType
+  ConsoleCmd   :: CDemoConsoleCmd -> MessageType
+  CustomData   :: CDemoCustomData -> MessageType
+  CustomDataCallbacks :: CDemoCustomDataCallbacks -> MessageType
+  UserCmd    :: CDemoUserCmd -> MessageType
+  FullPacket :: CDemoFullPacket -> MessageType
+  SaveGame   :: CDemoSaveGame -> MessageType
+  SpawnGroups :: CDemoSpawnGroups -> MessageType
+  AnimationData :: CDemoAnimationData -> MessageType
+  AnimationHeader :: CDemoAnimationHeader -> MessageType
+  Recovery :: CDemoRecovery -> MessageType
   FailedParsingMessage ::
     { typeId :: Int32
     , bytse  :: ByteString

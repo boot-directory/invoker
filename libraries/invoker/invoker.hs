@@ -23,7 +23,7 @@ main = do
         case omMsg msg of
           message@UnknownMessage{}       -> print message
           message@FailedParsingMessage{} -> print message
-          message@MkRecovery{}           -> print message
+          message@Recovery{}             -> print message
           _                              -> pure ()
         modifyIORef counter (+1)
     )
