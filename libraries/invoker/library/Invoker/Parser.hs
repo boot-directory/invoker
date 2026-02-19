@@ -1,9 +1,9 @@
 {-# LANGUAGE
-    OverloadedStrings
-  , RecordWildCards
+    DataKinds
   , DuplicateRecordFields
+  , OverloadedStrings
+  , RecordWildCards
 #-}
-{-# LANGUAGE DataKinds #-}
 
 module Invoker.Parser where
 
@@ -14,7 +14,7 @@ import Data.Binary.Get (Get, getByteString, getInt32le, getWord32le, runGetIncre
 import Data.Bits (Bits (complement, (.&.)))
 import Data.ByteString (ByteString)
 import Data.Int (Int32)
-import Data.Map as Map (Map, fromList, lookup)
+import Data.Map as Map (Map, fromList, lookup, member)
 import Data.Maybe (fromMaybe)
 import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, stripPrefix, unpack, pack)
 import Data.Word (Word32)
@@ -123,7 +123,7 @@ parseMessage typeId bytes = do
   sendTables :: CDemoSendTables -> MessageType
   sendTables sd =
     let bs = sd ^. data'
-    in case pushChunk (runGetIncremental parseSendTables) bs  of
+    in case pushChunk (runGetIncremental (parseSendTables 0)) bs  of
       Done _ _ a -> SendTables a
       Partial _ -> FailedParsingMessage 4 bs "sendTables: Not enough bytes"
       Fail _bs _offset str -> FailedParsingMessage 4 bs ("sendTables: " <> str)
@@ -191,38 +191,80 @@ data SendTables = MkSendTables
   }
   deriving (Show)
 
-parseSendTables :: Get SendTables
-parseSendTables = do
-  size <- getUVarInt
+parseSendTables :: Word32 -> Get SendTables
+parseSendTables build = do
+  size  <- getUVarInt
   bytes <- getByteString (fromIntegral size)
   packet <- either fail pure (decodeMessage @CSVCMsg_FlattenedSerializer bytes)
-  pure MkSendTables
-    { stFields = map newField (packet ^. fields)
-    , ..
-    }
+  let stFields = map (newField build) (packet ^. fields)
 
-newField :: ProtoFlattenedSerializerField_t -> Field
-newField f =
+  pure MkSendTables{packet, stFields}
+
+
+newField :: Word32 -> ProtoFlattenedSerializerField_t -> Field
+newField build f =
+  let
+    serializerName = maybe "" (T.pack . show)  (f ^. maybe'fieldSerializerNameSym)
+    parentName = if build <= 990 then serializerName else ""
+    varType = maybe "" (T.pack . show) (f ^. maybe'varTypeSym)
+    fieldType = newFieldType varType
+    model = determineModel fieldType serializerName
+  in
+  applyPatches build
   MkField
-    { parentName        = ""
+    { parentName
     , varName           = maybe "" (T.pack . show) (f ^. maybe'varNameSym)
-    , varType           = maybe "" (T.pack . show) (f ^. maybe'varTypeSym)
+    , varType
     , sendNode          = maybe "" (T.pack . show) (f ^. maybe'sendNodeSym)
-    , serializerName    = maybe "" (T.pack . show)  (f ^. maybe'fieldSerializerNameSym)
+    , serializerName
     , serializerVersion = fromMaybe 0 (f ^. maybe'fieldSerializerVersion)
     , encoder           = maybe "" (T.pack . show) (f ^. maybe'varEncoderSym)
     , encodeFlags       = f ^. maybe'encodeFlags
     , bitCount          = f ^. maybe'bitCount
     , lowValue          = f ^. maybe'lowValue
     , highValue         = f ^. maybe'highValue
-    , fieldType         = Just $ newFieldType "CUtlVector<CDOTAPlayer>*[8]"
-    , serializer        = ()
-    , value             = ()
-    , model             = 0
-    , decoder           = ()
-    , baseDecoder       = ()
-    , childDecoder      = ()
+    , fieldType         = fieldType
+    , serializer        = MkSerializer "" 0 []
+    , model
+    , decoder           = const ()
+    , baseDecoder       = const ()
+    , childDecoder      = const ()
     }
+
+type FieldDecoder = Field -> ()
+
+instance Show FieldDecoder where
+  show _ = "()"
+
+dummyDecoder, booleanDecoder, unsignedDecoder :: FieldDecoder
+dummyDecoder _ = ()
+booleanDecoder _ = ()
+unsignedDecoder _ = ()
+
+findDecoder :: FieldType -> FieldDecoder
+findDecoder _ = dummyDecoder
+
+findDecoderByBaseType :: Text -> FieldDecoder
+findDecoderByBaseType _ = dummyDecoder
+
+data FieldModel
+  = FMFixedArray
+  | FMFixedTable
+  | FMVariableArray
+  | FMVariableTable
+  | FMModelSimple
+  deriving (Show, Eq)
+
+determineModel :: FieldType -> Text -> FieldModel
+determineModel ft serializerName
+  | serializerName /= "" =
+    if pointer ft || Map.member (baseType ft) pointerTypes
+      then FMFixedTable
+      else FMVariableTable
+  | count ft > 0 && baseType ft /= "char" = FMFixedArray
+  | baseType ft `elem` ["CUtlVector", "CNetworkUtlVectorBase"] = FMVariableArray
+  | otherwise = FMModelSimple
+
 
 pointerTypes :: Map Text Bool
 pointerTypes = Map.fromList
@@ -278,12 +320,6 @@ newFieldType txt = FieldType base gen ptr cnt
     , ("MAX_ABILITY_DRAFT_ABILITIES", 48)
     ]
 
-data FieldPatch = MkFieldPatch
-  { minBuild :: Int
-  , maxBuild :: Int
-  , patch    :: Field -> Field
-  }
-
 data Field = MkField
   { parentName        :: Text
   , varName           :: Text
@@ -296,63 +332,64 @@ data Field = MkField
   , bitCount          :: Maybe Int32
   , lowValue          :: Maybe Float
   , highValue         :: Maybe Float
-  , fieldType         :: Maybe FieldType
-  , serializer        :: ()
-  , value             :: ()
-  , model             :: Int
-  , decoder           :: ()
-  , baseDecoder       :: ()
-  , childDecoder      :: ()
+  , fieldType         :: FieldType
+  , serializer        :: Serializer
+  , model             :: FieldModel
+  , decoder           :: FieldDecoder
+  , baseDecoder       :: FieldDecoder
+  , childDecoder      :: FieldDecoder
   } deriving (Show)
 
-applyPatch :: FieldPatch -> Field -> Field
-applyPatch fp f = patch fp f
 
-data Serializer = Serializer
+data Serializer = MkSerializer
   { serializerName :: Text
   , version        :: Int
   , serFields      :: [Field]
   } deriving (Show)
 
-fieldPatches :: Int -> [FieldPatch]
-fieldPatches build =
-  filter shouldApply
-    [ MkFieldPatch 0 990 p1
-    , MkFieldPatch 0 954 p2
-    , MkFieldPatch 1016 1027 p3
-    , MkFieldPatch 0 0 p4
-    ]
+
+applyPatches :: Word32 -> Field -> Field
+applyPatches build f =
+  id
+  . applyPatch 0 990 p1
+  . applyPatch 0 954 p2
+  . applyPatch 1016 1027 p3
+  . applyPatch 0 0 p4
+  $ f
   where
-  shouldApply :: FieldPatch -> Bool
-  shouldApply MkFieldPatch{..}
-    | minBuild == 0 && maxBuild == 0 = True
-    | otherwise = build >= minBuild && build <= maxBuild
+  applyPatch :: Word32 -> Word32 -> (Field -> Field) -> Field -> Field
+  applyPatch minBuild maxBuild patch
+    | minBuild == 0 && maxBuild == 0 = patch
+    | inBetween = patch
+    | otherwise = id
+    where
+    inBetween = build >= minBuild && build <= maxBuild
 
 p1 :: Field -> Field
 p1 field =
   case varName field of
-    "angExtraLocalAngles" -> p1_1
-    "angLocalAngles"      -> p1_1
-    "m_angInitialAngles"  -> p1_1
-    "m_angRotation"       -> p1_1
-    "m_ragAngles"         -> p1_1
-    "m_vLightDirection"   -> p1_1
-    "dirPrimary"     -> p1_2
-    "localSound"     -> p1_2
-    "m_flElasticity" -> p1_2
-    "m_location"     -> p1_2
-    "m_poolOrigin"   -> p1_2
-    "m_ragPos"       -> p1_2
-    "m_vecEndPos"    -> p1_2
-    "m_vecLadderDir" -> p1_2
+    "angExtraLocalAngles"            -> p1_1
+    "angLocalAngles"                 -> p1_1
+    "m_angInitialAngles"             -> p1_1
+    "m_angRotation"                  -> p1_1
+    "m_ragAngles"                    -> p1_1
+    "m_vLightDirection"              -> p1_1
+    "dirPrimary"                     -> p1_2
+    "localSound"                     -> p1_2
+    "m_flElasticity"                 -> p1_2
+    "m_location"                     -> p1_2
+    "m_poolOrigin"                   -> p1_2
+    "m_ragPos"                       -> p1_2
+    "m_vecEndPos"                    -> p1_2
+    "m_vecLadderDir"                 -> p1_2
     "m_vecPlayerMountPositionBottom" -> p1_2
-    "m_vecPlayerMountPositionTop" -> p1_2
-    "m_viewtarget"   -> p1_2
-    "m_WorldMaxs"    -> p1_2
-    "m_WorldMins"    -> p1_2
-    "origin"         -> p1_2
-    "vecLocalOrigin" -> p1_2
-    "m_vecLadderNormal" -> field{encoder="normal"}
+    "m_vecPlayerMountPositionTop"    -> p1_2
+    "m_viewtarget"                   -> p1_2
+    "m_WorldMaxs"                    -> p1_2
+    "m_WorldMins"                    -> p1_2
+    "origin"                         -> p1_2
+    "vecLocalOrigin"                 -> p1_2
+    "m_vecLadderNormal"              -> field{encoder="normal"}
     _ -> field
   where
   p1_1 =
@@ -391,8 +428,8 @@ p4 :: Field -> Field
 p4 field =
   case varName field of
     "m_flSimulationTime" -> p4_1
-    "m_flAnimTime" -> p4_1
-    "m_flRuneTime" -> p4_2
+    "m_flAnimTime"       -> p4_1
+    "m_flRuneTime"       -> p4_2
     _ -> field
   where
   p4_1 = field{encoder="simtime"}
