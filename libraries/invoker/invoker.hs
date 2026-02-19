@@ -7,7 +7,12 @@ import Data.IORef (modifyIORef, newIORef, readIORef)
 import Data.Word (Word64)
 import System.IO (IOMode (..), hClose, openBinaryFile)
 
-import Invoker (readOuterMessage, readHeader, mkBuffer, readFromBuffer, BufferArgs(..), OuterMessage(..), MessageType(..), IoErrors)
+import Invoker
+  ( readOuterMessage, readHeader
+  , mkBuffer, readFromBuffer, BufferArgs(..), IoErrors
+  , OuterMessage(..)
+  , MessageType(..), SendTables(..)
+  )
 
 main :: IO ()
 main = do
@@ -21,10 +26,10 @@ main = do
       forever $ do
         msg <- readFromBuffer buf readOuterMessage
         case omMsg msg of
-          message@UnknownMessage{}       -> print message
-          message@FailedParsingMessage{} -> print message
-          message@SendTables{}           -> print message
-          _                              -> pure ()
+          _message@UnknownMessage{}       -> print _message
+          _message@FailedParsingMessage{} -> print _message
+          _message@(SendTables st)        -> print (stFields st)
+          _                               -> pure ()
         modifyIORef counter (+1)
     )
     (\_e -> print =<< readIORef counter)
