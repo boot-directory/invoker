@@ -1,16 +1,18 @@
 {-# LANGUAGE
-    DataKinds
+    BlockArguments
+  , DataKinds
   , DuplicateRecordFields
   , OverloadedStrings
   , RecordWildCards
 #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 module Invoker.Parser where
 
 -- GHC included
 import Control.Applicative ((<|>))
-import Control.Monad (when)
-import Data.Binary.Get (Get, getByteString, getInt32le, getWord32le, runGetIncremental, pushChunk, Decoder (..))
+import Control.Monad (when, replicateM)
+import Data.Binary.Get (Get, getByteString, getInt32le, getWord32le, runGetIncremental, pushChunk, Decoder (..), getFloatle)
 import Data.Bits (Bits (complement, (.&.)))
 import Data.ByteString (ByteString)
 import Data.Int (Int32)
@@ -226,26 +228,45 @@ newField build f =
     , fieldType         = fieldType
     , serializer        = MkSerializer "" 0 []
     , model
-    , decoder           = const ()
-    , baseDecoder       = const ()
-    , childDecoder      = const ()
+    , decoder           = todoDecoder
+    , baseDecoder       = todoDecoder
+    , childDecoder      = todoDecoder
     }
 
-type FieldDecoder = Field -> ()
+data DecodedField
+  = DfFieldRecoder ()
+  | DfFloat32 Float
+  | DfVec [DecodedField]
 
-instance Show FieldDecoder where
+instance Show (Get DecodedField) where
   show _ = "()"
 
-dummyDecoder, booleanDecoder, unsignedDecoder :: FieldDecoder
-dummyDecoder _ = ()
-booleanDecoder _ = ()
-unsignedDecoder _ = ()
+findDecoder :: Field -> Get DecodedField
+findDecoder f =
+  fromMaybe todoDecoder $
+    fieldTypeFactories f
+    <|> fieldTypeDecoders (baseType . fieldType $ f)
 
-findDecoder :: FieldType -> FieldDecoder
-findDecoder _ = dummyDecoder
+fieldTypeFactories :: Field -> Maybe (Get DecodedField)
+fieldTypeFactories f = case (baseType . fieldType) f of
+  "float32"                  -> Just (floatFactory f)
+  "CNetworkedQuantizedFloat" -> Just (quantizedFactory f)
+  "Vector"                   -> Just (vectorFactory 3 f)
+  "Vector2D"                 -> Just (vectorFactory 2 f)
+  "Vector4D"                 -> Just (vectorFactory 4 f)
+  "VectorWS"                 -> Just (vectorFactory 3 f)
+  "uint64"                   -> Just (unsigned64Factory f)
+  "QAngle"                   -> Just (qangleFactory f)
+  "CHandle"                  -> Just unsignedFactory
+  "CStrongHandle"            -> Just (unsigned64Factory f)
+  "CEntityHandle"            -> Just unsignedFactory
+  _                          -> Nothing
 
-findDecoderByBaseType :: Text -> FieldDecoder
-findDecoderByBaseType _ = dummyDecoder
+fieldTypeDecoders :: Text -> Maybe (Get DecodedField)
+fieldTypeDecoders _ = Nothing
+
+findDecoderByBaseType :: Text -> Get DecodedField
+findDecoderByBaseType _ = todoDecoder
 
 data FieldModel
   = FMFixedArray
@@ -335,9 +356,9 @@ data Field = MkField
   , fieldType         :: FieldType
   , serializer        :: Serializer
   , model             :: FieldModel
-  , decoder           :: FieldDecoder
-  , baseDecoder       :: FieldDecoder
-  , childDecoder      :: FieldDecoder
+  , decoder           :: Get DecodedField
+  , baseDecoder       :: Get DecodedField
+  , childDecoder      :: Get DecodedField
   } deriving (Show)
 
 
@@ -434,3 +455,89 @@ p4 field =
   where
   p4_1 = field{encoder="simtime"}
   p4_2 = field{encoder="runetime"}
+
+-- ** Factories
+
+-- | Ok
+floatFactory :: Field -> Get DecodedField
+floatFactory f = case encoder f of
+  "coord" -> floatCoordDecoder
+  "simtime" -> simulationTimeDecoder
+  "runetime" -> runeTimeDecoder
+  _ ->
+    if maybe True (\bitCnt -> bitCnt <= 0 || bitCnt >= 32) (bitCount f)
+    then noscaleDecoder
+    else quantizedFactory f
+
+data QuantizedFloat = MkQuantizedFloat
+  { low        :: Float -- Gets recomputed for round up / down
+  , high       :: Float
+  , highLowMul :: Float
+  , decMul     :: Float
+  , offset     :: Float
+  , bitcount   :: Word32 -- Gets recomputed for qff_encode_int
+  , flags      :: Word32
+  , noScale    :: Bool -- Whether to decodes this as a noscale
+  }
+
+quantizedFactory :: Field -> Get DecodedField
+quantizedFactory _f = todoDecoder
+
+vectorFactory :: Int -> Field -> Get DecodedField
+vectorFactory n f =
+  if n == 3 && encoder f == "normal"
+  then vectorNormalDecoder
+  else DfVec <$> replicateM n (floatFactory f)
+
+unsigned64Factory :: Field -> Get DecodedField
+unsigned64Factory _f = todoDecoder
+
+unsignedFactory :: Get DecodedField
+unsignedFactory = unsignedDecoder
+
+qangleFactory :: Field -> Get DecodedField
+qangleFactory _f = todoDecoder
+
+-- ** Decoders
+
+todoDecoder :: Get DecodedField
+todoDecoder = DfFloat32 <$> getFloatle
+
+vectorNormalDecoder :: Get DecodedField
+vectorNormalDecoder = todoDecoder
+
+fixed64Decoder :: Get DecodedField
+fixed64Decoder = todoDecoder
+
+unsignedDecoder :: Get DecodedField
+unsignedDecoder = todoDecoder
+
+unsigned64Decoder :: Get DecodedField
+unsigned64Decoder = todoDecoder
+
+booleanDecoder :: Get DecodedField
+booleanDecoder = todoDecoder
+
+stringDecoder :: Get DecodedField
+stringDecoder = todoDecoder
+
+defaultDecoder :: Get DecodedField
+defaultDecoder = todoDecoder
+
+signedDecoder :: Get DecodedField
+signedDecoder = todoDecoder
+
+floatCoordDecoder :: Get DecodedField
+floatCoordDecoder = todoDecoder
+
+noscaleDecoder :: Get DecodedField
+noscaleDecoder = todoDecoder
+
+runeTimeDecoder :: Get DecodedField
+runeTimeDecoder = todoDecoder
+
+simulationTimeDecoder :: Get DecodedField
+simulationTimeDecoder = todoDecoder
+
+componentDecoder  :: Get DecodedField
+componentDecoder = todoDecoder
