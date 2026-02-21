@@ -12,17 +12,17 @@ module Invoker.Parser where
 -- GHC included
 import Control.Applicative ((<|>))
 import Control.Monad (when, replicateM)
-import Data.Binary.Get (Get, getByteString, getInt32le, getWord32le, runGetIncremental, pushChunk, Decoder (..), getFloatle)
+import Data.Binary.Get (pushChunk, Decoder (..))
 import Data.Bits (Bits (complement, (.&.)))
 import Data.ByteString (ByteString)
 import Data.Int (Int32)
 import Data.Map as Map (Map, fromList, lookup, member)
 import Data.Maybe (fromMaybe)
 import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, stripPrefix, unpack, pack)
-import Data.Word (Word32)
+import Data.Word (Word32, Word64)
 
 -- Internal
-import Invoker.Binary (getUVarInt)
+import Invoker.Binary (getUVarInt64, getUVarInt32, Get, readBytes, runGetIncremental, getWord64le, getFloatle, getInt32le, getWord32le)
 import Proto.Demo
   ( EDemoCommands(..)
   , CDemoStop, CDemoFileHeader, CDemoFileInfo, CDemoSyncTick
@@ -52,7 +52,7 @@ data Header = MkHeader
 
 readHeader :: Get Header
 readHeader = do
-  magicBytes <- getByteString 8
+  magicBytes <- readBytes 8
   when (magicBytes /= magicBytesSource2) (fail "Magic bytes reading error")
 
   version <- getInt32le
@@ -81,16 +81,16 @@ demIsCompressed = fromIntegral $ fromEnum DEM_IsCompressed
 
 readOuterMessage :: Get OuterMessage
 readOuterMessage = do
-  command <- fromIntegral <$> getUVarInt
+  command <- fromIntegral <$> getUVarInt32
   let omTypeId = fromIntegral (command .&. complement demIsCompressed)
       compressed = command .&. demIsCompressed == demIsCompressed
 
-  tick <- getUVarInt
+  tick <- getUVarInt32
   let omTick = if tick == maxBound then 0 else tick
 
   let decompressor = if compressed then Snappy.decompress else id
-  size <- getUVarInt
-  omData <- decompressor <$> getByteString (fromIntegral size)
+  size <- getUVarInt32
+  omData <- decompressor <$> readBytes (fromIntegral size)
   omMsg <- parseMessage omTypeId omData
 
   pure $ MkOuterMessage{..}
@@ -195,8 +195,8 @@ data SendTables = MkSendTables
 
 parseSendTables :: Word32 -> Get SendTables
 parseSendTables build = do
-  size  <- getUVarInt
-  bytes <- getByteString (fromIntegral size)
+  size <- getUVarInt32
+  bytes <- readBytes (fromIntegral size)
   packet <- either fail pure (decodeMessage @CSVCMsg_FlattenedSerializer bytes)
   let stFields = map (newField build) (packet ^. fields)
 
@@ -235,7 +235,9 @@ newField build f =
 
 data DecodedField
   = DfFieldRecoder ()
+  | DfUInt64 Word64
   | DfFloat32 Float
+  | DfBool Bool
   | DfVec [DecodedField]
 
 instance Show (Get DecodedField) where
@@ -507,13 +509,13 @@ vectorNormalDecoder :: Get DecodedField
 vectorNormalDecoder = todoDecoder
 
 fixed64Decoder :: Get DecodedField
-fixed64Decoder = todoDecoder
+fixed64Decoder = DfUInt64 <$> getWord64le
 
 unsignedDecoder :: Get DecodedField
-unsignedDecoder = todoDecoder
+unsignedDecoder = DfUInt64 . fromIntegral <$> getUVarInt32
 
 unsigned64Decoder :: Get DecodedField
-unsigned64Decoder = todoDecoder
+unsigned64Decoder = DfUInt64 <$> getUVarInt64
 
 booleanDecoder :: Get DecodedField
 booleanDecoder = todoDecoder

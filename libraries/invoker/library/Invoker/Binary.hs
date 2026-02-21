@@ -7,15 +7,17 @@
 
 module Invoker.Binary where
 
-import Data.Binary.Get
-import Data.Word
+import Control.Exception (Exception, throwIO)
+import Control.Monad (replicateM, when)
+import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
+import Data.Binary.Get (Decoder (..), getByteString, getWord8)
+import Data.Binary.Get qualified as Binary (Get, runGetIncremental)
 import Data.Bits
-import Data.Binary (Put, putWord8)
-import Data.Int
 import Data.ByteString as BS
 import Data.IORef (newIORef, readIORef, writeIORef)
-import Control.Exception (throwIO, Exception)
-
+import Data.Int
+import Data.Word
+import GHC.Float (castWord32ToFloat)
 
 -------------------------------------------------------------------------------
 -- * Buffered IO
@@ -67,38 +69,122 @@ readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runG
 
 
 -------------------------------------------------------------------------------
--- * Encoding
+-- * Serialization
 -------------------------------------------------------------------------------
 
-putUVarInt :: Word32 -> Put
-putUVarInt = goUVarIntSer
+runGetIncremental :: Get a -> Decoder a
+runGetIncremental = Binary.runGetIncremental . runBitGetFully
+
+newtype Get a = BitGet { runBitGet :: StateT BitState Binary.Get a }
+
+data BitState = BitState
+  { bitVal   :: Word64
+  , bitCount :: Int
+  }
+
+instance Functor Get where
+  fmap f (BitGet m) = BitGet (fmap f m)
+
+instance Applicative Get where
+  pure = BitGet . pure
+  BitGet f <*> BitGet x = BitGet (f <*> x)
+
+instance Monad Get where
+  BitGet m >>= f = BitGet (m >>= runBitGet . f)
+
+instance MonadFail Get where
+  fail msg = BitGet $ lift (fail msg)
+
+readBits :: Int -> Get Word32
+readBits n = BitGet $ do
+  fillBits n
+  BitState{..} <- get
+  let mask = (1 `shiftL` n) - 1
+      x    = bitVal .&. mask
+  put $ BitState
+        { bitVal   = bitVal `shiftR` n
+        , bitCount = bitCount - n
+        }
+  pure (fromIntegral x)
+
+fillBits :: Int -> StateT BitState Binary.Get ()
+fillBits n = do
+  BitState{..} <- get
+  when (bitCount < n) $ do
+    byte <- lift getWord8
+    put BitState
+      { bitVal   = bitVal .|. (fromIntegral byte `shiftL` bitCount)
+      , bitCount = bitCount + 8
+      }
+    fillBits n
+
+runBitGetFully :: Get a -> Binary.Get a
+runBitGetFully (BitGet m) = evalStateT m (BitState 0 0)
+
+readBytes :: Int -> Get ByteString
+readBytes n = do
+  BitState{bitCount} <- BitGet get
+  if bitCount == 0
+    then BitGet $ lift (getByteString n)
+    else BS.pack <$> replicateM n (fromIntegral <$> readBits 8)
+
+--
+-- ** Get
+--
+
+getUVarInt32 :: Get Word32
+getUVarInt32 = goUVarInt32 0 0
   where
-  goUVarIntSer i
-    | i < 0x80 = putWord8 (fromIntegral i)
-    | otherwise = do
-        putWord8 (fromIntegral (i .&. 0x7f) .|. 0x80)
-        goUVarIntSer (i `unsafeShiftR` 7)
+  goUVarInt32 :: Int -> Word32 -> Get Word32
+  goUVarInt32 i acc
+    | i < 5 = do
+        byte <- BitGet $ lift getWord8
+        let u    = fromIntegral byte :: Word32
+            acc' = acc .|. ((u .&. 0x7F) `unsafeShiftL` (7 * i))
+        if (u .&. 0x80) == 0
+           then pure acc'
+           else goUVarInt32 (i + 1) acc'
+    | otherwise = fail "input exceeds varuint32 size"
 
-getUVarInt :: Get Word32
-getUVarInt = goUVarIntDeser 0 0
-  where
-  goUVarIntDeser i o | i < 5 = do  -- max 5 bytes для 32-bit varint
-    byte <- getWord8
-    let o' = o .|. ((fromIntegral byte .&. 0x7f) `unsafeShiftL` (7 * i))
-    if byte .&. 0x80 == 0 then pure $! o' else goUVarIntDeser (i + 1) $! o'
-  goUVarIntDeser _ _ = fail "input exceeds varuint32 size"
-
-
-putVarInt :: Int32 -> Put
-putVarInt int32 = putUVarInt (zigZagEncode int32)
-  where
-  zigZagEncode :: Int32 -> Word32
-  zigZagEncode i = fromIntegral ((i `unsafeShiftL` 1) `xor` (i `unsafeShiftR` 31))
-  {-# INLINE zigZagEncode #-}
-
-getVarInt :: Get Int32
-getVarInt = zigZagDecode <$> getUVarInt
+getVarInt32 :: Get Int32
+getVarInt32 = zigZagDecode <$> getUVarInt32
   where
   zigZagDecode :: Word32 -> Int32
   zigZagDecode u = fromIntegral ((u `unsafeShiftR` 1) `xor` negate (u .&. 1))
   {-# INLINE zigZagDecode #-}
+
+getUVarInt64 :: Get Word64
+getUVarInt64 = goUVarInt64 0 0
+  where
+  goUVarInt64 :: Int -> Word64 -> Get Word64
+  goUVarInt64 i acc
+    | i < 10 = do
+        byte <- BitGet $ lift getWord8
+        let u    = fromIntegral byte :: Word64
+            acc' = acc .|. ((u .&. 0x7F) `unsafeShiftL` (7 * i))
+        if (u .&. 0x80) == 0
+           then pure acc'
+           else goUVarInt64 (i + 1) acc'
+    | otherwise = fail "input exceeds varuint64 size"
+
+getVarInt64 :: Get Int64
+getVarInt64 = zigZagDecode <$> getUVarInt64
+  where
+  zigZagDecode :: Word64 -> Int64
+  zigZagDecode u = fromIntegral ((u `unsafeShiftR` 1) `xor` negate (u .&. 1))
+
+getWord64le :: Get Word64
+getWord64le = do
+  lo <- readBits 32
+  hi <- readBits 32
+  pure $ fromIntegral lo
+       .|. (fromIntegral hi `unsafeShiftL` 32)
+
+getFloatle :: Get Float
+getFloatle = castWord32ToFloat <$> readBits 32
+
+getInt32le :: Get Int32
+getInt32le = fromIntegral <$> readBits 32
+
+getWord32le :: Get Word32
+getWord32le = readBits 32
