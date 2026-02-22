@@ -13,16 +13,27 @@ module Invoker.Parser where
 import Control.Applicative ((<|>))
 import Control.Monad (when, replicateM)
 import Data.Binary.Get (pushChunk, Decoder (..))
-import Data.Bits (Bits (complement, (.&.)))
+import Data.Bits (Bits (..))
 import Data.ByteString (ByteString)
 import Data.Int (Int32)
 import Data.Map as Map (Map, fromList, lookup, member)
 import Data.Maybe (fromMaybe)
 import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, stripPrefix, unpack, pack)
 import Data.Word (Word32, Word64)
+import GHC.Float (castWord32ToFloat)
 
 -- Internal
-import Invoker.Binary (getUVarInt64, getUVarInt32, Get, readBytes, runGetIncremental, getWord64le, getFloatle, getInt32le, getWord32le)
+import Invoker.Binary
+  ( Get, runGetIncremental
+  , readBytes, readBits, readStringEof
+  , getUVarInt64, getUVarInt32
+  , getVarInt32
+  , getWord64le, getWord32le
+  , getInt32le
+  , getFloatle
+  , readBoolean
+  )
+import Invoker.Parser.Quantized (newQuantizedFloatDecoder, decodeQuantized)
 import Proto.Demo
   ( EDemoCommands(..)
   , CDemoStop, CDemoFileHeader, CDemoFileInfo, CDemoSyncTick
@@ -39,6 +50,7 @@ import Proto.Netmessages_Fields (maybe'varNameSym, maybe'varTypeSym, fields, may
 import Codec.Compression.Snappy as Snappy (decompress)
 import Data.ProtoLens (decodeMessage, Message)
 import Lens.Family2 ((^.))
+import Data.Bool (bool)
 
 
 -------------------------------------------------------------------------------
@@ -230,13 +242,20 @@ newField build f =
     , model
     , decoder           = todoDecoder
     , baseDecoder       = todoDecoder
-    , childDecoder      = todoDecoder
+    , childDecoder      = todoDecoder -- findDecoderByBaseType (maybe "" baseType $ genericType fieldType)
     }
+
+todoDecoder :: Get DecodedField
+todoDecoder = DfFloat32 <$> getFloatle
 
 data DecodedField
   = DfFieldRecoder ()
   | DfUInt64 Word64
+  | DfUInt32 Word32
+  | DfInt32 Int32
+  | DfString ByteString
   | DfFloat32 Float
+  | DfFloat32Normal Float Float Float
   | DfBool Bool
   | DfVec [DecodedField]
 
@@ -245,9 +264,10 @@ instance Show (Get DecodedField) where
 
 findDecoder :: Field -> Get DecodedField
 findDecoder f =
-  fromMaybe todoDecoder $
+  fromMaybe defaultDecoder (
     fieldTypeFactories f
     <|> fieldTypeDecoders (baseType . fieldType $ f)
+  )
 
 fieldTypeFactories :: Field -> Maybe (Get DecodedField)
 fieldTypeFactories f = case (baseType . fieldType) f of
@@ -265,10 +285,32 @@ fieldTypeFactories f = case (baseType . fieldType) f of
   _                          -> Nothing
 
 fieldTypeDecoders :: Text -> Maybe (Get DecodedField)
-fieldTypeDecoders _ = Nothing
+fieldTypeDecoders dec = case dec of
+  "bool"                  -> Just booleanDecoder
+  "char"                  -> Just stringDecoder
+  "color32"               -> Just unsignedDecoder
+  "int16"                 -> Just signedDecoder
+  "int32"                 -> Just signedDecoder
+  "int64"                 -> Just signedDecoder
+  "int8"                  -> Just signedDecoder
+  "uint16"                -> Just unsignedDecoder
+  "uint32"                -> Just unsignedDecoder
+  "uint8"                 -> Just unsignedDecoder
+  "GameTime_t"            -> Just noscaleDecoder
+  "HeroFacetKey_t"        -> Just unsigned64Decoder
+  "BloodType"             -> Just unsignedDecoder
+  "CBodyComponent"        -> Just componentDecoder
+  "CGameSceneNodeHandle"  -> Just unsignedDecoder
+  "Color"                 -> Just unsignedDecoder
+  "CPhysicsComponent"     -> Just componentDecoder
+  "CRenderComponent"      -> Just componentDecoder
+  "CUtlString"            -> Just stringDecoder
+  "CUtlStringToken"       -> Just unsignedDecoder
+  "CUtlSymbolLarge"       -> Just stringDecoder
+  _                       -> Nothing
 
 findDecoderByBaseType :: Text -> Get DecodedField
-findDecoderByBaseType _ = todoDecoder
+findDecoderByBaseType t = fromMaybe defaultDecoder (fieldTypeDecoders t)
 
 data FieldModel
   = FMFixedArray
@@ -471,19 +513,10 @@ floatFactory f = case encoder f of
     then noscaleDecoder
     else quantizedFactory f
 
-data QuantizedFloat = MkQuantizedFloat
-  { low        :: Float -- Gets recomputed for round up / down
-  , high       :: Float
-  , highLowMul :: Float
-  , decMul     :: Float
-  , offset     :: Float
-  , bitcount   :: Word32 -- Gets recomputed for qff_encode_int
-  , flags      :: Word32
-  , noScale    :: Bool -- Whether to decodes this as a noscale
-  }
-
 quantizedFactory :: Field -> Get DecodedField
-quantizedFactory _f = todoDecoder
+quantizedFactory f = do
+  fmap DfFloat32 . decodeQuantized $
+    newQuantizedFloatDecoder (bitCount f) (encodeFlags f) (lowValue f) (highValue f)
 
 vectorFactory :: Int -> Field -> Get DecodedField
 vectorFactory n f =
@@ -492,21 +525,67 @@ vectorFactory n f =
   else DfVec <$> replicateM n (floatFactory f)
 
 unsigned64Factory :: Field -> Get DecodedField
-unsigned64Factory _f = todoDecoder
+unsigned64Factory f =
+  if encoder f == "fixed64"
+  then fixed64Decoder
+  else unsigned64Decoder
 
 unsignedFactory :: Get DecodedField
 unsignedFactory = unsignedDecoder
 
 qangleFactory :: Field -> Get DecodedField
-qangleFactory _f = todoDecoder
+qangleFactory f =
+  if encoder f == "qangle_pitch_yaw"
+  then DfFloat32Normal <$> readAngle n <*> readAngle n <*> (pure 0)
+  else
+    if (bitCount f /= Nothing && bitCount f /= Just 0)
+    then DfFloat32Normal <$> readAngle n <*> readAngle n <*> readAngle n
+    else do
+      rX <- readBoolean
+      rY <- readBoolean
+      rZ <- readBoolean
+      retX <- bool (return 0) readCoord rX
+      retY <- bool (return 0) readCoord rY
+      retZ <- bool (return 0) readCoord rZ
+      pure $ DfFloat32Normal retX retY retZ
+  where
+  n = maybe (error "bitCount missing for qangle_pitch_yaw") (fromIntegral @Int32 @Int) (bitCount f)
+
+
+readAngle :: Int -> Get Float
+readAngle n = (\f -> f / castWord32ToFloat (1 `shiftL` n)) . (* 360.0) . castWord32ToFloat <$> readBits n
 
 -- ** Decoders
 
-todoDecoder :: Get DecodedField
-todoDecoder = DfFloat32 <$> getFloatle
-
 vectorNormalDecoder :: Get DecodedField
-vectorNormalDecoder = todoDecoder
+vectorNormalDecoder = (\(f1,f2,f3) -> DfFloat32Normal f1 f2 f3) <$> read3BitNormal
+
+-- read3BitNormal reads a normalized float vector
+read3BitNormal :: Get (Float, Float, Float)
+read3BitNormal = do
+  hasX <- readBoolean
+  haxY <- readBoolean
+
+  ret0 <- if hasX then readNormal else pure 0
+  ret1 <- if haxY then readNormal else pure 0
+
+  negZ <- readBoolean
+  let
+    prodsum = ret0*ret0 + ret1*ret1
+    unsignedRet2 =
+      if prodsum < 1.0
+      then sqrt (1.0 - prodsum)
+      else 0
+    ret2 = if negZ then unsignedRet2 else negate unsignedRet2 
+
+  pure (ret0, ret1, ret2)
+
+readNormal :: Get Float
+readNormal = do
+  isNeg <- readBoolean
+  len <- readBits 11
+  let ret = castWord32ToFloat len * (1.0 / (castWord32ToFloat (1 `shiftL` 11) - 1.0) )
+  pure $ if isNeg then ret else negate ret
 
 fixed64Decoder :: Get DecodedField
 fixed64Decoder = DfUInt64 <$> getWord64le
@@ -518,28 +597,41 @@ unsigned64Decoder :: Get DecodedField
 unsigned64Decoder = DfUInt64 <$> getUVarInt64
 
 booleanDecoder :: Get DecodedField
-booleanDecoder = todoDecoder
+booleanDecoder = DfBool <$> readBoolean
 
 stringDecoder :: Get DecodedField
-stringDecoder = todoDecoder
+stringDecoder = DfString <$> readStringEof
 
 defaultDecoder :: Get DecodedField
-defaultDecoder = todoDecoder
+defaultDecoder = DfUInt32 <$> getUVarInt32
 
 signedDecoder :: Get DecodedField
-signedDecoder = todoDecoder
+signedDecoder = DfInt32 <$> getVarInt32
 
 floatCoordDecoder :: Get DecodedField
-floatCoordDecoder = todoDecoder
+floatCoordDecoder = DfFloat32 <$> readCoord
+
+readCoord :: Get Float
+readCoord = do
+  iFlag <- readBits 1
+  fFlag <- readBits 1
+  if iFlag == 0 && fFlag == 0
+  then pure 0
+  else do
+    sign <- readBoolean
+    i    <- if iFlag /= 0 then (+1) <$> readBits 14 else pure 0
+    f    <- if fFlag /= 0 then readBits 5 else pure 0
+    let !value = fromIntegral i + fromIntegral f * (1 / 32)
+    pure $ if sign then -value else value
 
 noscaleDecoder :: Get DecodedField
-noscaleDecoder = todoDecoder
+noscaleDecoder = DfFloat32 . castWord32ToFloat <$> readBits 32
 
 runeTimeDecoder :: Get DecodedField
-runeTimeDecoder = todoDecoder
+runeTimeDecoder = DfFloat32 . castWord32ToFloat <$> readBits 4
 
 simulationTimeDecoder :: Get DecodedField
-simulationTimeDecoder = todoDecoder
+simulationTimeDecoder = DfFloat32 . (* (1.0 / 30)) . castWord32ToFloat <$> getUVarInt32 
 
-componentDecoder  :: Get DecodedField
-componentDecoder = todoDecoder
+componentDecoder :: Get DecodedField
+componentDecoder = DfUInt32 <$> readBits 1

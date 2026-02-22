@@ -73,7 +73,7 @@ readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runG
 -------------------------------------------------------------------------------
 
 runGetIncremental :: Get a -> Decoder a
-runGetIncremental = Binary.runGetIncremental . runBitGetFully
+runGetIncremental = Binary.runGetIncremental . (\(BitGet m) -> evalStateT m (BitState 0 0))
 
 newtype Get a = BitGet { runBitGet :: StateT BitState Binary.Get a }
 
@@ -118,8 +118,6 @@ fillBits n = do
       }
     fillBits n
 
-runBitGetFully :: Get a -> Binary.Get a
-runBitGetFully (BitGet m) = evalStateT m (BitState 0 0)
 
 readBytes :: Int -> Get ByteString
 readBytes n = do
@@ -128,9 +126,28 @@ readBytes n = do
     then BitGet $ lift (getByteString n)
     else BS.pack <$> replicateM n (fromIntegral <$> readBits 8)
 
+readByte :: Get Word8
+readByte = do
+  BitState{bitCount} <- BitGet get
+  if bitCount == 0
+    then BitGet $ lift getWord8
+    else fromIntegral <$> readBits 8
+
+readStringEof :: Get ByteString
+readStringEof = (\f -> BS.pack $ f []) <$> goReadStringEof id
+  where
+  goReadStringEof build = do
+    byte <- readByte
+    if byte == 0
+    then pure build
+    else goReadStringEof (build . (byte:))
+
 --
 -- ** Get
 --
+
+readBoolean :: Get Bool
+readBoolean = (1 ==) <$> readBits 1
 
 getUVarInt32 :: Get Word32
 getUVarInt32 = goUVarInt32 0 0
@@ -138,10 +155,9 @@ getUVarInt32 = goUVarInt32 0 0
   goUVarInt32 :: Int -> Word32 -> Get Word32
   goUVarInt32 i acc
     | i < 5 = do
-        byte <- BitGet $ lift getWord8
-        let u    = fromIntegral byte :: Word32
-            acc' = acc .|. ((u .&. 0x7F) `unsafeShiftL` (7 * i))
-        if (u .&. 0x80) == 0
+        byte <- readBits 8
+        let acc' = acc .|. ((byte .&. 0x7F) `unsafeShiftL` (7 * i))
+        if (byte .&. 0x80) == 0
            then pure acc'
            else goUVarInt32 (i + 1) acc'
     | otherwise = fail "input exceeds varuint32 size"
@@ -159,10 +175,9 @@ getUVarInt64 = goUVarInt64 0 0
   goUVarInt64 :: Int -> Word64 -> Get Word64
   goUVarInt64 i acc
     | i < 10 = do
-        byte <- BitGet $ lift getWord8
-        let u    = fromIntegral byte :: Word64
-            acc' = acc .|. ((u .&. 0x7F) `unsafeShiftL` (7 * i))
-        if (u .&. 0x80) == 0
+        byte <- fromIntegral <$> readBits 8
+        let acc' = acc .|. ((byte .&. 0x7F) `unsafeShiftL` (7 * i))
+        if (byte .&. 0x80) == 0
            then pure acc'
            else goUVarInt64 (i + 1) acc'
     | otherwise = fail "input exceeds varuint64 size"

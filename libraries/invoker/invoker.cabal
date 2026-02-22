@@ -14,6 +14,7 @@ Library
   other-modules:
     Invoker.Binary
     Invoker.Parser
+    Invoker.Parser.Quantized
   hs-source-dirs:
     ./library/
   ghc-options:
