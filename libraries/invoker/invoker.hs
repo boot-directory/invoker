@@ -1,39 +1,28 @@
 module Main where
 
-import Control.Exception (catch)
-import Control.Monad (forever)
+import Control.Monad ((<=<))
 import Data.ByteString as BS (hGetSome)
-import Data.IORef (modifyIORef, newIORef, readIORef)
-import Data.Word (Word64)
+import Data.IORef (readIORef)
 import System.IO (IOMode (..), hClose, openBinaryFile)
 
 import Invoker
-  ( readOuterMessage, readHeader
-  , mkBuffer, readFromBuffer, BufferArgs(..), IoErrors
+  ( BufferArgs(..)
   , OuterMessage(..)
   , MessageType(..), SendTables(..)
+  , runParserLoop, ParserState(..)
   )
 
 main :: IO ()
 main = do
-  counter <- newIORef (0 :: Word64)
+  bufArgs <-  mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
+  runParserLoop bufArgs onMsg (print <=< readIORef . counter)
 
-  buf <- mkBuffer =<< mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
-
-  catch @IoErrors
-    ( do
-      _header <- readFromBuffer buf readHeader
-      forever $ do
-        msg <- readFromBuffer buf readOuterMessage
-        case omMsg msg of
-          _message@UnknownMessage{}       -> print _message
-          _message@FailedParsingMessage{} -> print _message
-          _message@(SendTables st)        -> print (stFields st)
-          _                               -> pure ()
-        modifyIORef counter (+1)
-    )
-    (\_e -> print =<< readIORef counter)
-
+onMsg :: OuterMessage -> IO ()
+onMsg msg = case omMsg msg of
+  _message@UnknownMessage{}       -> print _message
+  _message@FailedParsingMessage{} -> print _message
+  _message@(SendTables st)        -> print (stFields st)
+  _                               -> pure ()
 
 mkFileBufferArgs :: FilePath -> IO BufferArgs
 mkFileBufferArgs fp = do

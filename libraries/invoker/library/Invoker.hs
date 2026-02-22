@@ -3,15 +3,15 @@ module Invoker
     Buffer, readFromBuffer, IoErrors(..)
   , BufferArgs(..), mkBuffer
     -- * Demo parsing
-  , Header, readHeader
-  , OuterMessage(..), readOuterMessage
+  , runParserLoop, ParserState(..)
+  , OuterMessage(..)
   , MessageType(..)
   , SendTables(..)
   ) where
 
 import Invoker.Parser
-  ( Header, readHeader
-  , OuterMessage(..), readOuterMessage
+  ( runParserLoop, ParserState(..)
+  , OuterMessage(..)
   , MessageType(..)
   , SendTables(..)
   )

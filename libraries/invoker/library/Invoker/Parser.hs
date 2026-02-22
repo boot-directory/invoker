@@ -11,14 +11,17 @@ module Invoker.Parser where
 
 -- GHC included
 import Control.Applicative ((<|>))
-import Control.Monad (when, replicateM)
-import Data.Binary.Get (pushChunk, Decoder (..))
+import Control.Exception (catch)
+import Control.Monad (forever, replicateM, when)
+import Data.Binary.Get (Decoder (..), pushChunk)
 import Data.Bits (Bits (..))
+import Data.Bool (bool)
 import Data.ByteString (ByteString)
+import Data.IORef (IORef, modifyIORef, newIORef)
 import Data.Int (Int32)
 import Data.Map as Map (Map, fromList, lookup, member)
 import Data.Maybe (fromMaybe)
-import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, stripPrefix, unpack, pack)
+import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, pack, stripPrefix, unpack)
 import Data.Word (Word32, Word64)
 import GHC.Float (castWord32ToFloat)
 
@@ -31,7 +34,7 @@ import Invoker.Binary
   , getWord64le, getWord32le
   , getInt32le
   , getFloatle
-  , readBoolean
+  , readBoolean, Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors
   )
 import Invoker.Parser.Quantized (newQuantizedFloatDecoder, decodeQuantized)
 import Proto.Demo
@@ -50,7 +53,39 @@ import Proto.Netmessages_Fields (maybe'varNameSym, maybe'varTypeSym, fields, may
 import Codec.Compression.Snappy as Snappy (decompress)
 import Data.ProtoLens (decodeMessage, Message)
 import Lens.Family2 ((^.))
-import Data.Bool (bool)
+import Data.HashMap.Strict (HashMap)
+import Data.HashMap.Strict qualified as HashMap (empty)
+
+
+-------------------------------------------------------------------------------
+-- * Parser loop
+-------------------------------------------------------------------------------
+
+runParserLoop :: BufferArgs -> (OuterMessage -> IO ()) -> (ParserState -> IO ()) -> IO ()
+runParserLoop bufArgs onMsg finalizer = do
+  state@MkParserState{..} <- initParserState bufArgs
+  catch
+    (
+      do
+      _header <- readFromBuffer buffer readHeader
+      forever $ do
+        modifyIORef counter (+1)
+        onMsg =<< readFromBuffer buffer readOuterMessage
+    )
+    (\(_e :: IoErrors) -> finalizer state)
+
+data ParserState = MkParserState
+  { serializers :: HashMap Text Serializer
+  , buffer :: Buffer
+  , counter :: IORef Word64
+  }
+
+initParserState :: BufferArgs -> IO ParserState
+initParserState bufArgs = do
+  let serializers = HashMap.empty
+  buffer <- mkBuffer bufArgs
+  counter <- newIORef 0
+  pure MkParserState{..}
 
 
 -------------------------------------------------------------------------------
@@ -536,10 +571,10 @@ unsignedFactory = unsignedDecoder
 qangleFactory :: Field -> Get DecodedField
 qangleFactory f =
   if encoder f == "qangle_pitch_yaw"
-  then DfFloat32Normal <$> readAngle n <*> readAngle n <*> (pure 0)
+  then DfFloat32Normal <$> readAngleLen <*> readAngleLen <*> (pure 0)
   else
     if (bitCount f /= Nothing && bitCount f /= Just 0)
-    then DfFloat32Normal <$> readAngle n <*> readAngle n <*> readAngle n
+    then DfFloat32Normal <$> readAngleLen <*> readAngleLen <*> readAngleLen
     else do
       rX <- readBoolean
       rY <- readBoolean
@@ -549,7 +584,8 @@ qangleFactory f =
       retZ <- bool (return 0) readCoord rZ
       pure $ DfFloat32Normal retX retY retZ
   where
-  n = maybe (error "bitCount missing for qangle_pitch_yaw") (fromIntegral @Int32 @Int) (bitCount f)
+  readAngleLen = readAngle =<< getLen
+  getLen = maybe (fail "bitCount missing for qangle_pitch_yaw") (pure . fromIntegral @Int32 @Int) (bitCount f)
 
 
 readAngle :: Int -> Get Float

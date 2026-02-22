@@ -36,6 +36,7 @@ Library
     , snappy
     , proto-lens
     , lens-family
+    , unordered-containers
 
 executable invoker
   default-language: GHC2021
