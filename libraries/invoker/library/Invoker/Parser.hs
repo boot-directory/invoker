@@ -17,9 +17,8 @@ import Data.Binary.Get (Decoder (..), pushChunk)
 import Data.Bits (Bits (..))
 import Data.Bool (bool)
 import Data.ByteString (ByteString)
-import Data.IORef (IORef, modifyIORef, newIORef)
+import Data.IORef (IORef, modifyIORef, newIORef, writeIORef)
 import Data.Int (Int32)
-import Data.Map as Map (Map, fromList, lookup, member)
 import Data.Maybe (fromMaybe)
 import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, pack, stripPrefix, unpack)
 import Data.Word (Word32, Word64)
@@ -54,7 +53,8 @@ import Codec.Compression.Snappy as Snappy (decompress)
 import Data.ProtoLens (decodeMessage, Message)
 import Lens.Family2 ((^.))
 import Data.HashMap.Strict (HashMap)
-import Data.HashMap.Strict qualified as HashMap (empty)
+import Data.HashMap.Strict as HashMap (empty, fromList, lookup)
+import Data.HashSet as HashSet (HashSet, fromList, member)
 
 
 -------------------------------------------------------------------------------
@@ -70,19 +70,22 @@ runParserLoop bufArgs onMsg finalizer = do
       _header <- readFromBuffer buffer readHeader
       forever $ do
         modifyIORef counter (+1)
-        onMsg =<< readFromBuffer buffer readOuterMessage
+        msg<- readFromBuffer buffer readOuterMessage
+        case omMsg msg of
+          SendTables sendTables -> writeIORef serializers (toSerializers sendTables)
+          _ -> onMsg msg
     )
     (\(_e :: IoErrors) -> finalizer state)
 
 data ParserState = MkParserState
-  { serializers :: HashMap Text Serializer
+  { serializers :: IORef (HashMap Text Serializer)
   , buffer :: Buffer
   , counter :: IORef Word64
   }
 
 initParserState :: BufferArgs -> IO ParserState
 initParserState bufArgs = do
-  let serializers = HashMap.empty
+  serializers <- newIORef HashMap.empty
   buffer <- mkBuffer bufArgs
   counter <- newIORef 0
   pure MkParserState{..}
@@ -249,6 +252,8 @@ parseSendTables build = do
 
   pure MkSendTables{packet, stFields}
 
+toSerializers :: SendTables -> HashMap Text Serializer
+toSerializers st = HashMap.fromList $ map (\fld -> (serializerName fld, serializer fld)) (stFields st)
 
 newField :: Word32 -> ProtoFlattenedSerializerField_t -> Field
 newField build f =
@@ -358,7 +363,7 @@ data FieldModel
 determineModel :: FieldType -> Text -> FieldModel
 determineModel ft serializerName
   | serializerName /= "" =
-    if pointer ft || Map.member (baseType ft) pointerTypes
+    if pointer ft || HashSet.member (baseType ft) pointerTypes
       then FMFixedTable
       else FMVariableTable
   | count ft > 0 && baseType ft /= "char" = FMFixedArray
@@ -366,19 +371,19 @@ determineModel ft serializerName
   | otherwise = FMModelSimple
 
 
-pointerTypes :: Map Text Bool
-pointerTypes = Map.fromList
-  [ ("PhysicsRagdollPose_t", True)
-  , ("CBodyComponent", True)
-  , ("CEntityIdentity", True)
-  , ("CPhysicsComponent", True)
-  , ("CRenderComponent", True)
-  , ("CDOTAGamerules", True)
-  , ("CDOTAGameManager", True)
-  , ("CDOTASpectatorGraphManager", True)
-  , ("CPlayerLocalData", True)
-  , ("CPlayer_CameraServices", True)
-  , ("CDOTAGameRules", True)
+pointerTypes :: HashSet Text
+pointerTypes = HashSet.fromList
+  [ "PhysicsRagdollPose_t"
+  , "CBodyComponent"
+  , "CEntityIdentity"
+  , "CPhysicsComponent"
+  , "CRenderComponent"
+  , "CDOTAGamerules"
+  , "CDOTAGameManager"
+  , "CDOTASpectatorGraphManager"
+  , "CPlayerLocalData"
+  , "CPlayer_CameraServices"
+  , "CDOTAGameRules"
   ]
 
 data FieldType = FieldType
@@ -405,7 +410,7 @@ newFieldType txt = FieldType base gen ptr cnt
   rest3 = if ptr then T.drop 1 rest2 else rest2
   cnt = case T.stripPrefix "[" rest3 of
     Just t -> let (numTxt, _) = T.breakOn "]" t
-              in fromMaybe 1024 $ Map.lookup numTxt itemCounts <|> (readMaybe (T.unpack numTxt))
+              in fromMaybe 1024 $ HashMap.lookup numTxt itemCounts <|> (readMaybe (T.unpack numTxt))
     Nothing -> 0
 
   readMaybe :: Read a => String -> Maybe a
@@ -414,8 +419,8 @@ newFieldType txt = FieldType base gen ptr cnt
       [(x,"")] -> Just x
       _        -> Nothing
 
-  itemCounts :: Map Text Int
-  itemCounts = Map.fromList
+  itemCounts :: HashMap Text Int
+  itemCounts = HashMap.fromList
     [ ("MAX_ITEM_STOCKS", 8)
     , ("MAX_ABILITY_DRAFT_ABILITIES", 48)
     ]
@@ -442,7 +447,7 @@ data Field = MkField
 
 
 data Serializer = MkSerializer
-  { serializerName :: Text
+  { serName :: Text
   , version        :: Int
   , serFields      :: [Field]
   } deriving (Show)
