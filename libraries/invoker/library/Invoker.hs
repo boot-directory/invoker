@@ -13,9 +13,9 @@ import Invoker.Parser
   ( runParserLoop, ParserState(..)
   , OuterMessage(..)
   , MessageType(..)
-  , SendTables(..)
   )
 import Invoker.Binary
   ( Buffer, readFromBuffer, IoErrors(..)
   , BufferArgs(..), mkBuffer
   )
+import Invoker.Parser.SendTables (SendTables(..))

@@ -203,3 +203,45 @@ getInt32le = fromIntegral <$> readBits 32
 
 getWord32le :: Get Word32
 getWord32le = readBits 32
+
+readCoord :: Get Float
+readCoord = do
+  iFlag <- readBits 1
+  fFlag <- readBits 1
+  if iFlag == 0 && fFlag == 0
+  then pure 0
+  else do
+    sign <- readBoolean
+    i    <- if iFlag /= 0 then (+1) <$> readBits 14 else pure 0
+    f    <- if fFlag /= 0 then readBits 5 else pure 0
+    let !value = fromIntegral i + fromIntegral f * (1 / 32)
+    pure $ if sign then -value else value
+
+read3BitNormal :: Get (Float, Float, Float)
+read3BitNormal = do
+  hasX <- readBoolean
+  haxY <- readBoolean
+
+  ret0 <- if hasX then readNormal else pure 0
+  ret1 <- if haxY then readNormal else pure 0
+
+  negZ <- readBoolean
+  let
+    prodsum = ret0*ret0 + ret1*ret1
+    unsignedRet2 =
+      if prodsum < 1.0
+      then sqrt (1.0 - prodsum)
+      else 0
+    ret2 = if negZ then unsignedRet2 else negate unsignedRet2
+
+  pure (ret0, ret1, ret2)
+
+readNormal :: Get Float
+readNormal = do
+  isNeg <- readBoolean
+  len <- readBits 11
+  let ret = castWord32ToFloat len * (1.0 / (castWord32ToFloat (1 `shiftL` 11) - 1.0) )
+  pure $ if isNeg then ret else negate ret
+
+readAngle :: Int -> Get Float
+readAngle n = (\f -> f / castWord32ToFloat (1 `shiftL` n)) . (* 360.0) . castWord32ToFloat <$> readBits n
