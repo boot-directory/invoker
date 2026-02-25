@@ -98,6 +98,18 @@ instance Monad Get where
 instance MonadFail Get where
   fail msg = BitGet $ lift (fail msg)
 
+-- |
+-- >>> let bytes = BS.pack [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]
+-- >>> debugGet (readBits 7) bytes == 0x7f
+-- True
+-- >>> debugGet (readBits 8) bytes == 0xff
+-- True
+-- >>> debugGet (readBits 16) bytes == 0xffff
+-- True
+-- >>> debugGet (readBits 32) bytes == 0xffffffff
+-- True
+-- >>> debugGet (readBits 1) bytes == 0x01
+-- True
 readBits :: Int -> Get Word32
 readBits n = BitGet $ do
   fillBits n
