@@ -1,4 +1,5 @@
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Invoker.Parser.Quantized where
 
 -- GHC included
@@ -105,6 +106,14 @@ quantize QFD{..} val
       let i = floor ((val - qLow) * qHighLowMul) :: Word32
       in qLow + (qHigh - qLow) * (fromIntegral i * qDecMul)
 
+-- >>> import Data.ByteString as BS (pack)
+-- |
+-- >>> let decoder = newQuantizedFloatDecoder (Just 1) Nothing (Just 5) Nothing
+-- >>> let runDecode = debugGet (decodeQuantized decoder) . BS.pack
+-- >>> runDecode [0b10]
+-- 5.0
+-- >>> runDecode [0b01]
+-- 9.0
 decodeQuantized :: QuantizedFloatDecoder -> Get Float
 decodeQuantized QFD{..} = do
   if (qFlags .&. qff_rounddown) /= 0

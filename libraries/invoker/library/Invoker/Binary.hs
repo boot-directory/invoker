@@ -1,16 +1,11 @@
-{-# LANGUAGE
-    NamedFieldPuns
-  , OverloadedStrings
-  , RecordWildCards
-  , DeriveAnyClass
-#-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Invoker.Binary where
 
 import Control.Exception (Exception, throwIO)
 import Control.Monad (replicateM, when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
-import Data.Binary.Get (Decoder (..), getByteString, getWord8)
+import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk)
 import Data.Binary.Get qualified as Binary (Get, runGetIncremental)
 import Data.Bits
 import Data.ByteString as BS
@@ -74,6 +69,14 @@ readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runG
 
 runGetIncremental :: Get a -> Decoder a
 runGetIncremental = Binary.runGetIncremental . (\(BitGet m) -> evalStateT m (BitState 0 0))
+
+debugGet :: Get a -> ByteString -> a
+debugGet getA bs =
+  case pushChunk (runGetIncremental getA) bs of
+    Done _left _offset a -> a
+    Partial _ -> error "Invoker.Binary.debugGet not enough input"
+    Fail _ pos msg -> error ("Invoker.Binary.debugGet at position " ++ show pos ++ ": " ++ msg)
+
 
 newtype Get a = BitGet { runBitGet :: StateT BitState Binary.Get a }
 

@@ -1,11 +1,4 @@
-{-# LANGUAGE
-    BlockArguments
-  , DataKinds
-  , DuplicateRecordFields
-  , OverloadedStrings
-  , RecordWildCards
-#-}
-{-# OPTIONS_GHC -Wno-orphans #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Invoker.Parser where
 

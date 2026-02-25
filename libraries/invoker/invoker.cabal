@@ -38,6 +38,13 @@ Library
     , proto-lens
     , lens-family
     , unordered-containers
+  default-extensions:
+    BlockArguments
+    DataKinds
+    DeriveAnyClass
+    DuplicateRecordFields
+    NamedFieldPuns
+    RecordWildCards
 
 executable invoker
   default-language: GHC2021
