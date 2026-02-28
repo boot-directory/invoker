@@ -58,6 +58,11 @@ parseSendTables build = do
 toSerializers :: SendTables -> HashMap Text Serializer
 toSerializers st = HashMap.fromList $ map (\fld -> (serializerName fld, serializer fld)) (stFields st)
 
+
+-------------------------------------------------------------------------------
+-- * field
+-------------------------------------------------------------------------------
+
 newField :: Word32 -> ProtoFlattenedSerializerField_t -> Field
 newField build f =
   let
@@ -90,11 +95,6 @@ newField build f =
   where
   todoDecoder :: Get DecodedField
   todoDecoder = DfFloat32 <$> getFloatle
-
-
--------------------------------------------------------------------------------
--- * field
--------------------------------------------------------------------------------
 
 data Field = MkField
   { parentName        :: Text

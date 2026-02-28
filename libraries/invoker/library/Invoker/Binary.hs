@@ -64,7 +64,7 @@ readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runG
 
 
 -------------------------------------------------------------------------------
--- * Serialization
+-- * reader
 -------------------------------------------------------------------------------
 
 runGetIncremental :: Get a -> Decoder a
