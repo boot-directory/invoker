@@ -26,7 +26,7 @@ import Invoker.Binary
   )
 import Invoker.Parser.Quantized (newQuantizedFloatDecoder, decodeQuantized)
 import Proto.Netmessages (CSVCMsg_FlattenedSerializer, ProtoFlattenedSerializerField_t)
-import Proto.Netmessages_Fields (maybe'varNameSym, maybe'varTypeSym, fields, maybe'sendNodeSym, maybe'fieldSerializerNameSym, maybe'fieldSerializerVersion, maybe'varEncoderSym, maybe'encodeFlags, maybe'bitCount, maybe'lowValue, maybe'highValue)
+import Proto.Netmessages_Fields (symbols, serializers, fieldsIndex, serializerNameSym, serializerVersion, maybe'varNameSym, maybe'varTypeSym, fields, maybe'sendNodeSym, maybe'fieldSerializerNameSym, maybe'fieldSerializerVersion, maybe'varEncoderSym, maybe'encodeFlags, maybe'bitCount, maybe'lowValue, maybe'highValue)
 
 -- External
 import Data.ProtoLens (decodeMessage)
@@ -41,8 +41,8 @@ import Data.HashSet as HashSet (HashSet, fromList, member)
 -------------------------------------------------------------------------------
 
 data SendTables = MkSendTables
-  { packet :: CSVCMsg_FlattenedSerializer
-  , stFields :: [Field]
+  { stFields :: [Field]
+  , stSerializers :: HashMap Text Serializer
   }
   deriving (Show)
 
@@ -51,12 +51,28 @@ parseSendTables build = do
   size <- getUVarInt32
   bytes <- readBytes (fromIntegral size)
   packet <- either fail pure (decodeMessage @CSVCMsg_FlattenedSerializer bytes)
-  let stFields = map (newField build) (packet ^. fields)
 
-  pure MkSendTables{packet, stFields}
+  let
+    pFields      = packet ^. fields
+    pSymbols     = packet ^. symbols
+    pSerializers = packet ^. serializers
 
-toSerializers :: SendTables -> HashMap Text Serializer
-toSerializers st = HashMap.fromList $ map (\fld -> (serializerName fld, fromMaybe undefined (serializer fld))) (stFields st)
+    allFields = map (newField build) pFields
+    mkSerializer s =
+      let serName = pSymbols !! fromIntegral (s ^. serializerNameSym)
+          version = s ^. serializerVersion
+          serFields = [allFields !! fromIntegral i | i <- s ^. fieldsIndex]
+      in (serName, MkSerializer{..})
+    stSerializers = HashMap.fromList $ map mkSerializer pSerializers
+    stFields =
+      (\f ->
+        if serializerName f == ""
+        then f
+        else f { serializer = HashMap.lookup (serializerName f) stSerializers }
+      )
+      <$> allFields
+
+  pure MkSendTables{stFields, stSerializers}
 
 
 -------------------------------------------------------------------------------
@@ -79,14 +95,14 @@ newField build f =
     , varType
     , sendNode          = maybe "" (T.pack . show) (f ^. maybe'sendNodeSym)
     , serializerName
-    , serializerVersion = fromMaybe 0 (f ^. maybe'fieldSerializerVersion)
+    , serializerVer     = fromMaybe 0 (f ^. maybe'fieldSerializerVersion)
     , encoder           = maybe "" (T.pack . show) (f ^. maybe'varEncoderSym)
     , encodeFlags       = f ^. maybe'encodeFlags
     , bitCount          = f ^. maybe'bitCount
     , lowValue          = f ^. maybe'lowValue
     , highValue         = f ^. maybe'highValue
     , fieldType         = fieldType
-    , serializer        = Just $ MkSerializer "" 0 []
+    , serializer        = Nothing
     , model
     , decoder           = fail "Uninitialized decoder"
     , baseDecoder       = fail "Uninitialized decoder"
@@ -114,7 +130,7 @@ data Field = MkField
   , varType           :: Text
   , sendNode          :: Text
   , serializerName    :: Text
-  , serializerVersion :: Int32
+  , serializerVer     :: Int32
   , encoder           :: Text
   , encodeFlags       :: Maybe Int32
   , bitCount          :: Maybe Int32
@@ -134,9 +150,9 @@ data Field = MkField
 -------------------------------------------------------------------------------
 
 data Serializer = MkSerializer
-  { serName :: Text
-  , version        :: Int
-  , serFields      :: [Field]
+  { serName   :: Text
+  , version   :: Int32
+  , serFields :: [Field]
   } deriving (Show)
 
 getNameForFieldPathSer :: Serializer -> FieldPath -> Int -> [Text]
