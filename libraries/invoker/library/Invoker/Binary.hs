@@ -210,9 +210,6 @@ getWord64le = do
   pure $ fromIntegral lo
        .|. (fromIntegral hi `unsafeShiftL` 32)
 
-getFloatle :: Get Float
-getFloatle = castWord32ToFloat <$> readBits 32
-
 getInt32le :: Get Int32
 getInt32le = fromIntegral <$> readBits 32
 

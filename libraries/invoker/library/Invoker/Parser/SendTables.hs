@@ -8,8 +8,9 @@ import Control.Monad (replicateM)
 import Data.Bool (bool)
 import Data.ByteString (ByteString)
 import Data.Int (Int32)
+import Data.List ((!?))
 import Data.Maybe (fromMaybe)
-import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, pack, stripPrefix, unpack)
+import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, pack, stripPrefix, unpack, length, take)
 import Data.Word (Word32, Word64)
 import GHC.Float (castWord32ToFloat)
 
@@ -20,7 +21,6 @@ import Invoker.Binary
   , getUVarInt64, getUVarInt32
   , getVarInt32
   , getWord64le
-  , getFloatle
   , readBoolean
   , readCoord, read3BitNormal, readAngle
   )
@@ -56,7 +56,7 @@ parseSendTables build = do
   pure MkSendTables{packet, stFields}
 
 toSerializers :: SendTables -> HashMap Text Serializer
-toSerializers st = HashMap.fromList $ map (\fld -> (serializerName fld, serializer fld)) (stFields st)
+toSerializers st = HashMap.fromList $ map (\fld -> (serializerName fld, fromMaybe undefined (serializer fld))) (stFields st)
 
 
 -------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ newField build f =
     fieldType = newFieldType varType
     model = determineModel fieldType serializerName
   in
-  applyPatches build
+  setModel . applyPatches build $
   MkField
     { parentName
     , varName           = maybe "" (T.pack . show) (f ^. maybe'varNameSym)
@@ -86,15 +86,27 @@ newField build f =
     , lowValue          = f ^. maybe'lowValue
     , highValue         = f ^. maybe'highValue
     , fieldType         = fieldType
-    , serializer        = MkSerializer "" 0 []
+    , serializer        = Just $ MkSerializer "" 0 []
     , model
-    , decoder           = todoDecoder
-    , baseDecoder       = todoDecoder
-    , childDecoder      = todoDecoder -- findDecoderByBaseType (maybe "" baseType $ genericType fieldType)
+    , decoder           = fail "Uninitialized decoder"
+    , baseDecoder       = fail "Uninitialized decoder"
+    , childDecoder      = fail "Uninitialized decoder"
     }
-  where
-  todoDecoder :: Get DecodedField
-  todoDecoder = DfFloat32 <$> getFloatle
+
+setModel :: Field -> Field
+setModel f =
+  case model f of
+    FMFixedArray -> f { decoder = findDecoder f }
+    FMFixedTable -> f { baseDecoder = booleanDecoder }
+    FMVariableArray ->
+      case genericType (fieldType f) of
+        Nothing -> error ("no generic type for variable array field " ++ show (varName f))
+        Just g ->
+          f { baseDecoder  = unsignedDecoder
+            , childDecoder = findDecoderByBaseType (baseType g)
+            }
+    FMVariableTable -> f { baseDecoder = unsignedDecoder }
+    FMSimple -> f { decoder = findDecoder f }
 
 data Field = MkField
   { parentName        :: Text
@@ -109,7 +121,7 @@ data Field = MkField
   , lowValue          :: Maybe Float
   , highValue         :: Maybe Float
   , fieldType         :: FieldType
-  , serializer        :: Serializer
+  , serializer        :: Maybe Serializer
   , model             :: FieldModel
   , decoder           :: Get DecodedField
   , baseDecoder       :: Get DecodedField
@@ -117,11 +129,142 @@ data Field = MkField
   } deriving (Show)
 
 
+-------------------------------------------------------------------------------
+-- * serializer
+-------------------------------------------------------------------------------
+
 data Serializer = MkSerializer
   { serName :: Text
   , version        :: Int
   , serFields      :: [Field]
   } deriving (Show)
+
+getNameForFieldPathSer :: Serializer -> FieldPath -> Int -> [Text]
+getNameForFieldPathSer s fp pos =
+  case fpPath fp !? pos of
+    Nothing -> error "serializer.getNameForFieldPath: path too short"
+    Just idx ->
+      case serFields s !? idx of
+        Nothing -> error "serializer.getNameForFieldPath: index OOB"
+        Just f -> getNameForFieldPathField f fp (pos + 1)
+
+getDecoderForFieldPathSer :: Serializer -> FieldPath -> Int -> Get DecodedField
+getDecoderForFieldPathSer s fp pos =
+  case fpPath fp !? pos of
+    Nothing -> error "serializer.getDecoderForFieldPath: path too short"
+    Just idx ->
+      case serFields s !? idx of
+        Nothing -> error $ "serializer " <> T.unpack (serName s) <> ": field index OOB"
+        Just f -> getDecoderForFieldPathField f fp (pos + 1)
+
+getFieldPathForNameSer :: Serializer -> FieldPath -> Text -> Maybe FieldPath
+getFieldPathForNameSer s fp name =
+  foldr (<|>) Nothing $
+    zipWith (\idx f -> getFieldPathForNameField f (addIndex fp idx) name)
+            [0..]
+            (serFields s)
+
+
+-------------------------------------------------------------------------------
+-- * field_path
+-------------------------------------------------------------------------------
+
+data FieldPath = FieldPath
+  { fpPath :: [Int]
+  }
+
+addIndex :: FieldPath -> Int -> FieldPath
+addIndex (FieldPath path) idx = FieldPath (path <> [idx])
+
+getNameForFieldPathField :: Field -> FieldPath -> Int -> [Text]
+getNameForFieldPathField f fp pos =
+  case model f of
+    FMFixedArray -> handleArray
+    FMFixedTable ->
+      if lastIdx < pos
+      then [varName f]
+      else case serializer f of
+        Just ser -> [varName f] ++ getNameForFieldPathSer ser fp pos
+        Nothing -> error "FixedTable without serializer"
+    FMVariableArray -> handleArray
+    FMVariableTable ->
+      if lastIdx == pos - 1
+      then [varName f]
+      else handleIndex \i ->
+        let withIndex = [varName f, indexText i] in
+        if lastIdx /= pos
+        then case serializer f of
+          Just ser -> withIndex ++ getNameForFieldPathSer ser fp (pos + 1)
+          Nothing -> error "VariableTable without serializer"
+        else withIndex
+    FMSimple -> [varName f]
+  where
+    handleIndex onJust = maybe [varName f] onJust (fpPath fp !? pos)
+    handleArray =
+      if lastIdx == pos
+      then handleIndex \i -> [varName f, indexText i]
+      else [varName f]
+    indexText i = T.pack $ let s = show i in replicate (4 - Prelude.length s) '0' ++ s
+    lastIdx = Prelude.length (fpPath fp) - 1
+
+getDecoderForFieldPathField :: Field -> FieldPath -> Int -> Get DecodedField
+getDecoderForFieldPathField f fp pos =
+  case model f of
+    FMFixedArray -> decoder f
+    FMFixedTable ->
+      if lastIdx == pos - 1
+      then baseDecoder f
+      else case serializer f of
+        Just ser -> getDecoderForFieldPathSer ser fp pos
+        Nothing -> error "FixedTable without serializer"
+    FMVariableArray ->
+      if lastIdx == pos
+      then childDecoder f
+      else baseDecoder f
+    FMVariableTable ->
+      if lastIdx >= pos + 1
+      then case serializer f of
+        Just ser -> getDecoderForFieldPathSer ser fp (pos + 1)
+        Nothing -> error "VariableTable without serializer"
+      else baseDecoder f
+    FMSimple -> decoder f
+  where
+  lastIdx = Prelude.length (fpPath fp) - 1
+
+getFieldPathForNameField :: Field -> FieldPath -> Text -> Maybe FieldPath
+getFieldPathForNameField f fp name =
+  case model f of
+    FMSimple
+      | varName f == name -> Just fp
+      | otherwise         -> Nothing
+
+    FMFixedArray
+      | T.length name == 4 -> Just (addIndex fp (readInt name))
+      | otherwise          -> Nothing
+
+    FMVariableArray
+      | T.length name == 4 -> Just (addIndex fp (readInt name))
+      | otherwise          -> Nothing
+
+    FMFixedTable ->
+      case serializer f of
+        Just s -> getFieldPathForNameSer s fp name
+        Nothing -> Nothing
+
+    FMVariableTable
+      | T.length name >= 6 ->
+          case serializer f of
+            Just s ->
+              let idx = readInt (T.take 4 name)
+                  rest = T.drop 5 name
+              in getFieldPathForNameSer s (addIndex fp idx) rest
+            Nothing -> Nothing
+      | otherwise -> Nothing
+  where
+  readInt :: Text -> Int
+  readInt t = case reads (T.unpack t) of
+    [(n,"")] -> n
+    _        -> error $ "readInt: invalid number " <> T.unpack t
 
 
 -------------------------------------------------------------------------------
@@ -333,7 +476,7 @@ data FieldModel
   | FMFixedTable
   | FMVariableArray
   | FMVariableTable
-  | FMModelSimple
+  | FMSimple
   deriving (Show, Eq)
 
 determineModel :: FieldType -> Text -> FieldModel
@@ -344,7 +487,7 @@ determineModel ft serializerName
       else FMVariableTable
   | count ft > 0 && baseType ft /= "char" = FMFixedArray
   | baseType ft `elem` ["CUtlVector", "CNetworkUtlVectorBase"] = FMVariableArray
-  | otherwise = FMModelSimple
+  | otherwise = FMSimple
 
 
 pointerTypes :: HashSet Text
