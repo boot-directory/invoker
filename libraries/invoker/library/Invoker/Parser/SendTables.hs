@@ -189,6 +189,9 @@ data FieldPath = FieldPath
   { fpPath :: [Int]
   }
 
+lastFpIndex :: FieldPath -> Int
+lastFpIndex fp = Prelude.length (fpPath fp) - 1
+
 addIndex :: FieldPath -> Int -> FieldPath
 addIndex (FieldPath path) idx = FieldPath (path <> [idx])
 
@@ -197,18 +200,18 @@ getNameForFieldPathField f fp pos =
   case model f of
     FMFixedArray -> handleArray
     FMFixedTable ->
-      if lastIdx < pos
+      if lastFpIndex fp < pos
       then [varName f]
       else case serializer f of
         Just ser -> [varName f] ++ getNameForFieldPathSer ser fp pos
         Nothing -> error "FixedTable without serializer"
     FMVariableArray -> handleArray
     FMVariableTable ->
-      if lastIdx == pos - 1
+      if lastFpIndex fp == pos - 1
       then [varName f]
       else handleIndex \i ->
         let withIndex = [varName f, indexText i] in
-        if lastIdx /= pos
+        if lastFpIndex fp /= pos
         then case serializer f of
           Just ser -> withIndex ++ getNameForFieldPathSer ser fp (pos + 1)
           Nothing -> error "VariableTable without serializer"
@@ -217,11 +220,10 @@ getNameForFieldPathField f fp pos =
   where
     handleIndex onJust = maybe [varName f] onJust (fpPath fp !? pos)
     handleArray =
-      if lastIdx == pos
+      if lastFpIndex fp == pos
       then handleIndex \i -> [varName f, indexText i]
       else [varName f]
     indexText i = T.pack $ let s = show i in replicate (4 - Prelude.length s) '0' ++ s
-    lastIdx = Prelude.length (fpPath fp) - 1
 
 getDecoderForFieldPathField :: Field -> FieldPath -> Int -> Get DecodedField
 getDecoderForFieldPathField f fp pos =
@@ -424,8 +426,7 @@ p4 field =
 -------------------------------------------------------------------------------
 
 data DecodedField
-  = DfFieldRecoder ()
-  | DfUInt64 Word64
+  = DfUInt64 Word64
   | DfUInt32 Word32
   | DfInt32 Int32
   | DfString ByteString

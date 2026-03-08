@@ -7,6 +7,11 @@ build-type:         Simple
 license:            BSD-3-Clause
 
 
+Flag dev
+  Description: Dumps Core representation
+  Default:     False
+  Manual:      True
+
 Library
   default-language: GHC2021
   exposed-modules:
@@ -14,6 +19,7 @@ Library
   other-modules:
     Invoker.Binary
     Invoker.Parser
+    Invoker.Parser.Entity
     Invoker.Parser.Quantized
     Invoker.Parser.SendTables
   hs-source-dirs:
@@ -26,9 +32,9 @@ Library
       base >= 4.7 && <5
     , binary
     , bytestring
-    , containers
     , text
     , mtl
+    , vector
 
     -- Internal
     , invoker-proto
@@ -45,6 +51,21 @@ Library
     DuplicateRecordFields
     NamedFieldPuns
     RecordWildCards
+
+  if flag(dev)
+    GHC-Options:
+      -ddump-to-file
+      -ddump-timings
+      -ddump-simpl
+      -ddump-spec
+      -ddump-simpl-stats
+      -ddump-rule-firings
+      -dsuppress-all
+      -dsuppress-uniques
+    if impl(ghc >= 9.4)
+      ghc-options:
+        -dlint
+        -dno-suppress-core-sizes
 
 executable invoker
   default-language: GHC2021
