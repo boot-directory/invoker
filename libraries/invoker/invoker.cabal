@@ -6,6 +6,14 @@ version:            0.0.0.1
 build-type:         Simple
 license:            BSD-3-Clause
 
+common exts
+  default-extensions:
+    BlockArguments
+    DeriveAnyClass
+    DuplicateRecordFields
+    RecordWildCards
+    OverloadedRecordDot
+    NoFieldSelectors
 
 Flag dev
   Description: Dumps Core representation
@@ -13,6 +21,7 @@ Flag dev
   Manual:      True
 
 Library
+  import: exts
   default-language: GHC2021
   exposed-modules:
     Invoker
@@ -44,13 +53,6 @@ Library
     , proto-lens
     , lens-family
     , unordered-containers
-  default-extensions:
-    BlockArguments
-    DataKinds
-    DeriveAnyClass
-    DuplicateRecordFields
-    NamedFieldPuns
-    RecordWildCards
 
   if flag(dev)
     GHC-Options:
@@ -68,6 +70,7 @@ Library
         -dno-suppress-core-sizes
 
 executable invoker
+  import: exts
   default-language: GHC2021
   main-is: invoker.hs
   build-depends:
@@ -82,7 +85,7 @@ executable invoker
     -rtsopts
 
 test-suite invoker-tests
-    type:             exitcode-stdio-1.0
-    main-is:          tests.hs
-    build-depends:    base
-    default-language: Haskell2010
+  type:             exitcode-stdio-1.0
+  main-is:          tests.hs
+  build-depends:    base
+  default-language: GHC2021

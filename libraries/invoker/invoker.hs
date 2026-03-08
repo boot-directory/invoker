@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedRecordDot #-}
 module Main where
 
 import Data.ByteString as BS (hGetSome)
@@ -16,14 +17,14 @@ main = do
   bufArgs <-  mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
   runParserLoop bufArgs onMsg
     (\s -> do
-      print =<< (readIORef . counter) s
+      print =<< readIORef s.counter
     )
 
 onMsg :: OuterMessage -> IO ()
-onMsg msg = case omMsg msg of
-  _message@UnknownMessage{}       -> print _message
-  _message@FailedParsingMessage{} -> print _message
-  _                               -> pure ()
+onMsg msg = case msg.omMsg of
+  m@UnknownMessage{}       -> print m
+  m@FailedParsingMessage{} -> print m
+  _                        -> pure ()
 
 mkFileBufferArgs :: FilePath -> IO BufferArgs
 mkFileBufferArgs fp = do

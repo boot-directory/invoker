@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedRecordDot #-}
 
 module Invoker.Parser.Quantized where
 
@@ -65,14 +66,11 @@ validateFlags q@QFD{..}
 
 
 assignMultipliers :: Float -> QuantizedFloatDecoder -> QuantizedFloatDecoder
-assignMultipliers steps q@QFD{..} =
-  q { qHighLowMul = highMul
-    , qDecMul     = decMul
-    }
+assignMultipliers steps q = q{qHighLowMul, qDecMul}
   where
-  decMul = 1 / (steps - 1)
+  qDecMul = 1 / (steps - 1)
 
-  highMul =
+  qHighLowMul =
     if adjust highMul0
     then highMul0
     else fromMaybe (error "Error computing high / low multiplier")
@@ -84,13 +82,13 @@ assignMultipliers steps q@QFD{..} =
 
   multipliers = [0.9999, 0.99, 0.9, 0.8, 0.7]
 
-  range = qHigh - qLow
+  range = q.qHigh - q.qLow
 
   high :: Float
   high = castWord32ToFloat $
-    if qBitcount == 32
+    if q.qBitcount == 32
     then 0xFFFFFFFE
-    else (1 `shiftL` fromIntegral qBitcount) - 1
+    else (1 `shiftL` fromIntegral q.qBitcount) - 1
 
 quantize :: QuantizedFloatDecoder -> Float -> Float
 quantize QFD{..} val
@@ -154,18 +152,17 @@ newQuantizedFloatDecoder mBitCount mFlags mLow mHigh =
         , qNoScale    = False
         }
   q2 =
-    if (qFlags q1 .&. qff_rounddown) /= 0
-    then q1 { qHigh = qHigh q1 - offset
-            , qOffset = offset
-            }
-    else if (qFlags q1 .&. qff_roundup) /= 0
-    then q1 { qLow = qLow q1 + offset
-            , qOffset = offset
-            }
+    if q1.qFlags .&. qff_rounddown /= 0
+    then q1{qHigh, qOffset}
+    else if q1.qFlags .&. qff_roundup /= 0
+    then q1{qLow, qOffset}
     else q1
 
   q1 = validateFlags base
   
-  range = qHigh q1 - qLow q1
-  offset = range / steps
-  steps = castWord32ToFloat $ 1 `shiftL` fromIntegral (qBitcount q1)
+  qHigh = q1.qHigh - qOffset
+  qLow = q1.qLow + qOffset
+
+  qOffset = range / steps
+  range = q1.qHigh - q1.qLow
+  steps = castWord32ToFloat $ 1 `shiftL` fromIntegral q1.qBitcount

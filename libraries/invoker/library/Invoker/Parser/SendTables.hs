@@ -66,9 +66,9 @@ parseSendTables build = do
     stSerializers = HashMap.fromList $ map mkSerializer pSerializers
     stFields =
       (\f ->
-        if serializerName f == ""
+        if f.serializerName == ""
         then f
-        else f { serializer = HashMap.lookup (serializerName f) stSerializers }
+        else f { serializer = HashMap.lookup f.serializerName stSerializers }
       )
       <$> allFields
 
@@ -111,15 +111,15 @@ newField build f =
 
 setModel :: Field -> Field
 setModel f =
-  case model f of
+  case f.model of
     FMFixedArray -> f { decoder = findDecoder f }
     FMFixedTable -> f { baseDecoder = booleanDecoder }
     FMVariableArray ->
-      case genericType (fieldType f) of
-        Nothing -> error ("no generic type for variable array field " ++ show (varName f))
+      case f.fieldType.genericType of
+        Nothing -> error ("no generic type for variable array field " ++ show f.varName)
         Just g ->
           f { baseDecoder  = unsignedDecoder
-            , childDecoder = findDecoderByBaseType (baseType g)
+            , childDecoder = findDecoderByBaseType g.baseType
             }
     FMVariableTable -> f { baseDecoder = unsignedDecoder }
     FMSimple -> f { decoder = findDecoder f }
@@ -157,20 +157,20 @@ data Serializer = MkSerializer
 
 getNameForFieldPathSer :: Serializer -> FieldPath -> Int -> [Text]
 getNameForFieldPathSer s fp pos =
-  case fpPath fp !? pos of
+  case fp.fpPath !? pos of
     Nothing -> error "serializer.getNameForFieldPath: path too short"
     Just idx ->
-      case serFields s !? idx of
+      case s.serFields !? idx of
         Nothing -> error "serializer.getNameForFieldPath: index OOB"
         Just f -> getNameForFieldPathField f fp (pos + 1)
 
 getDecoderForFieldPathSer :: Serializer -> FieldPath -> Int -> Get DecodedField
 getDecoderForFieldPathSer s fp pos =
-  case fpPath fp !? pos of
+  case fp.fpPath !? pos of
     Nothing -> error "serializer.getDecoderForFieldPath: path too short"
     Just idx ->
-      case serFields s !? idx of
-        Nothing -> error $ "serializer " <> T.unpack (serName s) <> ": field index OOB"
+      case s.serFields !? idx of
+        Nothing -> error $ "serializer " <> T.unpack s.serName <> ": field index OOB"
         Just f -> getDecoderForFieldPathField f fp (pos + 1)
 
 getFieldPathForNameSer :: Serializer -> FieldPath -> Text -> Maybe FieldPath
@@ -178,7 +178,7 @@ getFieldPathForNameSer s fp name =
   foldr (<|>) Nothing $
     zipWith (\idx f -> getFieldPathForNameField f (addIndex fp idx) name)
             [0..]
-            (serFields s)
+            s.serFields
 
 
 -------------------------------------------------------------------------------
@@ -190,70 +190,70 @@ data FieldPath = FieldPath
   }
 
 lastFpIndex :: FieldPath -> Int
-lastFpIndex fp = Prelude.length (fpPath fp) - 1
+lastFpIndex fp = Prelude.length fp.fpPath - 1
 
 addIndex :: FieldPath -> Int -> FieldPath
 addIndex (FieldPath path) idx = FieldPath (path <> [idx])
 
 getNameForFieldPathField :: Field -> FieldPath -> Int -> [Text]
 getNameForFieldPathField f fp pos =
-  case model f of
+  case f.model of
     FMFixedArray -> handleArray
     FMFixedTable ->
       if lastFpIndex fp < pos
-      then [varName f]
-      else case serializer f of
-        Just ser -> [varName f] ++ getNameForFieldPathSer ser fp pos
+      then [f.varName]
+      else case f.serializer of
+        Just ser -> [f.varName] ++ getNameForFieldPathSer ser fp pos
         Nothing -> error "FixedTable without serializer"
     FMVariableArray -> handleArray
     FMVariableTable ->
       if lastFpIndex fp == pos - 1
-      then [varName f]
+      then [f.varName]
       else handleIndex \i ->
-        let withIndex = [varName f, indexText i] in
+        let withIndex = [f.varName, indexText i] in
         if lastFpIndex fp /= pos
-        then case serializer f of
+        then case f.serializer of
           Just ser -> withIndex ++ getNameForFieldPathSer ser fp (pos + 1)
           Nothing -> error "VariableTable without serializer"
         else withIndex
-    FMSimple -> [varName f]
+    FMSimple -> [f.varName]
   where
-    handleIndex onJust = maybe [varName f] onJust (fpPath fp !? pos)
+    handleIndex onJust = maybe [f.varName] onJust (fp.fpPath !? pos)
     handleArray =
       if lastFpIndex fp == pos
-      then handleIndex \i -> [varName f, indexText i]
-      else [varName f]
+      then handleIndex \i -> [f.varName, indexText i]
+      else [f.varName]
     indexText i = T.pack $ let s = show i in replicate (4 - Prelude.length s) '0' ++ s
 
 getDecoderForFieldPathField :: Field -> FieldPath -> Int -> Get DecodedField
 getDecoderForFieldPathField f fp pos =
-  case model f of
-    FMFixedArray -> decoder f
+  case f.model of
+    FMFixedArray -> f.decoder
     FMFixedTable ->
       if lastIdx == pos - 1
-      then baseDecoder f
-      else case serializer f of
+      then f.baseDecoder
+      else case f.serializer of
         Just ser -> getDecoderForFieldPathSer ser fp pos
         Nothing -> error "FixedTable without serializer"
     FMVariableArray ->
       if lastIdx == pos
-      then childDecoder f
-      else baseDecoder f
+      then f.childDecoder
+      else f.baseDecoder
     FMVariableTable ->
       if lastIdx >= pos + 1
-      then case serializer f of
+      then case f.serializer of
         Just ser -> getDecoderForFieldPathSer ser fp (pos + 1)
         Nothing -> error "VariableTable without serializer"
-      else baseDecoder f
-    FMSimple -> decoder f
+      else f.baseDecoder
+    FMSimple -> f.decoder
   where
-  lastIdx = Prelude.length (fpPath fp) - 1
+  lastIdx = Prelude.length fp.fpPath - 1
 
 getFieldPathForNameField :: Field -> FieldPath -> Text -> Maybe FieldPath
 getFieldPathForNameField f fp name =
-  case model f of
+  case f.model of
     FMSimple
-      | varName f == name -> Just fp
+      | f.varName == name -> Just fp
       | otherwise         -> Nothing
 
     FMFixedArray
@@ -265,13 +265,13 @@ getFieldPathForNameField f fp name =
       | otherwise          -> Nothing
 
     FMFixedTable ->
-      case serializer f of
+      case f.serializer of
         Just s -> getFieldPathForNameSer s fp name
         Nothing -> Nothing
 
     FMVariableTable
       | T.length name >= 6 ->
-          case serializer f of
+          case f.serializer of
             Just s ->
               let idx = readInt (T.take 4 name)
                   rest = T.drop 5 name
@@ -352,7 +352,7 @@ applyPatches build f =
 
 p1 :: Field -> Field
 p1 field =
-  case varName field of
+  case field.varName of
     "angExtraLocalAngles"            -> p1_1
     "angLocalAngles"                 -> p1_1
     "m_angInitialAngles"             -> p1_1
@@ -378,14 +378,14 @@ p1 field =
     _ -> field
   where
   p1_1 =
-    if parentName field == "CBodyComponentBaseAnimatingOverlay"
+    if field.parentName == "CBodyComponentBaseAnimatingOverlay"
     then field{encoder="qangle_pitch_yaw"}
     else field{encoder="QAngle"}
   p1_2 = field{encoder="coord"}
 
 p2 :: Field -> Field
 p2 field =
-  case varName field of
+  case field.varName of
     "m_flMana"    -> p2_1
     "m_flMaxMana" -> p2_1
     _ -> field
@@ -397,7 +397,7 @@ p2 field =
 
 p3 :: Field -> Field
 p3 field =
-  case varName field of
+  case field.varName of
     "m_bItemWhiteList"      -> p3_1
     "m_bWorldTreeState"     -> p3_1
     "m_iPlayerIDsInControl" -> p3_1
@@ -411,7 +411,7 @@ p3 field =
 
 p4 :: Field -> Field
 p4 field =
-  case varName field of
+  case field.varName of
     "m_flSimulationTime" -> p4_1
     "m_flAnimTime"       -> p4_1
     "m_flRuneTime"       -> p4_2
@@ -442,11 +442,11 @@ findDecoder :: Field -> Get DecodedField
 findDecoder f =
   fromMaybe defaultDecoder (
     fieldTypeFactories f
-    <|> fieldTypeDecoders (baseType . fieldType $ f)
+    <|> fieldTypeDecoders f.fieldType.baseType
   )
 
 fieldTypeFactories :: Field -> Maybe (Get DecodedField)
-fieldTypeFactories f = case (baseType . fieldType) f of
+fieldTypeFactories f = case f.fieldType.baseType of
   "float32"                  -> Just (floatFactory f)
   "CNetworkedQuantizedFloat" -> Just (quantizedFactory f)
   "Vector"                   -> Just (vectorFactory 3 f)
@@ -499,11 +499,11 @@ data FieldModel
 determineModel :: FieldType -> Text -> FieldModel
 determineModel ft serializerName
   | serializerName /= "" =
-    if pointer ft || HashSet.member (baseType ft) pointerTypes
+    if ft.pointer || HashSet.member ft.baseType pointerTypes
       then FMFixedTable
       else FMVariableTable
-  | count ft > 0 && baseType ft /= "char" = FMFixedArray
-  | baseType ft `elem` ["CUtlVector", "CNetworkUtlVectorBase"] = FMVariableArray
+  | ft.count > 0 && ft.baseType /= "char" = FMFixedArray
+  | ft.baseType `elem` ["CUtlVector", "CNetworkUtlVectorBase"] = FMVariableArray
   | otherwise = FMSimple
 
 
@@ -525,29 +525,29 @@ pointerTypes = HashSet.fromList
 -- ** Factories
 
 floatFactory :: Field -> Get DecodedField
-floatFactory f = case encoder f of
+floatFactory f = case f.encoder of
   "coord" -> floatCoordDecoder
   "simtime" -> simulationTimeDecoder
   "runetime" -> runeTimeDecoder
   _ ->
-    if maybe True (\bitCnt -> bitCnt <= 0 || bitCnt >= 32) (bitCount f)
+    if maybe True (\bitCnt -> bitCnt <= 0 || bitCnt >= 32) f.bitCount
     then noscaleDecoder
     else quantizedFactory f
 
 quantizedFactory :: Field -> Get DecodedField
 quantizedFactory f = do
   fmap DfFloat32 . decodeQuantized $
-    newQuantizedFloatDecoder (bitCount f) (encodeFlags f) (lowValue f) (highValue f)
+    newQuantizedFloatDecoder f.bitCount f.encodeFlags f.lowValue f.highValue
 
 vectorFactory :: Int -> Field -> Get DecodedField
 vectorFactory n f =
-  if n == 3 && encoder f == "normal"
+  if n == 3 && f.encoder == "normal"
   then vectorNormalDecoder
   else DfVec <$> replicateM n (floatFactory f)
 
 unsigned64Factory :: Field -> Get DecodedField
 unsigned64Factory f =
-  if encoder f == "fixed64"
+  if f.encoder == "fixed64"
   then fixed64Decoder
   else unsigned64Decoder
 
@@ -556,10 +556,10 @@ unsignedFactory = unsignedDecoder
 
 qangleFactory :: Field -> Get DecodedField
 qangleFactory f =
-  if encoder f == "qangle_pitch_yaw"
+  if f.encoder == "qangle_pitch_yaw"
   then DfFloat32Normal <$> readAngleLen <*> readAngleLen <*> (pure 0)
   else
-    if (bitCount f /= Nothing && bitCount f /= Just 0)
+    if (f.bitCount /= Nothing && f.bitCount /= Just 0)
     then DfFloat32Normal <$> readAngleLen <*> readAngleLen <*> readAngleLen
     else do
       rX <- readBoolean
@@ -571,7 +571,7 @@ qangleFactory f =
       pure $ DfFloat32Normal retX retY retZ
   where
   readAngleLen = readAngle =<< getLen
-  getLen = maybe (fail "bitCount missing for qangle_pitch_yaw") (pure . fromIntegral @Int32 @Int) (bitCount f)
+  getLen = maybe (fail "bitCount missing for qangle_pitch_yaw") (pure . fromIntegral @Int32 @Int) f.bitCount
 
 
 -- ** Decoders

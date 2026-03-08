@@ -23,8 +23,8 @@ import Invoker.Binary
   , Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors
   )
 import Invoker.Parser.SendTables
-    ( SendTables, parseSendTables
-    , Serializer, stSerializers
+    ( SendTables(..), parseSendTables
+    , Serializer
     )
 import Proto.Demo
   ( EDemoCommands(..)
@@ -57,9 +57,9 @@ runParserLoop bufArgs onMsg finalizer = do
       _header <- readFromBuffer buffer readHeader
       forever $ do
         modifyIORef counter (+1)
-        msg<- readFromBuffer buffer readOuterMessage
-        case omMsg msg of
-          SendTables sendTables -> writeIORef serializers (stSerializers sendTables)
+        msg <- readFromBuffer buffer readOuterMessage
+        case msg.omMsg of
+          SendTables sendTables -> writeIORef serializers sendTables.stSerializers
           _ -> onMsg msg
     )
     (\(_e :: IoErrors) -> finalizer state)

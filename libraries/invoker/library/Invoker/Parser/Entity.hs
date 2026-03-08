@@ -83,7 +83,7 @@ setField s fp v = goSetField s 0
       case vec V.! idx of
         FVState sub' -> goSetField sub' (i+1)
         FVValue _ -> goSetField newFieldState (i+1)
-    idx = fpPath fp !! i
+    idx = fp.fpPath !! i
     vec =
       if length fieldState <= idx
       then fieldState <> V.replicate (idx - length fieldState + 2) (FVValue undefined)
@@ -95,6 +95,7 @@ setField s fp v = goSetField s 0
 -------------------------------------------------------------------------------
 
 -- ToDo
+
 
 -------------------------------------------------------------------------------
 -- * Class

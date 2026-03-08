@@ -78,7 +78,7 @@ debugGet getA bs =
     Fail _ pos msg -> error ("Invoker.Binary.debugGet at position " ++ show pos ++ ": " ++ msg)
 
 
-newtype Get a = BitGet { runBitGet :: StateT BitState Binary.Get a }
+newtype Get a = BitGet (StateT BitState Binary.Get a)
 
 data BitState = BitState
   { bitVal   :: Word64
@@ -93,7 +93,7 @@ instance Applicative Get where
   BitGet f <*> BitGet x = BitGet (f <*> x)
 
 instance Monad Get where
-  BitGet m >>= f = BitGet (m >>= runBitGet . f)
+  BitGet m >>= f = BitGet (m >>= (\(BitGet run) -> run) . f)
 
 instance MonadFail Get where
   fail msg = BitGet $ lift (fail msg)
