@@ -208,10 +208,30 @@ fieldPathTable =
       fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
       fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
       pure fp3
-  , MkFieldPathOp "PushThreeLeftDeltaN" 0 \fp -> pure fp
-  , MkFieldPathOp "PushThreePack5LeftDeltaN" 0 \fp -> pure fp
-  , MkFieldPathOp "PushN" 0 \fp -> pure fp
-  , MkFieldPathOp "PushNAndNonTopological" 310 \fp -> pure fp
+  , MkFieldPathOp "PushThreeLeftDeltaN" 0 \fp0 -> do
+      n0 <- fromIntegral <$> readUBitVar
+      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
+      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
+      fp3 <- addFieldPath fp2 <$> readUBitVarFieldPath
+      fp4 <- addFieldPath fp3 <$> readUBitVarFieldPath
+      pure fp4
+  , MkFieldPathOp "PushThreePack5LeftDeltaN" 0 \fp0 -> do
+      n0 <- fromIntegral <$> readUBitVar
+      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
+      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
+      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
+      fp4 <- addFieldPath fp3 . fromIntegral <$> readBits 5
+      pure fp4
+  , MkFieldPathOp "PushN" 0 \fp0 -> do
+      {- ToDo
+      n <- fromIntegral <$> readUBitVar
+      n0 <- fromIntegral <$> readUBitVar
+      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
+      -}
+      pure fp0
+  , MkFieldPathOp "PushNAndNonTopological" 310 \fp0 -> do
+      {- ToDo -}
+      pure fp0
   , MkFieldPathOp "PopOnePlusOne" 2 \fp -> pure fp
   , MkFieldPathOp "PopOnePlusN" 0 \fp -> pure fp
   , MkFieldPathOp "PopAllButOnePlusOne" 1837 \fp -> pure fp
