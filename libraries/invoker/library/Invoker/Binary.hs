@@ -257,3 +257,22 @@ readNormal = do
 
 readAngle :: Int -> Get Float
 readAngle n = (\f -> f / castWord32ToFloat (1 `shiftL` n)) . (* 360.0) . castWord32ToFloat <$> readBits n
+
+readUBitVarFieldPath :: Get Int
+readUBitVarFieldPath = fromIntegral <$> go
+  where
+    go = do
+      b <- readBoolean
+      if b then readBits 2 else go2
+    go2 = do
+      b <- readBoolean
+      if b then readBits 4 else go3
+    go3 = do
+      b <- readBoolean
+      if b then readBits 10 else go4
+    go4 = do
+      b <- readBoolean
+      if b then readBits 17 else readBits 31
+
+readUBitVar :: Get Word32
+readUBitVar = error "ToDo"

@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedRecordDot #-}
 
 module Invoker.Parser.SendTables where
 
@@ -13,6 +14,8 @@ import Data.Maybe (fromMaybe)
 import Data.Text as T (Text, break, breakOn, drop, isPrefixOf, pack, stripPrefix, unpack, length, take)
 import Data.Word (Word32, Word64)
 import GHC.Float (castWord32ToFloat)
+import Data.Vector (Vector)
+import Data.Vector qualified as V
 
 -- Internal
 import Invoker.Binary
@@ -157,7 +160,7 @@ data Serializer = MkSerializer
 
 getNameForFieldPathSer :: Serializer -> FieldPath -> Int -> [Text]
 getNameForFieldPathSer s fp pos =
-  case fp.fpPath !? pos of
+  case fp.fpPath V.!? pos of
     Nothing -> error "serializer.getNameForFieldPath: path too short"
     Just idx ->
       case s.serFields !? idx of
@@ -166,7 +169,7 @@ getNameForFieldPathSer s fp pos =
 
 getDecoderForFieldPathSer :: Serializer -> FieldPath -> Int -> Get DecodedField
 getDecoderForFieldPathSer s fp pos =
-  case fp.fpPath !? pos of
+  case fp.fpPath V.!? pos of
     Nothing -> error "serializer.getDecoderForFieldPath: path too short"
     Just idx ->
       case s.serFields !? idx of
@@ -186,41 +189,46 @@ getFieldPathForNameSer s fp name =
 -------------------------------------------------------------------------------
 
 data FieldPath = FieldPath
-  { fpPath :: [Int]
+  { fpPath :: !(Vector Int)
+  , fpLast :: !Int
+  , fpDone :: !Bool
   }
 
-lastFpIndex :: FieldPath -> Int
-lastFpIndex fp = Prelude.length fp.fpPath - 1
-
 addIndex :: FieldPath -> Int -> FieldPath
-addIndex (FieldPath path) idx = FieldPath (path <> [idx])
-
+addIndex fp idx =
+  fp
+    { fpLast = i
+    , fpPath = fp.fpPath V.// [(i, idx)]
+    }
+  where
+  i = fp.fpLast + 1
+  
 getNameForFieldPathField :: Field -> FieldPath -> Int -> [Text]
 getNameForFieldPathField f fp pos =
   case f.model of
     FMFixedArray -> handleArray
     FMFixedTable ->
-      if lastFpIndex fp < pos
+      if fp.fpLast < pos
       then [f.varName]
       else case f.serializer of
         Just ser -> [f.varName] ++ getNameForFieldPathSer ser fp pos
         Nothing -> error "FixedTable without serializer"
     FMVariableArray -> handleArray
     FMVariableTable ->
-      if lastFpIndex fp == pos - 1
+      if fp.fpLast == pos - 1
       then [f.varName]
       else handleIndex \i ->
         let withIndex = [f.varName, indexText i] in
-        if lastFpIndex fp /= pos
+        if fp.fpLast /= pos
         then case f.serializer of
           Just ser -> withIndex ++ getNameForFieldPathSer ser fp (pos + 1)
           Nothing -> error "VariableTable without serializer"
         else withIndex
     FMSimple -> [f.varName]
   where
-    handleIndex onJust = maybe [f.varName] onJust (fp.fpPath !? pos)
+    handleIndex onJust = maybe [f.varName] onJust (fp.fpPath V.!? pos)
     handleArray =
-      if lastFpIndex fp == pos
+      if fp.fpLast == pos
       then handleIndex \i -> [f.varName, indexText i]
       else [f.varName]
     indexText i = T.pack $ let s = show i in replicate (4 - Prelude.length s) '0' ++ s

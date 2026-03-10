@@ -16,6 +16,10 @@ import GHC.Float (castWord32ToFloat)
 import Invoker.Binary
 
 
+-------------------------------------------------------------------------------
+-- * quantized_float
+-------------------------------------------------------------------------------
+
 qff_rounddown, qff_roundup, qff_encode_zero, qff_encode_integers :: Word32
 qff_rounddown        = 1 `shiftL` 0
 qff_roundup          = 1 `shiftL` 1

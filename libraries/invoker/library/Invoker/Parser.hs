@@ -218,4 +218,3 @@ data MessageType where
     }
     -> MessageType
   deriving (Show)
-
