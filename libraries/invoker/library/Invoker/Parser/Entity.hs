@@ -126,7 +126,7 @@ fieldPathTable =
   , MkFieldPathOp "PlusFour" 646 (lastSum (constant 4))
   , MkFieldPathOp "PlusN" 4128 (lastSum ((+5) <$> readUBitVarFieldPath))
   , MkFieldPathOp "PushOneLeftDeltaZeroRightZero" 35 (incrLastAndReplace (constant 0))
-  , MkFieldPathOp "PushOneLeftDeltaZeroRightNonZero" 3 (incrLastAndSum readUBitVarFieldPath)
+  , MkFieldPathOp "PushOneLeftDeltaZeroRightNonZero" 3 (incrLastAndReplace readUBitVarFieldPath)
   , MkFieldPathOp "PushOneLeftDeltaOneRightZero" 521
       ( lastSum (constant 1)
         >=> incrLastAndReplace (constant 0)
@@ -156,8 +156,8 @@ fieldPathTable =
         >=> incrLastAndSum readUBitVarFieldPath
       )
   , MkFieldPathOp "PushTwoPack5LeftDeltaZero" 0
-      ( incrLastAndSum (readBits 5)
-        >=> incrLastAndSum (readBits 5)
+      ( incrLastAndReplace (readBits 5)
+        >=> incrLastAndReplace (readBits 5)
       )
   , MkFieldPathOp "PushThreeLeftDeltaZero" 0
       ( incrLastAndSum readUBitVarFieldPath
@@ -165,9 +165,9 @@ fieldPathTable =
         >=> incrLastAndSum readUBitVarFieldPath
       )
   , MkFieldPathOp "PushThreePack5LeftDeltaZero" 0
-      ( incrLastAndSum (readBits 5)
-        >=> incrLastAndSum (readBits 5)
-        >=> incrLastAndSum (readBits 5)
+      ( incrLastAndReplace (readBits 5)
+        >=> incrLastAndReplace (readBits 5)
+        >=> incrLastAndReplace (readBits 5)
       )
   , MkFieldPathOp "PushTwoLeftDeltaOne" 0
       ( lastSum (constant 1)
