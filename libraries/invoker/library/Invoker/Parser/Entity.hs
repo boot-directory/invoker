@@ -220,7 +220,13 @@ fieldPathTable =
         (\fpN _ -> incrLastAndSum readUBitVarFieldPath fpN)
         fp1
         [1 .. n0]
-  , MkFieldPathOp "PushNAndNonTopological" 310 todo
+  , MkFieldPathOp "PushNAndNonTopological" 310 \fp0 -> do
+      fp1 <- applyIfBitAll ((+1) <$> getVarInt32) fp0
+      count <- readUBitVar
+      foldM
+        (\fp _ -> incrLastAndReplace readUBitVarFieldPath fp)
+        fp1
+        [1 .. count]
   , MkFieldPathOp "PopOnePlusOne" 2
       ( pop (constant 1)
         >=> lastSum (constant 1)
@@ -243,15 +249,29 @@ fieldPathTable =
       lastSum ((+1) <$> readBits 6) fp1
   , MkFieldPathOp "PopNPlusOne" 0 (pop readUBitVarFieldPath >=> lastSum (constant 1))
   , MkFieldPathOp "PopNPlusN" 0 (pop readUBitVarFieldPath >=> lastSum getVarInt32)
-  , MkFieldPathOp "PopNAndNonTopographical" 1 todo
-  , MkFieldPathOp "NonTopoComplex" 76 todo
-  , MkFieldPathOp "NonTopoPenultimatePlusOne" 271 todo
-  , MkFieldPathOp "NonTopoComplexPack4Bits" 99 todo
+  , MkFieldPathOp "PopNAndNonTopographical" 1
+      ( pop readUBitVarFieldPath
+        >=> applyIfBitAll getVarInt32
+      )
+  , MkFieldPathOp "NonTopoComplex" 76 (applyIfBitAll getVarInt32)
+  , MkFieldPathOp "NonTopoPenultimatePlusOne" 271 (\fp -> modifyAt (fp.fpLast - 1) (+1) fp)
+  , MkFieldPathOp "NonTopoComplexPack4Bits" 99 (applyIfBitAll (subtract 7 <$> readBits 4))
   , MkFieldPathOp "FieldPathEncodeFinish" 25474 \fp -> pure fp{fpDone=True}
   ]
 
-todo :: a -> Get a
-todo = pure
+applyIfBitAll :: Integral n => Get n -> FieldPath -> Get FieldPath
+applyIfBitAll getDelta fp0 =
+  foldM
+    (\fp i -> do
+      b <- readBoolean
+      if b
+      then do
+        d <- getDelta
+        modifyAt i (+ fromIntegral d) fp
+      else pure fp
+    )
+    fp0
+    [0 .. fp0.fpLast]
 
 constant :: Int -> Get Int
 constant = pure
