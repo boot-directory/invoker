@@ -1,13 +1,14 @@
 {-# LANGUAGE DerivingStrategies #-}
 module Invoker.Parser.Entity where
 
+import Control.Monad (foldM, (>=>))
 import Data.Bits (Bits (..))
 import Data.Int (Int32)
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Vector qualified as V
-import Invoker.Parser.SendTables (Serializer, DecodedField, FieldPath(..))
-import Invoker.Binary (Get, readUBitVarFieldPath, readBits, readUBitVar)
+import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean)
+import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer)
 
 
 -------------------------------------------------------------------------------
@@ -119,147 +120,178 @@ data FieldPathOp = MkFieldPathOp
 fieldPathTable :: [FieldPathOp]
 fieldPathTable =
   [
-    MkFieldPathOp "PlusOne" 36271 \fp -> pure (modifyLast (+1) fp)
-  , MkFieldPathOp "PlusTwo" 10334 \fp -> pure (modifyLast (+2) fp)
-  , MkFieldPathOp "PlusThree" 1375 \fp -> pure (modifyLast (+3) fp)
-  , MkFieldPathOp "PlusFour" 646 \fp -> pure (modifyLast (+4) fp)
-  , MkFieldPathOp "PlusN" 4128 \fp -> do
-      n <- readUBitVarFieldPath
-      pure (modifyLast (\lst -> lst + n + 5) fp)
-  , MkFieldPathOp "PushOneLeftDeltaZeroRightZero" 35 \fp -> pure (addFieldPath fp 0)
-  , MkFieldPathOp "PushOneLeftDeltaZeroRightNonZero" 3 \fp0 -> do
-      fp1 <- addFieldPath fp0 <$> readUBitVarFieldPath
-      pure fp1
-  , MkFieldPathOp "PushOneLeftDeltaOneRightZero" 521 \fp0 -> do
-      let fp1 = modifyLast (+1) fp0
-      pure (addFieldPath fp1 0)
-  , MkFieldPathOp "PushOneLeftDeltaOneRightNonZero" 2942 \fp0 ->  do
-      let fp1 = modifyLast (+1) fp0
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      pure fp2
-  , MkFieldPathOp "PushOneLeftDeltaNRightZero" 560 \fp0 -> do
-      fp1 <- addFieldPath fp0 <$> readUBitVarFieldPath
-      pure (addFieldPath fp1 0)
-  , MkFieldPathOp "PushOneLeftDeltaNRightNonZero" 471 \fp0 -> do
-      n0 <- readUBitVarFieldPath
-      let fp1 = modifyLast (+n0) fp0
-      n1 <- readUBitVarFieldPath
-      pure (addFieldPath fp1 (n1 + 1))
-  , MkFieldPathOp "PushOneLeftDeltaNRightNonZeroPack6Bits" 10530 \fp0 -> do
-      n0 <- fromIntegral <$> readBits 3
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      n1 <- fromIntegral <$> readBits 3
-      let fp2 = modifyLast (\lst -> lst + n1 + 2) fp1
-      pure fp2
-  , MkFieldPathOp "PushOneLeftDeltaNRightNonZeroPack8Bits" 251 \fp0 -> do
-      n0 <- fromIntegral <$> readBits 4
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      n1 <- fromIntegral <$> readBits 4
-      let fp2 = modifyLast (\lst -> lst + n1 + 1) fp1
-      pure fp2
-  , MkFieldPathOp "PushTwoLeftDeltaZero" 0 \fp0 -> do
-      fp1 <- addFieldPath fp0 <$> readUBitVarFieldPath
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      pure fp2
-  , MkFieldPathOp "PushTwoPack5LeftDeltaZero" 0 \fp0 -> do
-      fp1 <- addFieldPath fp0 . fromIntegral <$> readBits 5
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      pure fp2
-  , MkFieldPathOp "PushThreeLeftDeltaZero" 0 \fp0 -> do
-      fp1 <- addFieldPath fp0 <$> readUBitVarFieldPath
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      pure fp2
-  , MkFieldPathOp "PushThreePack5LeftDeltaZero" 0 \fp0 -> do
-      fp1 <- addFieldPath fp0 . fromIntegral <$> readBits 5
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
-      pure fp3
-  , MkFieldPathOp "PushTwoLeftDeltaOne" 0 \fp0 -> do
-      let fp1 = modifyLast (+1) fp0
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      fp3 <- addFieldPath fp2 <$> readUBitVarFieldPath
-      pure fp3
-  , MkFieldPathOp "PushTwoPack5LeftDeltaOne" 0 \fp0 -> do
-      let fp1 = modifyLast (+1) fp0
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
-      pure fp3
-  , MkFieldPathOp "PushThreeLeftDeltaOne" 0 \fp0 -> do
-      let fp1 = modifyLast (+1) fp0
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      fp3 <- addFieldPath fp2 <$> readUBitVarFieldPath
-      fp4 <- addFieldPath fp3 <$> readUBitVarFieldPath
-      pure fp4
-  , MkFieldPathOp "PushThreePack5LeftDeltaOne" 0 \fp0 -> do
-      let fp1 = modifyLast (+1) fp0
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
-      fp4 <- addFieldPath fp3 . fromIntegral <$> readBits 5
-      pure fp4
-  , MkFieldPathOp "PushTwoLeftDeltaN" 0 \fp0 -> do
-      n0 <- fromIntegral <$> readUBitVar
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      fp3 <- addFieldPath fp2 <$> readUBitVarFieldPath
-      pure fp3
-  , MkFieldPathOp "PushTwoPack5LeftDeltaN" 0 \fp0 -> do
-      n0 <- fromIntegral <$> readUBitVar
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
-      pure fp3
-  , MkFieldPathOp "PushThreeLeftDeltaN" 0 \fp0 -> do
-      n0 <- fromIntegral <$> readUBitVar
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      fp2 <- addFieldPath fp1 <$> readUBitVarFieldPath
-      fp3 <- addFieldPath fp2 <$> readUBitVarFieldPath
-      fp4 <- addFieldPath fp3 <$> readUBitVarFieldPath
-      pure fp4
-  , MkFieldPathOp "PushThreePack5LeftDeltaN" 0 \fp0 -> do
-      n0 <- fromIntegral <$> readUBitVar
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      fp2 <- addFieldPath fp1 . fromIntegral <$> readBits 5
-      fp3 <- addFieldPath fp2 . fromIntegral <$> readBits 5
-      fp4 <- addFieldPath fp3 . fromIntegral <$> readBits 5
-      pure fp4
+    MkFieldPathOp "PlusOne" 36271 (lastSum (constant 1))
+  , MkFieldPathOp "PlusTwo" 10334 (lastSum (constant 2))
+  , MkFieldPathOp "PlusThree" 1375 (lastSum (constant 3))
+  , MkFieldPathOp "PlusFour" 646 (lastSum (constant 4))
+  , MkFieldPathOp "PlusN" 4128 (lastSum ((+5) <$> readUBitVarFieldPath))
+  , MkFieldPathOp "PushOneLeftDeltaZeroRightZero" 35 (incrLastAndReplace (constant 0))
+  , MkFieldPathOp "PushOneLeftDeltaZeroRightNonZero" 3 (incrLastAndSum readUBitVarFieldPath)
+  , MkFieldPathOp "PushOneLeftDeltaOneRightZero" 521
+      ( lastSum (constant 1)
+        >=> incrLastAndReplace (constant 0)
+      )
+  , MkFieldPathOp "PushOneLeftDeltaOneRightNonZero" 2942
+      ( lastSum (constant 1)
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushOneLeftDeltaNRightZero" 560
+      ( lastSum readUBitVarFieldPath
+        >=> incrLastAndReplace (constant 0)
+      )
+  , MkFieldPathOp "PushOneLeftDeltaNRightNonZero" 471
+      ( lastSum ((+2) <$> readUBitVarFieldPath)
+        >=> incrLastAndReplace ((+1) <$> readUBitVarFieldPath)
+      )
+  , MkFieldPathOp "PushOneLeftDeltaNRightNonZeroPack6Bits" 10530
+      ( lastSum ((+2) <$> readBits 3)
+        >=> incrLastAndReplace ((+1) <$> readBits 3)
+      )
+  , MkFieldPathOp "PushOneLeftDeltaNRightNonZeroPack8Bits" 251
+      ( lastSum ((+2) <$> readBits 4)
+        >=> incrLastAndReplace ((+1) <$> readBits 4)
+      )
+  , MkFieldPathOp "PushTwoLeftDeltaZero" 0
+      ( incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushTwoPack5LeftDeltaZero" 0
+      ( incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
+  , MkFieldPathOp "PushThreeLeftDeltaZero" 0
+      ( incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushThreePack5LeftDeltaZero" 0
+      ( incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
+  , MkFieldPathOp "PushTwoLeftDeltaOne" 0
+      ( lastSum (constant 1)
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushTwoPack5LeftDeltaOne" 0
+      ( lastSum (constant 1)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
+  , MkFieldPathOp "PushThreeLeftDeltaOne" 0
+      ( lastSum (constant 1)
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushThreePack5LeftDeltaOne" 0
+      ( lastSum (constant 1)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
+  , MkFieldPathOp "PushTwoLeftDeltaN" 0
+      ( lastSum ((+2) <$> readUBitVar)
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushTwoPack5LeftDeltaN" 0
+      ( lastSum ((+2) <$> readUBitVar)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
+  , MkFieldPathOp "PushThreeLeftDeltaN" 0
+      ( lastSum ((+2) <$> readUBitVar)
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+        >=> incrLastAndSum readUBitVarFieldPath
+      )
+  , MkFieldPathOp "PushThreePack5LeftDeltaN" 0
+      ( lastSum ((+2) <$> readUBitVar)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+        >=> incrLastAndSum (readBits 5)
+      )
   , MkFieldPathOp "PushN" 0 \fp0 -> do
-      {- ToDo
-      n <- fromIntegral <$> readUBitVar
-      n0 <- fromIntegral <$> readUBitVar
-      let fp1 = modifyLast (\lst -> lst + n0 + 2) fp0
-      -}
-      pure fp0
-  , MkFieldPathOp "PushNAndNonTopological" 310 \fp0 -> do
-      {- ToDo -}
-      pure fp0
-  , MkFieldPathOp "PopOnePlusOne" 2 \fp -> pure fp
-  , MkFieldPathOp "PopOnePlusN" 0 \fp -> pure fp
-  , MkFieldPathOp "PopAllButOnePlusOne" 1837 \fp -> pure fp
-  , MkFieldPathOp "PopAllButOnePlusN" 149 \fp -> pure fp
-  , MkFieldPathOp "PopAllButOnePlusNPack3Bits" 300 \fp -> pure fp
-  , MkFieldPathOp "PopAllButOnePlusNPack6Bits" 634 \fp -> pure fp
-  , MkFieldPathOp "PopNPlusOne" 0 \fp -> pure fp
-  , MkFieldPathOp "PopNPlusN" 0 \fp -> pure fp
-  , MkFieldPathOp "PopNAndNonTopographical" 1 \fp -> pure fp
-  , MkFieldPathOp "NonTopoComplex" 76 \fp -> pure fp
-  , MkFieldPathOp "NonTopoPenultimatePlusOne" 271 \fp -> pure fp
-  , MkFieldPathOp "NonTopoComplexPack4Bits" 99 \fp -> pure fp
-  , MkFieldPathOp "FieldPathEncodeFinish" 25474 \fp -> pure fp
+      n0 <- readUBitVar
+      fp1 <- lastSum readUBitVar fp0
+      foldM
+        (\fpN _ -> incrLastAndSum readUBitVarFieldPath fpN)
+        fp1
+        [1 .. n0]
+  , MkFieldPathOp "PushNAndNonTopological" 310 todo
+  , MkFieldPathOp "PopOnePlusOne" 2
+      ( pop (constant 1)
+        >=> lastSum (constant 1)
+      )
+  , MkFieldPathOp "PopOnePlusN" 0
+      ( pop (constant 1)
+        >=> lastSum ((+1) <$> readUBitVarFieldPath)
+      )
+  , MkFieldPathOp "PopAllButOnePlusOne" 1837 \fp0 -> do
+      fp1 <- pop (constant fp0.fpLast) fp0
+      lastSum (constant 1) fp1
+  , MkFieldPathOp "PopAllButOnePlusN" 149 \fp0 -> do
+      fp1 <- pop (constant fp0.fpLast) fp0
+      lastSum ((+1) <$> readUBitVarFieldPath) fp1
+  , MkFieldPathOp "PopAllButOnePlusNPack3Bits" 300 \fp0 -> do
+      fp1 <- pop (constant fp0.fpLast) fp0
+      lastSum ((+1) <$> readBits 3) fp1
+  , MkFieldPathOp "PopAllButOnePlusNPack6Bits" 634 \fp0 -> do
+      fp1 <- pop (constant fp0.fpLast) fp0
+      lastSum ((+1) <$> readBits 6) fp1
+  , MkFieldPathOp "PopNPlusOne" 0 (pop readUBitVarFieldPath >=> lastSum (constant 1))
+  , MkFieldPathOp "PopNPlusN" 0 (pop readUBitVarFieldPath >=> lastSum getVarInt32)
+  , MkFieldPathOp "PopNAndNonTopographical" 1 todo
+  , MkFieldPathOp "NonTopoComplex" 76 todo
+  , MkFieldPathOp "NonTopoPenultimatePlusOne" 271 todo
+  , MkFieldPathOp "NonTopoComplexPack4Bits" 99 todo
+  , MkFieldPathOp "FieldPathEncodeFinish" 25474 \fp -> pure fp{fpDone=True}
   ]
 
-pop :: Int -> FieldPath -> FieldPath
-pop n fp = fp {fpPath, fpLast}
-  where
-  fpLast = fp.fpLast - n
-  fpPath = fp.fpPath V.// [ (fp.fpLast - i, 0) | i <- [0 .. n-1] ]
+todo :: a -> Get a
+todo = pure
 
-modifyLast :: (Int -> Int) -> FieldPath -> FieldPath
-modifyLast f fp = fp{fpPath}
-  where
-  fpPath = fp.fpPath V.// [(fp.fpLast, f (fp.fpPath V.! fp.fpLast))]
+constant :: Int -> Get Int
+constant = pure
 
-addFieldPath :: FieldPath -> Int -> FieldPath
-addFieldPath fp element = modifyLast (const element) fp{fpLast = fp.fpLast+1}
+pop :: Integral n => Get n -> FieldPath -> Get FieldPath
+pop getN fp = do
+  n <- getN
+  pure $ fp {fpPath = lst n, fpLast = path n}
+  where
+  path n = fp.fpLast - fromIntegral n
+  lst n = fp.fpPath V.// [ (fp.fpLast - i, 0) | i <- [0 .. fromIntegral n - 1] ]
+
+lastSum :: Integral n => Get n -> FieldPath -> Get FieldPath
+lastSum getNum fp = do
+  num <- getNum
+  modifyLast (+ fromIntegral num) fp
+
+lastReplace :: Integral n => Get n -> FieldPath -> Get FieldPath
+lastReplace getNum fp = do
+  num <- getNum
+  modifyLast (const $ fromIntegral num) fp
+
+incrLastAndSum :: Integral n => Get n -> FieldPath -> Get FieldPath
+incrLastAndSum getNum fp = do
+  num <- getNum
+  modifyLast (+ fromIntegral num) fp{fpLast=fp.fpLast + 1}
+
+incrLastAndReplace :: Integral n => Get n -> FieldPath -> Get FieldPath
+incrLastAndReplace getNum fp = do
+  num <- getNum
+  modifyLast (const $ fromIntegral num) fp{fpLast=fp.fpLast + 1}
+
+modifyLast :: (Int -> Int) -> FieldPath -> Get FieldPath
+modifyLast f fp = modifyAt fp.fpLast f fp
+
+modifyAt :: Int -> (Int -> Int) -> FieldPath -> Get FieldPath
+modifyAt i f fp = pure fp{fpPath}
+  where
+  fpPath = fp.fpPath V.// [(i, f (fp.fpPath V.! i))]
+
 
 -------------------------------------------------------------------------------
 -- * huffman
