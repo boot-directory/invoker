@@ -10,6 +10,7 @@ import Data.Bits (Bits (..))
 import Data.ByteString (ByteString)
 import Data.IORef (IORef, modifyIORef, newIORef, writeIORef)
 import Data.Int (Int32)
+import Data.List (sortOn)
 import Data.Text as T (Text)
 import Data.Word (Word32, Word64)
 
@@ -18,9 +19,11 @@ import Invoker.Binary
   ( Get, runGetIncremental
   , readBytes
   , getUVarInt32
+  , readUBitVar, getUVarInt64
   , getWord32le
   , getInt32le
   , Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors
+  , isEmpty
   )
 import Invoker.Parser.SendTables
     ( SendTables(..), parseSendTables
@@ -142,7 +145,7 @@ parseMessage typeId bytes = do
     4  -> parseMsg @CDemoSendTables sendTables
     5  -> parseMsg @CDemoClassInfo ClassInfo
     6  -> parseMsg @CDemoStringTables StringTables
-    7  -> parseMsg @CDemoPacket Packet
+    7  -> parseMsg @CDemoPacket onCDemoPacket
     8  -> parseMsg @CDemoPacket SignonPacket
     9  -> parseMsg @CDemoConsoleCmd ConsoleCmd
     10 -> parseMsg @CDemoCustomData CustomData
@@ -160,12 +163,42 @@ parseMessage typeId bytes = do
   parseMsg mkMsg = pure $ either (FailedParsingMessage typeId bytes) mkMsg $ decodeMessage @msg bytes
 
   sendTables :: CDemoSendTables -> MessageType
-  sendTables sd =
+  sendTables sd = do
     let bs = sd ^. data'
-    in case pushChunk (runGetIncremental (parseSendTables 0)) bs  of
+    case pushChunk (runGetIncremental (parseSendTables 0)) bs  of
       Done _ _ a -> SendTables a
       Partial _ -> FailedParsingMessage 4 bs "sendTables: Not enough bytes"
       Fail _bs _offset str -> FailedParsingMessage 4 bs ("sendTables: " <> str)
+
+  onCDemoPacket :: CDemoPacket -> MessageType
+  onCDemoPacket cDemoPacket = do
+    let bs = cDemoPacket ^. data'
+    case pushChunk (runGetIncremental parseDemoPacket) bs  of
+      Done _ _ a -> Packet a
+      Partial _ -> FailedParsingMessage 4 bs "sendTables: Not enough bytes"
+      Fail _bs _offset str -> FailedParsingMessage 4 bs ("sendTables: " <> str)
+
+parseDemoPacket :: Get DemoPacket
+parseDemoPacket = do
+  isNotEmpty <- not <$> isEmpty
+  msgs <- goEntities isNotEmpty pure
+
+  let _msgsSorted = sortOn fst msgs
+
+  pure MkDemoPacket
+  where
+  goEntities False cont = cont []
+  goEntities True cont = do
+    t <- readUBitVar
+    size <- getUVarInt64
+    bs <- readBytes (fromIntegral size)
+
+    isNotEmpty <- not <$> isEmpty
+    goEntities isNotEmpty (\xs -> cont ((t, bs) : xs))
+
+
+data DemoPacket = MkDemoPacket
+  deriving (Show)
 
 
 data MessageType where
@@ -184,7 +217,7 @@ data MessageType where
   SyncTick     :: MessageType
   SendTables   :: SendTables -> MessageType
   StringTables :: CDemoStringTables -> MessageType
-  Packet       :: CDemoPacket -> MessageType
+  Packet       :: DemoPacket -> MessageType
   ConsoleCmd   :: CDemoConsoleCmd -> MessageType
   CustomData   :: CDemoCustomData -> MessageType
   CustomDataCallbacks :: CDemoCustomDataCallbacks -> MessageType

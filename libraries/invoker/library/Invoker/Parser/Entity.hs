@@ -1,14 +1,30 @@
 {-# LANGUAGE DerivingStrategies #-}
 module Invoker.Parser.Entity where
 
-import Control.Monad (foldM, (>=>))
+-- GHC included
+import Control.Monad (foldM, unless, (>=>))
+import Data.Binary.Get (Decoder (..), pushChunk)
 import Data.Bits (Bits (..))
+import Data.Bool (bool)
+import Data.ByteString (ByteString)
 import Data.Int (Int32)
+import Data.IntMap (IntMap)
+import Data.IntMap qualified as IntMap
+import Data.List (sortOn)
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Vector qualified as V
-import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean)
-import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer)
+import Data.Word (Word32)
+
+-- Internal
+import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetIncremental)
+import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer, getDecoderForFieldPathSer)
+import Proto.Netmessages (CSVCMsg_PacketEntities)
+import Proto.Netmessages_Fields (updatedEntries)
+
+-- External
+import Lens.Family2 ((^.))
 
 
 -------------------------------------------------------------------------------
@@ -17,14 +33,14 @@ import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer)
 
 -- Entity represents a single game entity in the replay
 data Entity = MkEntity
-  { index   :: Int32
+  { index   :: Int
   , serial  :: Int32
   , entityClass :: Class
   , active  :: Bool
   , state   :: FieldState
   }
 
-newEntity :: Int32 -> Int32 -> Class  -> Entity
+newEntity :: Int -> Int32 -> Class  -> Entity
 newEntity index serial entityClass = MkEntity{state=newFieldState, active=True, ..}
 
 newtype EntityOp = MkEntityOp Int
@@ -56,6 +72,85 @@ entityOpUpdatedEntered = entityOpUpdated .|. entityOpEntered
 
 entityOpDeletedLeft :: EntityOp
 entityOpDeletedLeft = entityOpDeleted .|. entityOpLeft
+
+data EntityParserArgs = MkEntityParserArgs
+  { classesById :: IntMap Class
+  , classBaselines :: IntMap ByteString
+  , entities :: IntMap Entity
+  , classIdSize :: Int
+  }
+
+onCSVCMsg_PacketEntities :: EntityParserArgs -> CSVCMsg_PacketEntities -> Get [(Entity, EntityOp, Int)]
+onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
+  where
+  goEntities 0 cont = cont []
+  goEntities n cont = do
+    index <- fromIntegral . (+1) <$> readUBitVar
+    cmd <- readBits 2
+    x <-
+      if cmd .&. 0b01 == 0
+      then
+        if cmd .&. 0b10 /= 0
+        then branch1 index
+        else branch2 index
+      else branch3 cmd index
+    goEntities (n-1) (\xs -> cont (x:xs))
+
+  branch1 :: Int -> Get (Entity, EntityOp, Int)
+  branch1 index = do
+    classId <- fromIntegral <$> readBits args.classIdSize
+    serial <- fromIntegral <$> readBits 17
+    _ <- getUVarInt32
+
+    class' <- maybe (fail "unable to find new class") pure
+      (IntMap.lookup classId args.classesById)
+    baseline <- maybe (fail "unable to find new baseline") pure
+      (IntMap.lookup classId args.classBaselines)
+
+    let incompleteEntity = newEntity index serial class'
+        serializer = fromMaybe (undefined) class'.serializer
+
+    fs1 <- readFields serializer incompleteEntity.state
+    fs2 <-
+      case runGetIncremental (readFields serializer fs1) `pushChunk` baseline of
+        Done _ _ fs  -> pure fs
+        Partial _    -> fail "Not enough input in baseline"
+        Fail _ _ err -> fail err
+
+    let op = entityOpCreated .|. entityOpEntered
+        entity = incompleteEntity{state = fs2}
+
+    pure (entity, op, index)
+
+  branch2 :: Int -> Get (Entity, EntityOp, Int)
+  branch2 index = do
+    incompleteEntity <- maybe (fail "unable to find existing entity") pure
+      (IntMap.lookup index args.entities)
+
+    let incompleteOp = entityOpUpdated
+        op =
+          if incompleteEntity.active
+          then incompleteOp
+          else incompleteOp .|. entityOpNone
+
+    pure (incompleteEntity, op, index)
+
+  branch3 :: Word32 -> Int -> Get (Entity, EntityOp, Int)
+  branch3 cmd index = do
+    entity <- maybe (fail "unable to find existing entity") pure
+      (IntMap.lookup index args.entities)
+
+    let classId = show entity.entityClass.classId
+        className = show entity.entityClass.name
+        errMsg = "entity " <> classId <> " (" <> className <> ") ordered to leave, already inactive"
+    unless entity.active (fail errMsg)
+
+    let op =
+          if cmd .&. 0x02 /= 0
+          then entityOpLeft .|. entityOpDeleted
+          else entityOpLeft
+
+    pure (entity, op, index)
 
 
 -------------------------------------------------------------------------------
@@ -96,12 +191,41 @@ setField s fp v = goSetField s 0
 -- * field_reader
 -------------------------------------------------------------------------------
 
--- ToDo
+readFields :: Serializer -> FieldState -> Get FieldState
+readFields ser fs = do
+  fmap (MkFieldState . V.fromList) . mapM mkState =<< readFieldPaths
+  where
+  mkState fp = FVState . setField fs fp <$> getDecoderForFieldPathSer ser fp 0
 
 
 -------------------------------------------------------------------------------
 -- * field_path
 -------------------------------------------------------------------------------
+
+readFieldPaths :: Get [FieldPath]
+readFieldPaths = goReadFP huffTree newFieldPath []
+  where
+  goReadFP node fp acc
+    | fp.fpDone = pure (reverse acc)
+    | otherwise = do
+        next <- step node
+        case next of
+          HuffmanLeaf _ v -> do
+            fp' <- runOp v fp
+            goReadFP huffTree fp' (add fp' acc)
+          _ -> goReadFP next fp acc
+
+  huffTree = buildHuffmanTree fieldPathTable
+
+  step node = bool node.right node.left <$> readBoolean
+
+  runOp v fp =
+    let MkFieldPathOp _ _ f = fieldPathTable !! v
+    in f fp
+
+  add fp acc
+    | fp.fpDone = acc
+    | otherwise = fp : acc
 
 newFieldPath :: FieldPath
 newFieldPath =
@@ -208,10 +332,11 @@ fieldPathTable =
         >=> incrLastAndSum readUBitVarFieldPath
       )
   , MkFieldPathOp "PushThreePack5LeftDeltaN" 0
-      ( lastSum ((+2) <$> readUBitVar)
+      ( \fp -> lastSum ((+2) <$> readUBitVar)
         >=> incrLastAndSum (readBits 5)
         >=> incrLastAndSum (readBits 5)
         >=> incrLastAndSum (readBits 5)
+        $ fp
       )
   , MkFieldPathOp "PushN" 0 \fp0 -> do
       n0 <- readUBitVar
@@ -317,7 +442,38 @@ modifyAt i f fp = pure fp{fpPath}
 -- * huffman
 -------------------------------------------------------------------------------
 
--- ToDo
+data HuffmanTree
+  = HuffmanLeaf
+      { weight :: !Int
+      , value  :: !Int
+      }
+  | HuffmanNode
+      { weight :: !Int
+      , value  :: !Int
+      , left   :: HuffmanTree
+      , right  :: HuffmanTree
+      }
+  deriving (Show)
+
+isLeaf :: HuffmanTree -> Bool
+isLeaf HuffmanLeaf{} = True
+isLeaf _             = False
+
+buildHuffmanTree :: [FieldPathOp] -> HuffmanTree
+buildHuffmanTree freqs =
+  goBuild 40
+    [ HuffmanLeaf (if w.weight == 0 then 1 else w.weight) v
+    | (v,w) <- zip [0..] freqs
+    ]
+  where
+  goBuild _ [ ] = error "empty list"
+  goBuild _ [t] = t
+  goBuild n ts =
+    case sortOn (.weight) ts of
+      (a:b:rest) ->
+        let node = HuffmanNode (a.weight + b.weight) n a b
+        in goBuild (n+1) (node : rest)
+      _ -> error "Impossible"
 
 
 -------------------------------------------------------------------------------

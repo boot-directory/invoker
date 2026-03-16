@@ -6,7 +6,7 @@ import Control.Exception (Exception, throwIO)
 import Control.Monad (replicateM, when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk)
-import Data.Binary.Get qualified as Binary (Get, runGetIncremental)
+import Data.Binary.Get qualified as Binary (Get, runGetIncremental, isEmpty)
 import Data.Bits
 import Data.ByteString as BS
 import Data.IORef (newIORef, readIORef, writeIORef)
@@ -56,7 +56,7 @@ data IoErrors = UnexpectedEof
 readFromBuffer :: Buffer -> Get a -> IO a
 readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runGetIncremental parser)
   where
-  runBufferReader :: Decoder packet -> IO packet
+  runBufferReader :: Decoder a -> IO a
   runBufferReader dec = case dec of
     (Partial decoder) -> readBuff >>= runBufferReader . decoder . Just
     (Done leftover _consumed packet) -> packet <$ updateReadBuff leftover
@@ -97,6 +97,12 @@ instance Monad Get where
 
 instance MonadFail Get where
   fail msg = BitGet $ lift (fail msg)
+
+isEmpty ::  Get Bool
+isEmpty = BitGet $ do
+  isEmptyBitBuffer <- (== 0) . (.bitCount) <$> get
+  isEmptyByteBuf <- lift Binary.isEmpty
+  pure $ isEmptyByteBuf && isEmptyBitBuffer
 
 -- |
 -- >>> let bytes = BS.pack [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]

@@ -44,6 +44,7 @@ Library
     , text
     , mtl
     , vector
+    , containers
 
     -- Internal
     , invoker-proto

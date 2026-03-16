@@ -14,7 +14,7 @@ import Invoker
 
 main :: IO ()
 main = do
-  bufArgs <-  mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
+  bufArgs <- mkFileBufferArgs "./libraries/invoker/demos/8540916823.dem"
   runParserLoop bufArgs onMsg
     (\s -> do
       print =<< readIORef s.counter
