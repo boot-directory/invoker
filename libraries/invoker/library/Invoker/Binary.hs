@@ -5,7 +5,7 @@ module Invoker.Binary where
 import Control.Exception (Exception, throwIO)
 import Control.Monad (replicateM, when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
-import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk)
+import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
 import Data.Binary.Get qualified as Binary (Get, runGetIncremental, isEmpty)
 import Data.Bits
 import Data.ByteString as BS
@@ -72,7 +72,7 @@ runGetIncremental = Binary.runGetIncremental . (\(BitGet m) -> evalStateT m (Bit
 
 debugGet :: Get a -> ByteString -> a
 debugGet getA bs =
-  case pushChunk (runGetIncremental getA) bs of
+  case pushEndOfInput $ pushChunk (runGetIncremental getA) bs of
     Done _left _offset a -> a
     Partial _ -> error "Invoker.Binary.debugGet not enough input"
     Fail _ pos msg -> error ("Invoker.Binary.debugGet at position " ++ show pos ++ ": " ++ msg)
@@ -98,8 +98,16 @@ instance Monad Get where
 instance MonadFail Get where
   fail msg = BitGet $ lift (fail msg)
 
-isEmpty ::  Get Bool
-isEmpty = BitGet $ do
+-- |
+-- >>> debugGet hasNoMoreBytes ""
+-- True
+-- >>> debugGet hasNoMoreBytes "0"
+-- False
+hasNoMoreBytes :: Get Bool
+hasNoMoreBytes = BitGet $ lift Binary.isEmpty
+
+hasNoMoreBits ::  Get Bool
+hasNoMoreBits = BitGet $ do
   isEmptyBitBuffer <- (== 0) . (.bitCount) <$> get
   isEmptyByteBuf <- lift Binary.isEmpty
   pure $ isEmptyByteBuf && isEmptyBitBuffer
@@ -281,4 +289,10 @@ readUBitVarFieldPath = fromIntegral <$> go
       if b then readBits 17 else readBits 31
 
 readUBitVar :: Get Word32
-readUBitVar = error "ToDo"
+readUBitVar = do
+  ret <- readBits 6
+  case ret .&. 0x30 of
+    16 -> (\b -> (ret .&. 15) .|. shiftL b 4) <$> readBits 4
+    32 -> (\b -> (ret .&. 15) .|. shiftL b 4) <$> readBits 8
+    48 -> (\b -> (ret .&. 15) .|. shiftL b 4) <$> readBits 28
+    _ -> pure ret

@@ -28,6 +28,7 @@ Library
   other-modules:
     Invoker.Binary
     Invoker.Parser
+    Invoker.Parser.DemoPacket
     Invoker.Parser.Entity
     Invoker.Parser.Quantized
     Invoker.Parser.SendTables
