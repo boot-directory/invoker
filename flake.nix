@@ -20,7 +20,7 @@
       ];
       perSystem = {self', pkgs, config, lib, ...}:
       {
-        haskellProjects.default = import ./contribution/haskell.nix {inherit pkgs; ghc = "ghc9122";};
+        haskellProjects.default = import ./contribution/haskell.nix {inherit pkgs; ghc = "ghc9103";};
         devShells = {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [

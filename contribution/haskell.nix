@@ -12,5 +12,12 @@
     #   justStaticExecutables = true;
     #   executableProfiling = true;
     # };
+    invoker = {
+      libraryProfiling = true;
+      executableProfiling = true;
+    };
+    invoker-proto = {
+      libraryProfiling = true;
+    };
   };
 }

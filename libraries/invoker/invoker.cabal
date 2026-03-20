@@ -85,6 +85,11 @@ executable invoker
     -Wall
     -Wunused-packages
     -rtsopts
+  if impl(ghc >= 9.4)
+    ghc-prof-options:
+      -fprof-late
+  ghc-prof-options:
+    "-with-rtsopts=-s -A8m -AL8m -p -hc -L250 -l-agu -N1"
 
 test-suite invoker-tests
   type:             exitcode-stdio-1.0

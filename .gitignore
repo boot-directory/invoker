@@ -13,3 +13,9 @@ libraries/invoker/demos
 
 # generic wip files
 ~*
+
+# Profiling artifacts
+*.eventlog
+*.eventlog.html
+*.prof
+*.hp
