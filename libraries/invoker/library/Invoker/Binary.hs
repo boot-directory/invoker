@@ -127,7 +127,7 @@ hasNoMoreBits = BitGet $ do
 {-# INLINE readBits #-}
 readBits :: Int -> Get Word32
 readBits n = BitGet $ do
-  fillBits n
+  fillBits
   BitState{..} <- get
   let mask = (1 `shiftL` n) - 1
       x    = bitVal .&. mask
@@ -136,18 +136,16 @@ readBits n = BitGet $ do
         , bitCount = bitCount - n
         }
   pure (fromIntegral x)
-
-{-# INLINE fillBits #-}
-fillBits :: Int -> StateT BitState Binary.Get ()
-fillBits n = do
-  BitState{..} <- get
-  when (bitCount < n) $ do
-    byte <- lift getWord8
-    put BitState
-      { bitVal   = bitVal .|. (fromIntegral byte `shiftL` bitCount)
-      , bitCount = bitCount + 8
-      }
-    fillBits n
+  where
+  fillBits = do
+    BitState{..} <- get
+    when (bitCount < n) $ do
+      byte <- lift getWord8
+      put BitState
+        { bitVal   = bitVal .|. (fromIntegral byte `shiftL` bitCount)
+        , bitCount = bitCount + 8
+        }
+      fillBits
 
 
 {-# INLINE readBytes #-}
