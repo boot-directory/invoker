@@ -3,7 +3,7 @@
 module Invoker.Binary where
 
 import Control.Exception (Exception, throwIO)
-import Control.Monad (replicateM, when)
+import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
 import Data.Binary.Get qualified as Binary (Get, runGetIncremental, isEmpty)
@@ -124,6 +124,7 @@ hasNoMoreBits = BitGet $ do
 -- True
 -- >>> debugGet (readBits 1) bytes == 0x01
 -- True
+{-# INLINE readBits #-}
 readBits :: Int -> Get Word32
 readBits n = BitGet $ do
   fillBits n
@@ -136,6 +137,7 @@ readBits n = BitGet $ do
         }
   pure (fromIntegral x)
 
+{-# INLINE fillBits #-}
 fillBits :: Int -> StateT BitState Binary.Get ()
 fillBits n = do
   BitState{..} <- get
@@ -148,12 +150,19 @@ fillBits n = do
     fillBits n
 
 
+{-# INLINE readBytes #-}
 readBytes :: Int -> Get ByteString
 readBytes n = do
   BitState{bitCount} <- BitGet get
   if bitCount == 0
     then BitGet $ lift (getByteString n)
-    else BS.pack <$> replicateM n (fromIntegral <$> readBits 8)
+    else goReadBytes n (pure . BS.pack)
+  where
+  goReadBytes :: Int -> ([Word8] -> Get b) -> Get b
+  goReadBytes 0 cont = cont []
+  goReadBytes m cont = do
+    byte <- fromIntegral <$> readBits 8
+    goReadBytes (m-1) (\xs -> cont (byte:xs))
 
 readByte :: Get Word8
 readByte = do
