@@ -6,7 +6,6 @@ module Invoker.Parser where
 -- GHC included
 import Control.Exception (catch)
 import Control.Monad (forever, when)
-import Data.Binary.Get (Decoder (..), pushChunk, pushEndOfInput)
 import Data.Bits (Bits (..))
 import Data.ByteString (ByteString)
 import Data.IORef (IORef, modifyIORef, newIORef, writeIORef)
@@ -16,12 +15,12 @@ import Data.Word (Word32, Word64)
 
 -- Internal
 import Invoker.Binary
-  ( Get, runGetIncremental
+  ( Get
   , readBytes
   , getUVarInt32
   , getWord32le
   , getInt32le
-  , Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors  
+  , Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors, runGetInput
   )
 import Invoker.Parser.SendTables
     ( SendTables(..), parseSendTables
@@ -210,11 +209,10 @@ parseMessage typeId bytes = do
   parseMsg mkMsg = pure $ either (\err -> FailedParsingMessage typeId err bytes) mkMsg $ decodeMessage @msg bytes
 
 runParser :: forall msg . IsMessageType msg => ByteString -> Get msg -> MessageType
-runParser  bs parser =
-  case pushEndOfInput $ pushChunk (runGetIncremental parser) bs of
-    Done _ _ a -> toMessageType a
-    Partial _ -> FailedParsingMessage (packetNum @msg) "Not enough bytes" bs
-    Fail _bs _offset str -> FailedParsingMessage (packetNum @msg) str bs
+runParser bs parser =
+  either toFailedMessage toMessageType (runGetInput parser bs)
+  where
+  toFailedMessage = uncurry (FailedParsingMessage (packetNum @msg))
 
 
 class IsMessageType messageType where

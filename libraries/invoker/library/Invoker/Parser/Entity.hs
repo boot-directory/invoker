@@ -3,7 +3,6 @@ module Invoker.Parser.Entity where
 
 -- GHC included
 import Control.Monad (foldM, unless, (>=>))
-import Data.Binary.Get (Decoder (..), pushChunk)
 import Data.Bits (Bits (..))
 import Data.Bool (bool)
 import Data.ByteString (ByteString)
@@ -18,7 +17,7 @@ import Data.Vector qualified as V
 import Data.Word (Word32)
 
 -- Internal
-import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetIncremental)
+import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetInput)
 import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer, getDecoderForFieldPathSer)
 import Proto.Netmessages (CSVCMsg_PacketEntities)
 import Proto.Netmessages_Fields (updatedEntries)
@@ -111,11 +110,7 @@ onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
         serializer = fromMaybe (undefined) class'.serializer
 
     fs1 <- readFields serializer incompleteEntity.state
-    fs2 <-
-      case runGetIncremental (readFields serializer fs1) `pushChunk` baseline of
-        Done _ _ fs  -> pure fs
-        Partial _    -> fail "Not enough input in baseline"
-        Fail _ _ err -> fail err
+    fs2 <- either (error . fst) pure (runGetInput (readFields serializer fs1) baseline)
 
     let op = entityOpCreated .|. entityOpEntered
         entity = incompleteEntity{state = fs2}

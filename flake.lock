@@ -3,11 +3,11 @@
     "dota-protobuf": {
       "flake": false,
       "locked": {
-        "lastModified": 1770432170,
-        "narHash": "sha256-xT3KlaDuRzWj4zfrw7F6Ezej4s+tmv+/dpKQqoIGht4=",
+        "lastModified": 1774130847,
+        "narHash": "sha256-4JQKzirsukPC6gjgT5k6s4cWhJNE3CbffJ4rmVyET3I=",
         "owner": "SteamDatabase",
         "repo": "GameTracking-Dota2",
-        "rev": "1032ef9928db60b4d367e77a833c4df53b4c97a6",
+        "rev": "d9e0fec5d945d61aa1dd5e2ec8891845c449a2a6",
         "type": "github"
       },
       "original": {
