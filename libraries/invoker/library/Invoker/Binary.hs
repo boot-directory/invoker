@@ -77,8 +77,8 @@ debugGet getA bs =
     Partial _ -> error "Invoker.Binary.debugGet not enough input"
     Fail _ pos msg -> error ("Invoker.Binary.debugGet at position " ++ show pos ++ ": " ++ msg)
 
-runGetInput :: Get a -> ByteString -> Either (String, ByteString) a
-runGetInput getA bs =
+runGetInput :: ByteString -> Get a -> Either (String, ByteString) a
+runGetInput bs getA =
   case pushEndOfInput $ pushChunk (runGetIncremental getA) bs of
     Done _left _offset a -> Right a
     Partial _            -> Left ("Not enough input", bs)

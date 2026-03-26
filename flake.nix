@@ -28,6 +28,7 @@
               haskell-language-server
               cabal-install
               haskellPackages.eventlog2html
+              haskellPackages.graphmod
               pkgs.nil
               pkgs.zlib
               pkgs.pkg-config

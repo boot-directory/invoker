@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
 module Invoker.Parser.DemoPacket where
 
 -- GHC included
@@ -15,17 +16,19 @@ import Invoker.Binary
   , readBytes
   , getUVarInt32
   )
-import Proto.Networkbasetypes
-import Proto.Netmessages
-import Proto.Usermessages
-import Proto.Gameevents
-
--- External
-import Data.ProtoLens (Message, decodeMessage)
-import Proto.DotaUsermessages
+import Invoker.Parser.Entity (Entity, EntityOp, mkArgs, onCSVCMsg_PacketEntities)
 import Proto.DotaGcmessagesClient
 import Proto.DotaMatchMetadata
 import Proto.DotaSharedEnums
+import Proto.DotaUsermessages
+import Proto.Gameevents
+import Proto.Netmessages
+import Proto.Networkbasetypes
+import Proto.Usermessages
+
+-- External
+import Data.Data (Proxy (..))
+import Data.ProtoLens (Message (messageName), decodeMessage)
 
 
 -------------------------------------------------------------------------------
@@ -43,7 +46,7 @@ data DemoPacket = MkDemoPacket [DemoPacketType]
 parseDemoPacket :: Get DemoPacket
 parseDemoPacket = do
   messages <- goEntities pure =<< hasNoMoreBytes
-  MkDemoPacket <$> (mapM callByPacketType $ (sortOn (priority . fst) messages))
+  MkDemoPacket <$> mapM callByPacketType (sortOn (priority . fst) messages)
   where
   goEntities cont True = cont []
   goEntities cont False = do
@@ -66,266 +69,273 @@ priority p = case p of
 callByPacketType :: (Word32, ByteString) -> Get DemoPacketType
 callByPacketType (num, bs) = do
   case num of
-    0   -> parseMessage PCNETMsg_NOP
-    3   -> parseMessage PCNETMsg_SplitScreenUser
-    4   -> parseMessage PCNETMsg_Tick
-    5   -> parseMessage PCNETMsg_StringCmd
-    6   -> parseMessage PCNETMsg_SetConVar
-    7   -> parseMessage PCNETMsg_SignonState
-    8   -> parseMessage PCNETMsg_SpawnGroup_Load
-    9   -> parseMessage PCNETMsg_SpawnGroup_ManifestUpdate
-    11  -> parseMessage PCNETMsg_SpawnGroup_SetCreationTick
-    12  -> parseMessage PCNETMsg_SpawnGroup_Unload
-    13  -> parseMessage PCNETMsg_SpawnGroup_LoadCompleted
-    15  -> parseMessage PCNETMsg_DebugOverlay
-    40  -> parseMessage PCSVCMsg_ServerInfo
-    41  -> parseMessage PCSVCMsg_FlattenedSerializer
-    42  -> parseMessage PCSVCMsg_ClassInfo
-    43  -> parseMessage PCSVCMsg_SetPause
-    44  -> parseMessage PCSVCMsg_CreateStringTable
-    45  -> parseMessage PCSVCMsg_UpdateStringTable
-    46  -> parseMessage PCSVCMsg_VoiceInit
-    47  -> parseMessage PCSVCMsg_VoiceData
-    48  -> parseMessage PCSVCMsg_Print
-    49  -> parseMessage PCSVCMsg_Sounds
-    50  -> parseMessage PCSVCMsg_SetView
-    51  -> parseMessage PCSVCMsg_ClearAllStringTables
-    52  -> parseMessage PCSVCMsg_CmdKeyValues
-    53  -> parseMessage PCSVCMsg_BSPDecal
-    54  -> parseMessage PCSVCMsg_SplitScreen
-    55  -> parseMessage PCSVCMsg_PacketEntities
-    56  -> parseMessage PCSVCMsg_Prefetch
-    57  -> parseMessage PCSVCMsg_Menu
-    58  -> parseMessage PCSVCMsg_GetCvarValue
-    59  -> parseMessage PCSVCMsg_StopSound
-    60  -> parseMessage PCSVCMsg_PeerList
-    61  -> parseMessage PCSVCMsg_PacketReliable
-    62  -> parseMessage PCSVCMsg_HLTVStatus
-    63  -> parseMessage PCSVCMsg_ServerSteamID
-    70  -> parseMessage PCSVCMsg_FullFrameSplit
-    71  -> parseMessage PCSVCMsg_RconServerDetails
-    72  -> parseMessage PCSVCMsg_UserMessage
-    74  -> parseMessage PCSVCMsg_Broadcast_Command
-    75  -> parseMessage PCSVCMsg_HltvFixupOperatorStatus
-    101 -> parseMessage PCUserMessageAchievementEvent
-    102 -> parseMessage PCUserMessageCloseCaption
-    103 -> parseMessage PCUserMessageCloseCaptionDirect
-    104 -> parseMessage PCUserMessageCurrentTimescale
-    105 -> parseMessage PCUserMessageDesiredTimescale
-    106 -> parseMessage PCUserMessageFade
-    107 -> parseMessage PCUserMessageGameTitle
-    110 -> parseMessage PCUserMessageHudMsg
-    111 -> parseMessage PCUserMessageHudText
-    113 -> parseMessage PCUserMessageColoredText
-    114 -> parseMessage PCUserMessageRequestState
-    115 -> parseMessage PCUserMessageResetHUD
-    116 -> parseMessage PCUserMessageRumble
-    117 -> parseMessage PCUserMessageSayText
-    118 -> parseMessage PCUserMessageSayText2
-    119 -> parseMessage PCUserMessageSayTextChannel
-    120 -> parseMessage PCUserMessageShake
-    121 -> parseMessage PCUserMessageShakeDir
-    122 -> parseMessage PCUserMessageWaterShake
-    124 -> parseMessage PCUserMessageTextMsg
-    125 -> parseMessage PCUserMessageScreenTilt
-    128 -> parseMessage PCUserMessageVoiceMask
-    130 -> parseMessage PCUserMessageSendAudio
-    131 -> parseMessage PCUserMessageItemPickup
-    132 -> parseMessage PCUserMessageAmmoDenied
-    134 -> parseMessage PCUserMessageShowMenu
-    135 -> parseMessage PCUserMessageCreditsMsg
-    136 -> parseMessage PCEntityMessagePlayJingle
-    137 -> parseMessage PCEntityMessageScreenOverlay
-    138 -> parseMessage PCEntityMessageRemoveAllDecals
-    139 -> parseMessage PCEntityMessagePropagateForce
-    140 -> parseMessage PCEntityMessageDoSpark
-    141 -> parseMessage PCEntityMessageFixAngle
-    142 -> parseMessage PCUserMessageCloseCaptionPlaceholder
-    143 -> parseMessage PCUserMessageCameraTransition
-    144 -> parseMessage PCUserMessageAudioParameter
+    0   -> parseMsg PCNETMsg_NOP
+    3   -> parseMsg PCNETMsg_SplitScreenUser
+    4   -> parseMsg PCNETMsg_Tick
+    5   -> parseMsg PCNETMsg_StringCmd
+    6   -> parseMsg PCNETMsg_SetConVar
+    7   -> parseMsg PCNETMsg_SignonState
+    8   -> parseMsg PCNETMsg_SpawnGroup_Load
+    9   -> parseMsg PCNETMsg_SpawnGroup_ManifestUpdate
+    11  -> parseMsg PCNETMsg_SpawnGroup_SetCreationTick
+    12  -> parseMsg PCNETMsg_SpawnGroup_Unload
+    13  -> parseMsg PCNETMsg_SpawnGroup_LoadCompleted
+    15  -> parseMsg PCNETMsg_DebugOverlay
+    40  -> parseMsg PCSVCMsg_ServerInfo
+    41  -> parseMsg PCSVCMsg_FlattenedSerializer
+    42  -> parseMsg PCSVCMsg_ClassInfo
+    43  -> parseMsg PCSVCMsg_SetPause
+    44  -> parseMsg PCSVCMsg_CreateStringTable
+    45  -> parseMsg PCSVCMsg_UpdateStringTable
+    46  -> parseMsg PCSVCMsg_VoiceInit
+    47  -> parseMsg PCSVCMsg_VoiceData
+    48  -> parseMsg PCSVCMsg_Print
+    49  -> parseMsg PCSVCMsg_Sounds
+    50  -> parseMsg PCSVCMsg_SetView
+    51  -> parseMsg PCSVCMsg_ClearAllStringTables
+    52  -> parseMsg PCSVCMsg_CmdKeyValues
+    53  -> parseMsg PCSVCMsg_BSPDecal
+    54  -> parseMsg PCSVCMsg_SplitScreen
+    55  -> parseMsgEith (fmap PCSVCMsg_PacketEntities . onCSVCMsg_PacketEntities mkArgs)
+    56  -> parseMsg PCSVCMsg_Prefetch
+    57  -> parseMsg PCSVCMsg_Menu
+    58  -> parseMsg PCSVCMsg_GetCvarValue
+    59  -> parseMsg PCSVCMsg_StopSound
+    60  -> parseMsg PCSVCMsg_PeerList
+    61  -> parseMsg PCSVCMsg_PacketReliable
+    62  -> parseMsg PCSVCMsg_HLTVStatus
+    63  -> parseMsg PCSVCMsg_ServerSteamID
+    70  -> parseMsg PCSVCMsg_FullFrameSplit
+    71  -> parseMsg PCSVCMsg_RconServerDetails
+    72  -> parseMsg PCSVCMsg_UserMessage
+    74  -> parseMsg PCSVCMsg_Broadcast_Command
+    75  -> parseMsg PCSVCMsg_HltvFixupOperatorStatus
+    101 -> parseMsg PCUserMessageAchievementEvent
+    102 -> parseMsg PCUserMessageCloseCaption
+    103 -> parseMsg PCUserMessageCloseCaptionDirect
+    104 -> parseMsg PCUserMessageCurrentTimescale
+    105 -> parseMsg PCUserMessageDesiredTimescale
+    106 -> parseMsg PCUserMessageFade
+    107 -> parseMsg PCUserMessageGameTitle
+    110 -> parseMsg PCUserMessageHudMsg
+    111 -> parseMsg PCUserMessageHudText
+    113 -> parseMsg PCUserMessageColoredText
+    114 -> parseMsg PCUserMessageRequestState
+    115 -> parseMsg PCUserMessageResetHUD
+    116 -> parseMsg PCUserMessageRumble
+    117 -> parseMsg PCUserMessageSayText
+    118 -> parseMsg PCUserMessageSayText2
+    119 -> parseMsg PCUserMessageSayTextChannel
+    120 -> parseMsg PCUserMessageShake
+    121 -> parseMsg PCUserMessageShakeDir
+    122 -> parseMsg PCUserMessageWaterShake
+    124 -> parseMsg PCUserMessageTextMsg
+    125 -> parseMsg PCUserMessageScreenTilt
+    128 -> parseMsg PCUserMessageVoiceMask
+    130 -> parseMsg PCUserMessageSendAudio
+    131 -> parseMsg PCUserMessageItemPickup
+    132 -> parseMsg PCUserMessageAmmoDenied
+    134 -> parseMsg PCUserMessageShowMenu
+    135 -> parseMsg PCUserMessageCreditsMsg
+    136 -> parseMsg PCEntityMessagePlayJingle
+    137 -> parseMsg PCEntityMessageScreenOverlay
+    138 -> parseMsg PCEntityMessageRemoveAllDecals
+    139 -> parseMsg PCEntityMessagePropagateForce
+    140 -> parseMsg PCEntityMessageDoSpark
+    141 -> parseMsg PCEntityMessageFixAngle
+    142 -> parseMsg PCUserMessageCloseCaptionPlaceholder
+    143 -> parseMsg PCUserMessageCameraTransition
+    144 -> parseMsg PCUserMessageAudioParameter
     145 -> pure $ UnknownPacket num bs
-    150 -> parseMessage PCUserMessageHapticsManagerPulse
-    151 -> parseMessage PCUserMessageHapticsManagerEffect
-    153 -> parseMessage PCUserMessageUpdateCssClasses
-    154 -> parseMessage PCUserMessageServerFrameTime
-    155 -> parseMessage PCUserMessageLagCompensationError
-    156 -> parseMessage PCUserMessageRequestDllStatus
-    157 -> parseMessage PCUserMessageRequestUtilAction
-    160 -> parseMessage PCUserMessageRequestInventory
-    162 -> parseMessage PCUserMessageRequestDiagnostic
-    200 -> parseMessage PCMsgVDebugGameSessionIDEvent
-    201 -> parseMessage PCMsgPlaceDecalEvent
-    202 -> parseMessage PCMsgClearWorldDecalsEvent
-    203 -> parseMessage PCMsgClearEntityDecalsEvent
-    -- 204 -> parseMessage PCMsgClearDecalsForSkeletonInstanceEvent
-    205 -> parseMessage PCMsgSource1LegacyGameEventList
-    206 -> parseMessage PCMsgSource1LegacyListenEvents
-    207 -> parseMessage PCMsgSource1LegacyGameEvent
-    208 -> parseMessage PCMsgSosStartSoundEvent
-    209 -> parseMessage PCMsgSosStopSoundEvent
-    210 -> parseMessage PCMsgSosSetSoundEventParams
-    211 -> parseMessage PCMsgSosSetLibraryStackFields
-    212 -> parseMessage PCMsgSosStopSoundEventHash
+    150 -> parseMsg PCUserMessageHapticsManagerPulse
+    151 -> parseMsg PCUserMessageHapticsManagerEffect
+    153 -> parseMsg PCUserMessageUpdateCssClasses
+    154 -> parseMsg PCUserMessageServerFrameTime
+    155 -> parseMsg PCUserMessageLagCompensationError
+    156 -> parseMsg PCUserMessageRequestDllStatus
+    157 -> parseMsg PCUserMessageRequestUtilAction
+    160 -> parseMsg PCUserMessageRequestInventory
+    162 -> parseMsg PCUserMessageRequestDiagnostic
+    200 -> parseMsg PCMsgVDebugGameSessionIDEvent
+    201 -> parseMsg PCMsgPlaceDecalEvent
+    202 -> parseMsg PCMsgClearWorldDecalsEvent
+    203 -> parseMsg PCMsgClearEntityDecalsEvent
+    -- 204 -> parseMsg PCMsgClearDecalsForSkeletonInstanceEvent
+    205 -> parseMsg PCMsgSource1LegacyGameEventList
+    206 -> parseMsg PCMsgSource1LegacyListenEvents
+    207 -> parseMsg PCMsgSource1LegacyGameEvent
+    208 -> parseMsg PCMsgSosStartSoundEvent
+    209 -> parseMsg PCMsgSosStopSoundEvent
+    210 -> parseMsg PCMsgSosSetSoundEventParams
+    211 -> parseMsg PCMsgSosSetLibraryStackFields
+    212 -> parseMsg PCMsgSosStopSoundEventHash
     400 -> pure $ UnknownPacket num bs
-    465 -> parseMessage PCDOTAUserMsg_AIDebugLine
-    466 -> parseMessage PCDOTAUserMsg_ChatEvent
-    467 -> parseMessage PCDOTAUserMsg_CombatHeroPositions
-    470 -> parseMessage PCDOTAUserMsg_CombatLogBulkData
-    471 -> parseMessage PCDOTAUserMsg_CreateLinearProjectile
-    472 -> parseMessage PCDOTAUserMsg_DestroyLinearProjectile
-    473 -> parseMessage PCDOTAUserMsg_DodgeTrackingProjectiles
-    474 -> parseMessage PCDOTAUserMsg_GlobalLightColor
-    475 -> parseMessage PCDOTAUserMsg_GlobalLightDirection
-    476 -> parseMessage PCDOTAUserMsg_InvalidCommand
-    477 -> parseMessage PCDOTAUserMsg_LocationPing
-    478 -> parseMessage PCDOTAUserMsg_MapLine
-    479 -> parseMessage PCDOTAUserMsg_MiniKillCamInfo
-    480 -> parseMessage PCDOTAUserMsg_MinimapDebugPoint
-    481 -> parseMessage PCDOTAUserMsg_MinimapEvent
-    482 -> parseMessage PCDOTAUserMsg_NevermoreRequiem
-    483 -> parseMessage PCDOTAUserMsg_OverheadEvent
-    484 -> parseMessage PCDOTAUserMsg_SetNextAutobuyItem
-    485 -> parseMessage PCDOTAUserMsg_SharedCooldown
-    486 -> parseMessage PCDOTAUserMsg_SpectatorPlayerClick
-    487 -> parseMessage PCDOTAUserMsg_TutorialTipInfo
-    488 -> parseMessage PCDOTAUserMsg_UnitEvent
-    490 -> parseMessage PCDOTAUserMsg_BotChat
-    491 -> parseMessage PCDOTAUserMsg_HudError
-    492 -> parseMessage PCDOTAUserMsg_ItemPurchased
-    493 -> parseMessage PCDOTAUserMsg_Ping
-    494 -> parseMessage PCDOTAUserMsg_ItemFound
-    496 -> parseMessage PCDOTAUserMsg_SwapVerify
-    497 -> parseMessage PCDOTAUserMsg_WorldLine
-    498 -> parseMessage PCMsgGCToClientTournamentItemDrop
-    499 -> parseMessage PCDOTAUserMsg_ItemAlert
-    500 -> parseMessage PCDOTAUserMsg_HalloweenDrops
-    501 -> parseMessage PCDOTAUserMsg_ChatWheel
-    502 -> parseMessage PCDOTAUserMsg_ReceivedXmasGift
-    503 -> parseMessage PCDOTAUserMsg_UpdateSharedContent
-    504 -> parseMessage PCDOTAUserMsg_TutorialRequestExp
-    505 -> parseMessage PCDOTAUserMsg_TutorialPingMinimap
-    506 -> parseMessage PCDOTAUserMsg_GamerulesStateChanged
-    507 -> parseMessage PCDOTAUserMsg_ShowSurvey
-    508 -> parseMessage PCDOTAUserMsg_TutorialFade
-    509 -> parseMessage PCDOTAUserMsg_AddQuestLogEntry
-    510 -> parseMessage PCDOTAUserMsg_SendStatPopup
-    511 -> parseMessage PCDOTAUserMsg_TutorialFinish
-    512 -> parseMessage PCDOTAUserMsg_SendRoshanPopup
-    513 -> parseMessage PCDOTAUserMsg_SendGenericToolTip
-    514 -> parseMessage PCDOTAUserMsg_SendFinalGold
-    515 -> parseMessage PCDOTAUserMsg_CustomMsg
-    516 -> parseMessage PCDOTAUserMsg_CoachHUDPing
-    517 -> parseMessage PCDOTAUserMsg_ClientLoadGridNav
-    518 -> parseMessage PCDOTAUserMsg_TE_Projectile
-    519 -> parseMessage PCDOTAUserMsg_TE_ProjectileLoc
-    520 -> parseMessage PCDOTAUserMsg_TE_DotaBloodImpact
-    521 -> parseMessage PCDOTAUserMsg_TE_UnitAnimation
-    522 -> parseMessage PCDOTAUserMsg_TE_UnitAnimationEnd
-    523 -> parseMessage PCDOTAUserMsg_AbilityPing
-    524 -> parseMessage PCDOTAUserMsg_ShowGenericPopup 
-    525 -> parseMessage PCDOTAUserMsg_VoteStart
-    526 -> parseMessage PCDOTAUserMsg_VoteUpdate 
-    527 -> parseMessage PCDOTAUserMsg_VoteEnd
-    528 -> parseMessage PCDOTAUserMsg_BoosterState
-    529 -> parseMessage PCDOTAUserMsg_WillPurchaseAlert
-    530 -> parseMessage PCDOTAUserMsg_TutorialMinimapPosition
-    532 -> parseMessage PCDOTAUserMsg_AbilitySteal
-    533 -> parseMessage PCDOTAUserMsg_CourierKilledAlert
-    534 -> parseMessage PCDOTAUserMsg_EnemyItemAlert
-    535 -> parseMessage PCDOTAUserMsg_StatsMatchDetails
-    536 -> parseMessage PCDOTAUserMsg_MiniTaunt
-    537 -> parseMessage PCDOTAUserMsg_BuyBackStateAlert
-    538 -> parseMessage PCDOTAUserMsg_SpeechBubble
-    539 -> parseMessage PCDOTAUserMsg_CustomHeaderMessage
-    540 -> parseMessage PCDOTAUserMsg_QuickBuyAlert
-    541 -> parseMessage PCDOTAUserMsg_StatsHeroMinuteDetails
-    543 -> parseMessage PCDOTAUserMsg_ModifierAlert
-    544 -> parseMessage PCDOTAUserMsg_HPManaAlert
-    545 -> parseMessage PCDOTAUserMsg_GlyphAlert
-    546 -> parseMessage PCDOTAUserMsg_BeastChat
-    547 -> parseMessage PCDOTAUserMsg_SpectatorPlayerUnitOrders
-    548 -> parseMessage PCDOTAUserMsg_CustomHudElement_Create
-    549 -> parseMessage PCDOTAUserMsg_CustomHudElement_Modify
-    550 -> parseMessage PCDOTAUserMsg_CustomHudElement_Destroy
-    551 -> parseMessage PCDOTAUserMsg_CompendiumState
-    552 -> parseMessage PCDOTAUserMsg_ProjectionAbility
-    553 -> parseMessage PCDOTAUserMsg_ProjectionEvent
-    554 -> parseMessage PCMsgDOTACombatLogEntry
-    555 -> parseMessage PCDOTAUserMsg_XPAlert
-    556 -> parseMessage PCDOTAUserMsg_UpdateQuestProgress
-    557 -> parseMessage PCDOTAMatchMetadataFile
+    465 -> parseMsg PCDOTAUserMsg_AIDebugLine
+    466 -> parseMsg PCDOTAUserMsg_ChatEvent
+    467 -> parseMsg PCDOTAUserMsg_CombatHeroPositions
+    470 -> parseMsg PCDOTAUserMsg_CombatLogBulkData
+    471 -> parseMsg PCDOTAUserMsg_CreateLinearProjectile
+    472 -> parseMsg PCDOTAUserMsg_DestroyLinearProjectile
+    473 -> parseMsg PCDOTAUserMsg_DodgeTrackingProjectiles
+    474 -> parseMsg PCDOTAUserMsg_GlobalLightColor
+    475 -> parseMsg PCDOTAUserMsg_GlobalLightDirection
+    476 -> parseMsg PCDOTAUserMsg_InvalidCommand
+    477 -> parseMsg PCDOTAUserMsg_LocationPing
+    478 -> parseMsg PCDOTAUserMsg_MapLine
+    479 -> parseMsg PCDOTAUserMsg_MiniKillCamInfo
+    480 -> parseMsg PCDOTAUserMsg_MinimapDebugPoint
+    481 -> parseMsg PCDOTAUserMsg_MinimapEvent
+    482 -> parseMsg PCDOTAUserMsg_NevermoreRequiem
+    483 -> parseMsg PCDOTAUserMsg_OverheadEvent
+    484 -> parseMsg PCDOTAUserMsg_SetNextAutobuyItem
+    485 -> parseMsg PCDOTAUserMsg_SharedCooldown
+    486 -> parseMsg PCDOTAUserMsg_SpectatorPlayerClick
+    487 -> parseMsg PCDOTAUserMsg_TutorialTipInfo
+    488 -> parseMsg PCDOTAUserMsg_UnitEvent
+    490 -> parseMsg PCDOTAUserMsg_BotChat
+    491 -> parseMsg PCDOTAUserMsg_HudError
+    492 -> parseMsg PCDOTAUserMsg_ItemPurchased
+    493 -> parseMsg PCDOTAUserMsg_Ping
+    494 -> parseMsg PCDOTAUserMsg_ItemFound
+    496 -> parseMsg PCDOTAUserMsg_SwapVerify
+    497 -> parseMsg PCDOTAUserMsg_WorldLine
+    498 -> parseMsg PCMsgGCToClientTournamentItemDrop
+    499 -> parseMsg PCDOTAUserMsg_ItemAlert
+    500 -> parseMsg PCDOTAUserMsg_HalloweenDrops
+    501 -> parseMsg PCDOTAUserMsg_ChatWheel
+    502 -> parseMsg PCDOTAUserMsg_ReceivedXmasGift
+    503 -> parseMsg PCDOTAUserMsg_UpdateSharedContent
+    504 -> parseMsg PCDOTAUserMsg_TutorialRequestExp
+    505 -> parseMsg PCDOTAUserMsg_TutorialPingMinimap
+    506 -> parseMsg PCDOTAUserMsg_GamerulesStateChanged
+    507 -> parseMsg PCDOTAUserMsg_ShowSurvey
+    508 -> parseMsg PCDOTAUserMsg_TutorialFade
+    509 -> parseMsg PCDOTAUserMsg_AddQuestLogEntry
+    510 -> parseMsg PCDOTAUserMsg_SendStatPopup
+    511 -> parseMsg PCDOTAUserMsg_TutorialFinish
+    512 -> parseMsg PCDOTAUserMsg_SendRoshanPopup
+    513 -> parseMsg PCDOTAUserMsg_SendGenericToolTip
+    514 -> parseMsg PCDOTAUserMsg_SendFinalGold
+    515 -> parseMsg PCDOTAUserMsg_CustomMsg
+    516 -> parseMsg PCDOTAUserMsg_CoachHUDPing
+    517 -> parseMsg PCDOTAUserMsg_ClientLoadGridNav
+    518 -> parseMsg PCDOTAUserMsg_TE_Projectile
+    519 -> parseMsg PCDOTAUserMsg_TE_ProjectileLoc
+    520 -> parseMsg PCDOTAUserMsg_TE_DotaBloodImpact
+    521 -> parseMsg PCDOTAUserMsg_TE_UnitAnimation
+    522 -> parseMsg PCDOTAUserMsg_TE_UnitAnimationEnd
+    523 -> parseMsg PCDOTAUserMsg_AbilityPing
+    524 -> parseMsg PCDOTAUserMsg_ShowGenericPopup
+    525 -> parseMsg PCDOTAUserMsg_VoteStart
+    526 -> parseMsg PCDOTAUserMsg_VoteUpdate
+    527 -> parseMsg PCDOTAUserMsg_VoteEnd
+    528 -> parseMsg PCDOTAUserMsg_BoosterState
+    529 -> parseMsg PCDOTAUserMsg_WillPurchaseAlert
+    530 -> parseMsg PCDOTAUserMsg_TutorialMinimapPosition
+    532 -> parseMsg PCDOTAUserMsg_AbilitySteal
+    533 -> parseMsg PCDOTAUserMsg_CourierKilledAlert
+    534 -> parseMsg PCDOTAUserMsg_EnemyItemAlert
+    535 -> parseMsg PCDOTAUserMsg_StatsMatchDetails
+    536 -> parseMsg PCDOTAUserMsg_MiniTaunt
+    537 -> parseMsg PCDOTAUserMsg_BuyBackStateAlert
+    538 -> parseMsg PCDOTAUserMsg_SpeechBubble
+    539 -> parseMsg PCDOTAUserMsg_CustomHeaderMessage
+    540 -> parseMsg PCDOTAUserMsg_QuickBuyAlert
+    541 -> parseMsg PCDOTAUserMsg_StatsHeroMinuteDetails
+    543 -> parseMsg PCDOTAUserMsg_ModifierAlert
+    544 -> parseMsg PCDOTAUserMsg_HPManaAlert
+    545 -> parseMsg PCDOTAUserMsg_GlyphAlert
+    546 -> parseMsg PCDOTAUserMsg_BeastChat
+    547 -> parseMsg PCDOTAUserMsg_SpectatorPlayerUnitOrders
+    548 -> parseMsg PCDOTAUserMsg_CustomHudElement_Create
+    549 -> parseMsg PCDOTAUserMsg_CustomHudElement_Modify
+    550 -> parseMsg PCDOTAUserMsg_CustomHudElement_Destroy
+    551 -> parseMsg PCDOTAUserMsg_CompendiumState
+    552 -> parseMsg PCDOTAUserMsg_ProjectionAbility
+    553 -> parseMsg PCDOTAUserMsg_ProjectionEvent
+    554 -> parseMsg PCMsgDOTACombatLogEntry
+    555 -> parseMsg PCDOTAUserMsg_XPAlert
+    556 -> parseMsg PCDOTAUserMsg_UpdateQuestProgress
+    557 -> parseMsg PCDOTAMatchMetadataFile
     558 -> pure $ UnknownPacket num bs
-    559 -> parseMessage PCDOTAUserMsg_QuestStatus
-    560 -> parseMessage PCDOTAUserMsg_SuggestHeroPick
-    561 -> parseMessage PCDOTAUserMsg_SuggestHeroRole
-    562 -> parseMessage PCDOTAUserMsg_KillcamDamageTaken
-    563 -> parseMessage PCDOTAUserMsg_SelectPenaltyGold
-    564 -> parseMessage PCDOTAUserMsg_RollDiceResult
-    565 -> parseMessage PCDOTAUserMsg_FlipCoinResult
-    568 -> parseMessage PCDOTAUserMsg_SendRoshanSpectatorPhase 
-    569 -> parseMessage PCDOTAUserMsg_ChatWheelCooldown
-    570 -> parseMessage PCDOTAUserMsg_DismissAllStatPopups
-    571 -> parseMessage PCDOTAUserMsg_TE_DestroyProjectile
-    572 -> parseMessage PCDOTAUserMsg_HeroRelicProgress
-    573 -> parseMessage PCDOTAUserMsg_AbilityDraftRequestAbility
-    574 -> parseMessage PCDOTAUserMsg_ItemSold
-    575 -> parseMessage PCDOTAUserMsg_DamageReport
-    576 -> parseMessage PCDOTAUserMsg_SalutePlayer
-    577 -> parseMessage PCDOTAUserMsg_TipAlert
-    578 -> parseMessage PCDOTAUserMsg_ReplaceQueryUnit
-    579 -> parseMessage PCDOTAUserMsg_EmptyTeleportAlert
-    580 -> parseMessage PCDOTAUserMsg_MarsArenaOfBloodAttack
-    581 -> parseMessage PCDOTAUserMsg_ESArcanaCombo
-    582 -> parseMessage PCDOTAUserMsg_ESArcanaComboSummary
-    583 -> parseMessage PCDOTAUserMsg_HighFiveLeftHanging
-    584 -> parseMessage PCDOTAUserMsg_HighFiveCompleted
-    585 -> parseMessage PCDOTAUserMsg_ShovelUnearth
-    587 -> parseMessage PCDOTAUserMsg_RadarAlert
-    588 -> parseMessage PCDOTAUserMsg_AllStarEvent
-    589 -> parseMessage PCDOTAUserMsg_TalentTreeAlert
-    590 -> parseMessage PCDOTAUserMsg_QueuedOrderRemoved
-    591 -> parseMessage PCDOTAUserMsg_DebugChallenge
-    592 -> parseMessage PCDOTAUserMsg_OMArcanaCombo
-    593 -> parseMessage PCDOTAUserMsg_FoundNeutralItem
-    594 -> parseMessage PCDOTAUserMsg_OutpostCaptured
-    595 -> parseMessage PCDOTAUserMsg_OutpostGrantedXP
-    596 -> parseMessage PCDOTAUserMsg_MoveCameraToUnit
-    597 -> parseMessage PCDOTAUserMsg_PauseMinigameData
-    598 -> parseMessage PCDOTAUserMsg_VersusScene_PlayerBehavior
-    600 -> parseMessage PCDOTAUserMsg_QoP_ArcanaSummary
-    601 -> parseMessage PCDOTAUserMsg_HotPotato_Created
-    602 -> parseMessage PCDOTAUserMsg_HotPotato_Exploded
-    603 -> parseMessage PCDOTAUserMsg_WK_Arcana_Progress
-    604 -> parseMessage PCDOTAUserMsg_GuildChallenge_Progress
-    605 -> parseMessage PCDOTAUserMsg_WRArcanaProgress
-    606 -> parseMessage PCDOTAUserMsg_WRArcanaSummary
-    607 -> parseMessage PCDOTAUserMsg_EmptyItemSlotAlert
-    608 -> parseMessage PCDOTAUserMsg_AghsStatusAlert
-    609 -> parseMessage PCDOTAUserMsg_PingConfirmation
-    610 -> parseMessage PCDOTAUserMsg_MutedPlayers
-    611 -> parseMessage PCDOTAUserMsg_ContextualTip
-    612 -> parseMessage PCDOTAUserMsg_ChatMessage
-    613 -> parseMessage PCDOTAUserMsg_NeutralCampAlert
-    614 -> parseMessage PCDOTAUserMsg_RockPaperScissorsStarted
-    615 -> parseMessage PCDOTAUserMsg_RockPaperScissorsFinished
-    616 -> parseMessage PCDOTAUserMsg_DuelOpponentKilled
-    617 -> parseMessage PCDOTAUserMsg_DuelAccepted
-    618 -> parseMessage PCDOTAUserMsg_DuelRequested
-    619 -> parseMessage PCDOTAUserMsg_MuertaReleaseEvent_AssignedTargetKilled
-    620 -> parseMessage PCDOTAUserMsg_PlayerDraftSuggestPick
-    621 -> parseMessage PCDOTAUserMsg_PlayerDraftPick
-    622 -> parseMessage PCDOTAUserMsg_UpdateLinearProjectileCPData
-    623 -> parseMessage PCDOTAUserMsg_GiftPlayer
-    624 -> parseMessage PCDOTAUserMsg_FacetPing
-    625 -> parseMessage PCDOTAUserMsg_InnatePing
-    626 -> parseMessage PCDOTAUserMsg_RoshanTimer
-    627 -> parseMessage PCDOTAUserMsg_NeutralCraftAvailable
-    628 -> parseMessage PCDOTAUserMsg_TimerAlert
-    629 -> parseMessage PCDOTAUserMsg_MadstoneAlert
-    _   -> fail ("Unknown packet "  <> show num <> ": ") 
+    559 -> parseMsg PCDOTAUserMsg_QuestStatus
+    560 -> parseMsg PCDOTAUserMsg_SuggestHeroPick
+    561 -> parseMsg PCDOTAUserMsg_SuggestHeroRole
+    562 -> parseMsg PCDOTAUserMsg_KillcamDamageTaken
+    563 -> parseMsg PCDOTAUserMsg_SelectPenaltyGold
+    564 -> parseMsg PCDOTAUserMsg_RollDiceResult
+    565 -> parseMsg PCDOTAUserMsg_FlipCoinResult
+    568 -> parseMsg PCDOTAUserMsg_SendRoshanSpectatorPhase
+    569 -> parseMsg PCDOTAUserMsg_ChatWheelCooldown
+    570 -> parseMsg PCDOTAUserMsg_DismissAllStatPopups
+    571 -> parseMsg PCDOTAUserMsg_TE_DestroyProjectile
+    572 -> parseMsg PCDOTAUserMsg_HeroRelicProgress
+    573 -> parseMsg PCDOTAUserMsg_AbilityDraftRequestAbility
+    574 -> parseMsg PCDOTAUserMsg_ItemSold
+    575 -> parseMsg PCDOTAUserMsg_DamageReport
+    576 -> parseMsg PCDOTAUserMsg_SalutePlayer
+    577 -> parseMsg PCDOTAUserMsg_TipAlert
+    578 -> parseMsg PCDOTAUserMsg_ReplaceQueryUnit
+    579 -> parseMsg PCDOTAUserMsg_EmptyTeleportAlert
+    580 -> parseMsg PCDOTAUserMsg_MarsArenaOfBloodAttack
+    581 -> parseMsg PCDOTAUserMsg_ESArcanaCombo
+    582 -> parseMsg PCDOTAUserMsg_ESArcanaComboSummary
+    583 -> parseMsg PCDOTAUserMsg_HighFiveLeftHanging
+    584 -> parseMsg PCDOTAUserMsg_HighFiveCompleted
+    585 -> parseMsg PCDOTAUserMsg_ShovelUnearth
+    587 -> parseMsg PCDOTAUserMsg_RadarAlert
+    588 -> parseMsg PCDOTAUserMsg_AllStarEvent
+    589 -> parseMsg PCDOTAUserMsg_TalentTreeAlert
+    590 -> parseMsg PCDOTAUserMsg_QueuedOrderRemoved
+    591 -> parseMsg PCDOTAUserMsg_DebugChallenge
+    592 -> parseMsg PCDOTAUserMsg_OMArcanaCombo
+    593 -> parseMsg PCDOTAUserMsg_FoundNeutralItem
+    594 -> parseMsg PCDOTAUserMsg_OutpostCaptured
+    595 -> parseMsg PCDOTAUserMsg_OutpostGrantedXP
+    596 -> parseMsg PCDOTAUserMsg_MoveCameraToUnit
+    597 -> parseMsg PCDOTAUserMsg_PauseMinigameData
+    598 -> parseMsg PCDOTAUserMsg_VersusScene_PlayerBehavior
+    600 -> parseMsg PCDOTAUserMsg_QoP_ArcanaSummary
+    601 -> parseMsg PCDOTAUserMsg_HotPotato_Created
+    602 -> parseMsg PCDOTAUserMsg_HotPotato_Exploded
+    603 -> parseMsg PCDOTAUserMsg_WK_Arcana_Progress
+    604 -> parseMsg PCDOTAUserMsg_GuildChallenge_Progress
+    605 -> parseMsg PCDOTAUserMsg_WRArcanaProgress
+    606 -> parseMsg PCDOTAUserMsg_WRArcanaSummary
+    607 -> parseMsg PCDOTAUserMsg_EmptyItemSlotAlert
+    608 -> parseMsg PCDOTAUserMsg_AghsStatusAlert
+    609 -> parseMsg PCDOTAUserMsg_PingConfirmation
+    610 -> parseMsg PCDOTAUserMsg_MutedPlayers
+    611 -> parseMsg PCDOTAUserMsg_ContextualTip
+    612 -> parseMsg PCDOTAUserMsg_ChatMessage
+    613 -> parseMsg PCDOTAUserMsg_NeutralCampAlert
+    614 -> parseMsg PCDOTAUserMsg_RockPaperScissorsStarted
+    615 -> parseMsg PCDOTAUserMsg_RockPaperScissorsFinished
+    616 -> parseMsg PCDOTAUserMsg_DuelOpponentKilled
+    617 -> parseMsg PCDOTAUserMsg_DuelAccepted
+    618 -> parseMsg PCDOTAUserMsg_DuelRequested
+    619 -> parseMsg PCDOTAUserMsg_MuertaReleaseEvent_AssignedTargetKilled
+    620 -> parseMsg PCDOTAUserMsg_PlayerDraftSuggestPick
+    621 -> parseMsg PCDOTAUserMsg_PlayerDraftPick
+    622 -> parseMsg PCDOTAUserMsg_UpdateLinearProjectileCPData
+    623 -> parseMsg PCDOTAUserMsg_GiftPlayer
+    624 -> parseMsg PCDOTAUserMsg_FacetPing
+    625 -> parseMsg PCDOTAUserMsg_InnatePing
+    626 -> parseMsg PCDOTAUserMsg_RoshanTimer
+    627 -> parseMsg PCDOTAUserMsg_NeutralCraftAvailable
+    628 -> parseMsg PCDOTAUserMsg_TimerAlert
+    629 -> parseMsg PCDOTAUserMsg_MadstoneAlert
+    _   -> fail ("Unknown packet "  <> show num <> ": ")
   where
-  parseMessage :: forall msg res . Message msg => (msg -> res) -> Get res
-  parseMessage f = either fail (pure . f) (decodeMessage @msg bs)
+  parseMsg :: forall msg res . Message msg => (msg -> res) -> Get res
+  parseMsg f = either (fail . modifyMsg @msg) (pure . f) (decodeMessage @msg bs)
+
+  parseMsgEith :: forall msg res . Message msg => (msg -> Get res) -> Get res
+  parseMsgEith f = either (fail . modifyMsg @msg) f (decodeMessage @msg bs)
+
+modifyMsg :: forall msg . Message msg => String -> String
+modifyMsg msg = show (messageName @msg Proxy) <> msg
+
 
 
 data DemoPacketType
@@ -356,7 +366,7 @@ data DemoPacketType
   | PCSVCMsg_CmdKeyValues CSVCMsg_CmdKeyValues
   | PCSVCMsg_BSPDecal CSVCMsg_BSPDecal
   | PCSVCMsg_SplitScreen CSVCMsg_SplitScreen
-  | PCSVCMsg_PacketEntities CSVCMsg_PacketEntities
+  | PCSVCMsg_PacketEntities [(Entity, EntityOp, Int)]
   | PCSVCMsg_Prefetch CSVCMsg_Prefetch
   | PCSVCMsg_Menu CSVCMsg_Menu
   | PCSVCMsg_GetCvarValue CSVCMsg_GetCvarValue

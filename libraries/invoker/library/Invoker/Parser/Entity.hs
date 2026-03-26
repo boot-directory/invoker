@@ -20,7 +20,7 @@ import Data.Word (Word32)
 import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetInput)
 import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer, getDecoderForFieldPathSer)
 import Proto.Netmessages (CSVCMsg_PacketEntities)
-import Proto.Netmessages_Fields (updatedEntries)
+import Proto.Netmessages_Fields (updatedEntries, entityData)
 
 -- External
 import Lens.Family2 ((^.))
@@ -38,12 +38,13 @@ data Entity = MkEntity
   , active  :: Bool
   , state   :: FieldState
   }
+  deriving (Show)
 
 newEntity :: Int -> Int32 -> Class  -> Entity
 newEntity index serial entityClass = MkEntity{state=newFieldState, active=True, ..}
 
 newtype EntityOp = MkEntityOp Int
-  deriving newtype (Eq, Bits, Num)
+  deriving newtype (Eq, Bits, Num, Show)
 
 entityOpNone :: EntityOp
 entityOpNone = 0x00
@@ -79,21 +80,35 @@ data EntityParserArgs = MkEntityParserArgs
   , classIdSize :: Int
   }
 
+mkArgs :: EntityParserArgs
+mkArgs = MkEntityParserArgs{
+    classesById    = IntMap.empty,
+    classBaselines = IntMap.empty,
+    entities       = IntMap.empty, 
+    classIdSize    = 0
+  }
+
 onCSVCMsg_PacketEntities :: EntityParserArgs -> CSVCMsg_PacketEntities -> Get [(Entity, EntityOp, Int)]
-onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
+onCSVCMsg_PacketEntities args m =
+  runParser $ goEntities (-1) (m ^. updatedEntries) pure
   where
-  goEntities 0 cont = cont []
-  goEntities n cont = do
-    index <- fromIntegral . (+1) <$> readUBitVar
+  runParser getA =
+    case runGetInput (m ^. entityData) getA of
+      Left (err, _bs) -> fail ("PacketEntities " <> err)
+      Right res       -> pure res
+
+  goEntities _index 0 cont = cont []
+  goEntities  index n cont = do
+    newIndex <- (+index) . fromIntegral . (+1) <$> readUBitVar
     cmd <- readBits 2
     x <-
       if cmd .&. 0b01 == 0
       then
         if cmd .&. 0b10 /= 0
-        then branch1 index
-        else branch2 index
-      else branch3 cmd index
-    goEntities (n-1) (\xs -> cont (x:xs))
+        then branch1 newIndex
+        else branch2 newIndex
+      else branch3 cmd newIndex
+    goEntities newIndex (n-1) (\xs -> cont (x:xs))
 
   branch1 :: Int -> Get (Entity, EntityOp, Int)
   branch1 index = do
@@ -109,8 +124,10 @@ onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
     let incompleteEntity = newEntity index serial class'
         serializer = fromMaybe (undefined) class'.serializer
 
-    fs1 <- readFields serializer incompleteEntity.state
-    fs2 <- either (error . fst) pure (runGetInput (readFields serializer fs1) baseline)
+    fs1 <-
+      either (fail . fst) (pure)
+        (runGetInput baseline (readFields serializer incompleteEntity.state) )
+    fs2 <- readFields serializer fs1
 
     let op = entityOpCreated .|. entityOpEntered
         entity = incompleteEntity{state = fs2}
@@ -128,7 +145,10 @@ onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
           then incompleteOp
           else incompleteOp .|. entityOpNone
 
-    pure (incompleteEntity, op, index)
+    let serializer = fromMaybe (undefined) incompleteEntity.entityClass.serializer
+    fs <- readFields serializer incompleteEntity.state
+
+    pure (incompleteEntity{state = fs}, op, index)
 
   branch3 :: Word32 -> Int -> Get (Entity, EntityOp, Int)
   branch3 cmd index = do
@@ -153,10 +173,12 @@ onCSVCMsg_PacketEntities args m = goEntities (m ^. updatedEntries) pure
 -------------------------------------------------------------------------------
 
 data FieldState = MkFieldState {fieldState :: Vector FieldValue}
+  deriving (Show)
 
 data FieldValue
   = FVState FieldState
   | FVValue !DecodedField
+  deriving (Show)
 
 newFieldState :: FieldState
 newFieldState = (MkFieldState . V.replicate 8 . FVState . MkFieldState) mempty
@@ -480,3 +502,4 @@ data Class = MkClass
   , name       :: Text 
   , serializer :: Maybe Serializer
   }
+  deriving (Show)

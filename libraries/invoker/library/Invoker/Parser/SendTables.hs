@@ -442,6 +442,7 @@ data DecodedField
   | DfFloat32Normal Float Float Float
   | DfBool Bool
   | DfVec [DecodedField]
+  deriving (Show)
 
 instance Show (Get DecodedField) where
   show _ = "()"

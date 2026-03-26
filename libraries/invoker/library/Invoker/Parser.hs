@@ -210,7 +210,7 @@ parseMessage typeId bytes = do
 
 runParser :: forall msg . IsMessageType msg => ByteString -> Get msg -> MessageType
 runParser bs parser =
-  either toFailedMessage toMessageType (runGetInput parser bs)
+  either toFailedMessage toMessageType (runGetInput bs parser)
   where
   toFailedMessage = uncurry (FailedParsingMessage (packetNum @msg))
 
