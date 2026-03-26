@@ -16,7 +16,7 @@ import Invoker.Binary
   , readBytes
   , getUVarInt32
   )
-import Invoker.Parser.Entity (Entity, EntityOp, mkArgs, onCSVCMsg_PacketEntities)
+-- import Invoker.Parser.Entity (Entity, EntityOp, mkArgs, onCSVCMsg_PacketEntities)
 import Proto.DotaGcmessagesClient
 import Proto.DotaMatchMetadata
 import Proto.DotaSharedEnums
@@ -96,7 +96,7 @@ callByPacketType (num, bs) = do
     52  -> parseMsg PCSVCMsg_CmdKeyValues
     53  -> parseMsg PCSVCMsg_BSPDecal
     54  -> parseMsg PCSVCMsg_SplitScreen
-    55  -> parseMsgEith (fmap PCSVCMsg_PacketEntities . onCSVCMsg_PacketEntities mkArgs)
+    55  -> parseMsg PCSVCMsg_PacketEntities -- parseMsgEith (fmap PCSVCMsg_PacketEntities . onCSVCMsg_PacketEntities mkArgs)
     56  -> parseMsg PCSVCMsg_Prefetch
     57  -> parseMsg PCSVCMsg_Menu
     58  -> parseMsg PCSVCMsg_GetCvarValue
@@ -330,8 +330,8 @@ callByPacketType (num, bs) = do
   parseMsg :: forall msg res . Message msg => (msg -> res) -> Get res
   parseMsg f = either (fail . modifyMsg @msg) (pure . f) (decodeMessage @msg bs)
 
-  parseMsgEith :: forall msg res . Message msg => (msg -> Get res) -> Get res
-  parseMsgEith f = either (fail . modifyMsg @msg) f (decodeMessage @msg bs)
+  -- parseMsgEith :: forall msg res . Message msg => (msg -> Get res) -> Get res
+  -- parseMsgEith f = either (fail . modifyMsg @msg) f (decodeMessage @msg bs)
 
 modifyMsg :: forall msg . Message msg => String -> String
 modifyMsg msg = show (messageName @msg Proxy) <> msg
@@ -366,7 +366,7 @@ data DemoPacketType
   | PCSVCMsg_CmdKeyValues CSVCMsg_CmdKeyValues
   | PCSVCMsg_BSPDecal CSVCMsg_BSPDecal
   | PCSVCMsg_SplitScreen CSVCMsg_SplitScreen
-  | PCSVCMsg_PacketEntities [(Entity, EntityOp, Int)]
+  | PCSVCMsg_PacketEntities CSVCMsg_PacketEntities -- [(Entity, EntityOp, Int)]
   | PCSVCMsg_Prefetch CSVCMsg_Prefetch
   | PCSVCMsg_Menu CSVCMsg_Menu
   | PCSVCMsg_GetCvarValue CSVCMsg_GetCvarValue
