@@ -71,26 +71,6 @@ Library
         -dlint
         -dno-suppress-core-sizes
 
-executable invoker
-  import: exts
-  default-language: GHC2021
-  main-is: invoker.hs
-  build-depends:
-      base >=4.7 && <5
-    , bytestring
-    , invoker
-  ghc-options:
-    -threaded
-    -O2
-    -Wall
-    -Wunused-packages
-    -rtsopts
-  if impl(ghc >= 9.4)
-    ghc-prof-options:
-      -fprof-late
-  ghc-prof-options:
-    "-with-rtsopts=-s -A8m -AL8m -p -hc -L250 -l-agu -N1"
-
 test-suite invoker-tests
   type:             exitcode-stdio-1.0
   main-is:          tests.hs

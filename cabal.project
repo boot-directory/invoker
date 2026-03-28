@@ -1,3 +1,4 @@
 packages:
+  ./contribution/invoker-debug
   ./libraries/invoker-proto
   ./libraries/invoker

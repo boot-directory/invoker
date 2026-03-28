@@ -14,6 +14,8 @@
     # };
     invoker = {
       libraryProfiling = true;
+    };
+    invoker-debug = {
       executableProfiling = true;
     };
     invoker-proto = {
