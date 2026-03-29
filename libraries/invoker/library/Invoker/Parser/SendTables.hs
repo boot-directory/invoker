@@ -18,7 +18,7 @@ import Data.Vector (Vector)
 import Data.Vector qualified as V
 
 -- Internal
-import Invoker.Binary
+import BinaryBuff
   ( Get
   , readBytes, readBits, readStringEof
   , getUVarInt64, getUVarInt32

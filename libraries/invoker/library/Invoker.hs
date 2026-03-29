@@ -2,6 +2,7 @@ module Invoker
   ( -- * Buffer
     Buffer, readFromBuffer, IoErrors(..)
   , BufferArgs(..), mkBuffer
+  , mkFileBufferArgs
     -- * Demo parsing
   , runParserLoop, ParserState(..)
   , OuterMessage(..)
@@ -9,13 +10,14 @@ module Invoker
   , SendTables(..)
   ) where
 
+import BinaryBuff
+  ( Buffer, readFromBuffer, IoErrors(..)
+  , BufferArgs(..), mkBuffer
+  , mkFileBufferArgs
+  )
 import Invoker.Parser
   ( runParserLoop, ParserState(..)
   , OuterMessage(..)
   , MessageType(..)
-  )
-import Invoker.Binary
-  ( Buffer, readFromBuffer, IoErrors(..)
-  , BufferArgs(..), mkBuffer
   )
 import Invoker.Parser.SendTables (SendTables(..))

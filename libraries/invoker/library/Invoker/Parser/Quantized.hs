@@ -13,7 +13,7 @@ import Data.Word
 import GHC.Float (castWord32ToFloat)
 
 -- Internal
-import Invoker.Binary
+import BinaryBuff
 
 
 -------------------------------------------------------------------------------

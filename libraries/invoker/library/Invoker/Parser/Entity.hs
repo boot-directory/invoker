@@ -17,7 +17,7 @@ import Data.Vector qualified as V
 import Data.Word (Word32)
 
 -- Internal
-import Invoker.Binary (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetInput)
+import BinaryBuff (Get, readBits, readUBitVar, readUBitVarFieldPath, getVarInt32, readBoolean, getUVarInt32, runGetInput)
 import Invoker.Parser.SendTables (DecodedField, FieldPath (..), Serializer, getDecoderForFieldPathSer)
 import Proto.Netmessages (CSVCMsg_PacketEntities)
 import Proto.Netmessages_Fields (updatedEntries, entityData)

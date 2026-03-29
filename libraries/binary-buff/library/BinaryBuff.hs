@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Invoker.Binary where
+module BinaryBuff where
 
 import Control.Exception (Exception, throwIO)
 import Control.Monad (when)
@@ -13,6 +13,7 @@ import Data.IORef (newIORef, readIORef, writeIORef)
 import Data.Int
 import Data.Word
 import GHC.Float (castWord32ToFloat)
+import System.IO (IOMode (..), hClose, openBinaryFile)
 
 -------------------------------------------------------------------------------
 -- * Buffered IO
@@ -62,6 +63,13 @@ readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runG
     (Done leftover _consumed packet) -> packet <$ updateReadBuff leftover
     (Fail _leftover _consumed msg) -> error msg
 
+mkFileBufferArgs :: FilePath -> IO BufferArgs
+mkFileBufferArgs fp = do
+  h <- openBinaryFile fp ReadMode
+  pure MkBufferArgs
+    { readChunk     = BS.hGetSome h 4096
+    , closeResourse = hClose h
+    }
 
 -------------------------------------------------------------------------------
 -- * reader
@@ -74,8 +82,8 @@ debugGet :: Get a -> ByteString -> a
 debugGet getA bs =
   case pushEndOfInput $ pushChunk (runGetIncremental getA) bs of
     Done _left _offset a -> a
-    Partial _ -> error "Invoker.Binary.debugGet not enough input"
-    Fail _ pos msg -> error ("Invoker.Binary.debugGet at position " ++ show pos ++ ": " ++ msg)
+    Partial _ -> error "BinaryBuff.debugGet not enough input"
+    Fail _ pos msg -> error ("BinaryBuff.debugGet at position " ++ show pos ++ ": " ++ msg)
 
 runGetInput :: ByteString -> Get a -> Either (String, ByteString) a
 runGetInput bs getA =
@@ -185,9 +193,9 @@ readStringEof = (\f -> BS.pack $ f []) <$> goReadStringEof id
     then pure build
     else goReadStringEof (build . (byte:))
 
---
+-------------------------------------------------------------------------------
 -- ** Get
---
+-------------------------------------------------------------------------------
 
 readBoolean :: Get Bool
 readBoolean = (1 ==) <$> readBits 1

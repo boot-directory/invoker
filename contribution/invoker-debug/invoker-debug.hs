@@ -1,15 +1,13 @@
 {-# LANGUAGE OverloadedRecordDot #-}
 module Main where
 
-import Data.ByteString as BS (hGetSome)
 import Data.IORef (readIORef)
-import System.IO (IOMode (..), hClose, openBinaryFile)
 
 import Invoker
-  ( BufferArgs(..)
-  , OuterMessage(..)
+  ( OuterMessage(..)
   , MessageType(..)
   , runParserLoop, ParserState(..)
+  , mkFileBufferArgs
   )
 
 main :: IO ()
@@ -25,11 +23,3 @@ onMsg msg = case msg.omMsg of
   m@UnknownMessage{}       -> print m
   m@FailedParsingMessage{} -> print m
   _                        -> pure ()
-
-mkFileBufferArgs :: FilePath -> IO BufferArgs
-mkFileBufferArgs fp = do
-  h <- openBinaryFile fp ReadMode
-  pure MkBufferArgs
-    { readChunk     = BS.hGetSome h 4096
-    , closeResourse = hClose h
-    }

@@ -1,4 +1,5 @@
 packages:
   ./contribution/invoker-debug
+  ./libraries/binary-buff
   ./libraries/invoker-proto
   ./libraries/invoker

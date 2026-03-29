@@ -1,6 +1,6 @@
 Cabal-version:      3.0
 
-name:               invoker
+name:               binary-buff
 version:            0.0.0.1
 
 build-type:         Simple
@@ -24,13 +24,8 @@ Library
   import: exts
   default-language: GHC2021
   exposed-modules:
-    Invoker
+    BinaryBuff
   other-modules:
-    Invoker.Parser
-    Invoker.Parser.DemoPacket
-    Invoker.Parser.Entity
-    Invoker.Parser.Quantized
-    Invoker.Parser.SendTables
   hs-source-dirs:
     ./library/
   ghc-options:
@@ -39,20 +34,9 @@ Library
   build-depends:
     -- GHC included libraries
       base >= 4.7 && <5
+    , binary
     , bytestring
-    , text
-    , vector
-    , containers
-
-    -- Internal
-    , invoker-proto
-    , binary-buff
-
-    -- External
-    , snappy
-    , proto-lens
-    , lens-family
-    , unordered-containers
+    , mtl
 
   if flag(dev)
     GHC-Options:
@@ -68,9 +52,3 @@ Library
       ghc-options:
         -dlint
         -dno-suppress-core-sizes
-
-test-suite invoker-tests
-  type:             exitcode-stdio-1.0
-  main-is:          tests.hs
-  build-depends:    base
-  default-language: GHC2021

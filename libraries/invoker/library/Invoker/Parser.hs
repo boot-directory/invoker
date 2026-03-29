@@ -14,7 +14,7 @@ import Data.Text as T (Text)
 import Data.Word (Word32, Word64)
 
 -- Internal
-import Invoker.Binary
+import BinaryBuff
   ( Get
   , readBytes
   , getUVarInt32
