@@ -1,12 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Invoker.DotaGC where
 
-import Data.Aeson (FromJSON (..), withObject, (.:), decode)
-import Network.HTTP.Client
+-- GHC included
 import Control.Monad ((<=<))
+
+-- Internal
 import BinaryBuff
 
+-- External
+import Data.Aeson (FromJSON (..), withObject, (.:), decode)
+import Network.HTTP.Client
 
+-------------------------------------------------------------------------------
+-- * Game coordinator connection
+-------------------------------------------------------------------------------
 
 dotaAppId :: Int
 dotaAppId = 570
@@ -27,7 +34,7 @@ getCmListReq = parseRequest_ "http://api.steampowered.com/ISteamDirectory/GetCML
 
 
 -------------------------------------------------------------------------------
--- Connection managers list parser
+-- * Connection managers list parsing
 -------------------------------------------------------------------------------
 
 data CmList = MkCmList {cmList :: [ConnectionManager]}

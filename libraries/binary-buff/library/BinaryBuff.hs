@@ -2,11 +2,12 @@
 
 module BinaryBuff where
 
-import Control.Exception (Exception, throwIO, SomeException, catch, finally)
+-- GHC included
+import Control.Exception (Exception, SomeException, catch, finally, throwIO)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
-import Data.Binary.Get qualified as Binary (Get, runGetIncremental, isEmpty)
+import Data.Binary.Get qualified as Binary (Get, isEmpty, runGetIncremental)
 import Data.Bits
 import Data.ByteString as BS
 import Data.IORef (newIORef, readIORef, writeIORef)
@@ -14,6 +15,8 @@ import Data.Int
 import Data.Word
 import GHC.Float (castWord32ToFloat)
 import System.IO (IOMode (..), hClose, openBinaryFile)
+
+-- External
 import Network.Socket (close, ShutdownCmd (..), shutdown, socket, AddrInfo (..), SocketType (..), defaultProtocol, connect, defaultHints, getAddrInfo, AddrInfoFlag (..), HostName, ServiceName)
 import Network.Socket.ByteString (recv, sendAll)
 
@@ -97,6 +100,7 @@ mkTcpBufferArgs host port = do
             (finally (shutdown sock ShutdownBoth) (close sock))
             (const $ pure ())
       pure MkBufferArgs{..}
+
 
 -------------------------------------------------------------------------------
 -- * reader
@@ -219,6 +223,7 @@ readStringEof = (\f -> BS.pack $ f []) <$> goReadStringEof id
     if byte == 0
     then pure build
     else goReadStringEof (build . (byte:))
+
 
 -------------------------------------------------------------------------------
 -- ** Get

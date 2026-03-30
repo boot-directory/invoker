@@ -15,6 +15,8 @@ import Invoker
   , runParserLoop, ParserState(..)
   , connectToGC
   )
+
+-- External
 import Network.HTTP.Client
 
 
