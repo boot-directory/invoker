@@ -2,7 +2,7 @@
 
 module BinaryBuff where
 
-import Control.Exception (Exception, throwIO)
+import Control.Exception (Exception, throwIO, SomeException, catch, finally)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
@@ -14,19 +14,23 @@ import Data.Int
 import Data.Word
 import GHC.Float (castWord32ToFloat)
 import System.IO (IOMode (..), hClose, openBinaryFile)
+import Network.Socket (close, ShutdownCmd (..), shutdown, socket, AddrInfo (..), SocketType (..), defaultProtocol, connect, defaultHints, getAddrInfo, AddrInfoFlag (..), HostName, ServiceName)
+import Network.Socket.ByteString (recv, sendAll)
 
 -------------------------------------------------------------------------------
 -- * Buffered IO
 -------------------------------------------------------------------------------
 
 data Buffer = MkBuffer
-  { readBuff :: IO BS.ByteString
+  { runReadBuff    :: IO BS.ByteString
   , updateReadBuff :: BS.ByteString -> IO ()
-  , destroyBuff :: IO ()
+  , runWriteBuff   :: ByteString -> IO ()
+  , destroyBuff    :: IO ()
   }
 
 data BufferArgs = MkBufferArgs
   { readChunk     :: IO ByteString
+  , writeChunk    :: ByteString -> IO ()
   , closeResourse :: IO ()
   }
 
@@ -37,7 +41,7 @@ mkBuffer MkBufferArgs{..} = do
 
   pure MkBuffer
     { updateReadBuff
-    , readBuff = do
+    , runReadBuff = do
       currentBuffer <- readIORef buff
       if (not . BS.null) currentBuffer
       then updateReadBuff mempty *> pure currentBuffer
@@ -46,6 +50,7 @@ mkBuffer MkBufferArgs{..} = do
         if BS.null sockBytes
         then throwIO UnexpectedEof
         else pure sockBytes
+    , runWriteBuff = writeChunk
     , destroyBuff = do
       closeResourse
       updateReadBuff mempty
@@ -55,21 +60,43 @@ data IoErrors = UnexpectedEof
   deriving (Show, Exception)
 
 readFromBuffer :: Buffer -> Get a -> IO a
-readFromBuffer MkBuffer{readBuff, updateReadBuff} parser = runBufferReader (runGetIncremental parser)
+readFromBuffer MkBuffer{runReadBuff, updateReadBuff} parser = runBufferReader (runGetIncremental parser)
   where
   runBufferReader :: Decoder a -> IO a
   runBufferReader dec = case dec of
-    (Partial decoder) -> readBuff >>= runBufferReader . decoder . Just
+    (Partial decoder) -> runReadBuff >>= runBufferReader . decoder . Just
     (Done leftover _consumed packet) -> packet <$ updateReadBuff leftover
     (Fail _leftover _consumed msg) -> error msg
+
+writeToBuffer :: Buffer -> ByteString -> IO ()
+writeToBuffer MkBuffer{runWriteBuff} bs = runWriteBuff bs
 
 mkFileBufferArgs :: FilePath -> IO BufferArgs
 mkFileBufferArgs fp = do
   h <- openBinaryFile fp ReadMode
   pure MkBufferArgs
     { readChunk     = BS.hGetSome h 4096
+    , writeChunk    = hPut h
     , closeResourse = hClose h
     }
+
+mkTcpBufferArgs :: HostName -> ServiceName -> IO BufferArgs
+mkTcpBufferArgs host port = do
+  let hints = defaultHints{addrFlags = [AI_ADDRCONFIG], addrSocketType = Stream}
+  addrs <- getAddrInfo (Just hints) (Just host) (Just port)
+  case addrs of
+    []     -> error "Connection error"
+    addr:_ -> do
+      sock <- socket (addrFamily addr) Stream defaultProtocol
+      connect sock (addrAddress addr)
+      let
+        readChunk = recv sock 4096
+        writeChunk = sendAll sock 
+        closeResourse =
+          catch @SomeException
+            (finally (shutdown sock ShutdownBoth) (close sock))
+            (const $ pure ())
+      pure MkBufferArgs{..}
 
 -------------------------------------------------------------------------------
 -- * reader

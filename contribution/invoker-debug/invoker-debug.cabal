@@ -26,6 +26,8 @@ executable invoker-debug
   main-is: invoker-debug.hs
   build-depends:
       base >=4.7 && <5
+    , binary-buff
+    , http-client
     , invoker
   ghc-options:
     -threaded

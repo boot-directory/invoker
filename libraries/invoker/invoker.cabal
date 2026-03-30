@@ -27,6 +27,7 @@ Library
     Invoker
   other-modules:
     Invoker.Parser
+    Invoker.DotaGC
     Invoker.Parser.DemoPacket
     Invoker.Parser.Entity
     Invoker.Parser.Quantized
@@ -53,6 +54,8 @@ Library
     , proto-lens
     , lens-family
     , unordered-containers
+    , aeson
+    , http-client
 
   if flag(dev)
     GHC-Options:

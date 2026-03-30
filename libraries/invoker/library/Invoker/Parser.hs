@@ -20,7 +20,7 @@ import BinaryBuff
   , getUVarInt32
   , getWord32le
   , getInt32le
-  , Buffer, readFromBuffer, BufferArgs, mkBuffer, IoErrors, runGetInput
+  , Buffer, readFromBuffer, IoErrors, runGetInput
   )
 import Invoker.Parser.SendTables
     ( SendTables(..), parseSendTables
@@ -49,18 +49,18 @@ import Data.HashMap.Strict as HashMap (empty)
 -- * Parser loop
 -------------------------------------------------------------------------------
 
-runParserLoop :: BufferArgs -> (OuterMessage -> IO ()) -> (ParserState -> IO ()) -> IO ()
-runParserLoop bufArgs onMsg finalizer = do
-  state@MkParserState{..} <- initParserState bufArgs
+runParserLoop :: Buffer -> (OuterMessage -> IO ()) -> (ParserState -> IO ()) -> IO ()
+runParserLoop buffer onMsg finalizer = do
+  state <- initParserState buffer
   catch
     (
       do
       _header <- readFromBuffer buffer readHeader
       forever $ do
-        modifyIORef counter (+1)
+        modifyIORef state.counter (+1)
         msg <- readFromBuffer buffer readOuterMessage
         case msg.omMsg of
-          SendTables sendTables -> writeIORef serializers sendTables.stSerializers
+          SendTables sendTables -> writeIORef state.serializers sendTables.stSerializers
           _ -> onMsg msg
     )
     (\(_e :: IoErrors) -> finalizer state)
@@ -71,10 +71,9 @@ data ParserState = MkParserState
   , counter :: IORef Word64
   }
 
-initParserState :: BufferArgs -> IO ParserState
-initParserState bufArgs = do
+initParserState :: Buffer -> IO ParserState
+initParserState buffer = do
   serializers <- newIORef HashMap.empty
-  buffer <- mkBuffer bufArgs
   counter <- newIORef 0
   pure MkParserState{..}
 

@@ -1,18 +1,20 @@
 module Invoker
   ( -- * Buffer
     Buffer, readFromBuffer, IoErrors(..)
-  , BufferArgs(..), mkBuffer
+  , BufferArgs(..)
   , mkFileBufferArgs
     -- * Demo parsing
   , runParserLoop, ParserState(..)
   , OuterMessage(..)
   , MessageType(..)
   , SendTables(..)
+    -- * Game coordinator communication
+  , connectToGC
   ) where
 
 import BinaryBuff
   ( Buffer, readFromBuffer, IoErrors(..)
-  , BufferArgs(..), mkBuffer
+  , BufferArgs(..)
   , mkFileBufferArgs
   )
 import Invoker.Parser
@@ -21,3 +23,4 @@ import Invoker.Parser
   , MessageType(..)
   )
 import Invoker.Parser.SendTables (SendTables(..))
+import Invoker.DotaGC (connectToGC)

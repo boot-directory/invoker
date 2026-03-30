@@ -38,6 +38,9 @@ Library
     , bytestring
     , mtl
 
+    -- External dependencies
+    , network < 4
+
   if flag(dev)
     GHC-Options:
       -ddump-to-file
