@@ -9,7 +9,7 @@ result-*
 dist*
 
 # demos
-libraries/invoker/demos
+**/demos
 
 # generic wip files
 ~*

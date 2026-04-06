@@ -8,8 +8,6 @@ module Invoker
   , OuterMessage(..)
   , MessageType(..)
   , SendTables(..)
-    -- * Game coordinator communication
-  , connectToGC
   ) where
 
 import BinaryBuff
@@ -23,4 +21,3 @@ import Invoker.Parser
   , MessageType(..)
   )
 import Invoker.Parser.SendTables (SendTables(..))
-import Invoker.DotaGC (connectToGC)

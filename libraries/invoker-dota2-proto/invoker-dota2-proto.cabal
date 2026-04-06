@@ -1,6 +1,6 @@
 Cabal-version:      3.0
 
-name:               invoker-proto
+name:               invoker-dota2-proto
 version:            0.0.0.1
 
 build-type:         Simple

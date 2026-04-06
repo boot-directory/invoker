@@ -1,5 +1,6 @@
 packages:
   ./contribution/invoker-debug
   ./libraries/binary-buff
-  ./libraries/invoker-proto
-  ./libraries/invoker
+  ./libraries/invoker-dota2
+  ./libraries/invoker-dota2-proto
+  ./libraries/invoker-steam

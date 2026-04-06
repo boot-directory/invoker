@@ -28,7 +28,8 @@ executable invoker-debug
       base >=4.7 && <5
     , binary-buff
     , http-client
-    , invoker
+    , invoker-dota2
+    , invoker-steam
   ghc-options:
     -threaded
     -O2

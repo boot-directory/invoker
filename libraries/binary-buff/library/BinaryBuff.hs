@@ -6,6 +6,7 @@ module BinaryBuff where
 import Control.Exception (Exception, SomeException, catch, finally, throwIO)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
+import Data.Bifunctor (first)
 import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
 import Data.Binary.Get qualified as Binary (Get, isEmpty, runGetIncremental)
 import Data.Bits
@@ -116,8 +117,11 @@ debugGet getA bs =
     Partial _ -> error "BinaryBuff.debugGet not enough input"
     Fail _ pos msg -> error ("BinaryBuff.debugGet at position " ++ show pos ++ ": " ++ msg)
 
-runGetInput :: ByteString -> Get a -> Either (String, ByteString) a
-runGetInput bs getA =
+runGetInput :: ByteString -> Get a -> Either String a
+runGetInput bs reader = first fst $ runGetInputBs bs reader
+
+runGetInputBs :: ByteString -> Get a -> Either (String, ByteString) a
+runGetInputBs bs getA =
   case pushEndOfInput $ pushChunk (runGetIncremental getA) bs of
     Done _left _offset a -> Right a
     Partial _            -> Left ("Not enough input", bs)

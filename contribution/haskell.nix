@@ -18,7 +18,7 @@
     invoker-debug = {
       executableProfiling = true;
     };
-    invoker-proto = {
+    invoker-dota2-proto = {
       libraryProfiling = true;
     };
   };

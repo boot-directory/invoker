@@ -94,7 +94,7 @@ onCSVCMsg_PacketEntities args m =
   where
   runParser getA =
     case runGetInput (m ^. entityData) getA of
-      Left (err, _bs) -> fail ("PacketEntities " <> err)
+      Left err -> fail ("PacketEntities " <> err)
       Right res       -> pure res
 
   goEntities _index 0 cont = cont []
@@ -125,7 +125,7 @@ onCSVCMsg_PacketEntities args m =
         serializer = fromMaybe (undefined) class'.serializer
 
     fs1 <-
-      either (fail . fst) (pure)
+      either fail pure
         (runGetInput baseline (readFields serializer incompleteEntity.state) )
     fs2 <- readFields serializer fs1
 
