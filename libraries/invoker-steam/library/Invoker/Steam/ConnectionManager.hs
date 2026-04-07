@@ -11,7 +11,7 @@ import Data.Word (Word32, Word64)
 
 -- Internal
 import BinaryBuff
-import Invoker.Steam.Crypto (generateSessionKey, SessionKey, symmetricDecrypt)
+import Invoker.Steam.Crypto (generateSessionKey, SessionKey(..), symmetricDecrypt)
 
 -- External
 import Data.Aeson (FromJSON (..), decode, withObject, (.:))
@@ -26,47 +26,69 @@ connectToGC :: Manager -> IO Buffer
 connectToGC manager = do
   buffer <- initSteamConnection manager
 
-  serverHello <- readFromBuffer buffer readServerHello
+  serverHello <- readFromBuffer buffer readChannelEncryptRequest
 
   sessionKey <- generateSessionKey serverHello.nonce
-  putStrLn "Setting up session"
   writeChannelEncryptResponse buffer
     MkChannelEncryptResponse
       { protocol   = serverHello.protocol
-      , sessionKey = sessionKey
-      , keyCrc     = crc32 sessionKey
+      , sessionKey = sessionKey.encrypted
+      , keyCrc     = crc32 sessionKey.encrypted
       }
-  putStrLn "Reading response"
-  bs <- readFromBuffer buffer (readPacket (readBytes 1))
-  print bs
+  _result <- readFromBuffer buffer readChannelEncryptResult
 
   pure buffer
 
-readPacketT :: (ByteString -> ByteString) -> Get a -> Get a
+readPacketT :: (ByteString -> ByteString) -> (Word32 -> Get a) -> Get a
 readPacketT f get = do
   len <- getWord32le
   magic <- readBytes 4
   when (magic /= "VT01") $ fail ("GC: Unexpected magic bytes: " <> show magic)
   bytes <- readBytes (fromIntegral len)
   either fail pure $ runGetInput (f bytes) do
-    _emsg <- getWord32le
-    get
+    emsg <- getWord32le
+    get emsg
 
-readPacket :: Get a -> Get a
+readPacket :: (Word32 -> Get a) -> Get a
 readPacket get = readPacketT id get
 
-readEncryptedPacket :: SessionKey -> Get a -> Get a
+readEncryptedPacket :: SessionKey -> (Word32 -> Get a) -> Get a
 readEncryptedPacket sk get = readPacketT (symmetricDecrypt sk True) get
 
-readServerHello :: Get ServerHello
-readServerHello =
-  readPacket do
+readChannelEncryptRequest :: Get ChannelEncryptRequest
+readChannelEncryptRequest =
+  readPacket \_num -> do
+    targetJobID <- getWord64le
+    sourceJobID <- getWord64le
     protocol <- getWord32le
     universe <- getWord32le
     nonce <- readBytes 16
-    _skipped <- readBytes 16
-    pure MkServerHello{..}
+    pure MkChannelEncryptRequest{..}
 
+data ChannelEncryptRequest = MkChannelEncryptRequest
+  { targetJobID :: Word64
+  , sourceJobID :: Word64
+  , protocol :: Word32
+  , universe :: Word32
+  , nonce :: ByteString
+  }
+  deriving (Show)
+
+
+readChannelEncryptResult :: Get ChannelEncryptResult
+readChannelEncryptResult =
+  readPacket \_num -> do
+    targetJobID <- getWord64le
+    sourceJobID <- getWord64le
+    status <- getWord32le
+    pure MkChannelEncryptResult{..}
+
+data ChannelEncryptResult = MkChannelEncryptResult
+  { targetJobID :: Word64
+  , sourceJobID :: Word64
+  , status :: Word32
+  }
+  deriving Show
 
 wrapPacket :: Builder -> ByteString
 wrapPacket bodyBuilder =
@@ -76,13 +98,6 @@ wrapPacket bodyBuilder =
   in
     (toStrict . toLazyByteString)
       (word32LE len <> "VT01" <> bodyBuilder)
-
-data ServerHello = MkServerHello
-  { protocol :: Word32
-  , universe :: Word32
-  , nonce :: ByteString
-  }
-  deriving (Show)
 
 writeChannelEncryptResponse :: Buffer -> ChannelEncryptResponse -> IO ()
 writeChannelEncryptResponse buf resp = do
