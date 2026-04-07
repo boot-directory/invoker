@@ -3,7 +3,7 @@
 module BinaryBuff where
 
 -- GHC included
-import Control.Exception (Exception, SomeException, catch, finally, throwIO)
+import Control.Exception (Exception, SomeException, catch, finally, throwIO, throw, handle)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Bifunctor (first)
@@ -87,9 +87,12 @@ mkFileBufferArgs fp = do
 mkTcpBufferArgs :: HostName -> ServiceName -> IO BufferArgs
 mkTcpBufferArgs host port = do
   let hints = defaultHints{addrFlags = [AI_ADDRCONFIG], addrSocketType = Stream}
-  addrs <- getAddrInfo (Just hints) (Just host) (Just port)
+  addrs <-
+    handle
+      (throw . GetAddrInfoError)
+      (getAddrInfo (Just hints) (Just host) (Just port))
   case addrs of
-    []     -> error "Connection error"
+    []     -> throw NoAddressResolved
     addr:_ -> do
       sock <- socket (addrFamily addr) Stream defaultProtocol
       connect sock (addrAddress addr)
@@ -101,6 +104,11 @@ mkTcpBufferArgs host port = do
             (finally (shutdown sock ShutdownBoth) (close sock))
             (const $ pure ())
       pure MkBufferArgs{..}
+
+data BufferInitError where
+  NoAddressResolved :: BufferInitError
+  GetAddrInfoError :: SomeException -> BufferInitError
+  deriving (Show, Exception)
 
 
 -------------------------------------------------------------------------------

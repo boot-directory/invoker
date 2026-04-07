@@ -13,7 +13,7 @@ import Invoker
   , MessageType(..)
   , runParserLoop, ParserState(..)
   )
-import Invoker.Steam (connectToGC)
+import Invoker.Steam (initConnectionManager)
 
 -- External
 import Network.HTTP.Client
@@ -30,7 +30,7 @@ main = do
   --------------------------------------------
   manager <- newManager defaultManagerSettings
 
-  _steamGcBuffer <- connectToGC manager
+  _steamGcBuffer <- initConnectionManager manager
 
   --------------------------------------------
   -- Demo parsing

@@ -1,5 +1,5 @@
 module Invoker.Steam
-  ( connectToGC
+  ( initConnectionManager
   ) where
 
-import Invoker.Steam.ConnectionManager
+import Invoker.Steam.ConnectionManager (initConnectionManager)

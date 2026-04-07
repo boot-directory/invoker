@@ -26,8 +26,10 @@ Library
   exposed-modules:
     Invoker.Steam
   other-modules:
-    Invoker.Steam.Crypto
     Invoker.Steam.ConnectionManager
+    Invoker.Steam.Crypto
+    Invoker.Steam.Packets.Handshake
+    Invoker.Steam.Packets.Internal
   hs-source-dirs:
     ./library/
   ghc-options:
