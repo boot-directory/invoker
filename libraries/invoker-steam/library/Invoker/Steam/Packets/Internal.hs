@@ -65,12 +65,14 @@ data Header = MkHeader
   , sourceJobID :: Word64
   }
 
-mkHeader :: Word32 -> Header
-mkHeader eMsg = MkHeader
-  { targetJobID = jobIdNone
-  , sourceJobID = jobIdNone
-  , ..
-  }
+mkHeader :: Enum packetEnum => packetEnum -> Header
+mkHeader eMsgEnum =
+  let eMsg = fromIntegral (fromEnum eMsgEnum)
+  in MkHeader
+    { targetJobID = jobIdNone
+    , sourceJobID = jobIdNone
+    , ..
+    }
 
 encodeHeader :: Header -> Builder
 encodeHeader MkHeader{..} = ""

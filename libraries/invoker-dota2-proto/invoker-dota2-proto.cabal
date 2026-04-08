@@ -100,6 +100,8 @@ Library
     Proto.DotaGcmessagesCommonCraftworks_Fields
     Proto.DotaGcmessagesCommonFightingGame
     Proto.DotaGcmessagesCommonFightingGame_Fields
+    Proto.DotaGcmessagesCommonItemBattler
+    Proto.DotaGcmessagesCommonItemBattler_Fields
     Proto.DotaGcmessagesCommonLeague
     Proto.DotaGcmessagesCommonLeague_Fields
     Proto.DotaGcmessagesCommonLobby
@@ -157,6 +159,8 @@ Library
     Proto.NetworksystemProtomessages_Fields
     Proto.PredictionEvents
     Proto.PredictionEvents_Fields
+    Proto.Source2SteamStats
+    Proto.Source2SteamStats_Fields
     Proto.SteamdatagramMessagesAuth
     Proto.SteamdatagramMessagesAuth_Fields
     Proto.SteamdatagramMessagesSdr

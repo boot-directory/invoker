@@ -116,6 +116,11 @@ cacheDuration ::
    Data.ProtoLens.Field.HasField s "cacheDuration" a) =>
   Lens.Family2.LensLike' f s a
 cacheDuration = Data.ProtoLens.Field.field @"cacheDuration"
+catalog ::
+  forall f s a.
+  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "catalog" a) =>
+  Lens.Family2.LensLike' f s a
+catalog = Data.ProtoLens.Field.field @"catalog"
 cheerAmount ::
   forall f s a.
   (Prelude.Functor f,
@@ -257,6 +262,12 @@ deleteMisses ::
    Data.ProtoLens.Field.HasField s "deleteMisses" a) =>
   Lens.Family2.LensLike' f s a
 deleteMisses = Data.ProtoLens.Field.field @"deleteMisses"
+dimensions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "dimensions" a) =>
+  Lens.Family2.LensLike' f s a
+dimensions = Data.ProtoLens.Field.field @"dimensions"
 dir ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "dir" a) =>
@@ -318,6 +329,12 @@ extraFields ::
    Data.ProtoLens.Field.HasField s "extraFields" a) =>
   Lens.Family2.LensLike' f s a
 extraFields = Data.ProtoLens.Field.field @"extraFields"
+failedEntryCount ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "failedEntryCount" a) =>
+  Lens.Family2.LensLike' f s a
+failedEntryCount = Data.ProtoLens.Field.field @"failedEntryCount"
 failedLookupSteamids ::
   forall f s a.
   (Prelude.Functor f,
@@ -624,6 +641,12 @@ maybe'cacheDuration ::
   Lens.Family2.LensLike' f s a
 maybe'cacheDuration
   = Data.ProtoLens.Field.field @"maybe'cacheDuration"
+maybe'catalog ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'catalog" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'catalog = Data.ProtoLens.Field.field @"maybe'catalog"
 maybe'cheerAmount ::
   forall f s a.
   (Prelude.Functor f,
@@ -786,6 +809,13 @@ maybe'evictions ::
    Data.ProtoLens.Field.HasField s "maybe'evictions" a) =>
   Lens.Family2.LensLike' f s a
 maybe'evictions = Data.ProtoLens.Field.field @"maybe'evictions"
+maybe'failedEntryCount ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'failedEntryCount" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'failedEntryCount
+  = Data.ProtoLens.Field.field @"maybe'failedEntryCount"
 maybe'fallback ::
   forall f s a.
   (Prelude.Functor f,
@@ -1012,6 +1042,12 @@ maybe'online ::
    Data.ProtoLens.Field.HasField s "maybe'online" a) =>
   Lens.Family2.LensLike' f s a
 maybe'online = Data.ProtoLens.Field.field @"maybe'online"
+maybe'operation ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'operation" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'operation = Data.ProtoLens.Field.field @"maybe'operation"
 maybe'operationsSubmitted ::
   forall f s a.
   (Prelude.Functor f,
@@ -1336,6 +1372,12 @@ maybe'timeCreated ::
    Data.ProtoLens.Field.HasField s "maybe'timeCreated" a) =>
   Lens.Family2.LensLike' f s a
 maybe'timeCreated = Data.ProtoLens.Field.field @"maybe'timeCreated"
+maybe'timestamp ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'timestamp" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'timestamp = Data.ProtoLens.Field.field @"maybe'timestamp"
 maybe'tokenName ::
   forall f s a.
   (Prelude.Functor f,
@@ -1379,6 +1421,32 @@ maybe'value ::
    Data.ProtoLens.Field.HasField s "maybe'value" a) =>
   Lens.Family2.LensLike' f s a
 maybe'value = Data.ProtoLens.Field.field @"maybe'value"
+maybe'valueBoolean ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'valueBoolean" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'valueBoolean
+  = Data.ProtoLens.Field.field @"maybe'valueBoolean"
+maybe'valueFloat ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'valueFloat" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'valueFloat = Data.ProtoLens.Field.field @"maybe'valueFloat"
+maybe'valueInteger ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'valueInteger" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'valueInteger
+  = Data.ProtoLens.Field.field @"maybe'valueInteger"
+maybe'valueString ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'valueString" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'valueString = Data.ProtoLens.Field.field @"maybe'valueString"
 maybe'version ::
   forall f s a.
   (Prelude.Functor f,
@@ -1391,6 +1459,12 @@ maybe'webapiParam ::
    Data.ProtoLens.Field.HasField s "maybe'webapiParam" a) =>
   Lens.Family2.LensLike' f s a
 maybe'webapiParam = Data.ProtoLens.Field.field @"maybe'webapiParam"
+measurements ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "measurements" a) =>
+  Lens.Family2.LensLike' f s a
+measurements = Data.ProtoLens.Field.field @"measurements"
 message ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "message" a) =>
@@ -1407,6 +1481,12 @@ methodName ::
    Data.ProtoLens.Field.HasField s "methodName" a) =>
   Lens.Family2.LensLike' f s a
 methodName = Data.ProtoLens.Field.field @"methodName"
+metricData ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "metricData" a) =>
+  Lens.Family2.LensLike' f s a
+metricData = Data.ProtoLens.Field.field @"metricData"
 msgType ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "msgType" a) =>
@@ -1447,6 +1527,12 @@ online ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "online" a) =>
   Lens.Family2.LensLike' f s a
 online = Data.ProtoLens.Field.field @"online"
+operation ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "operation" a) =>
+  Lens.Family2.LensLike' f s a
+operation = Data.ProtoLens.Field.field @"operation"
 operationsSubmitted ::
   forall f s a.
   (Prelude.Functor f,
@@ -1778,6 +1864,12 @@ timeCreated ::
    Data.ProtoLens.Field.HasField s "timeCreated" a) =>
   Lens.Family2.LensLike' f s a
 timeCreated = Data.ProtoLens.Field.field @"timeCreated"
+timestamp ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "timestamp" a) =>
+  Lens.Family2.LensLike' f s a
+timestamp = Data.ProtoLens.Field.field @"timestamp"
 tokenName ::
   forall f s a.
   (Prelude.Functor f,
@@ -1822,6 +1914,30 @@ value ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "value" a) =>
   Lens.Family2.LensLike' f s a
 value = Data.ProtoLens.Field.field @"value"
+valueBoolean ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "valueBoolean" a) =>
+  Lens.Family2.LensLike' f s a
+valueBoolean = Data.ProtoLens.Field.field @"valueBoolean"
+valueFloat ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "valueFloat" a) =>
+  Lens.Family2.LensLike' f s a
+valueFloat = Data.ProtoLens.Field.field @"valueFloat"
+valueInteger ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "valueInteger" a) =>
+  Lens.Family2.LensLike' f s a
+valueInteger = Data.ProtoLens.Field.field @"valueInteger"
+valueString ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "valueString" a) =>
+  Lens.Family2.LensLike' f s a
+valueString = Data.ProtoLens.Field.field @"valueString"
 values ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "values" a) =>
@@ -1871,6 +1987,12 @@ vec'commandName ::
    Data.ProtoLens.Field.HasField s "vec'commandName" a) =>
   Lens.Family2.LensLike' f s a
 vec'commandName = Data.ProtoLens.Field.field @"vec'commandName"
+vec'dimensions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'dimensions" a) =>
+  Lens.Family2.LensLike' f s a
+vec'dimensions = Data.ProtoLens.Field.field @"vec'dimensions"
 vec'dir ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "vec'dir" a) =>
@@ -1949,6 +2071,18 @@ vec'license ::
    Data.ProtoLens.Field.HasField s "vec'license" a) =>
   Lens.Family2.LensLike' f s a
 vec'license = Data.ProtoLens.Field.field @"vec'license"
+vec'measurements ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'measurements" a) =>
+  Lens.Family2.LensLike' f s a
+vec'measurements = Data.ProtoLens.Field.field @"vec'measurements"
+vec'metricData ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'metricData" a) =>
+  Lens.Family2.LensLike' f s a
+vec'metricData = Data.ProtoLens.Field.field @"vec'metricData"
 vec'options ::
   forall f s a.
   (Prelude.Functor f,

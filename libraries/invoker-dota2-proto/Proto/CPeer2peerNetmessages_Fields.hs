@@ -167,6 +167,12 @@ maybe'hatId ::
    Data.ProtoLens.Field.HasField s "maybe'hatId" a) =>
   Lens.Family2.LensLike' f s a
 maybe'hatId = Data.ProtoLens.Field.field @"maybe'hatId"
+maybe'isReply ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'isReply" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'isReply = Data.ProtoLens.Field.field @"maybe'isReply"
 maybe'paused ::
   forall f s a.
   (Prelude.Functor f,
@@ -185,6 +191,12 @@ maybe'sceneId ::
    Data.ProtoLens.Field.HasField s "maybe'sceneId" a) =>
   Lens.Family2.LensLike' f s a
 maybe'sceneId = Data.ProtoLens.Field.field @"maybe'sceneId"
+maybe'sendTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'sendTime" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'sendTime = Data.ProtoLens.Field.field @"maybe'sendTime"
 maybe'text ::
   forall f s a.
   (Prelude.Functor f,

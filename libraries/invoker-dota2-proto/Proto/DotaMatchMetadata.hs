@@ -28,6 +28,13 @@ module Proto.DotaMatchMetadata (
         CDOTAMatchMetadata'Team'VictoryPrediction(),
         CDOTAMatchMetadata'Tip(), CDOTAMatchMetadataFile(),
         CDOTAMatchPrivateMetadata(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord(),
+        CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow(),
         CDOTAMatchPrivateMetadata'StringName(),
         CDOTAMatchPrivateMetadata'Team(),
         CDOTAMatchPrivateMetadata'Team'Building(),
@@ -13882,14 +13889,16 @@ instance Control.DeepSeq.NFData CDOTAMatchMetadata'Tip where
 {- | Fields :
      
          * 'Proto.DotaMatchMetadata_Fields.version' @:: Lens' CDOTAMatchMetadataFile Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'version' @:: Lens' CDOTAMatchMetadataFile (Prelude.Maybe Data.Int.Int32)@
          * 'Proto.DotaMatchMetadata_Fields.matchId' @:: Lens' CDOTAMatchMetadataFile Data.Word.Word64@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'matchId' @:: Lens' CDOTAMatchMetadataFile (Prelude.Maybe Data.Word.Word64)@
          * 'Proto.DotaMatchMetadata_Fields.metadata' @:: Lens' CDOTAMatchMetadataFile CDOTAMatchMetadata@
          * 'Proto.DotaMatchMetadata_Fields.maybe'metadata' @:: Lens' CDOTAMatchMetadataFile (Prelude.Maybe CDOTAMatchMetadata)@
          * 'Proto.DotaMatchMetadata_Fields.privateMetadata' @:: Lens' CDOTAMatchMetadataFile Data.ByteString.ByteString@
          * 'Proto.DotaMatchMetadata_Fields.maybe'privateMetadata' @:: Lens' CDOTAMatchMetadataFile (Prelude.Maybe Data.ByteString.ByteString)@ -}
 data CDOTAMatchMetadataFile
-  = CDOTAMatchMetadataFile'_constructor {_CDOTAMatchMetadataFile'version :: !Data.Int.Int32,
-                                         _CDOTAMatchMetadataFile'matchId :: !Data.Word.Word64,
+  = CDOTAMatchMetadataFile'_constructor {_CDOTAMatchMetadataFile'version :: !(Prelude.Maybe Data.Int.Int32),
+                                         _CDOTAMatchMetadataFile'matchId :: !(Prelude.Maybe Data.Word.Word64),
                                          _CDOTAMatchMetadataFile'metadata :: !(Prelude.Maybe CDOTAMatchMetadata),
                                          _CDOTAMatchMetadataFile'privateMetadata :: !(Prelude.Maybe Data.ByteString.ByteString),
                                          _CDOTAMatchMetadataFile'_unknownFields :: !Data.ProtoLens.FieldSet}
@@ -13906,8 +13915,22 @@ instance Data.ProtoLens.Field.HasField CDOTAMatchMetadataFile "version" Data.Int
         (Lens.Family2.Unchecked.lens
            _CDOTAMatchMetadataFile'version
            (\ x__ y__ -> x__ {_CDOTAMatchMetadataFile'version = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchMetadataFile "maybe'version" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchMetadataFile'version
+           (\ x__ y__ -> x__ {_CDOTAMatchMetadataFile'version = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CDOTAMatchMetadataFile "matchId" Data.Word.Word64 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchMetadataFile'matchId
+           (\ x__ y__ -> x__ {_CDOTAMatchMetadataFile'matchId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchMetadataFile "maybe'matchId" (Prelude.Maybe Data.Word.Word64) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -13947,8 +13970,8 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
   packedMessageDescriptor _
     = "\n\
       \\SYNCDOTAMatchMetadataFile\DC2\CAN\n\
-      \\aversion\CAN\SOH \STX(\ENQR\aversion\DC2\EM\n\
-      \\bmatch_id\CAN\STX \STX(\EOTR\amatchId\DC2/\n\
+      \\aversion\CAN\SOH \SOH(\ENQR\aversion\DC2\EM\n\
+      \\bmatch_id\CAN\STX \SOH(\EOTR\amatchId\DC2/\n\
       \\bmetadata\CAN\ETX \SOH(\v2\DC3.CDOTAMatchMetadataR\bmetadata\DC2)\n\
       \\DLEprivate_metadata\CAN\ENQ \SOH(\fR\SIprivateMetadata:\ACK\128\181\CAN\192\132="
   packedFileDescriptor _ = packedFileDescriptor
@@ -13959,16 +13982,16 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
               "version"
               (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"version")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'version")) ::
               Data.ProtoLens.FieldDescriptor CDOTAMatchMetadataFile
         matchId__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "match_id"
               (Data.ProtoLens.ScalarField Data.ProtoLens.UInt64Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Word.Word64)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"matchId")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'matchId")) ::
               Data.ProtoLens.FieldDescriptor CDOTAMatchMetadataFile
         metadata__field_descriptor
           = Data.ProtoLens.FieldDescriptor
@@ -13998,8 +14021,8 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
         (\ x__ y__ -> x__ {_CDOTAMatchMetadataFile'_unknownFields = y__})
   defMessage
     = CDOTAMatchMetadataFile'_constructor
-        {_CDOTAMatchMetadataFile'version = Data.ProtoLens.fieldDefault,
-         _CDOTAMatchMetadataFile'matchId = Data.ProtoLens.fieldDefault,
+        {_CDOTAMatchMetadataFile'version = Prelude.Nothing,
+         _CDOTAMatchMetadataFile'matchId = Prelude.Nothing,
          _CDOTAMatchMetadataFile'metadata = Prelude.Nothing,
          _CDOTAMatchMetadataFile'privateMetadata = Prelude.Nothing,
          _CDOTAMatchMetadataFile'_unknownFields = []}
@@ -14007,16 +14030,11 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
     = let
         loop ::
           CDOTAMatchMetadataFile
-          -> Prelude.Bool
-             -> Prelude.Bool
-                -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchMetadataFile
-        loop x required'matchId required'version
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchMetadataFile
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing
-                           = (if required'matchId then (:) "match_id" else Prelude.id)
-                               ((if required'version then (:) "version" else Prelude.id) [])
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -14036,15 +14054,11 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "version"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"version") y x)
-                                  required'matchId Prelude.False
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"version") y x)
                         16
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        Data.ProtoLens.Encoding.Bytes.getVarInt "match_id"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"matchId") y x)
-                                  Prelude.False required'version
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"matchId") y x)
                         26
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -14053,7 +14067,6 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
                                        "metadata"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"metadata") y x)
-                                  required'matchId required'version
                         42
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -14063,31 +14076,36 @@ instance Data.ProtoLens.Message CDOTAMatchMetadataFile where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"privateMetadata") y x)
-                                  required'matchId required'version
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'matchId required'version
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop Data.ProtoLens.defMessage Prelude.True Prelude.True)
-          "CDOTAMatchMetadataFile"
+          (do loop Data.ProtoLens.defMessage) "CDOTAMatchMetadataFile"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'version") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
              ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                   (Lens.Family2.view (Data.ProtoLens.Field.field @"version") _x)))
-             ((Data.Monoid.<>)
-                ((Data.Monoid.<>)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt
-                      (Lens.Family2.view (Data.ProtoLens.Field.field @"matchId") _x)))
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'matchId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt _v))
                 ((Data.Monoid.<>)
                    (case
                         Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'metadata") _x
@@ -14140,11 +14158,14 @@ instance Control.DeepSeq.NFData CDOTAMatchMetadataFile where
          * 'Proto.DotaMatchMetadata_Fields.graphWinProbability' @:: Lens' CDOTAMatchPrivateMetadata [Prelude.Float]@
          * 'Proto.DotaMatchMetadata_Fields.vec'graphWinProbability' @:: Lens' CDOTAMatchPrivateMetadata (Data.Vector.Unboxed.Vector Prelude.Float)@
          * 'Proto.DotaMatchMetadata_Fields.stringNames' @:: Lens' CDOTAMatchPrivateMetadata [CDOTAMatchPrivateMetadata'StringName]@
-         * 'Proto.DotaMatchMetadata_Fields.vec'stringNames' @:: Lens' CDOTAMatchPrivateMetadata (Data.Vector.Vector CDOTAMatchPrivateMetadata'StringName)@ -}
+         * 'Proto.DotaMatchMetadata_Fields.vec'stringNames' @:: Lens' CDOTAMatchPrivateMetadata (Data.Vector.Vector CDOTAMatchPrivateMetadata'StringName)@
+         * 'Proto.DotaMatchMetadata_Fields.contributions' @:: Lens' CDOTAMatchPrivateMetadata [CDOTAMatchPrivateMetadata'ContributionsCombatSegment]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'contributions' @:: Lens' CDOTAMatchPrivateMetadata (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment)@ -}
 data CDOTAMatchPrivateMetadata
   = CDOTAMatchPrivateMetadata'_constructor {_CDOTAMatchPrivateMetadata'teams :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'Team),
                                             _CDOTAMatchPrivateMetadata'graphWinProbability :: !(Data.Vector.Unboxed.Vector Prelude.Float),
                                             _CDOTAMatchPrivateMetadata'stringNames :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'StringName),
+                                            _CDOTAMatchPrivateMetadata'contributions :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment),
                                             _CDOTAMatchPrivateMetadata'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CDOTAMatchPrivateMetadata where
@@ -14203,6 +14224,24 @@ instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata "vec'stringName
            _CDOTAMatchPrivateMetadata'stringNames
            (\ x__ y__ -> x__ {_CDOTAMatchPrivateMetadata'stringNames = y__}))
         Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata "contributions" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'contributions
+           (\ x__ y__
+              -> x__ {_CDOTAMatchPrivateMetadata'contributions = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata "vec'contributions" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'contributions
+           (\ x__ y__
+              -> x__ {_CDOTAMatchPrivateMetadata'contributions = y__}))
+        Prelude.id
 instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
   messageName _ = Data.Text.pack "CDOTAMatchPrivateMetadata"
   packedMessageDescriptor _
@@ -14210,7 +14249,8 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
       \\EMCDOTAMatchPrivateMetadata\DC25\n\
       \\ENQteams\CAN\SOH \ETX(\v2\US.CDOTAMatchPrivateMetadata.TeamR\ENQteams\DC22\n\
       \\NAKgraph_win_probability\CAN\STX \ETX(\STXR\DC3graphWinProbability\DC2H\n\
-      \\fstring_names\CAN\ETX \ETX(\v2%.CDOTAMatchPrivateMetadata.StringNameR\vstringNames\SUB0\n\
+      \\fstring_names\CAN\ETX \ETX(\v2%.CDOTAMatchPrivateMetadata.StringNameR\vstringNames\DC2[\n\
+      \\rcontributions\CAN\EOT \ETX(\v25.CDOTAMatchPrivateMetadata.ContributionsCombatSegmentR\rcontributions\SUB0\n\
       \\n\
       \StringName\DC2\SO\n\
       \\STXid\CAN\SOH \SOH(\rR\STXid\DC2\DC2\n\
@@ -14292,7 +14332,57 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
       \\DLEposition_quant_x\CAN\STX \SOH(\rR\SOpositionQuantX\DC2(\n\
       \\DLEposition_quant_y\CAN\ETX \SOH(\rR\SOpositionQuantY\DC2\GS\n\
       \\n\
-      \death_time\CAN\EOT \SOH(\STXR\tdeathTime"
+      \death_time\CAN\EOT \SOH(\STXR\tdeathTime\SUB\213\DC2\n\
+      \\SUBContributionsCombatSegment\DC2\ESC\n\
+      \\tgame_time\CAN\SOH \SOH(\ENQR\bgameTime\DC2\129\SOH\n\
+      \\DC4damage_contributions\CAN\STX \ETX(\v2N.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageContributionRecordR\DC3damageContributions\DC2{\n\
+      \\DC2damage_mitigations\CAN\ETX \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageMitigationRecordR\DC1damageMitigations\DC2\132\SOH\n\
+      \\NAKhealing_contributions\CAN\EOT \ETX(\v2O.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingContributionRecordR\DC4healingContributions\DC2{\n\
+      \\DC2healing_reductions\CAN\ENQ \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingReductionRecordR\DC1healingReductions\DC2f\n\
+      \\rkilling_blows\CAN\ACK \ETX(\v2A.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.KillingBlowR\fkillingBlows\DC2V\n\
+      \\adispels\CAN\a \ETX(\v2<.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DispelR\adispels\SUB\178\STX\n\
+      \\CANDamageContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+      \\SYNDamageMitigationRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\179\STX\n\
+      \\EMHealingContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+      \\SYNHealingReductionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\147\SOH\n\
+      \\vKillingBlow\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\SUB\237\SOH\n\
+      \\ACKDispel\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\DC22\n\
+      \\DC3modifier_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC1modifierAbilityId\DC2)\n\
+      \\DLEduration_reduced\CAN\ENQ \SOH(\STXR\SIdurationReduced"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -14322,11 +14412,21 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                  Data.ProtoLens.Unpacked
                  (Data.ProtoLens.Field.field @"stringNames")) ::
               Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata
+        contributions__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributions"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"contributions")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata
       in
         Data.Map.fromList
           [(Data.ProtoLens.Tag 1, teams__field_descriptor),
            (Data.ProtoLens.Tag 2, graphWinProbability__field_descriptor),
-           (Data.ProtoLens.Tag 3, stringNames__field_descriptor)]
+           (Data.ProtoLens.Tag 3, stringNames__field_descriptor),
+           (Data.ProtoLens.Tag 4, contributions__field_descriptor)]
   unknownFields
     = Lens.Family2.Unchecked.lens
         _CDOTAMatchPrivateMetadata'_unknownFields
@@ -14337,23 +14437,29 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
         {_CDOTAMatchPrivateMetadata'teams = Data.Vector.Generic.empty,
          _CDOTAMatchPrivateMetadata'graphWinProbability = Data.Vector.Generic.empty,
          _CDOTAMatchPrivateMetadata'stringNames = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'contributions = Data.Vector.Generic.empty,
          _CDOTAMatchPrivateMetadata'_unknownFields = []}
   parseMessage
     = let
         loop ::
           CDOTAMatchPrivateMetadata
-          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Unboxed.Vector Data.ProtoLens.Encoding.Growing.RealWorld Prelude.Float
-             -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'StringName
-                -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'Team
-                   -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata
+          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+             -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Unboxed.Vector Data.ProtoLens.Encoding.Growing.RealWorld Prelude.Float
+                -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'StringName
+                   -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'Team
+                      -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata
         loop
           x
+          mutable'contributions
           mutable'graphWinProbability
           mutable'stringNames
           mutable'teams
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do frozen'graphWinProbability <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                   do frozen'contributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                   mutable'contributions)
+                      frozen'graphWinProbability <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                                       (Data.ProtoLens.Encoding.Growing.unsafeFreeze
                                                          mutable'graphWinProbability)
                       frozen'stringNames <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
@@ -14374,12 +14480,16 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                         (Lens.Family2.over
                            Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t)
                            (Lens.Family2.set
-                              (Data.ProtoLens.Field.field @"vec'graphWinProbability")
-                              frozen'graphWinProbability
+                              (Data.ProtoLens.Field.field @"vec'contributions")
+                              frozen'contributions
                               (Lens.Family2.set
-                                 (Data.ProtoLens.Field.field @"vec'stringNames") frozen'stringNames
+                                 (Data.ProtoLens.Field.field @"vec'graphWinProbability")
+                                 frozen'graphWinProbability
                                  (Lens.Family2.set
-                                    (Data.ProtoLens.Field.field @"vec'teams") frozen'teams x))))
+                                    (Data.ProtoLens.Field.field @"vec'stringNames")
+                                    frozen'stringNames
+                                    (Lens.Family2.set
+                                       (Data.ProtoLens.Field.field @"vec'teams") frozen'teams x)))))
                else
                    do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
                       case tag of
@@ -14392,7 +14502,9 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                                         "teams"
                                 v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                        (Data.ProtoLens.Encoding.Growing.append mutable'teams y)
-                                loop x mutable'graphWinProbability mutable'stringNames v
+                                loop
+                                  x mutable'contributions mutable'graphWinProbability
+                                  mutable'stringNames v
                         21
                           -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                         (Prelude.fmap
@@ -14402,7 +14514,7 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                                 v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                        (Data.ProtoLens.Encoding.Growing.append
                                           mutable'graphWinProbability y)
-                                loop x v mutable'stringNames mutable'teams
+                                loop x mutable'contributions v mutable'stringNames mutable'teams
                         18
                           -> do y <- do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
                                         Data.ProtoLens.Encoding.Bytes.isolate
@@ -14424,7 +14536,7 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                                                             ploop qs'
                                             in ploop)
                                              mutable'graphWinProbability)
-                                loop x y mutable'stringNames mutable'teams
+                                loop x mutable'contributions y mutable'stringNames mutable'teams
                         26
                           -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                         (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -14435,25 +14547,42 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                                 v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                        (Data.ProtoLens.Encoding.Growing.append
                                           mutable'stringNames y)
-                                loop x mutable'graphWinProbability v mutable'teams
+                                loop
+                                  x mutable'contributions mutable'graphWinProbability v
+                                  mutable'teams
+                        34
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "contributions"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'contributions y)
+                                loop
+                                  x v mutable'graphWinProbability mutable'stringNames mutable'teams
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  mutable'graphWinProbability mutable'stringNames mutable'teams
+                                  mutable'contributions mutable'graphWinProbability
+                                  mutable'stringNames mutable'teams
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do mutable'graphWinProbability <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+          (do mutable'contributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                         Data.ProtoLens.Encoding.Growing.new
+              mutable'graphWinProbability <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                                Data.ProtoLens.Encoding.Growing.new
               mutable'stringNames <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                        Data.ProtoLens.Encoding.Growing.new
               mutable'teams <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                  Data.ProtoLens.Encoding.Growing.new
               loop
-                Data.ProtoLens.defMessage mutable'graphWinProbability
-                mutable'stringNames mutable'teams)
+                Data.ProtoLens.defMessage mutable'contributions
+                mutable'graphWinProbability mutable'stringNames mutable'teams)
           "CDOTAMatchPrivateMetadata"
   buildMessage
     = \ _x
@@ -14494,8 +14623,22 @@ instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata where
                                  Data.ProtoLens.encodeMessage _v))
                       (Lens.Family2.view
                          (Data.ProtoLens.Field.field @"vec'stringNames") _x))
-                   (Data.ProtoLens.Encoding.Wire.buildFieldSet
-                      (Lens.Family2.view Data.ProtoLens.unknownFields _x))))
+                   ((Data.Monoid.<>)
+                      (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                         (\ _v
+                            -> (Data.Monoid.<>)
+                                 (Data.ProtoLens.Encoding.Bytes.putVarInt 34)
+                                 ((Prelude..)
+                                    (\ bs
+                                       -> (Data.Monoid.<>)
+                                            (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                               (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                            (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                    Data.ProtoLens.encodeMessage _v))
+                         (Lens.Family2.view
+                            (Data.ProtoLens.Field.field @"vec'contributions") _x))
+                      (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                         (Lens.Family2.view Data.ProtoLens.unknownFields _x)))))
 instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata where
   rnf
     = \ x__
@@ -14506,7 +14649,3058 @@ instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata where
                 (Control.DeepSeq.deepseq
                    (_CDOTAMatchPrivateMetadata'graphWinProbability x__)
                    (Control.DeepSeq.deepseq
-                      (_CDOTAMatchPrivateMetadata'stringNames x__) ())))
+                      (_CDOTAMatchPrivateMetadata'stringNames x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'contributions x__) ()))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.gameTime' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'gameTime' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.damageContributions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'damageContributions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord)@
+         * 'Proto.DotaMatchMetadata_Fields.damageMitigations' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'damageMitigations' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord)@
+         * 'Proto.DotaMatchMetadata_Fields.healingContributions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'healingContributions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord)@
+         * 'Proto.DotaMatchMetadata_Fields.healingReductions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'healingReductions' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord)@
+         * 'Proto.DotaMatchMetadata_Fields.killingBlows' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'killingBlows' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow)@
+         * 'Proto.DotaMatchMetadata_Fields.dispels' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel]@
+         * 'Proto.DotaMatchMetadata_Fields.vec'dispels' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime :: !(Prelude.Maybe Data.Int.Int32),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels :: !(Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel),
+                                                                       _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "gameTime" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "maybe'gameTime" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "damageContributions" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'damageContributions" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "damageMitigations" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'damageMitigations" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "healingContributions" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'healingContributions" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "healingReductions" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'healingReductions" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "killingBlows" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'killingBlows" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "dispels" [CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment "vec'dispels" (Data.Vector.Vector CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment"
+  packedMessageDescriptor _
+    = "\n\
+      \\SUBContributionsCombatSegment\DC2\ESC\n\
+      \\tgame_time\CAN\SOH \SOH(\ENQR\bgameTime\DC2\129\SOH\n\
+      \\DC4damage_contributions\CAN\STX \ETX(\v2N.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageContributionRecordR\DC3damageContributions\DC2{\n\
+      \\DC2damage_mitigations\CAN\ETX \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageMitigationRecordR\DC1damageMitigations\DC2\132\SOH\n\
+      \\NAKhealing_contributions\CAN\EOT \ETX(\v2O.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingContributionRecordR\DC4healingContributions\DC2{\n\
+      \\DC2healing_reductions\CAN\ENQ \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingReductionRecordR\DC1healingReductions\DC2f\n\
+      \\rkilling_blows\CAN\ACK \ETX(\v2A.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.KillingBlowR\fkillingBlows\DC2V\n\
+      \\adispels\CAN\a \ETX(\v2<.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DispelR\adispels\SUB\178\STX\n\
+      \\CANDamageContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+      \\SYNDamageMitigationRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\179\STX\n\
+      \\EMHealingContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+      \\SYNHealingReductionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\147\SOH\n\
+      \\vKillingBlow\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\SUB\237\SOH\n\
+      \\ACKDispel\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\DC22\n\
+      \\DC3modifier_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC1modifierAbilityId\DC2)\n\
+      \\DLEduration_reduced\CAN\ENQ \SOH(\STXR\SIdurationReduced"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        gameTime__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "game_time"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'gameTime")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        damageContributions__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "damage_contributions"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"damageContributions")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        damageMitigations__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "damage_mitigations"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"damageMitigations")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        healingContributions__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "healing_contributions"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"healingContributions")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        healingReductions__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "healing_reductions"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"healingReductions")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        killingBlows__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "killing_blows"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"killingBlows")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        dispels__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "dispels"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked (Data.ProtoLens.Field.field @"dispels")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, gameTime__field_descriptor),
+           (Data.ProtoLens.Tag 2, damageContributions__field_descriptor),
+           (Data.ProtoLens.Tag 3, damageMitigations__field_descriptor),
+           (Data.ProtoLens.Tag 4, healingContributions__field_descriptor),
+           (Data.ProtoLens.Tag 5, healingReductions__field_descriptor),
+           (Data.ProtoLens.Tag 6, killingBlows__field_descriptor),
+           (Data.ProtoLens.Tag 7, dispels__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels = Data.Vector.Generic.empty,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+             -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+                -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+                   -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+                      -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+                         -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+                            -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment
+        loop
+          x
+          mutable'damageContributions
+          mutable'damageMitigations
+          mutable'dispels
+          mutable'healingContributions
+          mutable'healingReductions
+          mutable'killingBlows
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do frozen'damageContributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                      (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                         mutable'damageContributions)
+                      frozen'damageMitigations <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                    (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                       mutable'damageMitigations)
+                      frozen'dispels <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                          (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                             mutable'dispels)
+                      frozen'healingContributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                       (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                          mutable'healingContributions)
+                      frozen'healingReductions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                    (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                       mutable'healingReductions)
+                      frozen'killingBlows <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                               (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                  mutable'killingBlows)
+                      (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t)
+                           (Lens.Family2.set
+                              (Data.ProtoLens.Field.field @"vec'damageContributions")
+                              frozen'damageContributions
+                              (Lens.Family2.set
+                                 (Data.ProtoLens.Field.field @"vec'damageMitigations")
+                                 frozen'damageMitigations
+                                 (Lens.Family2.set
+                                    (Data.ProtoLens.Field.field @"vec'dispels") frozen'dispels
+                                    (Lens.Family2.set
+                                       (Data.ProtoLens.Field.field @"vec'healingContributions")
+                                       frozen'healingContributions
+                                       (Lens.Family2.set
+                                          (Data.ProtoLens.Field.field @"vec'healingReductions")
+                                          frozen'healingReductions
+                                          (Lens.Family2.set
+                                             (Data.ProtoLens.Field.field @"vec'killingBlows")
+                                             frozen'killingBlows x)))))))
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "game_time"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"gameTime") y x)
+                                  mutable'damageContributions mutable'damageMitigations
+                                  mutable'dispels mutable'healingContributions
+                                  mutable'healingReductions mutable'killingBlows
+                        18
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "damage_contributions"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'damageContributions y)
+                                loop
+                                  x v mutable'damageMitigations mutable'dispels
+                                  mutable'healingContributions mutable'healingReductions
+                                  mutable'killingBlows
+                        26
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "damage_mitigations"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'damageMitigations y)
+                                loop
+                                  x mutable'damageContributions v mutable'dispels
+                                  mutable'healingContributions mutable'healingReductions
+                                  mutable'killingBlows
+                        34
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "healing_contributions"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'healingContributions y)
+                                loop
+                                  x mutable'damageContributions mutable'damageMitigations
+                                  mutable'dispels v mutable'healingReductions mutable'killingBlows
+                        42
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "healing_reductions"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'healingReductions y)
+                                loop
+                                  x mutable'damageContributions mutable'damageMitigations
+                                  mutable'dispels mutable'healingContributions v
+                                  mutable'killingBlows
+                        50
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "killing_blows"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'killingBlows y)
+                                loop
+                                  x mutable'damageContributions mutable'damageMitigations
+                                  mutable'dispels mutable'healingContributions
+                                  mutable'healingReductions v
+                        58
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "dispels"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append mutable'dispels y)
+                                loop
+                                  x mutable'damageContributions mutable'damageMitigations v
+                                  mutable'healingContributions mutable'healingReductions
+                                  mutable'killingBlows
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+                                  mutable'damageContributions mutable'damageMitigations
+                                  mutable'dispels mutable'healingContributions
+                                  mutable'healingReductions mutable'killingBlows
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do mutable'damageContributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                               Data.ProtoLens.Encoding.Growing.new
+              mutable'damageMitigations <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                             Data.ProtoLens.Encoding.Growing.new
+              mutable'dispels <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                   Data.ProtoLens.Encoding.Growing.new
+              mutable'healingContributions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                                Data.ProtoLens.Encoding.Growing.new
+              mutable'healingReductions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                             Data.ProtoLens.Encoding.Growing.new
+              mutable'killingBlows <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                        Data.ProtoLens.Encoding.Growing.new
+              loop
+                Data.ProtoLens.defMessage mutable'damageContributions
+                mutable'damageMitigations mutable'dispels
+                mutable'healingContributions mutable'healingReductions
+                mutable'killingBlows)
+          "ContributionsCombatSegment"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'gameTime") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                   (\ _v
+                      -> (Data.Monoid.<>)
+                           (Data.ProtoLens.Encoding.Bytes.putVarInt 18)
+                           ((Prelude..)
+                              (\ bs
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                         (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                      (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                              Data.ProtoLens.encodeMessage _v))
+                   (Lens.Family2.view
+                      (Data.ProtoLens.Field.field @"vec'damageContributions") _x))
+                ((Data.Monoid.<>)
+                   (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                      (\ _v
+                         -> (Data.Monoid.<>)
+                              (Data.ProtoLens.Encoding.Bytes.putVarInt 26)
+                              ((Prelude..)
+                                 (\ bs
+                                    -> (Data.Monoid.<>)
+                                         (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                            (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                         (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                 Data.ProtoLens.encodeMessage _v))
+                      (Lens.Family2.view
+                         (Data.ProtoLens.Field.field @"vec'damageMitigations") _x))
+                   ((Data.Monoid.<>)
+                      (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                         (\ _v
+                            -> (Data.Monoid.<>)
+                                 (Data.ProtoLens.Encoding.Bytes.putVarInt 34)
+                                 ((Prelude..)
+                                    (\ bs
+                                       -> (Data.Monoid.<>)
+                                            (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                               (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                            (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                    Data.ProtoLens.encodeMessage _v))
+                         (Lens.Family2.view
+                            (Data.ProtoLens.Field.field @"vec'healingContributions") _x))
+                      ((Data.Monoid.<>)
+                         (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                            (\ _v
+                               -> (Data.Monoid.<>)
+                                    (Data.ProtoLens.Encoding.Bytes.putVarInt 42)
+                                    ((Prelude..)
+                                       (\ bs
+                                          -> (Data.Monoid.<>)
+                                               (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                  (Prelude.fromIntegral
+                                                     (Data.ByteString.length bs)))
+                                               (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                       Data.ProtoLens.encodeMessage _v))
+                            (Lens.Family2.view
+                               (Data.ProtoLens.Field.field @"vec'healingReductions") _x))
+                         ((Data.Monoid.<>)
+                            (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                               (\ _v
+                                  -> (Data.Monoid.<>)
+                                       (Data.ProtoLens.Encoding.Bytes.putVarInt 50)
+                                       ((Prelude..)
+                                          (\ bs
+                                             -> (Data.Monoid.<>)
+                                                  (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                     (Prelude.fromIntegral
+                                                        (Data.ByteString.length bs)))
+                                                  (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                          Data.ProtoLens.encodeMessage _v))
+                               (Lens.Family2.view
+                                  (Data.ProtoLens.Field.field @"vec'killingBlows") _x))
+                            ((Data.Monoid.<>)
+                               (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                                  (\ _v
+                                     -> (Data.Monoid.<>)
+                                          (Data.ProtoLens.Encoding.Bytes.putVarInt 58)
+                                          ((Prelude..)
+                                             (\ bs
+                                                -> (Data.Monoid.<>)
+                                                     (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                        (Prelude.fromIntegral
+                                                           (Data.ByteString.length bs)))
+                                                     (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                             Data.ProtoLens.encodeMessage _v))
+                                  (Lens.Family2.view
+                                     (Data.ProtoLens.Field.field @"vec'dispels") _x))
+                               (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                  (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'gameTime
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageContributions
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'damageMitigations
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingContributions
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'healingReductions
+                               x__)
+                            (Control.DeepSeq.deepseq
+                               (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'killingBlows
+                                  x__)
+                               (Control.DeepSeq.deepseq
+                                  (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'dispels
+                                     x__)
+                                  ())))))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaMatchMetadata_Fields.type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord (Prelude.Maybe Data.Word.Word32)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type' :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                                _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "attackerAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'attackerAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "contributorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'contributorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "contributorHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'contributorHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "value" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'value" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "type'" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type' = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord "maybe'type'" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type' = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageContributionRecord"
+  packedMessageDescriptor _
+    = "\n\
+      \\CANDamageContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        contributorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        contributorHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        value__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'value")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        type'__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "type"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'type'")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 2, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 4, contributorAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 5, contributorHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 6, value__field_descriptor),
+           (Data.ProtoLens.Tag 7, type'__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type' = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerAbilityId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorAbilityId") y x)
+                        40
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorHeroId") y x)
+                        48
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"value") y x)
+                        56
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "type"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "DamageContributionRecord"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerAbilityId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'contributorAbilityId") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view
+                                (Data.ProtoLens.Field.field @"maybe'contributorHeroId") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 40)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
+                                      _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 48)
+                                      ((Prelude..)
+                                         Data.ProtoLens.Encoding.Bytes.putVarInt
+                                         Prelude.fromIntegral _v))
+                            ((Data.Monoid.<>)
+                               (case
+                                    Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'type'") _x
+                                of
+                                  Prelude.Nothing -> Data.Monoid.mempty
+                                  (Prelude.Just _v)
+                                    -> (Data.Monoid.<>)
+                                         (Data.ProtoLens.Encoding.Bytes.putVarInt 56)
+                                         ((Prelude..)
+                                            Data.ProtoLens.Encoding.Bytes.putVarInt
+                                            Prelude.fromIntegral _v))
+                               (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                  (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerAbilityId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'attackerHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'targetHeroId
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorAbilityId
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'contributorHeroId
+                               x__)
+                            (Control.DeepSeq.deepseq
+                               (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'value
+                                  x__)
+                               (Control.DeepSeq.deepseq
+                                  (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageContributionRecord'type'
+                                     x__)
+                                  ())))))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaMatchMetadata_Fields.type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord (Prelude.Maybe Data.Word.Word32)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type' :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "attackerAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'attackerAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "contributorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'contributorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "contributorHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'contributorHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "value" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'value" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "type'" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type' = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord "maybe'type'" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type' = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageMitigationRecord"
+  packedMessageDescriptor _
+    = "\n\
+      \\SYNDamageMitigationRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        contributorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        contributorHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        value__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'value")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        type'__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "type"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'type'")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 2, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 4, contributorAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 5, contributorHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 6, value__field_descriptor),
+           (Data.ProtoLens.Tag 7, type'__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type' = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerAbilityId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorAbilityId") y x)
+                        40
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorHeroId") y x)
+                        48
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"value") y x)
+                        56
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "type"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "DamageMitigationRecord"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerAbilityId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'contributorAbilityId") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view
+                                (Data.ProtoLens.Field.field @"maybe'contributorHeroId") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 40)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
+                                      _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 48)
+                                      ((Prelude..)
+                                         Data.ProtoLens.Encoding.Bytes.putVarInt
+                                         Prelude.fromIntegral _v))
+                            ((Data.Monoid.<>)
+                               (case
+                                    Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'type'") _x
+                                of
+                                  Prelude.Nothing -> Data.Monoid.mempty
+                                  (Prelude.Just _v)
+                                    -> (Data.Monoid.<>)
+                                         (Data.ProtoLens.Encoding.Bytes.putVarInt 56)
+                                         ((Prelude..)
+                                            Data.ProtoLens.Encoding.Bytes.putVarInt
+                                            Prelude.fromIntegral _v))
+                               (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                  (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerAbilityId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'attackerHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'targetHeroId
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorAbilityId
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'contributorHeroId
+                               x__)
+                            (Control.DeepSeq.deepseq
+                               (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'value
+                                  x__)
+                               (Control.DeepSeq.deepseq
+                                  (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'DamageMitigationRecord'type'
+                                     x__)
+                                  ())))))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.inflictorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'inflictorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.modifierAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'modifierAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.durationReduced' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel Prelude.Float@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'durationReduced' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel (Prelude.Maybe Prelude.Float)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced :: !(Prelude.Maybe Prelude.Float),
+                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "inflictorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "maybe'inflictorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "modifierAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "maybe'modifierAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "durationReduced" Prelude.Float where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel "maybe'durationReduced" (Prelude.Maybe Prelude.Float) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.Dispel"
+  packedMessageDescriptor _
+    = "\n\
+      \\ACKDispel\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\DC22\n\
+      \\DC3modifier_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC1modifierAbilityId\DC2)\n\
+      \\DLEduration_reduced\CAN\ENQ \SOH(\STXR\SIdurationReduced"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+        inflictorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "inflictor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'inflictorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+        modifierAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "modifier_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'modifierAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+        durationReduced__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "duration_reduced"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.FloatField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Float)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'durationReduced")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 2, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, inflictorAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 4, modifierAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 5, durationReduced__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "inflictor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"inflictorAbilityId") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "modifier_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"modifierAbilityId") y x)
+                        45
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToFloat
+                                          Data.ProtoLens.Encoding.Bytes.getFixed32)
+                                       "duration_reduced"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"durationReduced") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "Dispel"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'inflictorAbilityId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'modifierAbilityId") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view
+                                (Data.ProtoLens.Field.field @"maybe'durationReduced") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 45)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putFixed32
+                                      Data.ProtoLens.Encoding.Bytes.floatToWord _v))
+                         (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                            (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'attackerHeroId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'targetHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'inflictorAbilityId
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'modifierAbilityId
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'Dispel'durationReduced
+                               x__)
+                            ())))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaMatchMetadata_Fields.type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord (Prelude.Maybe Data.Word.Word32)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type' :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                                 _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "attackerAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'attackerAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "contributorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'contributorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "contributorHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'contributorHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "value" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'value" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "type'" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type' = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord "maybe'type'" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type' = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingContributionRecord"
+  packedMessageDescriptor _
+    = "\n\
+      \\EMHealingContributionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        contributorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        contributorHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        value__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'value")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        type'__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "type"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'type'")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 2, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 4, contributorAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 5, contributorHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 6, value__field_descriptor),
+           (Data.ProtoLens.Tag 7, type'__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type' = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerAbilityId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorAbilityId") y x)
+                        40
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorHeroId") y x)
+                        48
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"value") y x)
+                        56
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "type"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "HealingContributionRecord"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerAbilityId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'contributorAbilityId") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view
+                                (Data.ProtoLens.Field.field @"maybe'contributorHeroId") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 40)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
+                                      _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 48)
+                                      ((Prelude..)
+                                         Data.ProtoLens.Encoding.Bytes.putVarInt
+                                         Prelude.fromIntegral _v))
+                            ((Data.Monoid.<>)
+                               (case
+                                    Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'type'") _x
+                                of
+                                  Prelude.Nothing -> Data.Monoid.mempty
+                                  (Prelude.Just _v)
+                                    -> (Data.Monoid.<>)
+                                         (Data.ProtoLens.Encoding.Bytes.putVarInt 56)
+                                         ((Prelude..)
+                                            Data.ProtoLens.Encoding.Bytes.putVarInt
+                                            Prelude.fromIntegral _v))
+                               (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                  (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerAbilityId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'attackerHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'targetHeroId
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorAbilityId
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'contributorHeroId
+                               x__)
+                            (Control.DeepSeq.deepseq
+                               (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'value
+                                  x__)
+                               (Control.DeepSeq.deepseq
+                                  (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingContributionRecord'type'
+                                     x__)
+                                  ())))))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'contributorHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'value' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaMatchMetadata_Fields.type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord Data.Word.Word32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'type'' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord (Prelude.Maybe Data.Word.Word32)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type' :: !(Prelude.Maybe Data.Word.Word32),
+                                                                                              _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "attackerAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'attackerAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "contributorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'contributorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "contributorHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'contributorHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "value" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'value" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "type'" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type' = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord "maybe'type'" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type'
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type' = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingReductionRecord"
+  packedMessageDescriptor _
+    = "\n\
+      \\SYNHealingReductionRecord\DC22\n\
+      \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+      \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+      \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+      \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+      \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+      \\EOTtype\CAN\a \SOH(\rR\EOTtype"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        contributorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        contributorHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "contributor_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'contributorHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        value__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'value")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        type'__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "type"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'type'")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 2, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 4, contributorAbilityId__field_descriptor),
+           (Data.ProtoLens.Tag 5, contributorHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 6, value__field_descriptor),
+           (Data.ProtoLens.Tag 7, type'__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type' = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerAbilityId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorAbilityId") y x)
+                        40
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "contributor_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"contributorHeroId") y x)
+                        48
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"value") y x)
+                        56
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "type"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "HealingReductionRecord"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerAbilityId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'contributorAbilityId") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view
+                                (Data.ProtoLens.Field.field @"maybe'contributorHeroId") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 40)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
+                                      _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 48)
+                                      ((Prelude..)
+                                         Data.ProtoLens.Encoding.Bytes.putVarInt
+                                         Prelude.fromIntegral _v))
+                            ((Data.Monoid.<>)
+                               (case
+                                    Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'type'") _x
+                                of
+                                  Prelude.Nothing -> Data.Monoid.mempty
+                                  (Prelude.Just _v)
+                                    -> (Data.Monoid.<>)
+                                         (Data.ProtoLens.Encoding.Bytes.putVarInt 56)
+                                         ((Prelude..)
+                                            Data.ProtoLens.Encoding.Bytes.putVarInt
+                                            Prelude.fromIntegral _v))
+                               (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                  (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerAbilityId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'attackerHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'targetHeroId
+                         x__)
+                      (Control.DeepSeq.deepseq
+                         (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorAbilityId
+                            x__)
+                         (Control.DeepSeq.deepseq
+                            (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'contributorHeroId
+                               x__)
+                            (Control.DeepSeq.deepseq
+                               (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'value
+                                  x__)
+                               (Control.DeepSeq.deepseq
+                                  (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'HealingReductionRecord'type'
+                                     x__)
+                                  ())))))))
+{- | Fields :
+     
+         * 'Proto.DotaMatchMetadata_Fields.attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'attackerHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'targetHeroId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaMatchMetadata_Fields.inflictorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow Data.Int.Int32@
+         * 'Proto.DotaMatchMetadata_Fields.maybe'inflictorAbilityId' @:: Lens' CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow (Prelude.Maybe Data.Int.Int32)@ -}
+data CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+  = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_constructor {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                   _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                   _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId :: !(Prelude.Maybe Data.Int.Int32),
+                                                                                   _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "attackerHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "maybe'attackerHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "targetHeroId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "maybe'targetHeroId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "inflictorAbilityId" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow "maybe'inflictorAbilityId" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId
+           (\ x__ y__
+              -> x__
+                   {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow where
+  messageName _
+    = Data.Text.pack
+        "CDOTAMatchPrivateMetadata.ContributionsCombatSegment.KillingBlow"
+  packedMessageDescriptor _
+    = "\n\
+      \\vKillingBlow\DC2(\n\
+      \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+      \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+      \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        attackerHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "attacker_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'attackerHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+        targetHeroId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "target_hero_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'targetHeroId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+        inflictorAbilityId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "inflictor_ability_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'inflictorAbilityId")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, attackerHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 2, targetHeroId__field_descriptor),
+           (Data.ProtoLens.Tag 3, inflictorAbilityId__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_unknownFields = y__})
+  defMessage
+    = CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_constructor
+        {_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId = Prelude.Nothing,
+         _CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "attacker_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"attackerHeroId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "target_hero_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"targetHeroId") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "inflictor_ability_id"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"inflictorAbilityId") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "KillingBlow"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'attackerHeroId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'targetHeroId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'inflictorAbilityId") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                      (Lens.Family2.view Data.ProtoLens.unknownFields _x))))
+instance Control.DeepSeq.NFData CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'attackerHeroId
+                   x__)
+                (Control.DeepSeq.deepseq
+                   (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'targetHeroId
+                      x__)
+                   (Control.DeepSeq.deepseq
+                      (_CDOTAMatchPrivateMetadata'ContributionsCombatSegment'KillingBlow'inflictorAbilityId
+                         x__)
+                      ())))
 {- | Fields :
      
          * 'Proto.DotaMatchMetadata_Fields.id' @:: Lens' CDOTAMatchPrivateMetadata'StringName Data.Word.Word32@
@@ -19216,8 +22410,8 @@ packedFileDescriptor
   = "\n\
     \\EMdota_match_metadata.proto\SUB\NAKbase_gcmessages.proto\SUB-dota_gcmessages_common_match_management.proto\SUB\"dota_gcmessages_common_lobby.proto\SUB&dota_gcmessages_common_overworld.proto\SUB'dota_gcmessages_common_craftworks.proto\SUB+dota_gcmessages_common_monster_hunter.proto\SUB\FSdota_gcmessages_common.proto\SUB\ETBdota_shared_enums.proto\SUB\SYNgcsdk_gcmessages.proto\SUB\SYNnetworkbasetypes.proto\"\177\SOH\n\
     \\SYNCDOTAMatchMetadataFile\DC2\CAN\n\
-    \\aversion\CAN\SOH \STX(\ENQR\aversion\DC2\EM\n\
-    \\bmatch_id\CAN\STX \STX(\EOTR\amatchId\DC2/\n\
+    \\aversion\CAN\SOH \SOH(\ENQR\aversion\DC2\EM\n\
+    \\bmatch_id\CAN\STX \SOH(\EOTR\amatchId\DC2/\n\
     \\bmetadata\CAN\ETX \SOH(\v2\DC3.CDOTAMatchMetadataR\bmetadata\DC2)\n\
     \\DLEprivate_metadata\CAN\ENQ \SOH(\fR\SIprivateMetadata:\ACK\128\181\CAN\192\132=\"\240G\n\
     \\DC2CDOTAMatchMetadata\DC2.\n\
@@ -19460,11 +22654,12 @@ packedFileDescriptor
     \\DC2target_player_slot\CAN\STX \SOH(\rR\DLEtargetPlayerSlot\DC2\GS\n\
     \\n\
     \tip_amount\CAN\ETX \SOH(\rR\ttipAmount\DC21\n\
-    \\bevent_id\CAN\EOT \SOH(\SO2\a.EEvent:\rEVENT_ID_NONER\aeventId\"\192\ETB\n\
+    \\bevent_id\CAN\EOT \SOH(\SO2\a.EEvent:\rEVENT_ID_NONER\aeventId\"\245*\n\
     \\EMCDOTAMatchPrivateMetadata\DC25\n\
     \\ENQteams\CAN\SOH \ETX(\v2\US.CDOTAMatchPrivateMetadata.TeamR\ENQteams\DC22\n\
     \\NAKgraph_win_probability\CAN\STX \ETX(\STXR\DC3graphWinProbability\DC2H\n\
-    \\fstring_names\CAN\ETX \ETX(\v2%.CDOTAMatchPrivateMetadata.StringNameR\vstringNames\SUB0\n\
+    \\fstring_names\CAN\ETX \ETX(\v2%.CDOTAMatchPrivateMetadata.StringNameR\vstringNames\DC2[\n\
+    \\rcontributions\CAN\EOT \ETX(\v25.CDOTAMatchPrivateMetadata.ContributionsCombatSegmentR\rcontributions\SUB0\n\
     \\n\
     \StringName\DC2\SO\n\
     \\STXid\CAN\SOH \SOH(\rR\STXid\DC2\DC2\n\
@@ -19546,11 +22741,61 @@ packedFileDescriptor
     \\DLEposition_quant_x\CAN\STX \SOH(\rR\SOpositionQuantX\DC2(\n\
     \\DLEposition_quant_y\CAN\ETX \SOH(\rR\SOpositionQuantY\DC2\GS\n\
     \\n\
-    \death_time\CAN\EOT \SOH(\STXR\tdeathTime*y\n\
+    \death_time\CAN\EOT \SOH(\STXR\tdeathTime\SUB\213\DC2\n\
+    \\SUBContributionsCombatSegment\DC2\ESC\n\
+    \\tgame_time\CAN\SOH \SOH(\ENQR\bgameTime\DC2\129\SOH\n\
+    \\DC4damage_contributions\CAN\STX \ETX(\v2N.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageContributionRecordR\DC3damageContributions\DC2{\n\
+    \\DC2damage_mitigations\CAN\ETX \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DamageMitigationRecordR\DC1damageMitigations\DC2\132\SOH\n\
+    \\NAKhealing_contributions\CAN\EOT \ETX(\v2O.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingContributionRecordR\DC4healingContributions\DC2{\n\
+    \\DC2healing_reductions\CAN\ENQ \ETX(\v2L.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.HealingReductionRecordR\DC1healingReductions\DC2f\n\
+    \\rkilling_blows\CAN\ACK \ETX(\v2A.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.KillingBlowR\fkillingBlows\DC2V\n\
+    \\adispels\CAN\a \ETX(\v2<.CDOTAMatchPrivateMetadata.ContributionsCombatSegment.DispelR\adispels\SUB\178\STX\n\
+    \\CANDamageContributionRecord\DC22\n\
+    \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+    \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+    \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+    \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+    \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+    \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+    \\SYNDamageMitigationRecord\DC22\n\
+    \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+    \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+    \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+    \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+    \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+    \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\179\STX\n\
+    \\EMHealingContributionRecord\DC22\n\
+    \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+    \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+    \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+    \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+    \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+    \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\176\STX\n\
+    \\SYNHealingReductionRecord\DC22\n\
+    \\DC3attacker_ability_id\CAN\SOH \SOH(\ENQ:\STX-1R\DC1attackerAbilityId\DC2(\n\
+    \\DLEattacker_hero_id\CAN\STX \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\ETX \SOH(\ENQR\ftargetHeroId\DC28\n\
+    \\SYNcontributor_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC4contributorAbilityId\DC2.\n\
+    \\DC3contributor_hero_id\CAN\ENQ \SOH(\ENQR\DC1contributorHeroId\DC2\DC4\n\
+    \\ENQvalue\CAN\ACK \SOH(\rR\ENQvalue\DC2\DC2\n\
+    \\EOTtype\CAN\a \SOH(\rR\EOTtype\SUB\147\SOH\n\
+    \\vKillingBlow\DC2(\n\
+    \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+    \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\SUB\237\SOH\n\
+    \\ACKDispel\DC2(\n\
+    \\DLEattacker_hero_id\CAN\SOH \SOH(\ENQR\SOattackerHeroId\DC2$\n\
+    \\SOtarget_hero_id\CAN\STX \SOH(\ENQR\ftargetHeroId\DC24\n\
+    \\DC4inflictor_ability_id\CAN\ETX \SOH(\ENQ:\STX-1R\DC2inflictorAbilityId\DC22\n\
+    \\DC3modifier_ability_id\CAN\EOT \SOH(\ENQ:\STX-1R\DC1modifierAbilityId\DC2)\n\
+    \\DLEduration_reduced\CAN\ENQ \SOH(\STXR\SIdurationReduced*y\n\
     \\GSEPlayerInventorySnapshotFlags\DC2,\n\
     \(EPlayerInventorySnapshotFlags_HasScepter\DLE\SOH\DC2*\n\
-    \&EPlayerInventorySnapshotFlags_HasShard\DLE\STXJ\245\200\SOH\n\
-    \\a\DC2\ENQ\NUL\NUL\132\ETX\SOH\n\
+    \&EPlayerInventorySnapshotFlags_HasShard\DLE\STXJ\219\237\SOH\n\
+    \\a\DC2\ENQ\NUL\NUL\197\ETX\SOH\n\
     \\t\n\
     \\STX\ETX\NUL\DC2\ETX\NUL\NUL\US\n\
     \\t\n\
@@ -21729,7 +24974,7 @@ packedFileDescriptor
     \\r\n\
     \\ENQ\EOT\SOH\STX\v\ETX\DC2\EOT\156\STX79\n\
     \\f\n\
-    \\STX\EOT\STX\DC2\ACK\159\STX\NUL\132\ETX\SOH\n\
+    \\STX\EOT\STX\DC2\ACK\159\STX\NUL\197\ETX\SOH\n\
     \\v\n\
     \\ETX\EOT\STX\SOH\DC2\EOT\159\STX\b!\n\
     \\SO\n\
@@ -22409,33 +25654,545 @@ packedFileDescriptor
     \\a\EOT\STX\ETX\SOH\STX\STX\SOH\DC2\EOT\254\STXBK\n\
     \\SI\n\
     \\a\EOT\STX\ETX\SOH\STX\STX\ETX\DC2\EOT\254\STXNO\n\
+    \\SO\n\
+    \\EOT\EOT\STX\ETX\STX\DC2\ACK\129\ETX\b\191\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT\STX\ETX\STX\SOH\DC2\EOT\129\ETX\DLE*\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\NUL\DC2\ACK\130\ETX\DLE\138\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\NUL\SOH\DC2\EOT\130\ETX\CAN0\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\DC2\EOT\131\ETX\CANN\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\EOT\DC2\EOT\131\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\ENQ\DC2\EOT\131\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\SOH\DC2\EOT\131\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\ETX\DC2\EOT\131\ETX=>\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\b\DC2\EOT\131\ETX?M\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\NUL\a\DC2\EOT\131\ETXJL\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\SOH\DC2\EOT\132\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\SOH\EOT\DC2\EOT\132\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\SOH\ENQ\DC2\EOT\132\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\SOH\SOH\DC2\EOT\132\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\SOH\ETX\DC2\EOT\132\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\STX\DC2\EOT\133\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\STX\EOT\DC2\EOT\133\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\STX\ENQ\DC2\EOT\133\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\STX\SOH\DC2\EOT\133\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\STX\ETX\DC2\EOT\133\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\DC2\EOT\134\ETX\CANQ\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\EOT\DC2\EOT\134\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\ENQ\DC2\EOT\134\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\SOH\DC2\EOT\134\ETX'=\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\ETX\DC2\EOT\134\ETX@A\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\b\DC2\EOT\134\ETXBP\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ETX\a\DC2\EOT\134\ETXMO\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\EOT\DC2\EOT\135\ETX\CAN?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\EOT\EOT\DC2\EOT\135\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\EOT\ENQ\DC2\EOT\135\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\EOT\SOH\DC2\EOT\135\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\EOT\ETX\DC2\EOT\135\ETX=>\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\ENQ\DC2\EOT\136\ETX\CAN2\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ENQ\EOT\DC2\EOT\136\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ENQ\ENQ\DC2\EOT\136\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ENQ\SOH\DC2\EOT\136\ETX(-\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ENQ\ETX\DC2\EOT\136\ETX01\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\NUL\STX\ACK\DC2\EOT\137\ETX\CAN1\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ACK\EOT\DC2\EOT\137\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ACK\ENQ\DC2\EOT\137\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ACK\SOH\DC2\EOT\137\ETX(,\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\NUL\STX\ACK\ETX\DC2\EOT\137\ETX/0\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\SOH\DC2\ACK\140\ETX\DLE\148\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\SOH\SOH\DC2\EOT\140\ETX\CAN.\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\DC2\EOT\141\ETX\CANN\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\EOT\DC2\EOT\141\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\ENQ\DC2\EOT\141\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\SOH\DC2\EOT\141\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\ETX\DC2\EOT\141\ETX=>\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\b\DC2\EOT\141\ETX?M\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\NUL\a\DC2\EOT\141\ETXJL\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\SOH\DC2\EOT\142\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\SOH\EOT\DC2\EOT\142\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\SOH\ENQ\DC2\EOT\142\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\SOH\SOH\DC2\EOT\142\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\SOH\ETX\DC2\EOT\142\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\STX\DC2\EOT\143\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\STX\EOT\DC2\EOT\143\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\STX\ENQ\DC2\EOT\143\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\STX\SOH\DC2\EOT\143\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\STX\ETX\DC2\EOT\143\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\DC2\EOT\144\ETX\CANQ\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\EOT\DC2\EOT\144\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\ENQ\DC2\EOT\144\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\SOH\DC2\EOT\144\ETX'=\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\ETX\DC2\EOT\144\ETX@A\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\b\DC2\EOT\144\ETXBP\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ETX\a\DC2\EOT\144\ETXMO\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\EOT\DC2\EOT\145\ETX\CAN?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\EOT\EOT\DC2\EOT\145\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\EOT\ENQ\DC2\EOT\145\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\EOT\SOH\DC2\EOT\145\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\EOT\ETX\DC2\EOT\145\ETX=>\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\ENQ\DC2\EOT\146\ETX\CAN2\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ENQ\EOT\DC2\EOT\146\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ENQ\ENQ\DC2\EOT\146\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ENQ\SOH\DC2\EOT\146\ETX(-\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ENQ\ETX\DC2\EOT\146\ETX01\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\SOH\STX\ACK\DC2\EOT\147\ETX\CAN1\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ACK\EOT\DC2\EOT\147\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ACK\ENQ\DC2\EOT\147\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ACK\SOH\DC2\EOT\147\ETX(,\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\SOH\STX\ACK\ETX\DC2\EOT\147\ETX/0\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\STX\DC2\ACK\150\ETX\DLE\158\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\STX\SOH\DC2\EOT\150\ETX\CAN1\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\NUL\DC2\EOT\151\ETX\CANN\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\EOT\DC2\EOT\151\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\ENQ\DC2\EOT\151\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\SOH\DC2\EOT\151\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\ETX\DC2\EOT\151\ETX=>\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\b\DC2\EOT\151\ETX?M\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\NUL\a\DC2\EOT\151\ETXJL\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\SOH\DC2\EOT\152\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\SOH\EOT\DC2\EOT\152\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\SOH\ENQ\DC2\EOT\152\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\SOH\SOH\DC2\EOT\152\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\SOH\ETX\DC2\EOT\152\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\STX\DC2\EOT\153\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\STX\EOT\DC2\EOT\153\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\STX\ENQ\DC2\EOT\153\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\STX\SOH\DC2\EOT\153\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\STX\ETX\DC2\EOT\153\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\ETX\DC2\EOT\154\ETX\CANQ\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\EOT\DC2\EOT\154\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\ENQ\DC2\EOT\154\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\SOH\DC2\EOT\154\ETX'=\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\ETX\DC2\EOT\154\ETX@A\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\b\DC2\EOT\154\ETXBP\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ETX\a\DC2\EOT\154\ETXMO\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\EOT\DC2\EOT\155\ETX\CAN?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\EOT\EOT\DC2\EOT\155\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\EOT\ENQ\DC2\EOT\155\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\EOT\SOH\DC2\EOT\155\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\EOT\ETX\DC2\EOT\155\ETX=>\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\ENQ\DC2\EOT\156\ETX\CAN2\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ENQ\EOT\DC2\EOT\156\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ENQ\ENQ\DC2\EOT\156\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ENQ\SOH\DC2\EOT\156\ETX(-\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ENQ\ETX\DC2\EOT\156\ETX01\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\STX\STX\ACK\DC2\EOT\157\ETX\CAN1\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ACK\EOT\DC2\EOT\157\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ACK\ENQ\DC2\EOT\157\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ACK\SOH\DC2\EOT\157\ETX(,\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\STX\STX\ACK\ETX\DC2\EOT\157\ETX/0\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\ETX\DC2\ACK\160\ETX\DLE\168\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\ETX\SOH\DC2\EOT\160\ETX\CAN.\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\DC2\EOT\161\ETX\CANN\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\EOT\DC2\EOT\161\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\ENQ\DC2\EOT\161\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\SOH\DC2\EOT\161\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\ETX\DC2\EOT\161\ETX=>\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\b\DC2\EOT\161\ETX?M\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\NUL\a\DC2\EOT\161\ETXJL\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\SOH\DC2\EOT\162\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\SOH\EOT\DC2\EOT\162\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\SOH\ENQ\DC2\EOT\162\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\SOH\SOH\DC2\EOT\162\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\SOH\ETX\DC2\EOT\162\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\STX\DC2\EOT\163\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\STX\EOT\DC2\EOT\163\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\STX\ENQ\DC2\EOT\163\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\STX\SOH\DC2\EOT\163\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\STX\ETX\DC2\EOT\163\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\DC2\EOT\164\ETX\CANQ\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\EOT\DC2\EOT\164\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\ENQ\DC2\EOT\164\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\SOH\DC2\EOT\164\ETX'=\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\ETX\DC2\EOT\164\ETX@A\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\b\DC2\EOT\164\ETXBP\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ETX\a\DC2\EOT\164\ETXMO\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\EOT\DC2\EOT\165\ETX\CAN?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\EOT\EOT\DC2\EOT\165\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\EOT\ENQ\DC2\EOT\165\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\EOT\SOH\DC2\EOT\165\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\EOT\ETX\DC2\EOT\165\ETX=>\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\ENQ\DC2\EOT\166\ETX\CAN2\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ENQ\EOT\DC2\EOT\166\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ENQ\ENQ\DC2\EOT\166\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ENQ\SOH\DC2\EOT\166\ETX(-\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ENQ\ETX\DC2\EOT\166\ETX01\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ETX\STX\ACK\DC2\EOT\167\ETX\CAN1\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ACK\EOT\DC2\EOT\167\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ACK\ENQ\DC2\EOT\167\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ACK\SOH\DC2\EOT\167\ETX(,\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ETX\STX\ACK\ETX\DC2\EOT\167\ETX/0\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\EOT\DC2\ACK\170\ETX\DLE\174\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\EOT\SOH\DC2\EOT\170\ETX\CAN#\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\EOT\STX\NUL\DC2\EOT\171\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\NUL\EOT\DC2\EOT\171\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\NUL\ENQ\DC2\EOT\171\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\NUL\SOH\DC2\EOT\171\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\NUL\ETX\DC2\EOT\171\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\EOT\STX\SOH\DC2\EOT\172\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\SOH\EOT\DC2\EOT\172\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\SOH\ENQ\DC2\EOT\172\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\SOH\SOH\DC2\EOT\172\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\SOH\ETX\DC2\EOT\172\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\EOT\STX\STX\DC2\EOT\173\ETX\CANO\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\EOT\DC2\EOT\173\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\ENQ\DC2\EOT\173\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\SOH\DC2\EOT\173\ETX';\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\ETX\DC2\EOT\173\ETX>?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\b\DC2\EOT\173\ETX@N\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\EOT\STX\STX\a\DC2\EOT\173\ETXKM\n\
+    \\DLE\n\
+    \\ACK\EOT\STX\ETX\STX\ETX\ENQ\DC2\ACK\176\ETX\DLE\182\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\ETX\ENQ\SOH\DC2\EOT\176\ETX\CAN\RS\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ENQ\STX\NUL\DC2\EOT\177\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\NUL\EOT\DC2\EOT\177\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\NUL\ENQ\DC2\EOT\177\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\NUL\SOH\DC2\EOT\177\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\NUL\ETX\DC2\EOT\177\ETX:;\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ENQ\STX\SOH\DC2\EOT\178\ETX\CAN:\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\SOH\EOT\DC2\EOT\178\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\SOH\ENQ\DC2\EOT\178\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\SOH\SOH\DC2\EOT\178\ETX'5\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\SOH\ETX\DC2\EOT\178\ETX89\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\DC2\EOT\179\ETX\CANO\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\EOT\DC2\EOT\179\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\ENQ\DC2\EOT\179\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\SOH\DC2\EOT\179\ETX';\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\ETX\DC2\EOT\179\ETX>?\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\b\DC2\EOT\179\ETX@N\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\STX\a\DC2\EOT\179\ETXKM\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\DC2\EOT\180\ETX\CANN\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\EOT\DC2\EOT\180\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\ENQ\DC2\EOT\180\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\SOH\DC2\EOT\180\ETX':\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\ETX\DC2\EOT\180\ETX=>\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\b\DC2\EOT\180\ETX?M\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\ETX\a\DC2\EOT\180\ETXJL\n\
+    \\DLE\n\
+    \\b\EOT\STX\ETX\STX\ETX\ENQ\STX\EOT\DC2\EOT\181\ETX\CAN<\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\EOT\EOT\DC2\EOT\181\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\EOT\ENQ\DC2\EOT\181\ETX!&\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\EOT\SOH\DC2\EOT\181\ETX'7\n\
+    \\DC1\n\
+    \\t\EOT\STX\ETX\STX\ETX\ENQ\STX\EOT\ETX\DC2\EOT\181\ETX:;\n\
+    \\SO\n\
+    \\ACK\EOT\STX\ETX\STX\STX\NUL\DC2\EOT\184\ETX\DLE-\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\NUL\EOT\DC2\EOT\184\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\NUL\ENQ\DC2\EOT\184\ETX\EM\RS\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\NUL\SOH\DC2\EOT\184\ETX\US(\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\NUL\ETX\DC2\EOT\184\ETX+,\n\
+    \\SI\n\
+    \\ACK\EOT\STX\ETX\STX\STX\SOH\DC2\ENQ\185\ETX\DLE\129\SOH\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\SOH\EOT\DC2\EOT\185\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\SOH\ACK\DC2\EOT\185\ETX\EMg\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\SOH\SOH\DC2\EOT\185\ETXh|\n\
+    \\DLE\n\
+    \\a\EOT\STX\ETX\STX\STX\SOH\ETX\DC2\ENQ\185\ETX\DEL\128\SOH\n\
+    \\SO\n\
+    \\ACK\EOT\STX\ETX\STX\STX\STX\DC2\EOT\186\ETX\DLE}\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\STX\EOT\DC2\EOT\186\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\STX\ACK\DC2\EOT\186\ETX\EMe\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\STX\SOH\DC2\EOT\186\ETXfx\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\STX\ETX\DC2\EOT\186\ETX{|\n\
+    \\SI\n\
+    \\ACK\EOT\STX\ETX\STX\STX\ETX\DC2\ENQ\187\ETX\DLE\131\SOH\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ETX\EOT\DC2\EOT\187\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ETX\ACK\DC2\EOT\187\ETX\EMh\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ETX\SOH\DC2\EOT\187\ETXi~\n\
+    \\DC1\n\
+    \\a\EOT\STX\ETX\STX\STX\ETX\ETX\DC2\ACK\187\ETX\129\SOH\130\SOH\n\
+    \\SO\n\
+    \\ACK\EOT\STX\ETX\STX\STX\EOT\DC2\EOT\188\ETX\DLE}\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\EOT\EOT\DC2\EOT\188\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\EOT\ACK\DC2\EOT\188\ETX\EMe\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\EOT\SOH\DC2\EOT\188\ETXfx\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\EOT\ETX\DC2\EOT\188\ETX{|\n\
+    \\SO\n\
+    \\ACK\EOT\STX\ETX\STX\STX\ENQ\DC2\EOT\189\ETX\DLEm\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ENQ\EOT\DC2\EOT\189\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ENQ\ACK\DC2\EOT\189\ETX\EMZ\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ENQ\SOH\DC2\EOT\189\ETX[h\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ENQ\ETX\DC2\EOT\189\ETXkl\n\
+    \\SO\n\
+    \\ACK\EOT\STX\ETX\STX\STX\ACK\DC2\EOT\190\ETX\DLEb\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ACK\EOT\DC2\EOT\190\ETX\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ACK\ACK\DC2\EOT\190\ETX\EMU\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ACK\SOH\DC2\EOT\190\ETXV]\n\
+    \\SI\n\
+    \\a\EOT\STX\ETX\STX\STX\ACK\ETX\DC2\EOT\190\ETX`a\n\
     \\f\n\
-    \\EOT\EOT\STX\STX\NUL\DC2\EOT\129\ETX\b;\n\
+    \\EOT\EOT\STX\STX\NUL\DC2\EOT\193\ETX\b;\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\EOT\129\ETX\b\DLE\n\
+    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\EOT\193\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\NUL\ACK\DC2\EOT\129\ETX\DC10\n\
+    \\ENQ\EOT\STX\STX\NUL\ACK\DC2\EOT\193\ETX\DC10\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\EOT\129\ETX16\n\
+    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\EOT\193\ETX16\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\EOT\129\ETX9:\n\
+    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\EOT\193\ETX9:\n\
     \\f\n\
-    \\EOT\EOT\STX\STX\SOH\DC2\EOT\130\ETX\b1\n\
+    \\EOT\EOT\STX\STX\SOH\DC2\EOT\194\ETX\b1\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\SOH\EOT\DC2\EOT\130\ETX\b\DLE\n\
+    \\ENQ\EOT\STX\STX\SOH\EOT\DC2\EOT\194\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\SOH\ENQ\DC2\EOT\130\ETX\DC1\SYN\n\
+    \\ENQ\EOT\STX\STX\SOH\ENQ\DC2\EOT\194\ETX\DC1\SYN\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\SOH\SOH\DC2\EOT\130\ETX\ETB,\n\
+    \\ENQ\EOT\STX\STX\SOH\SOH\DC2\EOT\194\ETX\ETB,\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\SOH\ETX\DC2\EOT\130\ETX/0\n\
+    \\ENQ\EOT\STX\STX\SOH\ETX\DC2\EOT\194\ETX/0\n\
     \\f\n\
-    \\EOT\EOT\STX\STX\STX\DC2\EOT\131\ETX\bH\n\
+    \\EOT\EOT\STX\STX\STX\DC2\EOT\195\ETX\bH\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\STX\EOT\DC2\EOT\131\ETX\b\DLE\n\
+    \\ENQ\EOT\STX\STX\STX\EOT\DC2\EOT\195\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\STX\ACK\DC2\EOT\131\ETX\DC16\n\
+    \\ENQ\EOT\STX\STX\STX\ACK\DC2\EOT\195\ETX\DC16\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\STX\SOH\DC2\EOT\131\ETX7C\n\
+    \\ENQ\EOT\STX\STX\STX\SOH\DC2\EOT\195\ETX7C\n\
     \\r\n\
-    \\ENQ\EOT\STX\STX\STX\ETX\DC2\EOT\131\ETXFG"
+    \\ENQ\EOT\STX\STX\STX\ETX\DC2\EOT\195\ETXFG\n\
+    \\f\n\
+    \\EOT\EOT\STX\STX\ETX\DC2\EOT\196\ETX\bY\n\
+    \\r\n\
+    \\ENQ\EOT\STX\STX\ETX\EOT\DC2\EOT\196\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\STX\STX\ETX\ACK\DC2\EOT\196\ETX\DC1F\n\
+    \\r\n\
+    \\ENQ\EOT\STX\STX\ETX\SOH\DC2\EOT\196\ETXGT\n\
+    \\r\n\
+    \\ENQ\EOT\STX\STX\ETX\ETX\DC2\EOT\196\ETXWX"

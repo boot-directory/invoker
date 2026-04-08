@@ -359,7 +359,10 @@ data EGCMsgUseItemResponse
     K_EGCMsgUseItemResponse_MissingRequirement |
     K_EGCMsgUseItemResponse_EmoticonUnlock_NoNew |
     K_EGCMsgUseItemResponse_EmoticonUnlock_Complete |
-    K_EGCMsgUseItemResponse_ItemUsed_Compendium
+    K_EGCMsgUseItemResponse_ItemUsed_Compendium |
+    K_EGCMsgUseItemResponse_CannotUseWhileUntradable |
+    K_EGCMsgUseItemResponse_CannotBeUsedByAccount |
+    K_EGCMsgUseItemResponse_RecipientCannotRecieve
   deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
 instance Data.ProtoLens.MessageEnum EGCMsgUseItemResponse where
   maybeToEnum 0 = Prelude.Just K_EGCMsgUseItemResponse_ItemUsed
@@ -387,6 +390,12 @@ instance Data.ProtoLens.MessageEnum EGCMsgUseItemResponse where
     = Prelude.Just K_EGCMsgUseItemResponse_EmoticonUnlock_Complete
   maybeToEnum 13
     = Prelude.Just K_EGCMsgUseItemResponse_ItemUsed_Compendium
+  maybeToEnum 14
+    = Prelude.Just K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+  maybeToEnum 15
+    = Prelude.Just K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+  maybeToEnum 16
+    = Prelude.Just K_EGCMsgUseItemResponse_RecipientCannotRecieve
   maybeToEnum _ = Prelude.Nothing
   showEnum K_EGCMsgUseItemResponse_ItemUsed
     = "k_EGCMsgUseItemResponse_ItemUsed"
@@ -416,6 +425,12 @@ instance Data.ProtoLens.MessageEnum EGCMsgUseItemResponse where
     = "k_EGCMsgUseItemResponse_EmoticonUnlock_Complete"
   showEnum K_EGCMsgUseItemResponse_ItemUsed_Compendium
     = "k_EGCMsgUseItemResponse_ItemUsed_Compendium"
+  showEnum K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+    = "k_EGCMsgUseItemResponse_CannotUseWhileUntradable"
+  showEnum K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+    = "k_EGCMsgUseItemResponse_CannotBeUsedByAccount"
+  showEnum K_EGCMsgUseItemResponse_RecipientCannotRecieve
+    = "k_EGCMsgUseItemResponse_RecipientCannotRecieve"
   readEnum k
     | (Prelude.==) k "k_EGCMsgUseItemResponse_ItemUsed"
     = Prelude.Just K_EGCMsgUseItemResponse_ItemUsed
@@ -447,11 +462,17 @@ instance Data.ProtoLens.MessageEnum EGCMsgUseItemResponse where
     = Prelude.Just K_EGCMsgUseItemResponse_EmoticonUnlock_Complete
     | (Prelude.==) k "k_EGCMsgUseItemResponse_ItemUsed_Compendium"
     = Prelude.Just K_EGCMsgUseItemResponse_ItemUsed_Compendium
+    | (Prelude.==) k "k_EGCMsgUseItemResponse_CannotUseWhileUntradable"
+    = Prelude.Just K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+    | (Prelude.==) k "k_EGCMsgUseItemResponse_CannotBeUsedByAccount"
+    = Prelude.Just K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+    | (Prelude.==) k "k_EGCMsgUseItemResponse_RecipientCannotRecieve"
+    = Prelude.Just K_EGCMsgUseItemResponse_RecipientCannotRecieve
     | Prelude.otherwise
     = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
 instance Prelude.Bounded EGCMsgUseItemResponse where
   minBound = K_EGCMsgUseItemResponse_ItemUsed
-  maxBound = K_EGCMsgUseItemResponse_ItemUsed_Compendium
+  maxBound = K_EGCMsgUseItemResponse_RecipientCannotRecieve
 instance Prelude.Enum EGCMsgUseItemResponse where
   toEnum k__
     = Prelude.maybe
@@ -474,9 +495,12 @@ instance Prelude.Enum EGCMsgUseItemResponse where
   fromEnum K_EGCMsgUseItemResponse_EmoticonUnlock_NoNew = 11
   fromEnum K_EGCMsgUseItemResponse_EmoticonUnlock_Complete = 12
   fromEnum K_EGCMsgUseItemResponse_ItemUsed_Compendium = 13
-  succ K_EGCMsgUseItemResponse_ItemUsed_Compendium
+  fromEnum K_EGCMsgUseItemResponse_CannotUseWhileUntradable = 14
+  fromEnum K_EGCMsgUseItemResponse_CannotBeUsedByAccount = 15
+  fromEnum K_EGCMsgUseItemResponse_RecipientCannotRecieve = 16
+  succ K_EGCMsgUseItemResponse_RecipientCannotRecieve
     = Prelude.error
-        "EGCMsgUseItemResponse.succ: bad argument K_EGCMsgUseItemResponse_ItemUsed_Compendium. This value would be out of bounds."
+        "EGCMsgUseItemResponse.succ: bad argument K_EGCMsgUseItemResponse_RecipientCannotRecieve. This value would be out of bounds."
   succ K_EGCMsgUseItemResponse_ItemUsed
     = K_EGCMsgUseItemResponse_GiftNoOtherPlayers
   succ K_EGCMsgUseItemResponse_GiftNoOtherPlayers
@@ -503,6 +527,12 @@ instance Prelude.Enum EGCMsgUseItemResponse where
     = K_EGCMsgUseItemResponse_EmoticonUnlock_Complete
   succ K_EGCMsgUseItemResponse_EmoticonUnlock_Complete
     = K_EGCMsgUseItemResponse_ItemUsed_Compendium
+  succ K_EGCMsgUseItemResponse_ItemUsed_Compendium
+    = K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+  succ K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+    = K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+  succ K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+    = K_EGCMsgUseItemResponse_RecipientCannotRecieve
   pred K_EGCMsgUseItemResponse_ItemUsed
     = Prelude.error
         "EGCMsgUseItemResponse.pred: bad argument K_EGCMsgUseItemResponse_ItemUsed. This value would be out of bounds."
@@ -532,6 +562,12 @@ instance Prelude.Enum EGCMsgUseItemResponse where
     = K_EGCMsgUseItemResponse_EmoticonUnlock_NoNew
   pred K_EGCMsgUseItemResponse_ItemUsed_Compendium
     = K_EGCMsgUseItemResponse_EmoticonUnlock_Complete
+  pred K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+    = K_EGCMsgUseItemResponse_ItemUsed_Compendium
+  pred K_EGCMsgUseItemResponse_CannotBeUsedByAccount
+    = K_EGCMsgUseItemResponse_CannotUseWhileUntradable
+  pred K_EGCMsgUseItemResponse_RecipientCannotRecieve
+    = K_EGCMsgUseItemResponse_CannotBeUsedByAccount
   enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
   enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
   enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
@@ -558,7 +594,7 @@ packedFileDescriptor
     \\ETBk_EGCMsgResponseNoMatch\DLE\ENQ\DC2 \n\
     \\FSk_EGCMsgResponseUnknownError\DLE\ACK\DC2\US\n\
     \\ESCk_EGCMsgResponseNotLoggedOn\DLE\a\DC2\SUB\n\
-    \\SYNk_EGCMsgFailedToCreate\DLE\b*\197\ENQ\n\
+    \\SYNk_EGCMsgFailedToCreate\DLE\b*\226\ACK\n\
     \\NAKEGCMsgUseItemResponse\DC2$\n\
     \ k_EGCMsgUseItemResponse_ItemUsed\DLE\NUL\DC2.\n\
     \*k_EGCMsgUseItemResponse_GiftNoOtherPlayers\DLE\SOH\DC2'\n\
@@ -574,8 +610,12 @@ packedFileDescriptor
     \\DC20\n\
     \,k_EGCMsgUseItemResponse_EmoticonUnlock_NoNew\DLE\v\DC23\n\
     \/k_EGCMsgUseItemResponse_EmoticonUnlock_Complete\DLE\f\DC2/\n\
-    \+k_EGCMsgUseItemResponse_ItemUsed_Compendium\DLE\rJ\230\t\n\
-    \\ACK\DC2\EOT\NUL\NUL$\SOH\n\
+    \+k_EGCMsgUseItemResponse_ItemUsed_Compendium\DLE\r\DC24\n\
+    \0k_EGCMsgUseItemResponse_CannotUseWhileUntradable\DLE\SO\DC21\n\
+    \-k_EGCMsgUseItemResponse_CannotBeUsedByAccount\DLE\SI\DC22\n\
+    \.k_EGCMsgUseItemResponse_RecipientCannotRecieve\DLE\DLEJ\225\n\
+    \\n\
+    \\ACK\DC2\EOT\NUL\NUL'\SOH\n\
     \\n\
     \\n\
     \\STX\ENQ\NUL\DC2\EOT\NUL\NUL\STX\SOH\n\
@@ -653,7 +693,7 @@ packedFileDescriptor
     \\ENQ\ENQ\SOH\STX\b\STX\DC2\ETX\r!\"\n\
     \\n\
     \\n\
-    \\STX\ENQ\STX\DC2\EOT\DLE\NUL\US\SOH\n\
+    \\STX\ENQ\STX\DC2\EOT\DLE\NUL\"\SOH\n\
     \\n\
     \\n\
     \\ETX\ENQ\STX\SOH\DC2\ETX\DLE\ENQ\SUB\n\
@@ -744,33 +784,51 @@ packedFileDescriptor
     \\ENQ\ENQ\STX\STX\r\SOH\DC2\ETX\RS\b3\n\
     \\f\n\
     \\ENQ\ENQ\STX\STX\r\STX\DC2\ETX\RS68\n\
-    \\n\
-    \\n\
-    \\STX\EOT\NUL\DC2\EOT!\NUL$\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\EOT\NUL\SOH\DC2\ETX!\b\EM\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\NUL\DC2\ETX\"\b2\n\
+    \\EOT\ENQ\STX\STX\SO\DC2\ETX\US\b>\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX\"\b\DLE\n\
+    \\ENQ\ENQ\STX\STX\SO\SOH\DC2\ETX\US\b8\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX\"\DC1\ETB\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX\"\CAN\US\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX\"\"#\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\b\DC2\ETX\"$1\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\a\DC2\ETX\"/0\n\
+    \\ENQ\ENQ\STX\STX\SO\STX\DC2\ETX\US;=\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\SOH\DC2\ETX#\b*\n\
+    \\EOT\ENQ\STX\STX\SI\DC2\ETX \b;\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX#\b\DLE\n\
+    \\ENQ\ENQ\STX\STX\SI\SOH\DC2\ETX \b5\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX#\DC1\ETB\n\
+    \\ENQ\ENQ\STX\STX\SI\STX\DC2\ETX 8:\n\
+    \\v\n\
+    \\EOT\ENQ\STX\STX\DLE\DC2\ETX!\b<\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX#\CAN%\n\
+    \\ENQ\ENQ\STX\STX\DLE\SOH\DC2\ETX!\b6\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX#()"
+    \\ENQ\ENQ\STX\STX\DLE\STX\DC2\ETX!9;\n\
+    \\n\
+    \\n\
+    \\STX\EOT\NUL\DC2\EOT$\NUL'\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\NUL\SOH\DC2\ETX$\b\EM\n\
+    \\v\n\
+    \\EOT\EOT\NUL\STX\NUL\DC2\ETX%\b2\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX%\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX%\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX%\CAN\US\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX%\"#\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\b\DC2\ETX%$1\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\a\DC2\ETX%/0\n\
+    \\v\n\
+    \\EOT\EOT\NUL\STX\SOH\DC2\ETX&\b*\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX&\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX&\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX&\CAN%\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX&()"

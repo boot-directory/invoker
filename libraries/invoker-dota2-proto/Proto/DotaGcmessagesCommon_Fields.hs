@@ -42,13 +42,19 @@ ability ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "ability" a) =>
   Lens.Family2.LensLike' f s a
 ability = Data.ProtoLens.Field.field @"ability"
-abilityCategoryLocToken ::
+abilityCategory ::
   forall f s a.
   (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "abilityCategoryLocToken" a) =>
+   Data.ProtoLens.Field.HasField s "abilityCategory" a) =>
   Lens.Family2.LensLike' f s a
-abilityCategoryLocToken
-  = Data.ProtoLens.Field.field @"abilityCategoryLocToken"
+abilityCategory = Data.ProtoLens.Field.field @"abilityCategory"
+abilityDescLocToken ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "abilityDescLocToken" a) =>
+  Lens.Family2.LensLike' f s a
+abilityDescLocToken
+  = Data.ProtoLens.Field.field @"abilityDescLocToken"
 abilityHasScepter ::
   forall f s a.
   (Prelude.Functor f,
@@ -61,6 +67,12 @@ abilityHasShard ::
    Data.ProtoLens.Field.HasField s "abilityHasShard" a) =>
   Lens.Family2.LensLike' f s a
 abilityHasShard = Data.ProtoLens.Field.field @"abilityHasShard"
+abilityIconUrl ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "abilityIconUrl" a) =>
+  Lens.Family2.LensLike' f s a
+abilityIconUrl = Data.ProtoLens.Field.field @"abilityIconUrl"
 abilityId ::
   forall f s a.
   (Prelude.Functor f,
@@ -543,6 +555,12 @@ channelTimes ::
    Data.ProtoLens.Field.HasField s "channelTimes" a) =>
   Lens.Family2.LensLike' f s a
 channelTimes = Data.ProtoLens.Field.field @"channelTimes"
+characteristics ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "characteristics" a) =>
+  Lens.Family2.LensLike' f s a
+characteristics = Data.ProtoLens.Field.field @"characteristics"
 cheers ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "cheers" a) =>
@@ -1229,11 +1247,6 @@ expirationDate ::
    Data.ProtoLens.Field.HasField s "expirationDate" a) =>
   Lens.Family2.LensLike' f s a
 expirationDate = Data.ProtoLens.Field.field @"expirationDate"
-facet ::
-  forall f s a.
-  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "facet" a) =>
-  Lens.Family2.LensLike' f s a
-facet = Data.ProtoLens.Field.field @"facet"
 facetAbilities ::
   forall f s a.
   (Prelude.Functor f,
@@ -1246,39 +1259,6 @@ facetBonus ::
    Data.ProtoLens.Field.HasField s "facetBonus" a) =>
   Lens.Family2.LensLike' f s a
 facetBonus = Data.ProtoLens.Field.field @"facetBonus"
-facetColorStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "facetColorStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-facetColorStyleName
-  = Data.ProtoLens.Field.field @"facetColorStyleName"
-facetDescLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "facetDescLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-facetDescLocToken = Data.ProtoLens.Field.field @"facetDescLocToken"
-facetGradientStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "facetGradientStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-facetGradientStyleName
-  = Data.ProtoLens.Field.field @"facetGradientStyleName"
-facetIconStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "facetIconStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-facetIconStyleName
-  = Data.ProtoLens.Field.field @"facetIconStyleName"
-facetNameLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "facetNameLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-facetNameLocToken = Data.ProtoLens.Field.field @"facetNameLocToken"
 facets ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "facets" a) =>
@@ -1783,6 +1763,12 @@ intelligence ::
    Data.ProtoLens.Field.HasField s "intelligence" a) =>
   Lens.Family2.LensLike' f s a
 intelligence = Data.ProtoLens.Field.field @"intelligence"
+internalName ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "internalName" a) =>
+  Lens.Family2.LensLike' f s a
+internalName = Data.ProtoLens.Field.field @"internalName"
 isActiveValue ::
   forall f s a.
   (Prelude.Functor f,
@@ -1796,6 +1782,12 @@ isEarlygameSuggested ::
   Lens.Family2.LensLike' f s a
 isEarlygameSuggested
   = Data.ProtoLens.Field.field @"isEarlygameSuggested"
+isInnate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "isInnate" a) =>
+  Lens.Family2.LensLike' f s a
+isInnate = Data.ProtoLens.Field.field @"isInnate"
 isItem ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "isItem" a) =>
@@ -2191,6 +2183,12 @@ locStats ::
    Data.ProtoLens.Field.HasField s "locStats" a) =>
   Lens.Family2.LensLike' f s a
 locStats = Data.ProtoLens.Field.field @"locStats"
+localizedNameText ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "localizedNameText" a) =>
+  Lens.Family2.LensLike' f s a
+localizedNameText = Data.ProtoLens.Field.field @"localizedNameText"
 locationId ::
   forall f s a.
   (Prelude.Functor f,
@@ -2448,13 +2446,20 @@ maybe'ability ::
    Data.ProtoLens.Field.HasField s "maybe'ability" a) =>
   Lens.Family2.LensLike' f s a
 maybe'ability = Data.ProtoLens.Field.field @"maybe'ability"
-maybe'abilityCategoryLocToken ::
+maybe'abilityCategory ::
   forall f s a.
   (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'abilityCategoryLocToken" a) =>
+   Data.ProtoLens.Field.HasField s "maybe'abilityCategory" a) =>
   Lens.Family2.LensLike' f s a
-maybe'abilityCategoryLocToken
-  = Data.ProtoLens.Field.field @"maybe'abilityCategoryLocToken"
+maybe'abilityCategory
+  = Data.ProtoLens.Field.field @"maybe'abilityCategory"
+maybe'abilityDescLocToken ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'abilityDescLocToken" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'abilityDescLocToken
+  = Data.ProtoLens.Field.field @"maybe'abilityDescLocToken"
 maybe'abilityHasScepter ::
   forall f s a.
   (Prelude.Functor f,
@@ -2469,6 +2474,13 @@ maybe'abilityHasShard ::
   Lens.Family2.LensLike' f s a
 maybe'abilityHasShard
   = Data.ProtoLens.Field.field @"maybe'abilityHasShard"
+maybe'abilityIconUrl ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'abilityIconUrl" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'abilityIconUrl
+  = Data.ProtoLens.Field.field @"maybe'abilityIconUrl"
 maybe'abilityId ::
   forall f s a.
   (Prelude.Functor f,
@@ -2870,6 +2882,13 @@ maybe'challengeTier ::
   Lens.Family2.LensLike' f s a
 maybe'challengeTier
   = Data.ProtoLens.Field.field @"maybe'challengeTier"
+maybe'characteristics ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'characteristics" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'characteristics
+  = Data.ProtoLens.Field.field @"maybe'characteristics"
 maybe'cheers ::
   forall f s a.
   (Prelude.Functor f,
@@ -3571,53 +3590,12 @@ maybe'expirationDate ::
   Lens.Family2.LensLike' f s a
 maybe'expirationDate
   = Data.ProtoLens.Field.field @"maybe'expirationDate"
-maybe'facet ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facet" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facet = Data.ProtoLens.Field.field @"maybe'facet"
 maybe'facetBonus ::
   forall f s a.
   (Prelude.Functor f,
    Data.ProtoLens.Field.HasField s "maybe'facetBonus" a) =>
   Lens.Family2.LensLike' f s a
 maybe'facetBonus = Data.ProtoLens.Field.field @"maybe'facetBonus"
-maybe'facetColorStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facetColorStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facetColorStyleName
-  = Data.ProtoLens.Field.field @"maybe'facetColorStyleName"
-maybe'facetDescLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facetDescLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facetDescLocToken
-  = Data.ProtoLens.Field.field @"maybe'facetDescLocToken"
-maybe'facetGradientStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facetGradientStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facetGradientStyleName
-  = Data.ProtoLens.Field.field @"maybe'facetGradientStyleName"
-maybe'facetIconStyleName ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facetIconStyleName" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facetIconStyleName
-  = Data.ProtoLens.Field.field @"maybe'facetIconStyleName"
-maybe'facetNameLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'facetNameLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'facetNameLocToken
-  = Data.ProtoLens.Field.field @"maybe'facetNameLocToken"
 maybe'favoritePageNum ::
   forall f s a.
   (Prelude.Functor f,
@@ -4052,6 +4030,13 @@ maybe'intelligence ::
   Lens.Family2.LensLike' f s a
 maybe'intelligence
   = Data.ProtoLens.Field.field @"maybe'intelligence"
+maybe'internalName ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'internalName" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'internalName
+  = Data.ProtoLens.Field.field @"maybe'internalName"
 maybe'isActiveValue ::
   forall f s a.
   (Prelude.Functor f,
@@ -4066,6 +4051,12 @@ maybe'isEarlygameSuggested ::
   Lens.Family2.LensLike' f s a
 maybe'isEarlygameSuggested
   = Data.ProtoLens.Field.field @"maybe'isEarlygameSuggested"
+maybe'isInnate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'isInnate" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'isInnate = Data.ProtoLens.Field.field @"maybe'isInnate"
 maybe'isItem ::
   forall f s a.
   (Prelude.Functor f,
@@ -4460,6 +4451,13 @@ maybe'lobbyType ::
    Data.ProtoLens.Field.HasField s "maybe'lobbyType" a) =>
   Lens.Family2.LensLike' f s a
 maybe'lobbyType = Data.ProtoLens.Field.field @"maybe'lobbyType"
+maybe'localizedNameText ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'localizedNameText" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'localizedNameText
+  = Data.ProtoLens.Field.field @"maybe'localizedNameText"
 maybe'locationId ::
   forall f s a.
   (Prelude.Functor f,
@@ -4806,13 +4804,6 @@ maybe'nameLoc ::
    Data.ProtoLens.Field.HasField s "maybe'nameLoc" a) =>
   Lens.Family2.LensLike' f s a
 maybe'nameLoc = Data.ProtoLens.Field.field @"maybe'nameLoc"
-maybe'nameLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'nameLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-maybe'nameLocToken
-  = Data.ProtoLens.Field.field @"maybe'nameLocToken"
 maybe'netGold ::
   forall f s a.
   (Prelude.Functor f,
@@ -5248,6 +5239,13 @@ maybe'preventVoiceUntilDate ::
   Lens.Family2.LensLike' f s a
 maybe'preventVoiceUntilDate
   = Data.ProtoLens.Field.field @"maybe'preventVoiceUntilDate"
+maybe'previewVideoUrl ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'previewVideoUrl" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'previewVideoUrl
+  = Data.ProtoLens.Field.field @"maybe'previewVideoUrl"
 maybe'previousRank ::
   forall f s a.
   (Prelude.Functor f,
@@ -6096,21 +6094,20 @@ maybe'summaryAvailable ::
   Lens.Family2.LensLike' f s a
 maybe'summaryAvailable
   = Data.ProtoLens.Field.field @"maybe'summaryAvailable"
-maybe'summaryDescriptionFacet ::
+maybe'summaryDescriptionAghsScepter ::
   forall f s a.
   (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'summaryDescriptionFacet" a) =>
+   Data.ProtoLens.Field.HasField s "maybe'summaryDescriptionAghsScepter" a) =>
   Lens.Family2.LensLike' f s a
-maybe'summaryDescriptionFacet
-  = Data.ProtoLens.Field.field @"maybe'summaryDescriptionFacet"
-maybe'summaryDescriptionLevelUpLocToken ::
+maybe'summaryDescriptionAghsScepter
+  = Data.ProtoLens.Field.field @"maybe'summaryDescriptionAghsScepter"
+maybe'summaryDescriptionAghsShard ::
   forall f s a.
   (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "maybe'summaryDescriptionLevelUpLocToken" a) =>
+   Data.ProtoLens.Field.HasField s "maybe'summaryDescriptionAghsShard" a) =>
   Lens.Family2.LensLike' f s a
-maybe'summaryDescriptionLevelUpLocToken
-  = Data.ProtoLens.Field.field
-      @"maybe'summaryDescriptionLevelUpLocToken"
+maybe'summaryDescriptionAghsShard
+  = Data.ProtoLens.Field.field @"maybe'summaryDescriptionAghsShard"
 maybe'summaryDescriptionLocToken ::
   forall f s a.
   (Prelude.Functor f,
@@ -6797,12 +6794,6 @@ nameLoc ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "nameLoc" a) =>
   Lens.Family2.LensLike' f s a
 nameLoc = Data.ProtoLens.Field.field @"nameLoc"
-nameLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "nameLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-nameLocToken = Data.ProtoLens.Field.field @"nameLocToken"
 netGold ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "netGold" a) =>
@@ -7294,6 +7285,12 @@ preventVoiceUntilDate ::
   Lens.Family2.LensLike' f s a
 preventVoiceUntilDate
   = Data.ProtoLens.Field.field @"preventVoiceUntilDate"
+previewVideoUrl ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "previewVideoUrl" a) =>
+  Lens.Family2.LensLike' f s a
+previewVideoUrl = Data.ProtoLens.Field.field @"previewVideoUrl"
 previousRank ::
   forall f s a.
   (Prelude.Functor f,
@@ -8183,6 +8180,20 @@ summaryAvailable ::
    Data.ProtoLens.Field.HasField s "summaryAvailable" a) =>
   Lens.Family2.LensLike' f s a
 summaryAvailable = Data.ProtoLens.Field.field @"summaryAvailable"
+summaryDescriptionAghsScepter ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "summaryDescriptionAghsScepter" a) =>
+  Lens.Family2.LensLike' f s a
+summaryDescriptionAghsScepter
+  = Data.ProtoLens.Field.field @"summaryDescriptionAghsScepter"
+summaryDescriptionAghsShard ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "summaryDescriptionAghsShard" a) =>
+  Lens.Family2.LensLike' f s a
+summaryDescriptionAghsShard
+  = Data.ProtoLens.Field.field @"summaryDescriptionAghsShard"
 summaryDescriptionEmbedValues ::
   forall f s a.
   (Prelude.Functor f,
@@ -8190,20 +8201,14 @@ summaryDescriptionEmbedValues ::
   Lens.Family2.LensLike' f s a
 summaryDescriptionEmbedValues
   = Data.ProtoLens.Field.field @"summaryDescriptionEmbedValues"
-summaryDescriptionFacet ::
+summaryDescriptionEmbeddedSubAbilities ::
   forall f s a.
   (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "summaryDescriptionFacet" a) =>
+   Data.ProtoLens.Field.HasField s "summaryDescriptionEmbeddedSubAbilities" a) =>
   Lens.Family2.LensLike' f s a
-summaryDescriptionFacet
-  = Data.ProtoLens.Field.field @"summaryDescriptionFacet"
-summaryDescriptionLevelUpLocToken ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "summaryDescriptionLevelUpLocToken" a) =>
-  Lens.Family2.LensLike' f s a
-summaryDescriptionLevelUpLocToken
-  = Data.ProtoLens.Field.field @"summaryDescriptionLevelUpLocToken"
+summaryDescriptionEmbeddedSubAbilities
+  = Data.ProtoLens.Field.field
+      @"summaryDescriptionEmbeddedSubAbilities"
 summaryDescriptionLocToken ::
   forall f s a.
   (Prelude.Functor f,
@@ -8211,6 +8216,13 @@ summaryDescriptionLocToken ::
   Lens.Family2.LensLike' f s a
 summaryDescriptionLocToken
   = Data.ProtoLens.Field.field @"summaryDescriptionLocToken"
+summaryDescriptionSurfacedLines ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "summaryDescriptionSurfacedLines" a) =>
+  Lens.Family2.LensLike' f s a
+summaryDescriptionSurfacedLines
+  = Data.ProtoLens.Field.field @"summaryDescriptionSurfacedLines"
 supportAbilityValue ::
   forall f s a.
   (Prelude.Functor f,
@@ -9292,6 +9304,21 @@ vec'summaryDescriptionEmbedValues ::
   Lens.Family2.LensLike' f s a
 vec'summaryDescriptionEmbedValues
   = Data.ProtoLens.Field.field @"vec'summaryDescriptionEmbedValues"
+vec'summaryDescriptionEmbeddedSubAbilities ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'summaryDescriptionEmbeddedSubAbilities" a) =>
+  Lens.Family2.LensLike' f s a
+vec'summaryDescriptionEmbeddedSubAbilities
+  = Data.ProtoLens.Field.field
+      @"vec'summaryDescriptionEmbeddedSubAbilities"
+vec'summaryDescriptionSurfacedLines ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'summaryDescriptionSurfacedLines" a) =>
+  Lens.Family2.LensLike' f s a
+vec'summaryDescriptionSurfacedLines
+  = Data.ProtoLens.Field.field @"vec'summaryDescriptionSurfacedLines"
 vec'talents ::
   forall f s a.
   (Prelude.Functor f,

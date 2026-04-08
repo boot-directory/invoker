@@ -154,6 +154,18 @@ fadeTime ::
    Data.ProtoLens.Field.HasField s "fadeTime" a) =>
   Lens.Family2.LensLike' f s a
 fadeTime = Data.ProtoLens.Field.field @"fadeTime"
+hasScepter ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "hasScepter" a) =>
+  Lens.Family2.LensLike' f s a
+hasScepter = Data.ProtoLens.Field.field @"hasScepter"
+hasShard ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "hasShard" a) =>
+  Lens.Family2.LensLike' f s a
+hasShard = Data.ProtoLens.Field.field @"hasShard"
 heroLoopAppear ::
   forall f s a.
   (Prelude.Functor f,
@@ -308,12 +320,30 @@ maybe'duration ::
    Data.ProtoLens.Field.HasField s "maybe'duration" a) =>
   Lens.Family2.LensLike' f s a
 maybe'duration = Data.ProtoLens.Field.field @"maybe'duration"
+maybe'entryType ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'entryType" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'entryType = Data.ProtoLens.Field.field @"maybe'entryType"
 maybe'fadeTime ::
   forall f s a.
   (Prelude.Functor f,
    Data.ProtoLens.Field.HasField s "maybe'fadeTime" a) =>
   Lens.Family2.LensLike' f s a
 maybe'fadeTime = Data.ProtoLens.Field.field @"maybe'fadeTime"
+maybe'hasScepter ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'hasScepter" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'hasScepter = Data.ProtoLens.Field.field @"maybe'hasScepter"
+maybe'hasShard ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'hasShard" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'hasShard = Data.ProtoLens.Field.field @"maybe'hasShard"
 maybe'heroLoopAppear ::
   forall f s a.
   (Prelude.Functor f,
@@ -335,6 +365,12 @@ maybe'illusionLabel ::
   Lens.Family2.LensLike' f s a
 maybe'illusionLabel
   = Data.ProtoLens.Field.field @"maybe'illusionLabel"
+maybe'index ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'index" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'index = Data.ProtoLens.Field.field @"maybe'index"
 maybe'luaName ::
   forall f s a.
   (Prelude.Functor f,
@@ -348,6 +384,20 @@ maybe'modifierClass ::
   Lens.Family2.LensLike' f s a
 maybe'modifierClass
   = Data.ProtoLens.Field.field @"maybe'modifierClass"
+maybe'modifierFilename ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'modifierFilename" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'modifierFilename
+  = Data.ProtoLens.Field.field @"maybe'modifierFilename"
+maybe'modifierType ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'modifierType" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'modifierType
+  = Data.ProtoLens.Field.field @"maybe'modifierType"
 maybe'moveSlow ::
   forall f s a.
   (Prelude.Functor f,
@@ -361,6 +411,12 @@ maybe'movementSpeed ::
   Lens.Family2.LensLike' f s a
 maybe'movementSpeed
   = Data.ProtoLens.Field.field @"maybe'movementSpeed"
+maybe'parent ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'parent" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'parent = Data.ProtoLens.Field.field @"maybe'parent"
 maybe'playerIds ::
   forall f s a.
   (Prelude.Functor f,
@@ -387,6 +443,12 @@ maybe'range ::
    Data.ProtoLens.Field.HasField s "maybe'range" a) =>
   Lens.Family2.LensLike' f s a
 maybe'range = Data.ProtoLens.Field.field @"maybe'range"
+maybe'serialNum ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'serialNum" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'serialNum = Data.ProtoLens.Field.field @"maybe'serialNum"
 maybe'stackCount ::
   forall f s a.
   (Prelude.Functor f,

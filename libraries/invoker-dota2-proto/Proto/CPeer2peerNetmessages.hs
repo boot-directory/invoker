@@ -40,10 +40,12 @@ import qualified Proto.Networkbasetypes
 {- | Fields :
      
          * 'Proto.CPeer2peerNetmessages_Fields.sendTime' @:: Lens' CP2P_Ping Data.Word.Word64@
-         * 'Proto.CPeer2peerNetmessages_Fields.isReply' @:: Lens' CP2P_Ping Prelude.Bool@ -}
+         * 'Proto.CPeer2peerNetmessages_Fields.maybe'sendTime' @:: Lens' CP2P_Ping (Prelude.Maybe Data.Word.Word64)@
+         * 'Proto.CPeer2peerNetmessages_Fields.isReply' @:: Lens' CP2P_Ping Prelude.Bool@
+         * 'Proto.CPeer2peerNetmessages_Fields.maybe'isReply' @:: Lens' CP2P_Ping (Prelude.Maybe Prelude.Bool)@ -}
 data CP2P_Ping
-  = CP2P_Ping'_constructor {_CP2P_Ping'sendTime :: !Data.Word.Word64,
-                            _CP2P_Ping'isReply :: !Prelude.Bool,
+  = CP2P_Ping'_constructor {_CP2P_Ping'sendTime :: !(Prelude.Maybe Data.Word.Word64),
+                            _CP2P_Ping'isReply :: !(Prelude.Maybe Prelude.Bool),
                             _CP2P_Ping'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CP2P_Ping where
@@ -57,8 +59,20 @@ instance Data.ProtoLens.Field.HasField CP2P_Ping "sendTime" Data.Word.Word64 whe
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
            _CP2P_Ping'sendTime (\ x__ y__ -> x__ {_CP2P_Ping'sendTime = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CP2P_Ping "maybe'sendTime" (Prelude.Maybe Data.Word.Word64) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CP2P_Ping'sendTime (\ x__ y__ -> x__ {_CP2P_Ping'sendTime = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CP2P_Ping "isReply" Prelude.Bool where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CP2P_Ping'isReply (\ x__ y__ -> x__ {_CP2P_Ping'isReply = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CP2P_Ping "maybe'isReply" (Prelude.Maybe Prelude.Bool) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -69,8 +83,8 @@ instance Data.ProtoLens.Message CP2P_Ping where
   packedMessageDescriptor _
     = "\n\
       \\tCP2P_Ping\DC2\ESC\n\
-      \\tsend_time\CAN\SOH \STX(\EOTR\bsendTime\DC2\EM\n\
-      \\bis_reply\CAN\STX \STX(\bR\aisReply"
+      \\tsend_time\CAN\SOH \SOH(\EOTR\bsendTime\DC2\EM\n\
+      \\bis_reply\CAN\STX \SOH(\bR\aisReply"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -79,17 +93,16 @@ instance Data.ProtoLens.Message CP2P_Ping where
               "send_time"
               (Data.ProtoLens.ScalarField Data.ProtoLens.UInt64Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Word.Word64)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"sendTime")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'sendTime")) ::
               Data.ProtoLens.FieldDescriptor CP2P_Ping
         isReply__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "is_reply"
               (Data.ProtoLens.ScalarField Data.ProtoLens.BoolField ::
                  Data.ProtoLens.FieldTypeDescriptor Prelude.Bool)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"isReply")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'isReply")) ::
               Data.ProtoLens.FieldDescriptor CP2P_Ping
       in
         Data.Map.fromList
@@ -101,22 +114,16 @@ instance Data.ProtoLens.Message CP2P_Ping where
         (\ x__ y__ -> x__ {_CP2P_Ping'_unknownFields = y__})
   defMessage
     = CP2P_Ping'_constructor
-        {_CP2P_Ping'sendTime = Data.ProtoLens.fieldDefault,
-         _CP2P_Ping'isReply = Data.ProtoLens.fieldDefault,
+        {_CP2P_Ping'sendTime = Prelude.Nothing,
+         _CP2P_Ping'isReply = Prelude.Nothing,
          _CP2P_Ping'_unknownFields = []}
   parseMessage
     = let
-        loop ::
-          CP2P_Ping
-          -> Prelude.Bool
-             -> Prelude.Bool -> Data.ProtoLens.Encoding.Bytes.Parser CP2P_Ping
-        loop x required'isReply required'sendTime
+        loop :: CP2P_Ping -> Data.ProtoLens.Encoding.Bytes.Parser CP2P_Ping
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing
-                           = (if required'isReply then (:) "is_reply" else Prelude.id)
-                               ((if required'sendTime then (:) "send_time" else Prelude.id) [])
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -135,39 +142,43 @@ instance Data.ProtoLens.Message CP2P_Ping where
                                        Data.ProtoLens.Encoding.Bytes.getVarInt "send_time"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"sendTime") y x)
-                                  required'isReply Prelude.False
                         16
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "is_reply"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"isReply") y x)
-                                  Prelude.False required'sendTime
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"isReply") y x)
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'isReply required'sendTime
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop Data.ProtoLens.defMessage Prelude.True Prelude.True)
-          "CP2P_Ping"
+          (do loop Data.ProtoLens.defMessage) "CP2P_Ping"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'sendTime") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt _v))
              ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt
-                   (Lens.Family2.view (Data.ProtoLens.Field.field @"sendTime") _x)))
-             ((Data.Monoid.<>)
-                ((Data.Monoid.<>)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
-                   ((Prelude..)
-                      Data.ProtoLens.Encoding.Bytes.putVarInt (\ b -> if b then 1 else 0)
-                      (Lens.Family2.view (Data.ProtoLens.Field.field @"isReply") _x)))
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'isReply") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt (\ b -> if b then 1 else 0)
+                             _v))
                 (Data.ProtoLens.Encoding.Wire.buildFieldSet
                    (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
 instance Control.DeepSeq.NFData CP2P_Ping where
@@ -1674,8 +1685,8 @@ packedFileDescriptor
     \\rHandler_Flags\DC2\DLE\n\
     \\fPlayed_Audio\DLE\SOH\"C\n\
     \\tCP2P_Ping\DC2\ESC\n\
-    \\tsend_time\CAN\SOH \STX(\EOTR\bsendTime\DC2\EM\n\
-    \\bis_reply\CAN\STX \STX(\bR\aisReply\"\252\SOH\n\
+    \\tsend_time\CAN\SOH \SOH(\EOTR\bsendTime\DC2\EM\n\
+    \\bis_reply\CAN\STX \SOH(\bR\aisReply\"\252\SOH\n\
     \\NAKCP2P_VRAvatarPosition\DC2B\n\
     \\n\
     \body_parts\CAN\SOH \ETX(\v2#.CP2P_VRAvatarPosition.COrientationR\tbodyParts\DC2\NAK\n\

@@ -17,6 +17,7 @@ import Invoker.Steam (initConnectionManager)
 
 -- External
 import Network.HTTP.Client
+import Control.Concurrent (threadDelay)
 
 
 main :: IO ()
@@ -31,6 +32,7 @@ main = do
   manager <- newManager defaultManagerSettings
 
   _steamGcBuffer <- initConnectionManager manager
+  threadDelay $ 60 * 1_000_000
 
   --------------------------------------------
   -- Demo parsing

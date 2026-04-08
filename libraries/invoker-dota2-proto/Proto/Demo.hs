@@ -9,10 +9,11 @@ module Proto.Demo (
         CDemoCustomDataCallbacks(), CDemoFileHeader(), CDemoFileInfo(),
         CDemoFullPacket(), CDemoPacket(), CDemoRecovery(),
         CDemoRecovery'DemoInitialSpawnGroupEntry(), CDemoSaveGame(),
-        CDemoSendTables(), CDemoSpawnGroups(), CDemoStop(),
-        CDemoStringTables(), CDemoStringTables'Items_t(),
-        CDemoStringTables'Table_t(), CDemoSyncTick(), CDemoUserCmd(),
-        CGameInfo(), CGameInfo'CCSGameInfo(), CGameInfo'CDotaGameInfo(),
+        CDemoSendTables(), CDemoSpawnGroups(),
+        CDemoSpawnGroupsHLTVBroadcast(), CDemoStop(), CDemoStringTables(),
+        CDemoStringTables'Items_t(), CDemoStringTables'Table_t(),
+        CDemoSyncTick(), CDemoUserCmd(), CGameInfo(),
+        CGameInfo'CCSGameInfo(), CGameInfo'CDotaGameInfo(),
         CGameInfo'CDotaGameInfo'CHeroSelectEvent(),
         CGameInfo'CDotaGameInfo'CPlayerInfo(), EDemoCommands(..),
         EDemoCommands()
@@ -3694,6 +3695,126 @@ instance Control.DeepSeq.NFData CDemoSpawnGroups where
              (_CDemoSpawnGroups'_unknownFields x__)
              (Control.DeepSeq.deepseq (_CDemoSpawnGroups'msgs x__) ())
 {- | Fields :
+     
+         * 'Proto.Demo_Fields.data'' @:: Lens' CDemoSpawnGroupsHLTVBroadcast Data.ByteString.ByteString@
+         * 'Proto.Demo_Fields.maybe'data'' @:: Lens' CDemoSpawnGroupsHLTVBroadcast (Prelude.Maybe Data.ByteString.ByteString)@ -}
+data CDemoSpawnGroupsHLTVBroadcast
+  = CDemoSpawnGroupsHLTVBroadcast'_constructor {_CDemoSpawnGroupsHLTVBroadcast'data' :: !(Prelude.Maybe Data.ByteString.ByteString),
+                                                _CDemoSpawnGroupsHLTVBroadcast'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CDemoSpawnGroupsHLTVBroadcast where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CDemoSpawnGroupsHLTVBroadcast "data'" Data.ByteString.ByteString where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDemoSpawnGroupsHLTVBroadcast'data'
+           (\ x__ y__ -> x__ {_CDemoSpawnGroupsHLTVBroadcast'data' = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDemoSpawnGroupsHLTVBroadcast "maybe'data'" (Prelude.Maybe Data.ByteString.ByteString) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDemoSpawnGroupsHLTVBroadcast'data'
+           (\ x__ y__ -> x__ {_CDemoSpawnGroupsHLTVBroadcast'data' = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CDemoSpawnGroupsHLTVBroadcast where
+  messageName _ = Data.Text.pack "CDemoSpawnGroupsHLTVBroadcast"
+  packedMessageDescriptor _
+    = "\n\
+      \\GSCDemoSpawnGroupsHLTVBroadcast\DC2\DC2\n\
+      \\EOTdata\CAN\SOH \SOH(\fR\EOTdata"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        data'__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "data"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.BytesField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.ByteString.ByteString)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'data'")) ::
+              Data.ProtoLens.FieldDescriptor CDemoSpawnGroupsHLTVBroadcast
+      in
+        Data.Map.fromList [(Data.ProtoLens.Tag 1, data'__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CDemoSpawnGroupsHLTVBroadcast'_unknownFields
+        (\ x__ y__
+           -> x__ {_CDemoSpawnGroupsHLTVBroadcast'_unknownFields = y__})
+  defMessage
+    = CDemoSpawnGroupsHLTVBroadcast'_constructor
+        {_CDemoSpawnGroupsHLTVBroadcast'data' = Prelude.Nothing,
+         _CDemoSpawnGroupsHLTVBroadcast'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CDemoSpawnGroupsHLTVBroadcast
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDemoSpawnGroupsHLTVBroadcast
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        10
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getBytes
+                                             (Prelude.fromIntegral len))
+                                       "data"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"data'") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "CDemoSpawnGroupsHLTVBroadcast"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'data'") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 10)
+                       ((\ bs
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                   (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                          _v))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CDemoSpawnGroupsHLTVBroadcast where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CDemoSpawnGroupsHLTVBroadcast'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CDemoSpawnGroupsHLTVBroadcast'data' x__) ())
+{- | Fields :
       -}
 data CDemoStop
   = CDemoStop'_constructor {_CDemoStop'_unknownFields :: !Data.ProtoLens.FieldSet}
@@ -6496,7 +6617,9 @@ packedFileDescriptor
     \cmd_number\CAN\SOH \SOH(\ENQR\tcmdNumber\DC2\DC2\n\
     \\EOTdata\CAN\STX \SOH(\fR\EOTdata\"&\n\
     \\DLECDemoSpawnGroups\DC2\DC2\n\
-    \\EOTmsgs\CAN\ETX \ETX(\fR\EOTmsgs\"\133\STX\n\
+    \\EOTmsgs\CAN\ETX \ETX(\fR\EOTmsgs\"3\n\
+    \\GSCDemoSpawnGroupsHLTVBroadcast\DC2\DC2\n\
+    \\EOTdata\CAN\SOH \SOH(\fR\EOTdata\"\133\STX\n\
     \\rCDemoRecovery\DC2Y\n\
     \\DC3initial_spawn_group\CAN\SOH \SOH(\v2).CDemoRecovery.DemoInitialSpawnGroupEntryR\DC1initialSpawnGroup\DC2.\n\
     \\DC3spawn_group_message\CAN\STX \SOH(\fR\DC1spawnGroupMessage\SUBi\n\
@@ -6528,8 +6651,8 @@ packedFileDescriptor
     \\DC3DEM_AnimationHeader\DLE\DC1\DC2\DLE\n\
     \\fDEM_Recovery\DLE\DC2\DC2\v\n\
     \\aDEM_Max\DLE\DC3\DC2\DC4\n\
-    \\DLEDEM_IsCompressed\DLE@J\188;\n\
-    \\a\DC2\ENQ\NUL\NUL\183\SOH\SOH\n\
+    \\DLEDEM_IsCompressed\DLE@J\161<\n\
+    \\a\DC2\ENQ\NUL\NUL\187\SOH\SOH\n\
     \\n\
     \\n\
     \\STX\ENQ\NUL\DC2\EOT\NUL\NUL\ETB\SOH\n\
@@ -7569,50 +7692,64 @@ packedFileDescriptor
     \\r\n\
     \\ENQ\EOT\DC1\STX\NUL\ETX\DC2\EOT\172\SOH\RS\US\n\
     \\f\n\
-    \\STX\EOT\DC2\DC2\ACK\175\SOH\NUL\183\SOH\SOH\n\
+    \\STX\EOT\DC2\DC2\ACK\175\SOH\NUL\177\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DC2\SOH\DC2\EOT\175\SOH\b\NAK\n\
-    \\SO\n\
-    \\EOT\EOT\DC2\ETX\NUL\DC2\ACK\176\SOH\b\179\SOH\t\n\
-    \\r\n\
-    \\ENQ\EOT\DC2\ETX\NUL\SOH\DC2\EOT\176\SOH\DLE*\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\ETX\NUL\STX\NUL\DC2\EOT\177\SOH\DLE5\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\NUL\EOT\DC2\EOT\177\SOH\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\NUL\ENQ\DC2\EOT\177\SOH\EM\US\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\NUL\SOH\DC2\EOT\177\SOH 0\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\NUL\ETX\DC2\EOT\177\SOH34\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\ETX\NUL\STX\SOH\DC2\EOT\178\SOH\DLE.\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\SOH\EOT\DC2\EOT\178\SOH\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\SOH\ENQ\DC2\EOT\178\SOH\EM\GS\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\SOH\SOH\DC2\EOT\178\SOH\RS)\n\
-    \\SI\n\
-    \\a\EOT\DC2\ETX\NUL\STX\SOH\ETX\DC2\EOT\178\SOH,-\n\
+    \\ETX\EOT\DC2\SOH\DC2\EOT\175\SOH\b%\n\
     \\f\n\
-    \\EOT\EOT\DC2\STX\NUL\DC2\EOT\181\SOH\bS\n\
+    \\EOT\EOT\DC2\STX\NUL\DC2\EOT\176\SOH\b \n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\EOT\DC2\EOT\181\SOH\b\DLE\n\
+    \\ENQ\EOT\DC2\STX\NUL\EOT\DC2\EOT\176\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\ACK\DC2\EOT\181\SOH\DC1:\n\
+    \\ENQ\EOT\DC2\STX\NUL\ENQ\DC2\EOT\176\SOH\DC1\SYN\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\SOH\DC2\EOT\181\SOH;N\n\
+    \\ENQ\EOT\DC2\STX\NUL\SOH\DC2\EOT\176\SOH\ETB\ESC\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\ETX\DC2\EOT\181\SOHQR\n\
+    \\ENQ\EOT\DC2\STX\NUL\ETX\DC2\EOT\176\SOH\RS\US\n\
     \\f\n\
-    \\EOT\EOT\DC2\STX\SOH\DC2\EOT\182\SOH\b/\n\
+    \\STX\EOT\DC3\DC2\ACK\179\SOH\NUL\187\SOH\SOH\n\
+    \\v\n\
+    \\ETX\EOT\DC3\SOH\DC2\EOT\179\SOH\b\NAK\n\
+    \\SO\n\
+    \\EOT\EOT\DC3\ETX\NUL\DC2\ACK\180\SOH\b\183\SOH\t\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\EOT\DC2\EOT\182\SOH\b\DLE\n\
+    \\ENQ\EOT\DC3\ETX\NUL\SOH\DC2\EOT\180\SOH\DLE*\n\
+    \\SO\n\
+    \\ACK\EOT\DC3\ETX\NUL\STX\NUL\DC2\EOT\181\SOH\DLE5\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\NUL\EOT\DC2\EOT\181\SOH\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\NUL\ENQ\DC2\EOT\181\SOH\EM\US\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\NUL\SOH\DC2\EOT\181\SOH 0\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\NUL\ETX\DC2\EOT\181\SOH34\n\
+    \\SO\n\
+    \\ACK\EOT\DC3\ETX\NUL\STX\SOH\DC2\EOT\182\SOH\DLE.\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\SOH\EOT\DC2\EOT\182\SOH\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\SOH\ENQ\DC2\EOT\182\SOH\EM\GS\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\SOH\SOH\DC2\EOT\182\SOH\RS)\n\
+    \\SI\n\
+    \\a\EOT\DC3\ETX\NUL\STX\SOH\ETX\DC2\EOT\182\SOH,-\n\
+    \\f\n\
+    \\EOT\EOT\DC3\STX\NUL\DC2\EOT\185\SOH\bS\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\ENQ\DC2\EOT\182\SOH\DC1\SYN\n\
+    \\ENQ\EOT\DC3\STX\NUL\EOT\DC2\EOT\185\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\SOH\DC2\EOT\182\SOH\ETB*\n\
+    \\ENQ\EOT\DC3\STX\NUL\ACK\DC2\EOT\185\SOH\DC1:\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\ETX\DC2\EOT\182\SOH-."
+    \\ENQ\EOT\DC3\STX\NUL\SOH\DC2\EOT\185\SOH;N\n\
+    \\r\n\
+    \\ENQ\EOT\DC3\STX\NUL\ETX\DC2\EOT\185\SOHQR\n\
+    \\f\n\
+    \\EOT\EOT\DC3\STX\SOH\DC2\EOT\186\SOH\b/\n\
+    \\r\n\
+    \\ENQ\EOT\DC3\STX\SOH\EOT\DC2\EOT\186\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\DC3\STX\SOH\ENQ\DC2\EOT\186\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\DC3\STX\SOH\SOH\DC2\EOT\186\SOH\ETB*\n\
+    \\r\n\
+    \\ENQ\EOT\DC3\STX\SOH\ETX\DC2\EOT\186\SOH-."

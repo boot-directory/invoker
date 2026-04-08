@@ -403,6 +403,12 @@ createPhysicsSim ::
    Data.ProtoLens.Field.HasField s "createPhysicsSim" a) =>
   Lens.Family2.LensLike' f s a
 createPhysicsSim = Data.ProtoLens.Field.field @"createPhysicsSim"
+createSmokeGrid ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "createSmokeGrid" a) =>
+  Lens.Family2.LensLike' f s a
+createSmokeGrid = Data.ProtoLens.Field.field @"createSmokeGrid"
 criteria ::
   forall f s a.
   (Prelude.Functor f,
@@ -980,6 +986,12 @@ length ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "length" a) =>
   Lens.Family2.LensLike' f s a
 length = Data.ProtoLens.Field.field @"length"
+localize ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "localize" a) =>
+  Lens.Family2.LensLike' f s a
+localize = Data.ProtoLens.Field.field @"localize"
 logoLength ::
   forall f s a.
   (Prelude.Functor f,
@@ -1393,6 +1405,13 @@ maybe'createPhysicsSim ::
   Lens.Family2.LensLike' f s a
 maybe'createPhysicsSim
   = Data.ProtoLens.Field.field @"maybe'createPhysicsSim"
+maybe'createSmokeGrid ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'createSmokeGrid" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'createSmokeGrid
+  = Data.ProtoLens.Field.field @"maybe'createSmokeGrid"
 maybe'cssClasses ::
   forall f s a.
   (Prelude.Functor f,
@@ -1923,6 +1942,12 @@ maybe'length ::
    Data.ProtoLens.Field.HasField s "maybe'length" a) =>
   Lens.Family2.LensLike' f s a
 maybe'length = Data.ProtoLens.Field.field @"maybe'length"
+maybe'localize ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'localize" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'localize = Data.ProtoLens.Field.field @"maybe'localize"
 maybe'logoLength ::
   forall f s a.
   (Prelude.Functor f,
@@ -2325,6 +2350,13 @@ maybe'setNamedValueContext ::
   Lens.Family2.LensLike' f s a
 maybe'setNamedValueContext
   = Data.ProtoLens.Field.field @"maybe'setNamedValueContext"
+maybe'setOverrideTexture ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'setOverrideTexture" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'setOverrideTexture
+  = Data.ProtoLens.Field.field @"maybe'setOverrideTexture"
 maybe'setParticleClusterGrowth ::
   forall f s a.
   (Prelude.Functor f,
@@ -3080,6 +3112,13 @@ setNamedValueContext ::
   Lens.Family2.LensLike' f s a
 setNamedValueContext
   = Data.ProtoLens.Field.field @"setNamedValueContext"
+setOverrideTexture ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "setOverrideTexture" a) =>
+  Lens.Family2.LensLike' f s a
+setOverrideTexture
+  = Data.ProtoLens.Field.field @"setOverrideTexture"
 setParticleClusterGrowth ::
   forall f s a.
   (Prelude.Functor f,

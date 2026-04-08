@@ -44,7 +44,18 @@ module Proto.SteammessagesInt (
         CMsgGCMsgSetOptions'GCSQLVersion(),
         CMsgGCMsgSetOptions'MessageRange(), CMsgGCMsgSetOptions'Option(..),
         CMsgGCMsgSetOptions'Option(),
-        CMsgGCMsgWebAPIJobRequestForwardResponse(), CMsgGCRoutingInfo(),
+        CMsgGCMsgWebAPIJobRequestForwardResponse(), CMsgGCReportMetrics(),
+        CMsgGCReportMetrics'MetricEntry(),
+        CMsgGCReportMetrics'MetricEntry'Dimension(),
+        CMsgGCReportMetrics'MetricEntry'Dimension'Value(..),
+        _CMsgGCReportMetrics'MetricEntry'Dimension'ValueString,
+        _CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger,
+        _CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean,
+        CMsgGCReportMetrics'MetricEntry'Measurement(),
+        CMsgGCReportMetrics'MetricEntry'Measurement'Value(..),
+        _CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger,
+        _CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat,
+        CMsgGCReportMetrics_Response(), CMsgGCRoutingInfo(),
         CMsgGCRoutingInfo'RoutingMethod(..),
         CMsgGCRoutingInfo'RoutingMethod(), CMsgHttpRequest(),
         CMsgHttpRequest'QueryParam(), CMsgHttpRequest'RequestHeader(),
@@ -13768,6 +13779,1389 @@ instance Control.DeepSeq.NFData CMsgGCMsgWebAPIJobRequestForwardResponse where
                 (_CMsgGCMsgWebAPIJobRequestForwardResponse'dirIndex x__) ())
 {- | Fields :
      
+         * 'Proto.SteammessagesInt_Fields.metricData' @:: Lens' CMsgGCReportMetrics [CMsgGCReportMetrics'MetricEntry]@
+         * 'Proto.SteammessagesInt_Fields.vec'metricData' @:: Lens' CMsgGCReportMetrics (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry)@ -}
+data CMsgGCReportMetrics
+  = CMsgGCReportMetrics'_constructor {_CMsgGCReportMetrics'metricData :: !(Data.Vector.Vector CMsgGCReportMetrics'MetricEntry),
+                                      _CMsgGCReportMetrics'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgGCReportMetrics where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics "metricData" [CMsgGCReportMetrics'MetricEntry] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'metricData
+           (\ x__ y__ -> x__ {_CMsgGCReportMetrics'metricData = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics "vec'metricData" (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'metricData
+           (\ x__ y__ -> x__ {_CMsgGCReportMetrics'metricData = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgGCReportMetrics where
+  messageName _ = Data.Text.pack "CMsgGCReportMetrics"
+  packedMessageDescriptor _
+    = "\n\
+      \\DC3CMsgGCReportMetrics\DC2A\n\
+      \\vmetric_data\CAN\SOH \ETX(\v2 .CMsgGCReportMetrics.MetricEntryR\n\
+      \metricData\SUB\149\EOT\n\
+      \\vMetricEntry\DC2\CAN\n\
+      \\acatalog\CAN\SOH \SOH(\tR\acatalog\DC2\FS\n\
+      \\toperation\CAN\STX \SOH(\tR\toperation\DC2\FS\n\
+      \\ttimestamp\CAN\ETX \SOH(\SOHR\ttimestamp\DC2J\n\
+      \\n\
+      \dimensions\CAN\n\
+      \ \ETX(\v2*.CMsgGCReportMetrics.MetricEntry.DimensionR\n\
+      \dimensions\DC2P\n\
+      \\fmeasurements\CAN\v \ETX(\v2,.CMsgGCReportMetrics.MetricEntry.MeasurementR\fmeasurements\SUB\155\SOH\n\
+      \\tDimension\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2#\n\
+      \\fvalue_string\CAN\STX \SOH(\tH\NULR\vvalueString\DC2%\n\
+      \\rvalue_integer\CAN\ETX \SOH(\ETXH\NULR\fvalueInteger\DC2%\n\
+      \\rvalue_boolean\CAN\EOT \SOH(\bH\NULR\fvalueBooleanB\a\n\
+      \\ENQvalue\SUBt\n\
+      \\vMeasurement\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2%\n\
+      \\rvalue_integer\CAN\STX \SOH(\ETXH\NULR\fvalueInteger\DC2!\n\
+      \\vvalue_float\CAN\ETX \SOH(\SOHH\NULR\n\
+      \valueFloatB\a\n\
+      \\ENQvalue"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        metricData__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "metric_data"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgGCReportMetrics'MetricEntry)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"metricData")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, metricData__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgGCReportMetrics'_unknownFields
+        (\ x__ y__ -> x__ {_CMsgGCReportMetrics'_unknownFields = y__})
+  defMessage
+    = CMsgGCReportMetrics'_constructor
+        {_CMsgGCReportMetrics'metricData = Data.Vector.Generic.empty,
+         _CMsgGCReportMetrics'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgGCReportMetrics
+          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CMsgGCReportMetrics'MetricEntry
+             -> Data.ProtoLens.Encoding.Bytes.Parser CMsgGCReportMetrics
+        loop x mutable'metricData
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do frozen'metricData <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                             (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                mutable'metricData)
+                      (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t)
+                           (Lens.Family2.set
+                              (Data.ProtoLens.Field.field @"vec'metricData") frozen'metricData
+                              x))
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        10
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "metric_data"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append mutable'metricData y)
+                                loop x v
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+                                  mutable'metricData
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do mutable'metricData <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                      Data.ProtoLens.Encoding.Growing.new
+              loop Data.ProtoLens.defMessage mutable'metricData)
+          "CMsgGCReportMetrics"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                (\ _v
+                   -> (Data.Monoid.<>)
+                        (Data.ProtoLens.Encoding.Bytes.putVarInt 10)
+                        ((Prelude..)
+                           (\ bs
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                      (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                   (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                           Data.ProtoLens.encodeMessage _v))
+                (Lens.Family2.view
+                   (Data.ProtoLens.Field.field @"vec'metricData") _x))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgGCReportMetrics'_unknownFields x__)
+             (Control.DeepSeq.deepseq (_CMsgGCReportMetrics'metricData x__) ())
+{- | Fields :
+     
+         * 'Proto.SteammessagesInt_Fields.catalog' @:: Lens' CMsgGCReportMetrics'MetricEntry Data.Text.Text@
+         * 'Proto.SteammessagesInt_Fields.maybe'catalog' @:: Lens' CMsgGCReportMetrics'MetricEntry (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.SteammessagesInt_Fields.operation' @:: Lens' CMsgGCReportMetrics'MetricEntry Data.Text.Text@
+         * 'Proto.SteammessagesInt_Fields.maybe'operation' @:: Lens' CMsgGCReportMetrics'MetricEntry (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.SteammessagesInt_Fields.timestamp' @:: Lens' CMsgGCReportMetrics'MetricEntry Prelude.Double@
+         * 'Proto.SteammessagesInt_Fields.maybe'timestamp' @:: Lens' CMsgGCReportMetrics'MetricEntry (Prelude.Maybe Prelude.Double)@
+         * 'Proto.SteammessagesInt_Fields.dimensions' @:: Lens' CMsgGCReportMetrics'MetricEntry [CMsgGCReportMetrics'MetricEntry'Dimension]@
+         * 'Proto.SteammessagesInt_Fields.vec'dimensions' @:: Lens' CMsgGCReportMetrics'MetricEntry (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Dimension)@
+         * 'Proto.SteammessagesInt_Fields.measurements' @:: Lens' CMsgGCReportMetrics'MetricEntry [CMsgGCReportMetrics'MetricEntry'Measurement]@
+         * 'Proto.SteammessagesInt_Fields.vec'measurements' @:: Lens' CMsgGCReportMetrics'MetricEntry (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Measurement)@ -}
+data CMsgGCReportMetrics'MetricEntry
+  = CMsgGCReportMetrics'MetricEntry'_constructor {_CMsgGCReportMetrics'MetricEntry'catalog :: !(Prelude.Maybe Data.Text.Text),
+                                                  _CMsgGCReportMetrics'MetricEntry'operation :: !(Prelude.Maybe Data.Text.Text),
+                                                  _CMsgGCReportMetrics'MetricEntry'timestamp :: !(Prelude.Maybe Prelude.Double),
+                                                  _CMsgGCReportMetrics'MetricEntry'dimensions :: !(Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Dimension),
+                                                  _CMsgGCReportMetrics'MetricEntry'measurements :: !(Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Measurement),
+                                                  _CMsgGCReportMetrics'MetricEntry'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgGCReportMetrics'MetricEntry where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "catalog" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'catalog
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'catalog = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "maybe'catalog" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'catalog
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'catalog = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "operation" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'operation
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'operation = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "maybe'operation" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'operation
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'operation = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "timestamp" Prelude.Double where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'timestamp
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'timestamp = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "maybe'timestamp" (Prelude.Maybe Prelude.Double) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'timestamp
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'timestamp = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "dimensions" [CMsgGCReportMetrics'MetricEntry'Dimension] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'dimensions
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'dimensions = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "vec'dimensions" (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Dimension) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'dimensions
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'dimensions = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "measurements" [CMsgGCReportMetrics'MetricEntry'Measurement] where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'measurements
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'measurements = y__}))
+        (Lens.Family2.Unchecked.lens
+           Data.Vector.Generic.toList
+           (\ _ y__ -> Data.Vector.Generic.fromList y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry "vec'measurements" (Data.Vector.Vector CMsgGCReportMetrics'MetricEntry'Measurement) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'measurements
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'measurements = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgGCReportMetrics'MetricEntry where
+  messageName _ = Data.Text.pack "CMsgGCReportMetrics.MetricEntry"
+  packedMessageDescriptor _
+    = "\n\
+      \\vMetricEntry\DC2\CAN\n\
+      \\acatalog\CAN\SOH \SOH(\tR\acatalog\DC2\FS\n\
+      \\toperation\CAN\STX \SOH(\tR\toperation\DC2\FS\n\
+      \\ttimestamp\CAN\ETX \SOH(\SOHR\ttimestamp\DC2J\n\
+      \\n\
+      \dimensions\CAN\n\
+      \ \ETX(\v2*.CMsgGCReportMetrics.MetricEntry.DimensionR\n\
+      \dimensions\DC2P\n\
+      \\fmeasurements\CAN\v \ETX(\v2,.CMsgGCReportMetrics.MetricEntry.MeasurementR\fmeasurements\SUB\155\SOH\n\
+      \\tDimension\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2#\n\
+      \\fvalue_string\CAN\STX \SOH(\tH\NULR\vvalueString\DC2%\n\
+      \\rvalue_integer\CAN\ETX \SOH(\ETXH\NULR\fvalueInteger\DC2%\n\
+      \\rvalue_boolean\CAN\EOT \SOH(\bH\NULR\fvalueBooleanB\a\n\
+      \\ENQvalue\SUBt\n\
+      \\vMeasurement\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2%\n\
+      \\rvalue_integer\CAN\STX \SOH(\ETXH\NULR\fvalueInteger\DC2!\n\
+      \\vvalue_float\CAN\ETX \SOH(\SOHH\NULR\n\
+      \valueFloatB\a\n\
+      \\ENQvalue"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        catalog__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "catalog"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'catalog")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry
+        operation__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "operation"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'operation")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry
+        timestamp__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "timestamp"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.DoubleField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Double)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'timestamp")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry
+        dimensions__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "dimensions"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgGCReportMetrics'MetricEntry'Dimension)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"dimensions")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry
+        measurements__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "measurements"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgGCReportMetrics'MetricEntry'Measurement)
+              (Data.ProtoLens.RepeatedField
+                 Data.ProtoLens.Unpacked
+                 (Data.ProtoLens.Field.field @"measurements")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, catalog__field_descriptor),
+           (Data.ProtoLens.Tag 2, operation__field_descriptor),
+           (Data.ProtoLens.Tag 3, timestamp__field_descriptor),
+           (Data.ProtoLens.Tag 10, dimensions__field_descriptor),
+           (Data.ProtoLens.Tag 11, measurements__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgGCReportMetrics'MetricEntry'_unknownFields
+        (\ x__ y__
+           -> x__ {_CMsgGCReportMetrics'MetricEntry'_unknownFields = y__})
+  defMessage
+    = CMsgGCReportMetrics'MetricEntry'_constructor
+        {_CMsgGCReportMetrics'MetricEntry'catalog = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'operation = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'timestamp = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'dimensions = Data.Vector.Generic.empty,
+         _CMsgGCReportMetrics'MetricEntry'measurements = Data.Vector.Generic.empty,
+         _CMsgGCReportMetrics'MetricEntry'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgGCReportMetrics'MetricEntry
+          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CMsgGCReportMetrics'MetricEntry'Dimension
+             -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CMsgGCReportMetrics'MetricEntry'Measurement
+                -> Data.ProtoLens.Encoding.Bytes.Parser CMsgGCReportMetrics'MetricEntry
+        loop x mutable'dimensions mutable'measurements
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do frozen'dimensions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                             (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                mutable'dimensions)
+                      frozen'measurements <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                               (Data.ProtoLens.Encoding.Growing.unsafeFreeze
+                                                  mutable'measurements)
+                      (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t)
+                           (Lens.Family2.set
+                              (Data.ProtoLens.Field.field @"vec'dimensions") frozen'dimensions
+                              (Lens.Family2.set
+                                 (Data.ProtoLens.Field.field @"vec'measurements")
+                                 frozen'measurements x)))
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        10
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "catalog"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"catalog") y x)
+                                  mutable'dimensions mutable'measurements
+                        18
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "operation"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"operation") y x)
+                                  mutable'dimensions mutable'measurements
+                        25
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToDouble
+                                          Data.ProtoLens.Encoding.Bytes.getFixed64)
+                                       "timestamp"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"timestamp") y x)
+                                  mutable'dimensions mutable'measurements
+                        82
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "dimensions"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append mutable'dimensions y)
+                                loop x v mutable'measurements
+                        90
+                          -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                            Data.ProtoLens.Encoding.Bytes.isolate
+                                              (Prelude.fromIntegral len)
+                                              Data.ProtoLens.parseMessage)
+                                        "measurements"
+                                v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                       (Data.ProtoLens.Encoding.Growing.append
+                                          mutable'measurements y)
+                                loop x mutable'dimensions v
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+                                  mutable'dimensions mutable'measurements
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do mutable'dimensions <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                      Data.ProtoLens.Encoding.Growing.new
+              mutable'measurements <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
+                                        Data.ProtoLens.Encoding.Growing.new
+              loop
+                Data.ProtoLens.defMessage mutable'dimensions mutable'measurements)
+          "MetricEntry"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'catalog") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 10)
+                       ((Prelude..)
+                          (\ bs
+                             -> (Data.Monoid.<>)
+                                  (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                     (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                  (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                          Data.Text.Encoding.encodeUtf8 _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'operation") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 18)
+                          ((Prelude..)
+                             (\ bs
+                                -> (Data.Monoid.<>)
+                                     (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                        (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                     (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                             Data.Text.Encoding.encodeUtf8 _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'timestamp") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 25)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putFixed64
+                                Data.ProtoLens.Encoding.Bytes.doubleToWord _v))
+                   ((Data.Monoid.<>)
+                      (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                         (\ _v
+                            -> (Data.Monoid.<>)
+                                 (Data.ProtoLens.Encoding.Bytes.putVarInt 82)
+                                 ((Prelude..)
+                                    (\ bs
+                                       -> (Data.Monoid.<>)
+                                            (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                               (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                            (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                    Data.ProtoLens.encodeMessage _v))
+                         (Lens.Family2.view
+                            (Data.ProtoLens.Field.field @"vec'dimensions") _x))
+                      ((Data.Monoid.<>)
+                         (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
+                            (\ _v
+                               -> (Data.Monoid.<>)
+                                    (Data.ProtoLens.Encoding.Bytes.putVarInt 90)
+                                    ((Prelude..)
+                                       (\ bs
+                                          -> (Data.Monoid.<>)
+                                               (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                  (Prelude.fromIntegral
+                                                     (Data.ByteString.length bs)))
+                                               (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                       Data.ProtoLens.encodeMessage _v))
+                            (Lens.Family2.view
+                               (Data.ProtoLens.Field.field @"vec'measurements") _x))
+                         (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                            (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics'MetricEntry where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgGCReportMetrics'MetricEntry'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgGCReportMetrics'MetricEntry'catalog x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgGCReportMetrics'MetricEntry'operation x__)
+                   (Control.DeepSeq.deepseq
+                      (_CMsgGCReportMetrics'MetricEntry'timestamp x__)
+                      (Control.DeepSeq.deepseq
+                         (_CMsgGCReportMetrics'MetricEntry'dimensions x__)
+                         (Control.DeepSeq.deepseq
+                            (_CMsgGCReportMetrics'MetricEntry'measurements x__) ())))))
+{- | Fields :
+     
+         * 'Proto.SteammessagesInt_Fields.name' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension Data.Text.Text@
+         * 'Proto.SteammessagesInt_Fields.maybe'name' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.SteammessagesInt_Fields.maybe'value' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension (Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Dimension'Value)@
+         * 'Proto.SteammessagesInt_Fields.maybe'valueString' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.SteammessagesInt_Fields.valueString' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension Data.Text.Text@
+         * 'Proto.SteammessagesInt_Fields.maybe'valueInteger' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension (Prelude.Maybe Data.Int.Int64)@
+         * 'Proto.SteammessagesInt_Fields.valueInteger' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension Data.Int.Int64@
+         * 'Proto.SteammessagesInt_Fields.maybe'valueBoolean' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension (Prelude.Maybe Prelude.Bool)@
+         * 'Proto.SteammessagesInt_Fields.valueBoolean' @:: Lens' CMsgGCReportMetrics'MetricEntry'Dimension Prelude.Bool@ -}
+data CMsgGCReportMetrics'MetricEntry'Dimension
+  = CMsgGCReportMetrics'MetricEntry'Dimension'_constructor {_CMsgGCReportMetrics'MetricEntry'Dimension'name :: !(Prelude.Maybe Data.Text.Text),
+                                                            _CMsgGCReportMetrics'MetricEntry'Dimension'value :: !(Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Dimension'Value),
+                                                            _CMsgGCReportMetrics'MetricEntry'Dimension'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgGCReportMetrics'MetricEntry'Dimension where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+data CMsgGCReportMetrics'MetricEntry'Dimension'Value
+  = CMsgGCReportMetrics'MetricEntry'Dimension'ValueString !Data.Text.Text |
+    CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger !Data.Int.Int64 |
+    CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean !Prelude.Bool
+  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "name" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'name
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'name = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "maybe'name" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'name
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'name = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "maybe'value" (Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Dimension'Value) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "maybe'valueString" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        (Lens.Family2.Unchecked.lens
+           (\ x__
+              -> case x__ of
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueString x__val))
+                     -> Prelude.Just x__val
+                   _otherwise -> Prelude.Nothing)
+           (\ _ y__
+              -> Prelude.fmap
+                   CMsgGCReportMetrics'MetricEntry'Dimension'ValueString y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "valueString" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        ((Prelude..)
+           (Lens.Family2.Unchecked.lens
+              (\ x__
+                 -> case x__ of
+                      (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueString x__val))
+                        -> Prelude.Just x__val
+                      _otherwise -> Prelude.Nothing)
+              (\ _ y__
+                 -> Prelude.fmap
+                      CMsgGCReportMetrics'MetricEntry'Dimension'ValueString y__))
+           (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "maybe'valueInteger" (Prelude.Maybe Data.Int.Int64) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        (Lens.Family2.Unchecked.lens
+           (\ x__
+              -> case x__ of
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger x__val))
+                     -> Prelude.Just x__val
+                   _otherwise -> Prelude.Nothing)
+           (\ _ y__
+              -> Prelude.fmap
+                   CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "valueInteger" Data.Int.Int64 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        ((Prelude..)
+           (Lens.Family2.Unchecked.lens
+              (\ x__
+                 -> case x__ of
+                      (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger x__val))
+                        -> Prelude.Just x__val
+                      _otherwise -> Prelude.Nothing)
+              (\ _ y__
+                 -> Prelude.fmap
+                      CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger y__))
+           (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "maybe'valueBoolean" (Prelude.Maybe Prelude.Bool) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        (Lens.Family2.Unchecked.lens
+           (\ x__
+              -> case x__ of
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean x__val))
+                     -> Prelude.Just x__val
+                   _otherwise -> Prelude.Nothing)
+           (\ _ y__
+              -> Prelude.fmap
+                   CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Dimension "valueBoolean" Prelude.Bool where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Dimension'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Dimension'value = y__}))
+        ((Prelude..)
+           (Lens.Family2.Unchecked.lens
+              (\ x__
+                 -> case x__ of
+                      (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean x__val))
+                        -> Prelude.Just x__val
+                      _otherwise -> Prelude.Nothing)
+              (\ _ y__
+                 -> Prelude.fmap
+                      CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean y__))
+           (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault))
+instance Data.ProtoLens.Message CMsgGCReportMetrics'MetricEntry'Dimension where
+  messageName _
+    = Data.Text.pack "CMsgGCReportMetrics.MetricEntry.Dimension"
+  packedMessageDescriptor _
+    = "\n\
+      \\tDimension\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2#\n\
+      \\fvalue_string\CAN\STX \SOH(\tH\NULR\vvalueString\DC2%\n\
+      \\rvalue_integer\CAN\ETX \SOH(\ETXH\NULR\fvalueInteger\DC2%\n\
+      \\rvalue_boolean\CAN\EOT \SOH(\bH\NULR\fvalueBooleanB\a\n\
+      \\ENQvalue"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        name__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "name"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'name")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Dimension
+        valueString__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value_string"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'valueString")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Dimension
+        valueInteger__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value_integer"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int64Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int64)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'valueInteger")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Dimension
+        valueBoolean__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value_boolean"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.BoolField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Bool)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'valueBoolean")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Dimension
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, name__field_descriptor),
+           (Data.ProtoLens.Tag 2, valueString__field_descriptor),
+           (Data.ProtoLens.Tag 3, valueInteger__field_descriptor),
+           (Data.ProtoLens.Tag 4, valueBoolean__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgGCReportMetrics'MetricEntry'Dimension'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgGCReportMetrics'MetricEntry'Dimension'_unknownFields = y__})
+  defMessage
+    = CMsgGCReportMetrics'MetricEntry'Dimension'_constructor
+        {_CMsgGCReportMetrics'MetricEntry'Dimension'name = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'Dimension'value = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'Dimension'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgGCReportMetrics'MetricEntry'Dimension
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgGCReportMetrics'MetricEntry'Dimension
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        10
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "name"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"name") y x)
+                        18
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "value_string"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"valueString") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value_integer"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"valueInteger") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value_boolean"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"valueBoolean") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "Dimension"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'name") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 10)
+                       ((Prelude..)
+                          (\ bs
+                             -> (Data.Monoid.<>)
+                                  (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                     (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                  (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                          Data.Text.Encoding.encodeUtf8 _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueString v))
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 18)
+                          ((Prelude..)
+                             (\ bs
+                                -> (Data.Monoid.<>)
+                                     (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                        (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                     (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                             Data.Text.Encoding.encodeUtf8 v)
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger v))
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral v)
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean v))
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt (\ b -> if b then 1 else 0)
+                             v))
+                (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                   (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics'MetricEntry'Dimension where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgGCReportMetrics'MetricEntry'Dimension'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgGCReportMetrics'MetricEntry'Dimension'name x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgGCReportMetrics'MetricEntry'Dimension'value x__) ()))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics'MetricEntry'Dimension'Value where
+  rnf (CMsgGCReportMetrics'MetricEntry'Dimension'ValueString x__)
+    = Control.DeepSeq.rnf x__
+  rnf (CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger x__)
+    = Control.DeepSeq.rnf x__
+  rnf (CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean x__)
+    = Control.DeepSeq.rnf x__
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueString ::
+  Data.ProtoLens.Prism.Prism' CMsgGCReportMetrics'MetricEntry'Dimension'Value Data.Text.Text
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueString
+  = Data.ProtoLens.Prism.prism'
+      CMsgGCReportMetrics'MetricEntry'Dimension'ValueString
+      (\ p__
+         -> case p__ of
+              (CMsgGCReportMetrics'MetricEntry'Dimension'ValueString p__val)
+                -> Prelude.Just p__val
+              _otherwise -> Prelude.Nothing)
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger ::
+  Data.ProtoLens.Prism.Prism' CMsgGCReportMetrics'MetricEntry'Dimension'Value Data.Int.Int64
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger
+  = Data.ProtoLens.Prism.prism'
+      CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger
+      (\ p__
+         -> case p__ of
+              (CMsgGCReportMetrics'MetricEntry'Dimension'ValueInteger p__val)
+                -> Prelude.Just p__val
+              _otherwise -> Prelude.Nothing)
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean ::
+  Data.ProtoLens.Prism.Prism' CMsgGCReportMetrics'MetricEntry'Dimension'Value Prelude.Bool
+_CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean
+  = Data.ProtoLens.Prism.prism'
+      CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean
+      (\ p__
+         -> case p__ of
+              (CMsgGCReportMetrics'MetricEntry'Dimension'ValueBoolean p__val)
+                -> Prelude.Just p__val
+              _otherwise -> Prelude.Nothing)
+{- | Fields :
+     
+         * 'Proto.SteammessagesInt_Fields.name' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement Data.Text.Text@
+         * 'Proto.SteammessagesInt_Fields.maybe'name' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.SteammessagesInt_Fields.maybe'value' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement (Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Measurement'Value)@
+         * 'Proto.SteammessagesInt_Fields.maybe'valueInteger' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement (Prelude.Maybe Data.Int.Int64)@
+         * 'Proto.SteammessagesInt_Fields.valueInteger' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement Data.Int.Int64@
+         * 'Proto.SteammessagesInt_Fields.maybe'valueFloat' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement (Prelude.Maybe Prelude.Double)@
+         * 'Proto.SteammessagesInt_Fields.valueFloat' @:: Lens' CMsgGCReportMetrics'MetricEntry'Measurement Prelude.Double@ -}
+data CMsgGCReportMetrics'MetricEntry'Measurement
+  = CMsgGCReportMetrics'MetricEntry'Measurement'_constructor {_CMsgGCReportMetrics'MetricEntry'Measurement'name :: !(Prelude.Maybe Data.Text.Text),
+                                                              _CMsgGCReportMetrics'MetricEntry'Measurement'value :: !(Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Measurement'Value),
+                                                              _CMsgGCReportMetrics'MetricEntry'Measurement'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgGCReportMetrics'MetricEntry'Measurement where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+data CMsgGCReportMetrics'MetricEntry'Measurement'Value
+  = CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger !Data.Int.Int64 |
+    CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat !Prelude.Double
+  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "name" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'name
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'name = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "maybe'name" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'name
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'name = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "maybe'value" (Prelude.Maybe CMsgGCReportMetrics'MetricEntry'Measurement'Value) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'value = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "maybe'valueInteger" (Prelude.Maybe Data.Int.Int64) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'value = y__}))
+        (Lens.Family2.Unchecked.lens
+           (\ x__
+              -> case x__ of
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger x__val))
+                     -> Prelude.Just x__val
+                   _otherwise -> Prelude.Nothing)
+           (\ _ y__
+              -> Prelude.fmap
+                   CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "valueInteger" Data.Int.Int64 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'value = y__}))
+        ((Prelude..)
+           (Lens.Family2.Unchecked.lens
+              (\ x__
+                 -> case x__ of
+                      (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger x__val))
+                        -> Prelude.Just x__val
+                      _otherwise -> Prelude.Nothing)
+              (\ _ y__
+                 -> Prelude.fmap
+                      CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger y__))
+           (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "maybe'valueFloat" (Prelude.Maybe Prelude.Double) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'value = y__}))
+        (Lens.Family2.Unchecked.lens
+           (\ x__
+              -> case x__ of
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat x__val))
+                     -> Prelude.Just x__val
+                   _otherwise -> Prelude.Nothing)
+           (\ _ y__
+              -> Prelude.fmap
+                   CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat y__))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics'MetricEntry'Measurement "valueFloat" Prelude.Double where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics'MetricEntry'Measurement'value
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics'MetricEntry'Measurement'value = y__}))
+        ((Prelude..)
+           (Lens.Family2.Unchecked.lens
+              (\ x__
+                 -> case x__ of
+                      (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat x__val))
+                        -> Prelude.Just x__val
+                      _otherwise -> Prelude.Nothing)
+              (\ _ y__
+                 -> Prelude.fmap
+                      CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat y__))
+           (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault))
+instance Data.ProtoLens.Message CMsgGCReportMetrics'MetricEntry'Measurement where
+  messageName _
+    = Data.Text.pack "CMsgGCReportMetrics.MetricEntry.Measurement"
+  packedMessageDescriptor _
+    = "\n\
+      \\vMeasurement\DC2\DC2\n\
+      \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2%\n\
+      \\rvalue_integer\CAN\STX \SOH(\ETXH\NULR\fvalueInteger\DC2!\n\
+      \\vvalue_float\CAN\ETX \SOH(\SOHH\NULR\n\
+      \valueFloatB\a\n\
+      \\ENQvalue"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        name__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "name"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'name")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Measurement
+        valueInteger__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value_integer"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int64Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int64)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'valueInteger")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Measurement
+        valueFloat__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "value_float"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.DoubleField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Double)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'valueFloat")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics'MetricEntry'Measurement
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, name__field_descriptor),
+           (Data.ProtoLens.Tag 2, valueInteger__field_descriptor),
+           (Data.ProtoLens.Tag 3, valueFloat__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgGCReportMetrics'MetricEntry'Measurement'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgGCReportMetrics'MetricEntry'Measurement'_unknownFields = y__})
+  defMessage
+    = CMsgGCReportMetrics'MetricEntry'Measurement'_constructor
+        {_CMsgGCReportMetrics'MetricEntry'Measurement'name = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'Measurement'value = Prelude.Nothing,
+         _CMsgGCReportMetrics'MetricEntry'Measurement'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgGCReportMetrics'MetricEntry'Measurement
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgGCReportMetrics'MetricEntry'Measurement
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        10
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "name"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"name") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "value_integer"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"valueInteger") y x)
+                        25
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToDouble
+                                          Data.ProtoLens.Encoding.Bytes.getFixed64)
+                                       "value_float"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"valueFloat") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "Measurement"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'name") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 10)
+                       ((Prelude..)
+                          (\ bs
+                             -> (Data.Monoid.<>)
+                                  (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                     (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                  (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                          Data.Text.Encoding.encodeUtf8 _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'value") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger v))
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral v)
+                   (Prelude.Just (CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat v))
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 25)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putFixed64
+                             Data.ProtoLens.Encoding.Bytes.doubleToWord v))
+                (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                   (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics'MetricEntry'Measurement where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgGCReportMetrics'MetricEntry'Measurement'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgGCReportMetrics'MetricEntry'Measurement'name x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgGCReportMetrics'MetricEntry'Measurement'value x__) ()))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics'MetricEntry'Measurement'Value where
+  rnf (CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger x__)
+    = Control.DeepSeq.rnf x__
+  rnf (CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat x__)
+    = Control.DeepSeq.rnf x__
+_CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger ::
+  Data.ProtoLens.Prism.Prism' CMsgGCReportMetrics'MetricEntry'Measurement'Value Data.Int.Int64
+_CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger
+  = Data.ProtoLens.Prism.prism'
+      CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger
+      (\ p__
+         -> case p__ of
+              (CMsgGCReportMetrics'MetricEntry'Measurement'ValueInteger p__val)
+                -> Prelude.Just p__val
+              _otherwise -> Prelude.Nothing)
+_CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat ::
+  Data.ProtoLens.Prism.Prism' CMsgGCReportMetrics'MetricEntry'Measurement'Value Prelude.Double
+_CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat
+  = Data.ProtoLens.Prism.prism'
+      CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat
+      (\ p__
+         -> case p__ of
+              (CMsgGCReportMetrics'MetricEntry'Measurement'ValueFloat p__val)
+                -> Prelude.Just p__val
+              _otherwise -> Prelude.Nothing)
+{- | Fields :
+     
+         * 'Proto.SteammessagesInt_Fields.eresult' @:: Lens' CMsgGCReportMetrics_Response Data.Int.Int32@
+         * 'Proto.SteammessagesInt_Fields.maybe'eresult' @:: Lens' CMsgGCReportMetrics_Response (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.SteammessagesInt_Fields.failedEntryCount' @:: Lens' CMsgGCReportMetrics_Response Data.Word.Word32@
+         * 'Proto.SteammessagesInt_Fields.maybe'failedEntryCount' @:: Lens' CMsgGCReportMetrics_Response (Prelude.Maybe Data.Word.Word32)@ -}
+data CMsgGCReportMetrics_Response
+  = CMsgGCReportMetrics_Response'_constructor {_CMsgGCReportMetrics_Response'eresult :: !(Prelude.Maybe Data.Int.Int32),
+                                               _CMsgGCReportMetrics_Response'failedEntryCount :: !(Prelude.Maybe Data.Word.Word32),
+                                               _CMsgGCReportMetrics_Response'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgGCReportMetrics_Response where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics_Response "eresult" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics_Response'eresult
+           (\ x__ y__ -> x__ {_CMsgGCReportMetrics_Response'eresult = y__}))
+        (Data.ProtoLens.maybeLens 2)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics_Response "maybe'eresult" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics_Response'eresult
+           (\ x__ y__ -> x__ {_CMsgGCReportMetrics_Response'eresult = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics_Response "failedEntryCount" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics_Response'failedEntryCount
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics_Response'failedEntryCount = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgGCReportMetrics_Response "maybe'failedEntryCount" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgGCReportMetrics_Response'failedEntryCount
+           (\ x__ y__
+              -> x__ {_CMsgGCReportMetrics_Response'failedEntryCount = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgGCReportMetrics_Response where
+  messageName _ = Data.Text.pack "CMsgGCReportMetrics_Response"
+  packedMessageDescriptor _
+    = "\n\
+      \\FSCMsgGCReportMetrics_Response\DC2\ESC\n\
+      \\aeresult\CAN\SOH \SOH(\ENQ:\SOH2R\aeresult\DC2,\n\
+      \\DC2failed_entry_count\CAN\STX \SOH(\rR\DLEfailedEntryCount"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        eresult__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "eresult"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'eresult")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics_Response
+        failedEntryCount__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "failed_entry_count"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'failedEntryCount")) ::
+              Data.ProtoLens.FieldDescriptor CMsgGCReportMetrics_Response
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, eresult__field_descriptor),
+           (Data.ProtoLens.Tag 2, failedEntryCount__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgGCReportMetrics_Response'_unknownFields
+        (\ x__ y__
+           -> x__ {_CMsgGCReportMetrics_Response'_unknownFields = y__})
+  defMessage
+    = CMsgGCReportMetrics_Response'_constructor
+        {_CMsgGCReportMetrics_Response'eresult = Prelude.Nothing,
+         _CMsgGCReportMetrics_Response'failedEntryCount = Prelude.Nothing,
+         _CMsgGCReportMetrics_Response'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgGCReportMetrics_Response
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgGCReportMetrics_Response
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "eresult"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"eresult") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "failed_entry_count"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"failedEntryCount") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "CMsgGCReportMetrics_Response"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'eresult") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'failedEntryCount") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                   (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
+instance Control.DeepSeq.NFData CMsgGCReportMetrics_Response where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgGCReportMetrics_Response'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgGCReportMetrics_Response'eresult x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgGCReportMetrics_Response'failedEntryCount x__) ()))
+{- | Fields :
+     
          * 'Proto.SteammessagesInt_Fields.dirIndex' @:: Lens' CMsgGCRoutingInfo [Data.Int.Int32]@
          * 'Proto.SteammessagesInt_Fields.vec'dirIndex' @:: Lens' CMsgGCRoutingInfo (Data.Vector.Unboxed.Vector Data.Int.Int32)@
          * 'Proto.SteammessagesInt_Fields.method' @:: Lens' CMsgGCRoutingInfo CMsgGCRoutingInfo'RoutingMethod@
@@ -18820,8 +20214,35 @@ packedFileDescriptor
     \gameitemid\DC2\DC2\n\
     \\EOTdate\CAN\ETX \SOH(\tR\EOTdate\DC2+\n\
     \\DC2net_payment_us_usd\CAN\EOT \SOH(\EOTR\SInetPaymentUsUsd\DC2-\n\
-    \\DC3net_payment_row_usd\CAN\ENQ \SOH(\EOTR\DLEnetPaymentRowUsdJ\252\160\SOH\n\
-    \\a\DC2\ENQ\NUL\NUL\241\ETX\SOH\n\
+    \\DC3net_payment_row_usd\CAN\ENQ \SOH(\EOTR\DLEnetPaymentRowUsd\"\240\EOT\n\
+    \\DC3CMsgGCReportMetrics\DC2A\n\
+    \\vmetric_data\CAN\SOH \ETX(\v2 .CMsgGCReportMetrics.MetricEntryR\n\
+    \metricData\SUB\149\EOT\n\
+    \\vMetricEntry\DC2\CAN\n\
+    \\acatalog\CAN\SOH \SOH(\tR\acatalog\DC2\FS\n\
+    \\toperation\CAN\STX \SOH(\tR\toperation\DC2\FS\n\
+    \\ttimestamp\CAN\ETX \SOH(\SOHR\ttimestamp\DC2J\n\
+    \\n\
+    \dimensions\CAN\n\
+    \ \ETX(\v2*.CMsgGCReportMetrics.MetricEntry.DimensionR\n\
+    \dimensions\DC2P\n\
+    \\fmeasurements\CAN\v \ETX(\v2,.CMsgGCReportMetrics.MetricEntry.MeasurementR\fmeasurements\SUB\155\SOH\n\
+    \\tDimension\DC2\DC2\n\
+    \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2#\n\
+    \\fvalue_string\CAN\STX \SOH(\tH\NULR\vvalueString\DC2%\n\
+    \\rvalue_integer\CAN\ETX \SOH(\ETXH\NULR\fvalueInteger\DC2%\n\
+    \\rvalue_boolean\CAN\EOT \SOH(\bH\NULR\fvalueBooleanB\a\n\
+    \\ENQvalue\SUBt\n\
+    \\vMeasurement\DC2\DC2\n\
+    \\EOTname\CAN\SOH \SOH(\tR\EOTname\DC2%\n\
+    \\rvalue_integer\CAN\STX \SOH(\ETXH\NULR\fvalueInteger\DC2!\n\
+    \\vvalue_float\CAN\ETX \SOH(\SOHH\NULR\n\
+    \valueFloatB\a\n\
+    \\ENQvalue\"i\n\
+    \\FSCMsgGCReportMetrics_Response\DC2\ESC\n\
+    \\aeresult\CAN\SOH \SOH(\ENQ:\SOH2R\aeresult\DC2,\n\
+    \\DC2failed_entry_count\CAN\STX \SOH(\rR\DLEfailedEntryCountJ\184\172\SOH\n\
+    \\a\DC2\ENQ\NUL\NUL\149\EOT\SOH\n\
     \\t\n\
     \\STX\ETX\NUL\DC2\ETX\NUL\NUL\GS\n\
     \\n\
@@ -21657,4 +23078,176 @@ packedFileDescriptor
     \\r\n\
     \\ENQ\EOT?\STX\NUL\SOH\DC2\EOT\240\ETXGW\n\
     \\r\n\
-    \\ENQ\EOT?\STX\NUL\ETX\DC2\EOT\240\ETXZ["
+    \\ENQ\EOT?\STX\NUL\ETX\DC2\EOT\240\ETXZ[\n\
+    \\f\n\
+    \\STX\EOT@\DC2\ACK\243\ETX\NUL\144\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT@\SOH\DC2\EOT\243\ETX\b\ESC\n\
+    \\SO\n\
+    \\EOT\EOT@\ETX\NUL\DC2\ACK\244\ETX\b\141\EOT\t\n\
+    \\r\n\
+    \\ENQ\EOT@\ETX\NUL\SOH\DC2\EOT\244\ETX\DLE\ESC\n\
+    \\DLE\n\
+    \\ACK\EOT@\ETX\NUL\ETX\NUL\DC2\ACK\245\ETX\DLE\253\ETX\DC1\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\ETX\NUL\SOH\DC2\EOT\245\ETX\CAN!\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\NUL\STX\NUL\DC2\EOT\246\ETX\CAN1\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\NUL\EOT\DC2\EOT\246\ETX\CAN \n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\NUL\ENQ\DC2\EOT\246\ETX!'\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\NUL\SOH\DC2\EOT\246\ETX(,\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\NUL\ETX\DC2\EOT\246\ETX/0\n\
+    \\DC2\n\
+    \\b\EOT@\ETX\NUL\ETX\NUL\b\NUL\DC2\ACK\248\ETX\CAN\252\ETX\EM\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\b\NUL\SOH\DC2\EOT\248\ETX\RS#\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\NUL\STX\SOH\DC2\EOT\249\ETX 8\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\SOH\ENQ\DC2\EOT\249\ETX &\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\SOH\SOH\DC2\EOT\249\ETX'3\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\SOH\ETX\DC2\EOT\249\ETX67\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\NUL\STX\STX\DC2\EOT\250\ETX 8\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\STX\ENQ\DC2\EOT\250\ETX %\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\STX\SOH\DC2\EOT\250\ETX&3\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\STX\ETX\DC2\EOT\250\ETX67\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\NUL\STX\ETX\DC2\EOT\251\ETX 7\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\ETX\ENQ\DC2\EOT\251\ETX $\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\ETX\SOH\DC2\EOT\251\ETX%2\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\NUL\STX\ETX\ETX\DC2\EOT\251\ETX56\n\
+    \\DLE\n\
+    \\ACK\EOT@\ETX\NUL\ETX\SOH\DC2\ACK\255\ETX\DLE\134\EOT\DC1\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\ETX\SOH\SOH\DC2\EOT\255\ETX\CAN#\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\SOH\STX\NUL\DC2\EOT\128\EOT\CAN1\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\NUL\EOT\DC2\EOT\128\EOT\CAN \n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\NUL\ENQ\DC2\EOT\128\EOT!'\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\NUL\SOH\DC2\EOT\128\EOT(,\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\NUL\ETX\DC2\EOT\128\EOT/0\n\
+    \\DC2\n\
+    \\b\EOT@\ETX\NUL\ETX\SOH\b\NUL\DC2\ACK\130\EOT\CAN\133\EOT\EM\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\b\NUL\SOH\DC2\EOT\130\EOT\RS#\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\SOH\STX\SOH\DC2\EOT\131\EOT 8\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\SOH\ENQ\DC2\EOT\131\EOT %\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\SOH\SOH\DC2\EOT\131\EOT&3\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\SOH\ETX\DC2\EOT\131\EOT67\n\
+    \\DLE\n\
+    \\b\EOT@\ETX\NUL\ETX\SOH\STX\STX\DC2\EOT\132\EOT 7\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\STX\ENQ\DC2\EOT\132\EOT &\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\STX\SOH\DC2\EOT\132\EOT'2\n\
+    \\DC1\n\
+    \\t\EOT@\ETX\NUL\ETX\SOH\STX\STX\ETX\DC2\EOT\132\EOT56\n\
+    \\SO\n\
+    \\ACK\EOT@\ETX\NUL\STX\NUL\DC2\EOT\136\EOT\DLE,\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\NUL\EOT\DC2\EOT\136\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\NUL\ENQ\DC2\EOT\136\EOT\EM\US\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\NUL\SOH\DC2\EOT\136\EOT '\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\NUL\ETX\DC2\EOT\136\EOT*+\n\
+    \\SO\n\
+    \\ACK\EOT@\ETX\NUL\STX\SOH\DC2\EOT\137\EOT\DLE.\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\SOH\EOT\DC2\EOT\137\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\SOH\ENQ\DC2\EOT\137\EOT\EM\US\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\SOH\SOH\DC2\EOT\137\EOT )\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\SOH\ETX\DC2\EOT\137\EOT,-\n\
+    \\SO\n\
+    \\ACK\EOT@\ETX\NUL\STX\STX\DC2\EOT\138\EOT\DLE.\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\STX\EOT\DC2\EOT\138\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\STX\ENQ\DC2\EOT\138\EOT\EM\US\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\STX\SOH\DC2\EOT\138\EOT )\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\STX\ETX\DC2\EOT\138\EOT,-\n\
+    \\SO\n\
+    \\ACK\EOT@\ETX\NUL\STX\ETX\DC2\EOT\139\EOT\DLET\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\ETX\EOT\DC2\EOT\139\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\ETX\ACK\DC2\EOT\139\EOT\EMC\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\ETX\SOH\DC2\EOT\139\EOTDN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\ETX\ETX\DC2\EOT\139\EOTQS\n\
+    \\SO\n\
+    \\ACK\EOT@\ETX\NUL\STX\EOT\DC2\EOT\140\EOT\DLEX\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\EOT\EOT\DC2\EOT\140\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\EOT\ACK\DC2\EOT\140\EOT\EME\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\EOT\SOH\DC2\EOT\140\EOTFR\n\
+    \\SI\n\
+    \\a\EOT@\ETX\NUL\STX\EOT\ETX\DC2\EOT\140\EOTUW\n\
+    \\f\n\
+    \\EOT\EOT@\STX\NUL\DC2\EOT\143\EOT\bB\n\
+    \\r\n\
+    \\ENQ\EOT@\STX\NUL\EOT\DC2\EOT\143\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT@\STX\NUL\ACK\DC2\EOT\143\EOT\DC11\n\
+    \\r\n\
+    \\ENQ\EOT@\STX\NUL\SOH\DC2\EOT\143\EOT2=\n\
+    \\r\n\
+    \\ENQ\EOT@\STX\NUL\ETX\DC2\EOT\143\EOT@A\n\
+    \\f\n\
+    \\STX\EOTA\DC2\ACK\146\EOT\NUL\149\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOTA\SOH\DC2\EOT\146\EOT\b$\n\
+    \\f\n\
+    \\EOT\EOTA\STX\NUL\DC2\EOT\147\EOT\b1\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\EOT\DC2\EOT\147\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\ENQ\DC2\EOT\147\EOT\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\SOH\DC2\EOT\147\EOT\ETB\RS\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\ETX\DC2\EOT\147\EOT!\"\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\b\DC2\EOT\147\EOT#0\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\NUL\a\DC2\EOT\147\EOT./\n\
+    \\f\n\
+    \\EOT\EOTA\STX\SOH\DC2\EOT\148\EOT\b/\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\SOH\EOT\DC2\EOT\148\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\SOH\ENQ\DC2\EOT\148\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\SOH\SOH\DC2\EOT\148\EOT\CAN*\n\
+    \\r\n\
+    \\ENQ\EOTA\STX\SOH\ETX\DC2\EOT\148\EOT-."

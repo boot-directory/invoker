@@ -5,8 +5,8 @@
     haskell-flake.url = "github:srid/haskell-flake";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    dota-protobuf = {
-      url = "github:SteamDatabase/GameTracking-Dota2";
+    steamTracking = {
+      url = "github:SteamDatabase/Protobufs";
       flake = false;
     };
 
@@ -37,7 +37,8 @@
           };
         };
         packages = {
-          dotaProtobufBindings = import ./contribution/genDotaProtobuf.nix { inherit pkgs; dotaSteamDbRepo = inputs.dota-protobuf; };
+          dotaProtobufBindings = import ./contribution/genDotaProtobuf.nix { inherit pkgs; steamTrackingRepo = inputs.steamTracking; };
+          steamProtobufBindings = import ./contribution/genSteamProtobuf.nix { inherit pkgs; steamTrackingRepo = inputs.steamTracking; };
         };
       };
   };

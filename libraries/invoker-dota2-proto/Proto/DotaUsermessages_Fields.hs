@@ -793,6 +793,18 @@ giftItemDefIndex ::
    Data.ProtoLens.Field.HasField s "giftItemDefIndex" a) =>
   Lens.Family2.LensLike' f s a
 giftItemDefIndex = Data.ProtoLens.Field.field @"giftItemDefIndex"
+giveStatus ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "giveStatus" a) =>
+  Lens.Family2.LensLike' f s a
+giveStatus = Data.ProtoLens.Field.field @"giveStatus"
+giverEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "giverEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+giverEntIndex = Data.ProtoLens.Field.field @"giverEntIndex"
 goal ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "goal" a) =>
@@ -1034,6 +1046,12 @@ itemDefs ::
    Data.ProtoLens.Field.HasField s "itemDefs" a) =>
   Lens.Family2.LensLike' f s a
 itemDefs = Data.ProtoLens.Field.field @"itemDefs"
+itemEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "itemEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+itemEntIndex = Data.ProtoLens.Field.field @"itemEntIndex"
 itemLevel ::
   forall f s a.
   (Prelude.Functor f,
@@ -1490,6 +1508,13 @@ maybe'challengeProgressAtStart ::
   Lens.Family2.LensLike' f s a
 maybe'challengeProgressAtStart
   = Data.ProtoLens.Field.field @"maybe'challengeProgressAtStart"
+maybe'challengeQueryId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'challengeQueryId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'challengeQueryId
+  = Data.ProtoLens.Field.field @"maybe'challengeQueryId"
 maybe'challengeType ::
   forall f s a.
   (Prelude.Functor f,
@@ -1956,6 +1981,19 @@ maybe'giftItemDefIndex ::
   Lens.Family2.LensLike' f s a
 maybe'giftItemDefIndex
   = Data.ProtoLens.Field.field @"maybe'giftItemDefIndex"
+maybe'giveStatus ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'giveStatus" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'giveStatus = Data.ProtoLens.Field.field @"maybe'giveStatus"
+maybe'giverEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'giverEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'giverEntIndex
+  = Data.ProtoLens.Field.field @"maybe'giverEntIndex"
 maybe'goal ::
   forall f s a.
   (Prelude.Functor f,
@@ -2018,6 +2056,12 @@ maybe'hasShard ::
    Data.ProtoLens.Field.HasField s "maybe'hasShard" a) =>
   Lens.Family2.LensLike' f s a
 maybe'hasShard = Data.ProtoLens.Field.field @"maybe'hasShard"
+maybe'header ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'header" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'header = Data.ProtoLens.Field.field @"maybe'header"
 maybe'heading ::
   forall f s a.
   (Prelude.Functor f,
@@ -2183,6 +2227,13 @@ maybe'itemCooldownSeconds ::
   Lens.Family2.LensLike' f s a
 maybe'itemCooldownSeconds
   = Data.ProtoLens.Field.field @"maybe'itemCooldownSeconds"
+maybe'itemEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'itemEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'itemEntIndex
+  = Data.ProtoLens.Field.field @"maybe'itemEntIndex"
 maybe'itemLevel ::
   forall f s a.
   (Prelude.Functor f,
@@ -2213,6 +2264,12 @@ maybe'itemdef ::
    Data.ProtoLens.Field.HasField s "maybe'itemdef" a) =>
   Lens.Family2.LensLike' f s a
 maybe'itemdef = Data.ProtoLens.Field.field @"maybe'itemdef"
+maybe'key ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'key" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'key = Data.ProtoLens.Field.field @"maybe'key"
 maybe'killSharePercent ::
   forall f s a.
   (Prelude.Functor f,
@@ -2240,6 +2297,12 @@ maybe'lagCompensationTime ::
   Lens.Family2.LensLike' f s a
 maybe'lagCompensationTime
   = Data.ProtoLens.Field.field @"maybe'lagCompensationTime"
+maybe'lastHit ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'lastHit" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'lastHit = Data.ProtoLens.Field.field @"maybe'lastHit"
 maybe'lastHits ::
   forall f s a.
   (Prelude.Functor f,
@@ -2378,6 +2441,12 @@ maybe'messageText ::
    Data.ProtoLens.Field.HasField s "maybe'messageText" a) =>
   Lens.Family2.LensLike' f s a
 maybe'messageText = Data.ProtoLens.Field.field @"maybe'messageText"
+maybe'messageType ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'messageType" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'messageType = Data.ProtoLens.Field.field @"maybe'messageType"
 maybe'method ::
   forall f s a.
   (Prelude.Functor f,
@@ -2397,6 +2466,12 @@ maybe'moveSpeed ::
    Data.ProtoLens.Field.HasField s "maybe'moveSpeed" a) =>
   Lens.Family2.LensLike' f s a
 maybe'moveSpeed = Data.ProtoLens.Field.field @"maybe'moveSpeed"
+maybe'msgType ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'msgType" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'msgType = Data.ProtoLens.Field.field @"maybe'msgType"
 maybe'multicastAmount ::
   forall f s a.
   (Prelude.Functor f,
@@ -2647,6 +2722,13 @@ maybe'playerIdCaptain ::
   Lens.Family2.LensLike' f s a
 maybe'playerIdCaptain
   = Data.ProtoLens.Field.field @"maybe'playerIdCaptain"
+maybe'playerIdKiller ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'playerIdKiller" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'playerIdKiller
+  = Data.ProtoLens.Field.field @"maybe'playerIdKiller"
 maybe'playerIdLoser ::
   forall f s a.
   (Prelude.Functor f,
@@ -2756,6 +2838,18 @@ maybe'pointAmount ::
    Data.ProtoLens.Field.HasField s "maybe'pointAmount" a) =>
   Lens.Family2.LensLike' f s a
 maybe'pointAmount = Data.ProtoLens.Field.field @"maybe'pointAmount"
+maybe'points ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'points" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'points = Data.ProtoLens.Field.field @"maybe'points"
+maybe'pointsTotal ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'pointsTotal" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'pointsTotal = Data.ProtoLens.Field.field @"maybe'pointsTotal"
 maybe'posX ::
   forall f s a.
   (Prelude.Functor f,
@@ -2881,6 +2975,13 @@ maybe'rarity ::
    Data.ProtoLens.Field.HasField s "maybe'rarity" a) =>
   Lens.Family2.LensLike' f s a
 maybe'rarity = Data.ProtoLens.Field.field @"maybe'rarity"
+maybe'receiverEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'receiverEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'receiverEntIndex
+  = Data.ProtoLens.Field.field @"maybe'receiverEntIndex"
 maybe'recipientType ::
   forall f s a.
   (Prelude.Functor f,
@@ -3588,6 +3689,12 @@ maybe'valStringtableIndex ::
   Lens.Family2.LensLike' f s a
 maybe'valStringtableIndex
   = Data.ProtoLens.Field.field @"maybe'valStringtableIndex"
+maybe'valtype ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'valtype" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'valtype = Data.ProtoLens.Field.field @"maybe'valtype"
 maybe'value ::
   forall f s a.
   (Prelude.Functor f,
@@ -4276,6 +4383,12 @@ rarity ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "rarity" a) =>
   Lens.Family2.LensLike' f s a
 rarity = Data.ProtoLens.Field.field @"rarity"
+receiverEntIndex ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "receiverEntIndex" a) =>
+  Lens.Family2.LensLike' f s a
+receiverEntIndex = Data.ProtoLens.Field.field @"receiverEntIndex"
 recipientType ::
   forall f s a.
   (Prelude.Functor f,

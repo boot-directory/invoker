@@ -211,10 +211,11 @@ instance Control.DeepSeq.NFData CUIFontFilePB where
 {- | Fields :
      
          * 'Proto.UifontfileFormat_Fields.packageVersion' @:: Lens' CUIFontFilePackagePB Data.Word.Word32@
+         * 'Proto.UifontfileFormat_Fields.maybe'packageVersion' @:: Lens' CUIFontFilePackagePB (Prelude.Maybe Data.Word.Word32)@
          * 'Proto.UifontfileFormat_Fields.encryptedFontFiles' @:: Lens' CUIFontFilePackagePB [CUIFontFilePackagePB'CUIEncryptedFontFilePB]@
          * 'Proto.UifontfileFormat_Fields.vec'encryptedFontFiles' @:: Lens' CUIFontFilePackagePB (Data.Vector.Vector CUIFontFilePackagePB'CUIEncryptedFontFilePB)@ -}
 data CUIFontFilePackagePB
-  = CUIFontFilePackagePB'_constructor {_CUIFontFilePackagePB'packageVersion :: !Data.Word.Word32,
+  = CUIFontFilePackagePB'_constructor {_CUIFontFilePackagePB'packageVersion :: !(Prelude.Maybe Data.Word.Word32),
                                        _CUIFontFilePackagePB'encryptedFontFiles :: !(Data.Vector.Vector CUIFontFilePackagePB'CUIEncryptedFontFilePB),
                                        _CUIFontFilePackagePB'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
@@ -225,6 +226,13 @@ instance Prelude.Show CUIFontFilePackagePB where
         (Prelude.showString
            (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
 instance Data.ProtoLens.Field.HasField CUIFontFilePackagePB "packageVersion" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CUIFontFilePackagePB'packageVersion
+           (\ x__ y__ -> x__ {_CUIFontFilePackagePB'packageVersion = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CUIFontFilePackagePB "maybe'packageVersion" (Prelude.Maybe Data.Word.Word32) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -254,7 +262,7 @@ instance Data.ProtoLens.Message CUIFontFilePackagePB where
   packedMessageDescriptor _
     = "\n\
       \\DC4CUIFontFilePackagePB\DC2'\n\
-      \\SIpackage_version\CAN\SOH \STX(\rR\SOpackageVersion\DC2^\n\
+      \\SIpackage_version\CAN\SOH \SOH(\rR\SOpackageVersion\DC2^\n\
       \\DC4encrypted_font_files\CAN\STX \ETX(\v2,.CUIFontFilePackagePB.CUIEncryptedFontFilePBR\DC2encryptedFontFiles\SUBG\n\
       \\SYNCUIEncryptedFontFilePB\DC2-\n\
       \\DC2encrypted_contents\CAN\SOH \SOH(\fR\DC1encryptedContents"
@@ -266,9 +274,8 @@ instance Data.ProtoLens.Message CUIFontFilePackagePB where
               "package_version"
               (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"packageVersion")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'packageVersion")) ::
               Data.ProtoLens.FieldDescriptor CUIFontFilePackagePB
         encryptedFontFiles__field_descriptor
           = Data.ProtoLens.FieldDescriptor
@@ -289,29 +296,22 @@ instance Data.ProtoLens.Message CUIFontFilePackagePB where
         (\ x__ y__ -> x__ {_CUIFontFilePackagePB'_unknownFields = y__})
   defMessage
     = CUIFontFilePackagePB'_constructor
-        {_CUIFontFilePackagePB'packageVersion = Data.ProtoLens.fieldDefault,
+        {_CUIFontFilePackagePB'packageVersion = Prelude.Nothing,
          _CUIFontFilePackagePB'encryptedFontFiles = Data.Vector.Generic.empty,
          _CUIFontFilePackagePB'_unknownFields = []}
   parseMessage
     = let
         loop ::
           CUIFontFilePackagePB
-          -> Prelude.Bool
-             -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CUIFontFilePackagePB'CUIEncryptedFontFilePB
-                -> Data.ProtoLens.Encoding.Bytes.Parser CUIFontFilePackagePB
-        loop x required'packageVersion mutable'encryptedFontFiles
+          -> Data.ProtoLens.Encoding.Growing.Growing Data.Vector.Vector Data.ProtoLens.Encoding.Growing.RealWorld CUIFontFilePackagePB'CUIEncryptedFontFilePB
+             -> Data.ProtoLens.Encoding.Bytes.Parser CUIFontFilePackagePB
+        loop x mutable'encryptedFontFiles
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
                    do frozen'encryptedFontFiles <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                                      (Data.ProtoLens.Encoding.Growing.unsafeFreeze
                                                         mutable'encryptedFontFiles)
-                      (let
-                         missing
-                           = (if required'packageVersion then
-                                  (:) "package_version"
-                              else
-                                  Prelude.id)
-                               []
+                      (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -337,7 +337,7 @@ instance Data.ProtoLens.Message CUIFontFilePackagePB where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"packageVersion") y x)
-                                  Prelude.False mutable'encryptedFontFiles
+                                  mutable'encryptedFontFiles
                         18
                           -> do !y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                         (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -348,30 +348,33 @@ instance Data.ProtoLens.Message CUIFontFilePackagePB where
                                 v <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                        (Data.ProtoLens.Encoding.Growing.append
                                           mutable'encryptedFontFiles y)
-                                loop x required'packageVersion v
+                                loop x v
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'packageVersion mutable'encryptedFontFiles
+                                  mutable'encryptedFontFiles
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
           (do mutable'encryptedFontFiles <- Data.ProtoLens.Encoding.Parser.Unsafe.unsafeLiftIO
                                               Data.ProtoLens.Encoding.Growing.new
-              loop
-                Data.ProtoLens.defMessage Prelude.True mutable'encryptedFontFiles)
+              loop Data.ProtoLens.defMessage mutable'encryptedFontFiles)
           "CUIFontFilePackagePB"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
-             ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                   (Lens.Family2.view
-                      (Data.ProtoLens.Field.field @"packageVersion") _x)))
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'packageVersion") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
              ((Data.Monoid.<>)
                 (Data.ProtoLens.Encoding.Bytes.foldMapBuilder
                    (\ _v
@@ -537,7 +540,7 @@ packedFileDescriptor
     \\SOfont_file_name\CAN\SOH \SOH(\tR\ffontFileName\DC2,\n\
     \\DC2opentype_font_data\CAN\STX \SOH(\fR\DLEopentypeFontData\"\232\SOH\n\
     \\DC4CUIFontFilePackagePB\DC2'\n\
-    \\SIpackage_version\CAN\SOH \STX(\rR\SOpackageVersion\DC2^\n\
+    \\SIpackage_version\CAN\SOH \SOH(\rR\SOpackageVersion\DC2^\n\
     \\DC4encrypted_font_files\CAN\STX \ETX(\v2,.CUIFontFilePackagePB.CUIEncryptedFontFilePBR\DC2encryptedFontFiles\SUBG\n\
     \\SYNCUIEncryptedFontFilePB\DC2-\n\
     \\DC2encrypted_contents\CAN\SOH \SOH(\fR\DC1encryptedContentsJ\183\ETX\n\

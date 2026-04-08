@@ -120,6 +120,12 @@ maybe'tournamentId ::
   Lens.Family2.LensLike' f s a
 maybe'tournamentId
   = Data.ProtoLens.Field.field @"maybe'tournamentId"
+maybe'type' ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'type'" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'type' = Data.ProtoLens.Field.field @"maybe'type'"
 members ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "members" a) =>

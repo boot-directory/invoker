@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "dota-protobuf": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1775163273,
-        "narHash": "sha256-JeCCkFNS4yu1niedcXxVi1UIoRkyOL6wiZwjWFcwuNk=",
-        "owner": "SteamDatabase",
-        "repo": "GameTracking-Dota2",
-        "rev": "885e92a96c49a3b103a90c378970227029ae7249",
-        "type": "github"
-      },
-      "original": {
-        "owner": "SteamDatabase",
-        "repo": "GameTracking-Dota2",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -82,10 +66,26 @@
     },
     "root": {
       "inputs": {
-        "dota-protobuf": "dota-protobuf",
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "steamTracking": "steamTracking"
+      }
+    },
+    "steamTracking": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775604116,
+        "narHash": "sha256-VgVPJ+asWEMZIwrkelEjQxRb+GefgiF/0N6SmxzN95o=",
+        "owner": "SteamDatabase",
+        "repo": "Protobufs",
+        "rev": "d01c7e0a2efb470f31352db930e9d022323ff8e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SteamDatabase",
+        "repo": "Protobufs",
+        "type": "github"
       }
     }
   },

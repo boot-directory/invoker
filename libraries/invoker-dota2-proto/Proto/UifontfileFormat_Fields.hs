@@ -67,6 +67,13 @@ maybe'opentypeFontData ::
   Lens.Family2.LensLike' f s a
 maybe'opentypeFontData
   = Data.ProtoLens.Field.field @"maybe'opentypeFontData"
+maybe'packageVersion ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'packageVersion" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'packageVersion
+  = Data.ProtoLens.Field.field @"maybe'packageVersion"
 opentypeFontData ::
   forall f s a.
   (Prelude.Functor f,

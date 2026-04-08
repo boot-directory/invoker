@@ -558,6 +558,12 @@ choseRadiantAsWinner ::
   Lens.Family2.LensLike' f s a
 choseRadiantAsWinner
   = Data.ProtoLens.Field.field @"choseRadiantAsWinner"
+claimAsPoints ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "claimAsPoints" a) =>
+  Lens.Family2.LensLike' f s a
+claimAsPoints = Data.ProtoLens.Field.field @"claimAsPoints"
 claimedRooms1 ::
   forall f s a.
   (Prelude.Functor f,
@@ -783,12 +789,6 @@ couponId ::
    Data.ProtoLens.Field.HasField s "couponId" a) =>
   Lens.Family2.LensLike' f s a
 couponId = Data.ProtoLens.Field.field @"couponId"
-couponIds ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "couponIds" a) =>
-  Lens.Family2.LensLike' f s a
-couponIds = Data.ProtoLens.Field.field @"couponIds"
 coupons ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "coupons" a) =>
@@ -2567,6 +2567,13 @@ maybe'choseRadiantAsWinner ::
   Lens.Family2.LensLike' f s a
 maybe'choseRadiantAsWinner
   = Data.ProtoLens.Field.field @"maybe'choseRadiantAsWinner"
+maybe'claimAsPoints ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'claimAsPoints" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'claimAsPoints
+  = Data.ProtoLens.Field.field @"maybe'claimAsPoints"
 maybe'claimedRooms1 ::
   forall f s a.
   (Prelude.Functor f,
@@ -7599,12 +7606,6 @@ vec'completedPaths ::
   Lens.Family2.LensLike' f s a
 vec'completedPaths
   = Data.ProtoLens.Field.field @"vec'completedPaths"
-vec'couponIds ::
-  forall f s a.
-  (Prelude.Functor f,
-   Data.ProtoLens.Field.HasField s "vec'couponIds" a) =>
-  Lens.Family2.LensLike' f s a
-vec'couponIds = Data.ProtoLens.Field.field @"vec'couponIds"
 vec'coupons ::
   forall f s a.
   (Prelude.Functor f,

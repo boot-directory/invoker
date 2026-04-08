@@ -4,9 +4,7 @@
 {-# OPTIONS_GHC -Wno-duplicate-exports#-}
 {-# OPTIONS_GHC -Wno-dodgy-exports#-}
 module Proto.EnumsClientserver (
-        EClientPersonaStateFlag(..), EClientPersonaStateFlag(),
-        ECodecUsagePlatform(..), ECodecUsagePlatform(),
-        ECodecUsageReason(..), ECodecUsageReason(), EMsg(..),
+        EClientPersonaStateFlag(..), EClientPersonaStateFlag(), EMsg(..),
         EMsg(K_EMsgGenericReply, K_EMsgAssignSysID, K_EMsgHeartbeat,
              K_EMsgReqChallenge, K_EMsgAdminCmd, K_EMsgFBSReqVersion,
              K_EMsgFileXferRequest, K_EMsgChannelAuthChallenge,
@@ -22,7 +20,7 @@ module Proto.EnumsClientserver (
              K_EMsgClientVoiceCallPreAuthorize, K_EMsgClientLANP2PRequestChunk,
              K_EMsgNotifyWatchdog, K_EMsgClientSiteLicenseSiteInfoNotification,
              K_EMsgChatServerGetPendingNotificationCount,
-             K_EMsgServerSecretChanged, K_EMsgWGConnectionProtocolError),
+             K_EMsgServerSecretChanged),
         EMsgClanAccountFlags(..), EMsgClanAccountFlags(),
         ESteamReviewScore(..), ESteamReviewScore()
     ) where
@@ -235,146 +233,6 @@ instance Data.ProtoLens.FieldDefault EClientPersonaStateFlag where
   fieldDefault = K_EClientPersonaStateFlagStatus
 instance Control.DeepSeq.NFData EClientPersonaStateFlag where
   rnf x__ = Prelude.seq x__ ()
-data ECodecUsagePlatform
-  = K_ECodecUsagePlatformUnknown |
-    K_ECodecUsagePlatformWindows |
-    K_ECodecUsagePlatformMacOS |
-    K_ECodecUsagePlatformLinux |
-    K_ECodecUsagePlatformSteamDeck
-  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
-instance Data.ProtoLens.MessageEnum ECodecUsagePlatform where
-  maybeToEnum 0 = Prelude.Just K_ECodecUsagePlatformUnknown
-  maybeToEnum 1 = Prelude.Just K_ECodecUsagePlatformWindows
-  maybeToEnum 2 = Prelude.Just K_ECodecUsagePlatformMacOS
-  maybeToEnum 3 = Prelude.Just K_ECodecUsagePlatformLinux
-  maybeToEnum 4 = Prelude.Just K_ECodecUsagePlatformSteamDeck
-  maybeToEnum _ = Prelude.Nothing
-  showEnum K_ECodecUsagePlatformUnknown
-    = "k_ECodecUsagePlatformUnknown"
-  showEnum K_ECodecUsagePlatformWindows
-    = "k_ECodecUsagePlatformWindows"
-  showEnum K_ECodecUsagePlatformMacOS = "k_ECodecUsagePlatformMacOS"
-  showEnum K_ECodecUsagePlatformLinux = "k_ECodecUsagePlatformLinux"
-  showEnum K_ECodecUsagePlatformSteamDeck
-    = "k_ECodecUsagePlatformSteamDeck"
-  readEnum k
-    | (Prelude.==) k "k_ECodecUsagePlatformUnknown"
-    = Prelude.Just K_ECodecUsagePlatformUnknown
-    | (Prelude.==) k "k_ECodecUsagePlatformWindows"
-    = Prelude.Just K_ECodecUsagePlatformWindows
-    | (Prelude.==) k "k_ECodecUsagePlatformMacOS"
-    = Prelude.Just K_ECodecUsagePlatformMacOS
-    | (Prelude.==) k "k_ECodecUsagePlatformLinux"
-    = Prelude.Just K_ECodecUsagePlatformLinux
-    | (Prelude.==) k "k_ECodecUsagePlatformSteamDeck"
-    = Prelude.Just K_ECodecUsagePlatformSteamDeck
-    | Prelude.otherwise
-    = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
-instance Prelude.Bounded ECodecUsagePlatform where
-  minBound = K_ECodecUsagePlatformUnknown
-  maxBound = K_ECodecUsagePlatformSteamDeck
-instance Prelude.Enum ECodecUsagePlatform where
-  toEnum k__
-    = Prelude.maybe
-        (Prelude.error
-           ((Prelude.++)
-              "toEnum: unknown value for enum ECodecUsagePlatform: "
-              (Prelude.show k__)))
-        Prelude.id (Data.ProtoLens.maybeToEnum k__)
-  fromEnum K_ECodecUsagePlatformUnknown = 0
-  fromEnum K_ECodecUsagePlatformWindows = 1
-  fromEnum K_ECodecUsagePlatformMacOS = 2
-  fromEnum K_ECodecUsagePlatformLinux = 3
-  fromEnum K_ECodecUsagePlatformSteamDeck = 4
-  succ K_ECodecUsagePlatformSteamDeck
-    = Prelude.error
-        "ECodecUsagePlatform.succ: bad argument K_ECodecUsagePlatformSteamDeck. This value would be out of bounds."
-  succ K_ECodecUsagePlatformUnknown = K_ECodecUsagePlatformWindows
-  succ K_ECodecUsagePlatformWindows = K_ECodecUsagePlatformMacOS
-  succ K_ECodecUsagePlatformMacOS = K_ECodecUsagePlatformLinux
-  succ K_ECodecUsagePlatformLinux = K_ECodecUsagePlatformSteamDeck
-  pred K_ECodecUsagePlatformUnknown
-    = Prelude.error
-        "ECodecUsagePlatform.pred: bad argument K_ECodecUsagePlatformUnknown. This value would be out of bounds."
-  pred K_ECodecUsagePlatformWindows = K_ECodecUsagePlatformUnknown
-  pred K_ECodecUsagePlatformMacOS = K_ECodecUsagePlatformWindows
-  pred K_ECodecUsagePlatformLinux = K_ECodecUsagePlatformMacOS
-  pred K_ECodecUsagePlatformSteamDeck = K_ECodecUsagePlatformLinux
-  enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
-  enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
-  enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
-  enumFromThenTo = Data.ProtoLens.Message.Enum.messageEnumFromThenTo
-instance Data.ProtoLens.FieldDefault ECodecUsagePlatform where
-  fieldDefault = K_ECodecUsagePlatformUnknown
-instance Control.DeepSeq.NFData ECodecUsagePlatform where
-  rnf x__ = Prelude.seq x__ ()
-data ECodecUsageReason
-  = K_ECodecUsageReasonUnknown |
-    K_ECodecUsageReasonRemotePlay |
-    K_ECodecUsageReasonBroadcasting |
-    K_ECodecUsageReasonGameVideo
-  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
-instance Data.ProtoLens.MessageEnum ECodecUsageReason where
-  maybeToEnum 0 = Prelude.Just K_ECodecUsageReasonUnknown
-  maybeToEnum 1 = Prelude.Just K_ECodecUsageReasonRemotePlay
-  maybeToEnum 2 = Prelude.Just K_ECodecUsageReasonBroadcasting
-  maybeToEnum 3 = Prelude.Just K_ECodecUsageReasonGameVideo
-  maybeToEnum _ = Prelude.Nothing
-  showEnum K_ECodecUsageReasonUnknown = "k_ECodecUsageReasonUnknown"
-  showEnum K_ECodecUsageReasonRemotePlay
-    = "k_ECodecUsageReasonRemotePlay"
-  showEnum K_ECodecUsageReasonBroadcasting
-    = "k_ECodecUsageReasonBroadcasting"
-  showEnum K_ECodecUsageReasonGameVideo
-    = "k_ECodecUsageReasonGameVideo"
-  readEnum k
-    | (Prelude.==) k "k_ECodecUsageReasonUnknown"
-    = Prelude.Just K_ECodecUsageReasonUnknown
-    | (Prelude.==) k "k_ECodecUsageReasonRemotePlay"
-    = Prelude.Just K_ECodecUsageReasonRemotePlay
-    | (Prelude.==) k "k_ECodecUsageReasonBroadcasting"
-    = Prelude.Just K_ECodecUsageReasonBroadcasting
-    | (Prelude.==) k "k_ECodecUsageReasonGameVideo"
-    = Prelude.Just K_ECodecUsageReasonGameVideo
-    | Prelude.otherwise
-    = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
-instance Prelude.Bounded ECodecUsageReason where
-  minBound = K_ECodecUsageReasonUnknown
-  maxBound = K_ECodecUsageReasonGameVideo
-instance Prelude.Enum ECodecUsageReason where
-  toEnum k__
-    = Prelude.maybe
-        (Prelude.error
-           ((Prelude.++)
-              "toEnum: unknown value for enum ECodecUsageReason: "
-              (Prelude.show k__)))
-        Prelude.id (Data.ProtoLens.maybeToEnum k__)
-  fromEnum K_ECodecUsageReasonUnknown = 0
-  fromEnum K_ECodecUsageReasonRemotePlay = 1
-  fromEnum K_ECodecUsageReasonBroadcasting = 2
-  fromEnum K_ECodecUsageReasonGameVideo = 3
-  succ K_ECodecUsageReasonGameVideo
-    = Prelude.error
-        "ECodecUsageReason.succ: bad argument K_ECodecUsageReasonGameVideo. This value would be out of bounds."
-  succ K_ECodecUsageReasonUnknown = K_ECodecUsageReasonRemotePlay
-  succ K_ECodecUsageReasonRemotePlay
-    = K_ECodecUsageReasonBroadcasting
-  succ K_ECodecUsageReasonBroadcasting = K_ECodecUsageReasonGameVideo
-  pred K_ECodecUsageReasonUnknown
-    = Prelude.error
-        "ECodecUsageReason.pred: bad argument K_ECodecUsageReasonUnknown. This value would be out of bounds."
-  pred K_ECodecUsageReasonRemotePlay = K_ECodecUsageReasonUnknown
-  pred K_ECodecUsageReasonBroadcasting
-    = K_ECodecUsageReasonRemotePlay
-  pred K_ECodecUsageReasonGameVideo = K_ECodecUsageReasonBroadcasting
-  enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
-  enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
-  enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
-  enumFromThenTo = Data.ProtoLens.Message.Enum.messageEnumFromThenTo
-instance Data.ProtoLens.FieldDefault ECodecUsageReason where
-  fieldDefault = K_ECodecUsageReasonUnknown
-instance Control.DeepSeq.NFData ECodecUsageReason where
-  rnf x__ = Prelude.seq x__ ()
 data EMsg
   = K_EMsgInvalid |
     K_EMsgMulti |
@@ -447,6 +305,7 @@ data EMsg
     K_EMsgLicenseProcessingComplete |
     K_EMsgSetTestFlag |
     K_EMsgQueuedEmailsComplete |
+    K_EMsgGMReportPHPError |
     K_EMsgGMDRMSync |
     K_EMsgPhysicalBoxInventory |
     K_EMsgUpdateConfigFile |
@@ -464,8 +323,6 @@ data EMsg
     K_EMsgExpectShellRestart |
     K_EMsgHotFixProgress |
     K_EMsgGMStatsForwardToAdminConnections |
-    K_EMsgGMGetModifiedConVars |
-    K_EMsgGMGetModifiedConVarsResponse |
     K_EMsgBaseAIS |
     K_EMsgAISRequestContentDescription |
     K_EMsgAISUpdateAppInfo |
@@ -869,8 +726,11 @@ data EMsg
     K_EMsgClientDPSendSpecialSurveyResponse |
     K_EMsgClientDPSendSpecialSurveyResponseReply |
     K_EMsgDPStoreSaleStatistics |
+    K_EMsgClientDPUpdateAppJobReport |
+    K_EMsgClientDPUnsignedInstallScript |
     K_EMsgDPPartnerMicroTxns |
     K_EMsgDPPartnerMicroTxnsResponse |
+    K_EMsgClientDPContentStatsReport |
     K_EMsgDPVRUniquePlayersStat |
     K_EMsgBaseCM |
     K_EMsgCMSetAllowState |
@@ -916,9 +776,6 @@ data EMsg
     K_EMsgGCHAppCheersReceived |
     K_EMsgGCHAppCheersGetAllowedTypes |
     K_EMsgGCHAppCheersGetAllowedTypesResponse |
-    K_EMsgGCHRoutingRulesFromGCHtoGM |
-    K_EMsgGCHRoutingRulesToGCHfromGM |
-    K_EMsgUpdateCMMessageRateRules |
     K_EMsgBaseP2P |
     K_EMsgP2PIntroducerMessage |
     K_EMsgBaseSM |
@@ -1064,6 +921,8 @@ data EMsg
     K_EMsgAMSendQueuedEmails |
     K_EMsgAMSetLicenseFlags |
     K_EMsgCommunityDeleteUserNews |
+    K_EMsgAMAllowUserFilesRequest |
+    K_EMsgAMAllowUserFilesResponse |
     K_EMsgAMGetAccountStatus |
     K_EMsgAMGetAccountStatusResponse |
     K_EMsgAMEditBanReason |
@@ -1091,6 +950,7 @@ data EMsg
     K_EMsgAMSupportIsAccountEnabledResponse |
     K_EMsgUGSGetUserStats |
     K_EMsgAMGSSearch |
+    K_EMsgMarketingMessageUpdate |
     K_EMsgChatServerRouteFriendMsg |
     K_EMsgAMTicketAuthRequestOrResponse |
     K_EMsgAMAddFreeLicense |
@@ -1117,6 +977,7 @@ data EMsg
     K_EMsgAMCreateFinancialAdjustment |
     K_EMsgAMPlayerNicknameList |
     K_EMsgAMPlayerNicknameListResponse |
+    K_EMsgAMSetDRMTestConfig |
     K_EMsgAMGetUserCurrentGameInfo |
     K_EMsgAMGetUserCurrentGameInfoResponse |
     K_EMsgAMGetGSPlayerList |
@@ -1247,7 +1108,6 @@ data EMsg
     K_EMsgAMPerfectWorldPaymentResponse |
     K_EMsgAMECommPayPayment |
     K_EMsgAMECommPayPaymentResponse |
-    K_EMsgAMSetRemoteClientID |
     K_EMsgBasePSRange |
     K_EMsgPSCreateShoppingCart |
     K_EMsgPSCreateShoppingCartResponse |
@@ -1337,6 +1197,7 @@ data EMsg
     K_EMsgClientP2PConnectionFailInfo |
     K_EMsgClientGetDepotDecryptionKey |
     K_EMsgClientGetDepotDecryptionKeyResponse |
+    K_EMsgGSPerformHardwareSurvey |
     K_EMsgClientEnableTestLicense |
     K_EMsgClientEnableTestLicenseResponse |
     K_EMsgClientDisableTestLicense |
@@ -1376,10 +1237,8 @@ data EMsg
     K_EMsgClientOGSEndSession |
     K_EMsgClientOGSEndSessionResponse |
     K_EMsgClientOGSWriteRow |
-    K_EMsgClientGetPeerContentInfo |
-    K_EMsgClientGetPeerContentInfoResponse |
-    K_EMsgClientStartPeerContentServer |
-    K_EMsgClientStartPeerContentServerResponse |
+    K_EMsgClientDRMTest |
+    K_EMsgClientDRMTestResult |
     K_EMsgClientServerUnavailable |
     K_EMsgClientServersAvailable |
     K_EMsgClientRegisterAuthTicketWithCM |
@@ -1389,6 +1248,7 @@ data EMsg
     K_EMsgClientMicroTxnAuthorizeResponse |
     K_EMsgClientGetMicroTxnInfo |
     K_EMsgClientGetMicroTxnInfoResponse |
+    K_EMsgClientMarketingMessageUpdate2 |
     K_EMsgClientDeregisterWithServer |
     K_EMsgClientSubscribeToPersonaFeed |
     K_EMsgClientLogon |
@@ -1603,6 +1463,8 @@ data EMsg
     K_EMsgClientUCMUpdatePublishedFileResponse |
     K_EMsgUCMUpdatePublishedFile |
     K_EMsgUCMUpdatePublishedFileResponse |
+    K_EMsgUCMDeletePublishedFile |
+    K_EMsgUCMDeletePublishedFileResponse |
     K_EMsgUCMUpdatePublishedFileStat |
     K_EMsgUCMReloadPublishedFile |
     K_EMsgUCMReloadUserFileListCaches |
@@ -1631,6 +1493,8 @@ data EMsg
     K_EMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse |
     K_EMsgUCMPublishedFileContentUpdated |
     K_EMsgClientUCMPublishedFileUpdated |
+    K_EMsgClientWorkshopItemChangesRequest |
+    K_EMsgClientWorkshopItemChangesResponse |
     K_EMsgFSBase |
     K_EMsgClientRichPresenceUpload |
     K_EMsgClientRichPresenceRequest |
@@ -1788,14 +1652,14 @@ data EMsg
     K_EMsgRemoteClientStartStreamResponse |
     K_EMsgRemoteClientPing |
     K_EMsgRemoteClientPingResponse |
-    K_EMsgClientUnlockH264 |
-    K_EMsgClientUnlockH264Response |
+    K_EMsgClientUnlockStreaming |
+    K_EMsgClientUnlockStreamingResponse |
     K_EMsgRemoteClientAcceptEULA |
     K_EMsgRemoteClientGetControllerConfig |
     K_EMsgRemoteClientGetControllerConfigResponse |
     K_EMsgRemoteClientStreamingEnabled |
-    K_EMsgClientUnlockHEVC_OBSOLETE |
-    K_EMsgClientUnlockHEVCResponse_OBSOLETE |
+    K_EMsgClientUnlockHEVC |
+    K_EMsgClientUnlockHEVCResponse |
     K_EMsgRemoteClientStatusRequest |
     K_EMsgRemoteClientStatusResponse |
     K_EMsgClientConcurrentSessionsBase |
@@ -1803,6 +1667,7 @@ data EMsg
     K_EMsgClientBroadcastBase |
     K_EMsgClientBroadcastFrames |
     K_EMsgClientBroadcastDisconnect |
+    K_EMsgClientBroadcastScreenshot |
     K_EMsgClientBroadcastUploadConfig |
     K_EMsgBaseClient3 |
     K_EMsgClientVoiceCallPreAuthorizeResponse |
@@ -1810,12 +1675,8 @@ data EMsg
     K_EMsgClientServerTimestampResponse |
     K_EMsgServiceMethodCallFromClientNonAuthed |
     K_EMsgClientHello |
-    K_EMsgClientEnableOrDisableDownloads |
-    K_EMsgClientEnableOrDisableDownloadsResponse |
     K_EMsgClientLANP2PBase |
     K_EMsgClientLANP2PRequestChunkResponse |
-    K_EMsgClientPeerChunkRequest |
-    K_EMsgClientPeerChunkResponse |
     K_EMsgClientLANP2PMax |
     K_EMsgBaseWatchdogServer |
     K_EMsgClientSiteLicenseBase |
@@ -1827,12 +1688,7 @@ data EMsg
     K_EMsgClientSiteLicenseGetContentCacheInfoResponse |
     K_EMsgBaseChatServer |
     K_EMsgChatServerGetPendingNotificationCountResponse |
-    K_EMsgBaseSecretServer |
-    K_EMsgBaseWG |
-    K_EMsgWGConnectionValidateUserToken |
-    K_EMsgWGConnectionValidateUserTokenResponse |
-    K_EMsgWGConnectionLegacyWGRequest |
-    K_EMsgWGConnectionLegacyWGResponse
+    K_EMsgBaseSecretServer
   deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
 instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 0 = Prelude.Just K_EMsgInvalid
@@ -1911,6 +1767,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 316 = Prelude.Just K_EMsgLicenseProcessingComplete
   maybeToEnum 317 = Prelude.Just K_EMsgSetTestFlag
   maybeToEnum 318 = Prelude.Just K_EMsgQueuedEmailsComplete
+  maybeToEnum 319 = Prelude.Just K_EMsgGMReportPHPError
   maybeToEnum 320 = Prelude.Just K_EMsgGMDRMSync
   maybeToEnum 321 = Prelude.Just K_EMsgPhysicalBoxInventory
   maybeToEnum 322 = Prelude.Just K_EMsgUpdateConfigFile
@@ -1932,8 +1789,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 337 = Prelude.Just K_EMsgHotFixProgress
   maybeToEnum 338
     = Prelude.Just K_EMsgGMStatsForwardToAdminConnections
-  maybeToEnum 339 = Prelude.Just K_EMsgGMGetModifiedConVars
-  maybeToEnum 340 = Prelude.Just K_EMsgGMGetModifiedConVarsResponse
   maybeToEnum 400 = Prelude.Just K_EMsgBaseAIS
   maybeToEnum 402 = Prelude.Just K_EMsgAISRequestContentDescription
   maybeToEnum 403 = Prelude.Just K_EMsgAISUpdateAppInfo
@@ -2371,8 +2226,11 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 1623
     = Prelude.Just K_EMsgClientDPSendSpecialSurveyResponseReply
   maybeToEnum 1624 = Prelude.Just K_EMsgDPStoreSaleStatistics
+  maybeToEnum 1625 = Prelude.Just K_EMsgClientDPUpdateAppJobReport
+  maybeToEnum 1627 = Prelude.Just K_EMsgClientDPUnsignedInstallScript
   maybeToEnum 1628 = Prelude.Just K_EMsgDPPartnerMicroTxns
   maybeToEnum 1629 = Prelude.Just K_EMsgDPPartnerMicroTxnsResponse
+  maybeToEnum 1630 = Prelude.Just K_EMsgClientDPContentStatsReport
   maybeToEnum 1631 = Prelude.Just K_EMsgDPVRUniquePlayersStat
   maybeToEnum 1700 = Prelude.Just K_EMsgBaseCM
   maybeToEnum 1701 = Prelude.Just K_EMsgCMSetAllowState
@@ -2424,9 +2282,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 2243 = Prelude.Just K_EMsgGCHAppCheersGetAllowedTypes
   maybeToEnum 2244
     = Prelude.Just K_EMsgGCHAppCheersGetAllowedTypesResponse
-  maybeToEnum 2245 = Prelude.Just K_EMsgGCHRoutingRulesFromGCHtoGM
-  maybeToEnum 2246 = Prelude.Just K_EMsgGCHRoutingRulesToGCHfromGM
-  maybeToEnum 2247 = Prelude.Just K_EMsgUpdateCMMessageRateRules
   maybeToEnum 2500 = Prelude.Just K_EMsgBaseP2P
   maybeToEnum 2502 = Prelude.Just K_EMsgP2PIntroducerMessage
   maybeToEnum 2900 = Prelude.Just K_EMsgBaseSM
@@ -2587,6 +2442,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 4152 = Prelude.Just K_EMsgAMSendQueuedEmails
   maybeToEnum 4153 = Prelude.Just K_EMsgAMSetLicenseFlags
   maybeToEnum 4155 = Prelude.Just K_EMsgCommunityDeleteUserNews
+  maybeToEnum 4156 = Prelude.Just K_EMsgAMAllowUserFilesRequest
+  maybeToEnum 4157 = Prelude.Just K_EMsgAMAllowUserFilesResponse
   maybeToEnum 4158 = Prelude.Just K_EMsgAMGetAccountStatus
   maybeToEnum 4159 = Prelude.Just K_EMsgAMGetAccountStatusResponse
   maybeToEnum 4160 = Prelude.Just K_EMsgAMEditBanReason
@@ -2619,6 +2476,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgAMSupportIsAccountEnabledResponse
   maybeToEnum 4211 = Prelude.Just K_EMsgUGSGetUserStats
   maybeToEnum 4213 = Prelude.Just K_EMsgAMGSSearch
+  maybeToEnum 4216 = Prelude.Just K_EMsgMarketingMessageUpdate
   maybeToEnum 4219 = Prelude.Just K_EMsgChatServerRouteFriendMsg
   maybeToEnum 4220 = Prelude.Just K_EMsgAMTicketAuthRequestOrResponse
   maybeToEnum 4224 = Prelude.Just K_EMsgAMAddFreeLicense
@@ -2647,6 +2505,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 4265 = Prelude.Just K_EMsgAMCreateFinancialAdjustment
   maybeToEnum 4266 = Prelude.Just K_EMsgAMPlayerNicknameList
   maybeToEnum 4267 = Prelude.Just K_EMsgAMPlayerNicknameListResponse
+  maybeToEnum 4268 = Prelude.Just K_EMsgAMSetDRMTestConfig
   maybeToEnum 4269 = Prelude.Just K_EMsgAMGetUserCurrentGameInfo
   maybeToEnum 4270
     = Prelude.Just K_EMsgAMGetUserCurrentGameInfoResponse
@@ -2812,7 +2671,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 4422 = Prelude.Just K_EMsgAMPerfectWorldPaymentResponse
   maybeToEnum 4423 = Prelude.Just K_EMsgAMECommPayPayment
   maybeToEnum 4424 = Prelude.Just K_EMsgAMECommPayPaymentResponse
-  maybeToEnum 4425 = Prelude.Just K_EMsgAMSetRemoteClientID
   maybeToEnum 5000 = Prelude.Just K_EMsgBasePSRange
   maybeToEnum 5001 = Prelude.Just K_EMsgPSCreateShoppingCart
   maybeToEnum 5002 = Prelude.Just K_EMsgPSCreateShoppingCartResponse
@@ -2921,6 +2779,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 5438 = Prelude.Just K_EMsgClientGetDepotDecryptionKey
   maybeToEnum 5439
     = Prelude.Just K_EMsgClientGetDepotDecryptionKeyResponse
+  maybeToEnum 5440 = Prelude.Just K_EMsgGSPerformHardwareSurvey
   maybeToEnum 5443 = Prelude.Just K_EMsgClientEnableTestLicense
   maybeToEnum 5444
     = Prelude.Just K_EMsgClientEnableTestLicenseResponse
@@ -2968,12 +2827,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 5492 = Prelude.Just K_EMsgClientOGSEndSession
   maybeToEnum 5493 = Prelude.Just K_EMsgClientOGSEndSessionResponse
   maybeToEnum 5494 = Prelude.Just K_EMsgClientOGSWriteRow
-  maybeToEnum 5495 = Prelude.Just K_EMsgClientGetPeerContentInfo
-  maybeToEnum 5496
-    = Prelude.Just K_EMsgClientGetPeerContentInfoResponse
-  maybeToEnum 5497 = Prelude.Just K_EMsgClientStartPeerContentServer
-  maybeToEnum 5498
-    = Prelude.Just K_EMsgClientStartPeerContentServerResponse
+  maybeToEnum 5495 = Prelude.Just K_EMsgClientDRMTest
+  maybeToEnum 5496 = Prelude.Just K_EMsgClientDRMTestResult
   maybeToEnum 5500 = Prelude.Just K_EMsgClientServerUnavailable
   maybeToEnum 5501 = Prelude.Just K_EMsgClientServersAvailable
   maybeToEnum 5502
@@ -2985,6 +2840,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientMicroTxnAuthorizeResponse
   maybeToEnum 5508 = Prelude.Just K_EMsgClientGetMicroTxnInfo
   maybeToEnum 5509 = Prelude.Just K_EMsgClientGetMicroTxnInfoResponse
+  maybeToEnum 5510 = Prelude.Just K_EMsgClientMarketingMessageUpdate2
   maybeToEnum 5511 = Prelude.Just K_EMsgClientDeregisterWithServer
   maybeToEnum 5512 = Prelude.Just K_EMsgClientSubscribeToPersonaFeed
   maybeToEnum 5514 = Prelude.Just K_EMsgClientLogon
@@ -3254,6 +3110,9 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 7327 = Prelude.Just K_EMsgUCMUpdatePublishedFile
   maybeToEnum 7328
     = Prelude.Just K_EMsgUCMUpdatePublishedFileResponse
+  maybeToEnum 7329 = Prelude.Just K_EMsgUCMDeletePublishedFile
+  maybeToEnum 7330
+    = Prelude.Just K_EMsgUCMDeletePublishedFileResponse
   maybeToEnum 7331 = Prelude.Just K_EMsgUCMUpdatePublishedFileStat
   maybeToEnum 7337 = Prelude.Just K_EMsgUCMReloadPublishedFile
   maybeToEnum 7338 = Prelude.Just K_EMsgUCMReloadUserFileListCaches
@@ -3297,6 +3156,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 7380
     = Prelude.Just K_EMsgUCMPublishedFileContentUpdated
   maybeToEnum 7381 = Prelude.Just K_EMsgClientUCMPublishedFileUpdated
+  maybeToEnum 7382
+    = Prelude.Just K_EMsgClientWorkshopItemChangesRequest
+  maybeToEnum 7383
+    = Prelude.Just K_EMsgClientWorkshopItemChangesResponse
   maybeToEnum 7500 = Prelude.Just K_EMsgFSBase
   maybeToEnum 7501 = Prelude.Just K_EMsgClientRichPresenceUpload
   maybeToEnum 7502 = Prelude.Just K_EMsgClientRichPresenceRequest
@@ -3520,17 +3383,16 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgRemoteClientStartStreamResponse
   maybeToEnum 9505 = Prelude.Just K_EMsgRemoteClientPing
   maybeToEnum 9506 = Prelude.Just K_EMsgRemoteClientPingResponse
-  maybeToEnum 9507 = Prelude.Just K_EMsgClientUnlockH264
-  maybeToEnum 9508 = Prelude.Just K_EMsgClientUnlockH264Response
+  maybeToEnum 9507 = Prelude.Just K_EMsgClientUnlockStreaming
+  maybeToEnum 9508 = Prelude.Just K_EMsgClientUnlockStreamingResponse
   maybeToEnum 9509 = Prelude.Just K_EMsgRemoteClientAcceptEULA
   maybeToEnum 9510
     = Prelude.Just K_EMsgRemoteClientGetControllerConfig
   maybeToEnum 9511
     = Prelude.Just K_EMsgRemoteClientGetControllerConfigResponse
   maybeToEnum 9512 = Prelude.Just K_EMsgRemoteClientStreamingEnabled
-  maybeToEnum 9513 = Prelude.Just K_EMsgClientUnlockHEVC_OBSOLETE
-  maybeToEnum 9514
-    = Prelude.Just K_EMsgClientUnlockHEVCResponse_OBSOLETE
+  maybeToEnum 9513 = Prelude.Just K_EMsgClientUnlockHEVC
+  maybeToEnum 9514 = Prelude.Just K_EMsgClientUnlockHEVCResponse
   maybeToEnum 9515 = Prelude.Just K_EMsgRemoteClientStatusRequest
   maybeToEnum 9516 = Prelude.Just K_EMsgRemoteClientStatusResponse
   maybeToEnum 9600 = Prelude.Just K_EMsgClientConcurrentSessionsBase
@@ -3538,6 +3400,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 9700 = Prelude.Just K_EMsgClientBroadcastBase
   maybeToEnum 9701 = Prelude.Just K_EMsgClientBroadcastFrames
   maybeToEnum 9702 = Prelude.Just K_EMsgClientBroadcastDisconnect
+  maybeToEnum 9703 = Prelude.Just K_EMsgClientBroadcastScreenshot
   maybeToEnum 9704 = Prelude.Just K_EMsgClientBroadcastUploadConfig
   maybeToEnum 9800 = Prelude.Just K_EMsgBaseClient3
   maybeToEnum 9801
@@ -3547,15 +3410,9 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 9804
     = Prelude.Just K_EMsgServiceMethodCallFromClientNonAuthed
   maybeToEnum 9805 = Prelude.Just K_EMsgClientHello
-  maybeToEnum 9806
-    = Prelude.Just K_EMsgClientEnableOrDisableDownloads
-  maybeToEnum 9807
-    = Prelude.Just K_EMsgClientEnableOrDisableDownloadsResponse
   maybeToEnum 9900 = Prelude.Just K_EMsgClientLANP2PBase
   maybeToEnum 9901
     = Prelude.Just K_EMsgClientLANP2PRequestChunkResponse
-  maybeToEnum 9902 = Prelude.Just K_EMsgClientPeerChunkRequest
-  maybeToEnum 9903 = Prelude.Just K_EMsgClientPeerChunkResponse
   maybeToEnum 9999 = Prelude.Just K_EMsgClientLANP2PMax
   maybeToEnum 10000 = Prelude.Just K_EMsgBaseWatchdogServer
   maybeToEnum 10100 = Prelude.Just K_EMsgClientSiteLicenseBase
@@ -3574,13 +3431,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   maybeToEnum 12001
     = Prelude.Just K_EMsgChatServerGetPendingNotificationCountResponse
   maybeToEnum 12100 = Prelude.Just K_EMsgBaseSecretServer
-  maybeToEnum 12200 = Prelude.Just K_EMsgBaseWG
-  maybeToEnum 12201
-    = Prelude.Just K_EMsgWGConnectionValidateUserToken
-  maybeToEnum 12202
-    = Prelude.Just K_EMsgWGConnectionValidateUserTokenResponse
-  maybeToEnum 12203 = Prelude.Just K_EMsgWGConnectionLegacyWGRequest
-  maybeToEnum 12204 = Prelude.Just K_EMsgWGConnectionLegacyWGResponse
   maybeToEnum _ = Prelude.Nothing
   showEnum K_EMsgInvalid = "k_EMsgInvalid"
   showEnum K_EMsgMulti = "k_EMsgMulti"
@@ -3677,6 +3527,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgLicenseProcessingComplete"
   showEnum K_EMsgSetTestFlag = "k_EMsgSetTestFlag"
   showEnum K_EMsgQueuedEmailsComplete = "k_EMsgQueuedEmailsComplete"
+  showEnum K_EMsgGMReportPHPError = "k_EMsgGMReportPHPError"
   showEnum K_EMsgGMDRMSync = "k_EMsgGMDRMSync"
   showEnum K_EMsgPhysicalBoxInventory = "k_EMsgPhysicalBoxInventory"
   showEnum K_EMsgUpdateConfigFile = "k_EMsgUpdateConfigFile"
@@ -3702,9 +3553,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgHotFixProgress = "k_EMsgHotFixProgress"
   showEnum K_EMsgGMStatsForwardToAdminConnections
     = "k_EMsgGMStatsForwardToAdminConnections"
-  showEnum K_EMsgGMGetModifiedConVars = "k_EMsgGMGetModifiedConVars"
-  showEnum K_EMsgGMGetModifiedConVarsResponse
-    = "k_EMsgGMGetModifiedConVarsResponse"
   showEnum K_EMsgBaseAIS = "k_EMsgBaseAIS"
   showEnum K_EMsgAISRequestContentDescription
     = "k_EMsgAISRequestContentDescription"
@@ -4302,9 +4150,15 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgClientDPSendSpecialSurveyResponseReply"
   showEnum K_EMsgDPStoreSaleStatistics
     = "k_EMsgDPStoreSaleStatistics"
+  showEnum K_EMsgClientDPUpdateAppJobReport
+    = "k_EMsgClientDPUpdateAppJobReport"
+  showEnum K_EMsgClientDPUnsignedInstallScript
+    = "k_EMsgClientDPUnsignedInstallScript"
   showEnum K_EMsgDPPartnerMicroTxns = "k_EMsgDPPartnerMicroTxns"
   showEnum K_EMsgDPPartnerMicroTxnsResponse
     = "k_EMsgDPPartnerMicroTxnsResponse"
+  showEnum K_EMsgClientDPContentStatsReport
+    = "k_EMsgClientDPContentStatsReport"
   showEnum K_EMsgDPVRUniquePlayersStat
     = "k_EMsgDPVRUniquePlayersStat"
   showEnum K_EMsgBaseCM = "k_EMsgBaseCM"
@@ -4367,12 +4221,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgGCHAppCheersGetAllowedTypes"
   showEnum K_EMsgGCHAppCheersGetAllowedTypesResponse
     = "k_EMsgGCHAppCheersGetAllowedTypesResponse"
-  showEnum K_EMsgGCHRoutingRulesFromGCHtoGM
-    = "k_EMsgGCHRoutingRulesFromGCHtoGM"
-  showEnum K_EMsgGCHRoutingRulesToGCHfromGM
-    = "k_EMsgGCHRoutingRulesToGCHfromGM"
-  showEnum K_EMsgUpdateCMMessageRateRules
-    = "k_EMsgUpdateCMMessageRateRules"
   showEnum K_EMsgBaseP2P = "k_EMsgBaseP2P"
   showEnum K_EMsgP2PIntroducerMessage = "k_EMsgP2PIntroducerMessage"
   showEnum K_EMsgBaseSM = "k_EMsgBaseSM"
@@ -4582,6 +4430,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgAMSetLicenseFlags = "k_EMsgAMSetLicenseFlags"
   showEnum K_EMsgCommunityDeleteUserNews
     = "k_EMsgCommunityDeleteUserNews"
+  showEnum K_EMsgAMAllowUserFilesRequest
+    = "k_EMsgAMAllowUserFilesRequest"
+  showEnum K_EMsgAMAllowUserFilesResponse
+    = "k_EMsgAMAllowUserFilesResponse"
   showEnum K_EMsgAMGetAccountStatus = "k_EMsgAMGetAccountStatus"
   showEnum K_EMsgAMGetAccountStatusResponse
     = "k_EMsgAMGetAccountStatusResponse"
@@ -4627,6 +4479,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgAMSupportIsAccountEnabledResponse"
   showEnum K_EMsgUGSGetUserStats = "k_EMsgUGSGetUserStats"
   showEnum K_EMsgAMGSSearch = "k_EMsgAMGSSearch"
+  showEnum K_EMsgMarketingMessageUpdate
+    = "k_EMsgMarketingMessageUpdate"
   showEnum K_EMsgChatServerRouteFriendMsg
     = "k_EMsgChatServerRouteFriendMsg"
   showEnum K_EMsgAMTicketAuthRequestOrResponse
@@ -4667,6 +4521,7 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgAMPlayerNicknameList = "k_EMsgAMPlayerNicknameList"
   showEnum K_EMsgAMPlayerNicknameListResponse
     = "k_EMsgAMPlayerNicknameListResponse"
+  showEnum K_EMsgAMSetDRMTestConfig = "k_EMsgAMSetDRMTestConfig"
   showEnum K_EMsgAMGetUserCurrentGameInfo
     = "k_EMsgAMGetUserCurrentGameInfo"
   showEnum K_EMsgAMGetUserCurrentGameInfoResponse
@@ -4891,7 +4746,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgAMECommPayPayment = "k_EMsgAMECommPayPayment"
   showEnum K_EMsgAMECommPayPaymentResponse
     = "k_EMsgAMECommPayPaymentResponse"
-  showEnum K_EMsgAMSetRemoteClientID = "k_EMsgAMSetRemoteClientID"
   showEnum K_EMsgBasePSRange = "k_EMsgBasePSRange"
   showEnum K_EMsgPSCreateShoppingCart = "k_EMsgPSCreateShoppingCart"
   showEnum K_EMsgPSCreateShoppingCartResponse
@@ -5053,6 +4907,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgClientGetDepotDecryptionKey"
   showEnum K_EMsgClientGetDepotDecryptionKeyResponse
     = "k_EMsgClientGetDepotDecryptionKeyResponse"
+  showEnum K_EMsgGSPerformHardwareSurvey
+    = "k_EMsgGSPerformHardwareSurvey"
   showEnum K_EMsgClientEnableTestLicense
     = "k_EMsgClientEnableTestLicense"
   showEnum K_EMsgClientEnableTestLicenseResponse
@@ -5119,14 +4975,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgClientOGSEndSessionResponse
     = "k_EMsgClientOGSEndSessionResponse"
   showEnum K_EMsgClientOGSWriteRow = "k_EMsgClientOGSWriteRow"
-  showEnum K_EMsgClientGetPeerContentInfo
-    = "k_EMsgClientGetPeerContentInfo"
-  showEnum K_EMsgClientGetPeerContentInfoResponse
-    = "k_EMsgClientGetPeerContentInfoResponse"
-  showEnum K_EMsgClientStartPeerContentServer
-    = "k_EMsgClientStartPeerContentServer"
-  showEnum K_EMsgClientStartPeerContentServerResponse
-    = "k_EMsgClientStartPeerContentServerResponse"
+  showEnum K_EMsgClientDRMTest = "k_EMsgClientDRMTest"
+  showEnum K_EMsgClientDRMTestResult = "k_EMsgClientDRMTestResult"
   showEnum K_EMsgClientServerUnavailable
     = "k_EMsgClientServerUnavailable"
   showEnum K_EMsgClientServersAvailable
@@ -5144,6 +4994,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgClientGetMicroTxnInfo"
   showEnum K_EMsgClientGetMicroTxnInfoResponse
     = "k_EMsgClientGetMicroTxnInfoResponse"
+  showEnum K_EMsgClientMarketingMessageUpdate2
+    = "k_EMsgClientMarketingMessageUpdate2"
   showEnum K_EMsgClientDeregisterWithServer
     = "k_EMsgClientDeregisterWithServer"
   showEnum K_EMsgClientSubscribeToPersonaFeed
@@ -5506,6 +5358,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgUCMUpdatePublishedFile"
   showEnum K_EMsgUCMUpdatePublishedFileResponse
     = "k_EMsgUCMUpdatePublishedFileResponse"
+  showEnum K_EMsgUCMDeletePublishedFile
+    = "k_EMsgUCMDeletePublishedFile"
+  showEnum K_EMsgUCMDeletePublishedFileResponse
+    = "k_EMsgUCMDeletePublishedFileResponse"
   showEnum K_EMsgUCMUpdatePublishedFileStat
     = "k_EMsgUCMUpdatePublishedFileStat"
   showEnum K_EMsgUCMReloadPublishedFile
@@ -5562,6 +5418,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgUCMPublishedFileContentUpdated"
   showEnum K_EMsgClientUCMPublishedFileUpdated
     = "k_EMsgClientUCMPublishedFileUpdated"
+  showEnum K_EMsgClientWorkshopItemChangesRequest
+    = "k_EMsgClientWorkshopItemChangesRequest"
+  showEnum K_EMsgClientWorkshopItemChangesResponse
+    = "k_EMsgClientWorkshopItemChangesResponse"
   showEnum K_EMsgFSBase = "k_EMsgFSBase"
   showEnum K_EMsgClientRichPresenceUpload
     = "k_EMsgClientRichPresenceUpload"
@@ -5837,9 +5697,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgRemoteClientPing = "k_EMsgRemoteClientPing"
   showEnum K_EMsgRemoteClientPingResponse
     = "k_EMsgRemoteClientPingResponse"
-  showEnum K_EMsgClientUnlockH264 = "k_EMsgClientUnlockH264"
-  showEnum K_EMsgClientUnlockH264Response
-    = "k_EMsgClientUnlockH264Response"
+  showEnum K_EMsgClientUnlockStreaming
+    = "k_EMsgClientUnlockStreaming"
+  showEnum K_EMsgClientUnlockStreamingResponse
+    = "k_EMsgClientUnlockStreamingResponse"
   showEnum K_EMsgRemoteClientAcceptEULA
     = "k_EMsgRemoteClientAcceptEULA"
   showEnum K_EMsgRemoteClientGetControllerConfig
@@ -5848,10 +5709,9 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgRemoteClientGetControllerConfigResponse"
   showEnum K_EMsgRemoteClientStreamingEnabled
     = "k_EMsgRemoteClientStreamingEnabled"
-  showEnum K_EMsgClientUnlockHEVC_OBSOLETE
-    = "k_EMsgClientUnlockHEVC_OBSOLETE"
-  showEnum K_EMsgClientUnlockHEVCResponse_OBSOLETE
-    = "k_EMsgClientUnlockHEVCResponse_OBSOLETE"
+  showEnum K_EMsgClientUnlockHEVC = "k_EMsgClientUnlockHEVC"
+  showEnum K_EMsgClientUnlockHEVCResponse
+    = "k_EMsgClientUnlockHEVCResponse"
   showEnum K_EMsgRemoteClientStatusRequest
     = "k_EMsgRemoteClientStatusRequest"
   showEnum K_EMsgRemoteClientStatusResponse
@@ -5865,6 +5725,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = "k_EMsgClientBroadcastFrames"
   showEnum K_EMsgClientBroadcastDisconnect
     = "k_EMsgClientBroadcastDisconnect"
+  showEnum K_EMsgClientBroadcastScreenshot
+    = "k_EMsgClientBroadcastScreenshot"
   showEnum K_EMsgClientBroadcastUploadConfig
     = "k_EMsgClientBroadcastUploadConfig"
   showEnum K_EMsgBaseClient3 = "k_EMsgBaseClient3"
@@ -5877,17 +5739,9 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgServiceMethodCallFromClientNonAuthed
     = "k_EMsgServiceMethodCallFromClientNonAuthed"
   showEnum K_EMsgClientHello = "k_EMsgClientHello"
-  showEnum K_EMsgClientEnableOrDisableDownloads
-    = "k_EMsgClientEnableOrDisableDownloads"
-  showEnum K_EMsgClientEnableOrDisableDownloadsResponse
-    = "k_EMsgClientEnableOrDisableDownloadsResponse"
   showEnum K_EMsgClientLANP2PBase = "k_EMsgClientLANP2PBase"
   showEnum K_EMsgClientLANP2PRequestChunkResponse
     = "k_EMsgClientLANP2PRequestChunkResponse"
-  showEnum K_EMsgClientPeerChunkRequest
-    = "k_EMsgClientPeerChunkRequest"
-  showEnum K_EMsgClientPeerChunkResponse
-    = "k_EMsgClientPeerChunkResponse"
   showEnum K_EMsgClientLANP2PMax = "k_EMsgClientLANP2PMax"
   showEnum K_EMsgBaseWatchdogServer = "k_EMsgBaseWatchdogServer"
   showEnum K_EMsgClientSiteLicenseBase
@@ -5908,15 +5762,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
   showEnum K_EMsgChatServerGetPendingNotificationCountResponse
     = "k_EMsgChatServerGetPendingNotificationCountResponse"
   showEnum K_EMsgBaseSecretServer = "k_EMsgBaseSecretServer"
-  showEnum K_EMsgBaseWG = "k_EMsgBaseWG"
-  showEnum K_EMsgWGConnectionValidateUserToken
-    = "k_EMsgWGConnectionValidateUserToken"
-  showEnum K_EMsgWGConnectionValidateUserTokenResponse
-    = "k_EMsgWGConnectionValidateUserTokenResponse"
-  showEnum K_EMsgWGConnectionLegacyWGRequest
-    = "k_EMsgWGConnectionLegacyWGRequest"
-  showEnum K_EMsgWGConnectionLegacyWGResponse
-    = "k_EMsgWGConnectionLegacyWGResponse"
   readEnum k
     | (Prelude.==) k "k_EMsgInvalid" = Prelude.Just K_EMsgInvalid
     | (Prelude.==) k "k_EMsgMulti" = Prelude.Just K_EMsgMulti
@@ -6048,6 +5893,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgSetTestFlag
     | (Prelude.==) k "k_EMsgQueuedEmailsComplete"
     = Prelude.Just K_EMsgQueuedEmailsComplete
+    | (Prelude.==) k "k_EMsgGMReportPHPError"
+    = Prelude.Just K_EMsgGMReportPHPError
     | (Prelude.==) k "k_EMsgGMDRMSync" = Prelude.Just K_EMsgGMDRMSync
     | (Prelude.==) k "k_EMsgPhysicalBoxInventory"
     = Prelude.Just K_EMsgPhysicalBoxInventory
@@ -6080,10 +5927,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgHotFixProgress
     | (Prelude.==) k "k_EMsgGMStatsForwardToAdminConnections"
     = Prelude.Just K_EMsgGMStatsForwardToAdminConnections
-    | (Prelude.==) k "k_EMsgGMGetModifiedConVars"
-    = Prelude.Just K_EMsgGMGetModifiedConVars
-    | (Prelude.==) k "k_EMsgGMGetModifiedConVarsResponse"
-    = Prelude.Just K_EMsgGMGetModifiedConVarsResponse
     | (Prelude.==) k "k_EMsgBaseAIS" = Prelude.Just K_EMsgBaseAIS
     | (Prelude.==) k "k_EMsgAISRequestContentDescription"
     = Prelude.Just K_EMsgAISRequestContentDescription
@@ -6878,10 +6721,16 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientDPSendSpecialSurveyResponseReply
     | (Prelude.==) k "k_EMsgDPStoreSaleStatistics"
     = Prelude.Just K_EMsgDPStoreSaleStatistics
+    | (Prelude.==) k "k_EMsgClientDPUpdateAppJobReport"
+    = Prelude.Just K_EMsgClientDPUpdateAppJobReport
+    | (Prelude.==) k "k_EMsgClientDPUnsignedInstallScript"
+    = Prelude.Just K_EMsgClientDPUnsignedInstallScript
     | (Prelude.==) k "k_EMsgDPPartnerMicroTxns"
     = Prelude.Just K_EMsgDPPartnerMicroTxns
     | (Prelude.==) k "k_EMsgDPPartnerMicroTxnsResponse"
     = Prelude.Just K_EMsgDPPartnerMicroTxnsResponse
+    | (Prelude.==) k "k_EMsgClientDPContentStatsReport"
+    = Prelude.Just K_EMsgClientDPContentStatsReport
     | (Prelude.==) k "k_EMsgDPVRUniquePlayersStat"
     = Prelude.Just K_EMsgDPVRUniquePlayersStat
     | (Prelude.==) k "k_EMsgBaseCM" = Prelude.Just K_EMsgBaseCM
@@ -6966,12 +6815,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgGCHAppCheersGetAllowedTypes
     | (Prelude.==) k "k_EMsgGCHAppCheersGetAllowedTypesResponse"
     = Prelude.Just K_EMsgGCHAppCheersGetAllowedTypesResponse
-    | (Prelude.==) k "k_EMsgGCHRoutingRulesFromGCHtoGM"
-    = Prelude.Just K_EMsgGCHRoutingRulesFromGCHtoGM
-    | (Prelude.==) k "k_EMsgGCHRoutingRulesToGCHfromGM"
-    = Prelude.Just K_EMsgGCHRoutingRulesToGCHfromGM
-    | (Prelude.==) k "k_EMsgUpdateCMMessageRateRules"
-    = Prelude.Just K_EMsgUpdateCMMessageRateRules
     | (Prelude.==) k "k_EMsgBaseP2P" = Prelude.Just K_EMsgBaseP2P
     | (Prelude.==) k "k_EMsgP2PIntroducerMessage"
     = Prelude.Just K_EMsgP2PIntroducerMessage
@@ -7255,6 +7098,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgAMSetLicenseFlags
     | (Prelude.==) k "k_EMsgCommunityDeleteUserNews"
     = Prelude.Just K_EMsgCommunityDeleteUserNews
+    | (Prelude.==) k "k_EMsgAMAllowUserFilesRequest"
+    = Prelude.Just K_EMsgAMAllowUserFilesRequest
+    | (Prelude.==) k "k_EMsgAMAllowUserFilesResponse"
+    = Prelude.Just K_EMsgAMAllowUserFilesResponse
     | (Prelude.==) k "k_EMsgAMGetAccountStatus"
     = Prelude.Just K_EMsgAMGetAccountStatus
     | (Prelude.==) k "k_EMsgAMGetAccountStatusResponse"
@@ -7308,6 +7155,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     | (Prelude.==) k "k_EMsgUGSGetUserStats"
     = Prelude.Just K_EMsgUGSGetUserStats
     | (Prelude.==) k "k_EMsgAMGSSearch" = Prelude.Just K_EMsgAMGSSearch
+    | (Prelude.==) k "k_EMsgMarketingMessageUpdate"
+    = Prelude.Just K_EMsgMarketingMessageUpdate
     | (Prelude.==) k "k_EMsgChatServerRouteFriendMsg"
     = Prelude.Just K_EMsgChatServerRouteFriendMsg
     | (Prelude.==) k "k_EMsgAMTicketAuthRequestOrResponse"
@@ -7360,6 +7209,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgAMPlayerNicknameList
     | (Prelude.==) k "k_EMsgAMPlayerNicknameListResponse"
     = Prelude.Just K_EMsgAMPlayerNicknameListResponse
+    | (Prelude.==) k "k_EMsgAMSetDRMTestConfig"
+    = Prelude.Just K_EMsgAMSetDRMTestConfig
     | (Prelude.==) k "k_EMsgAMGetUserCurrentGameInfo"
     = Prelude.Just K_EMsgAMGetUserCurrentGameInfo
     | (Prelude.==) k "k_EMsgAMGetUserCurrentGameInfoResponse"
@@ -7623,8 +7474,6 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgAMECommPayPayment
     | (Prelude.==) k "k_EMsgAMECommPayPaymentResponse"
     = Prelude.Just K_EMsgAMECommPayPaymentResponse
-    | (Prelude.==) k "k_EMsgAMSetRemoteClientID"
-    = Prelude.Just K_EMsgAMSetRemoteClientID
     | (Prelude.==) k "k_EMsgBasePSRange"
     = Prelude.Just K_EMsgBasePSRange
     | (Prelude.==) k "k_EMsgPSCreateShoppingCart"
@@ -7804,6 +7653,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientGetDepotDecryptionKey
     | (Prelude.==) k "k_EMsgClientGetDepotDecryptionKeyResponse"
     = Prelude.Just K_EMsgClientGetDepotDecryptionKeyResponse
+    | (Prelude.==) k "k_EMsgGSPerformHardwareSurvey"
+    = Prelude.Just K_EMsgGSPerformHardwareSurvey
     | (Prelude.==) k "k_EMsgClientEnableTestLicense"
     = Prelude.Just K_EMsgClientEnableTestLicense
     | (Prelude.==) k "k_EMsgClientEnableTestLicenseResponse"
@@ -7881,14 +7732,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientOGSEndSessionResponse
     | (Prelude.==) k "k_EMsgClientOGSWriteRow"
     = Prelude.Just K_EMsgClientOGSWriteRow
-    | (Prelude.==) k "k_EMsgClientGetPeerContentInfo"
-    = Prelude.Just K_EMsgClientGetPeerContentInfo
-    | (Prelude.==) k "k_EMsgClientGetPeerContentInfoResponse"
-    = Prelude.Just K_EMsgClientGetPeerContentInfoResponse
-    | (Prelude.==) k "k_EMsgClientStartPeerContentServer"
-    = Prelude.Just K_EMsgClientStartPeerContentServer
-    | (Prelude.==) k "k_EMsgClientStartPeerContentServerResponse"
-    = Prelude.Just K_EMsgClientStartPeerContentServerResponse
+    | (Prelude.==) k "k_EMsgClientDRMTest"
+    = Prelude.Just K_EMsgClientDRMTest
+    | (Prelude.==) k "k_EMsgClientDRMTestResult"
+    = Prelude.Just K_EMsgClientDRMTestResult
     | (Prelude.==) k "k_EMsgClientServerUnavailable"
     = Prelude.Just K_EMsgClientServerUnavailable
     | (Prelude.==) k "k_EMsgClientServersAvailable"
@@ -7907,6 +7754,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientGetMicroTxnInfo
     | (Prelude.==) k "k_EMsgClientGetMicroTxnInfoResponse"
     = Prelude.Just K_EMsgClientGetMicroTxnInfoResponse
+    | (Prelude.==) k "k_EMsgClientMarketingMessageUpdate2"
+    = Prelude.Just K_EMsgClientMarketingMessageUpdate2
     | (Prelude.==) k "k_EMsgClientDeregisterWithServer"
     = Prelude.Just K_EMsgClientDeregisterWithServer
     | (Prelude.==) k "k_EMsgClientSubscribeToPersonaFeed"
@@ -8326,6 +8175,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgUCMUpdatePublishedFile
     | (Prelude.==) k "k_EMsgUCMUpdatePublishedFileResponse"
     = Prelude.Just K_EMsgUCMUpdatePublishedFileResponse
+    | (Prelude.==) k "k_EMsgUCMDeletePublishedFile"
+    = Prelude.Just K_EMsgUCMDeletePublishedFile
+    | (Prelude.==) k "k_EMsgUCMDeletePublishedFileResponse"
+    = Prelude.Just K_EMsgUCMDeletePublishedFileResponse
     | (Prelude.==) k "k_EMsgUCMUpdatePublishedFileStat"
     = Prelude.Just K_EMsgUCMUpdatePublishedFileStat
     | (Prelude.==) k "k_EMsgUCMReloadPublishedFile"
@@ -8390,6 +8243,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgUCMPublishedFileContentUpdated
     | (Prelude.==) k "k_EMsgClientUCMPublishedFileUpdated"
     = Prelude.Just K_EMsgClientUCMPublishedFileUpdated
+    | (Prelude.==) k "k_EMsgClientWorkshopItemChangesRequest"
+    = Prelude.Just K_EMsgClientWorkshopItemChangesRequest
+    | (Prelude.==) k "k_EMsgClientWorkshopItemChangesResponse"
+    = Prelude.Just K_EMsgClientWorkshopItemChangesResponse
     | (Prelude.==) k "k_EMsgFSBase" = Prelude.Just K_EMsgFSBase
     | (Prelude.==) k "k_EMsgClientRichPresenceUpload"
     = Prelude.Just K_EMsgClientRichPresenceUpload
@@ -8722,10 +8579,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgRemoteClientPing
     | (Prelude.==) k "k_EMsgRemoteClientPingResponse"
     = Prelude.Just K_EMsgRemoteClientPingResponse
-    | (Prelude.==) k "k_EMsgClientUnlockH264"
-    = Prelude.Just K_EMsgClientUnlockH264
-    | (Prelude.==) k "k_EMsgClientUnlockH264Response"
-    = Prelude.Just K_EMsgClientUnlockH264Response
+    | (Prelude.==) k "k_EMsgClientUnlockStreaming"
+    = Prelude.Just K_EMsgClientUnlockStreaming
+    | (Prelude.==) k "k_EMsgClientUnlockStreamingResponse"
+    = Prelude.Just K_EMsgClientUnlockStreamingResponse
     | (Prelude.==) k "k_EMsgRemoteClientAcceptEULA"
     = Prelude.Just K_EMsgRemoteClientAcceptEULA
     | (Prelude.==) k "k_EMsgRemoteClientGetControllerConfig"
@@ -8734,10 +8591,10 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgRemoteClientGetControllerConfigResponse
     | (Prelude.==) k "k_EMsgRemoteClientStreamingEnabled"
     = Prelude.Just K_EMsgRemoteClientStreamingEnabled
-    | (Prelude.==) k "k_EMsgClientUnlockHEVC_OBSOLETE"
-    = Prelude.Just K_EMsgClientUnlockHEVC_OBSOLETE
-    | (Prelude.==) k "k_EMsgClientUnlockHEVCResponse_OBSOLETE"
-    = Prelude.Just K_EMsgClientUnlockHEVCResponse_OBSOLETE
+    | (Prelude.==) k "k_EMsgClientUnlockHEVC"
+    = Prelude.Just K_EMsgClientUnlockHEVC
+    | (Prelude.==) k "k_EMsgClientUnlockHEVCResponse"
+    = Prelude.Just K_EMsgClientUnlockHEVCResponse
     | (Prelude.==) k "k_EMsgRemoteClientStatusRequest"
     = Prelude.Just K_EMsgRemoteClientStatusRequest
     | (Prelude.==) k "k_EMsgRemoteClientStatusResponse"
@@ -8756,6 +8613,8 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgClientBroadcastFrames
     | (Prelude.==) k "k_EMsgClientBroadcastDisconnect"
     = Prelude.Just K_EMsgClientBroadcastDisconnect
+    | (Prelude.==) k "k_EMsgClientBroadcastScreenshot"
+    = Prelude.Just K_EMsgClientBroadcastScreenshot
     | (Prelude.==) k "k_EMsgClientBroadcastUploadConfig"
     = Prelude.Just K_EMsgClientBroadcastUploadConfig
     | (Prelude.==) k "k_EMsgBaseClient3"
@@ -8772,20 +8631,12 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgServiceMethodCallFromClientNonAuthed
     | (Prelude.==) k "k_EMsgClientHello"
     = Prelude.Just K_EMsgClientHello
-    | (Prelude.==) k "k_EMsgClientEnableOrDisableDownloads"
-    = Prelude.Just K_EMsgClientEnableOrDisableDownloads
-    | (Prelude.==) k "k_EMsgClientEnableOrDisableDownloadsResponse"
-    = Prelude.Just K_EMsgClientEnableOrDisableDownloadsResponse
     | (Prelude.==) k "k_EMsgClientLANP2PBase"
     = Prelude.Just K_EMsgClientLANP2PBase
     | (Prelude.==) k "k_EMsgClientLANP2PRequestChunk"
     = Prelude.Just K_EMsgClientLANP2PRequestChunk
     | (Prelude.==) k "k_EMsgClientLANP2PRequestChunkResponse"
     = Prelude.Just K_EMsgClientLANP2PRequestChunkResponse
-    | (Prelude.==) k "k_EMsgClientPeerChunkRequest"
-    = Prelude.Just K_EMsgClientPeerChunkRequest
-    | (Prelude.==) k "k_EMsgClientPeerChunkResponse"
-    = Prelude.Just K_EMsgClientPeerChunkResponse
     | (Prelude.==) k "k_EMsgClientLANP2PMax"
     = Prelude.Just K_EMsgClientLANP2PMax
     | (Prelude.==) k "k_EMsgBaseWatchdogServer"
@@ -8820,22 +8671,11 @@ instance Data.ProtoLens.MessageEnum EMsg where
     = Prelude.Just K_EMsgBaseSecretServer
     | (Prelude.==) k "k_EMsgServerSecretChanged"
     = Prelude.Just K_EMsgServerSecretChanged
-    | (Prelude.==) k "k_EMsgBaseWG" = Prelude.Just K_EMsgBaseWG
-    | (Prelude.==) k "k_EMsgWGConnectionProtocolError"
-    = Prelude.Just K_EMsgWGConnectionProtocolError
-    | (Prelude.==) k "k_EMsgWGConnectionValidateUserToken"
-    = Prelude.Just K_EMsgWGConnectionValidateUserToken
-    | (Prelude.==) k "k_EMsgWGConnectionValidateUserTokenResponse"
-    = Prelude.Just K_EMsgWGConnectionValidateUserTokenResponse
-    | (Prelude.==) k "k_EMsgWGConnectionLegacyWGRequest"
-    = Prelude.Just K_EMsgWGConnectionLegacyWGRequest
-    | (Prelude.==) k "k_EMsgWGConnectionLegacyWGResponse"
-    = Prelude.Just K_EMsgWGConnectionLegacyWGResponse
     | Prelude.otherwise
     = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
 instance Prelude.Bounded EMsg where
   minBound = K_EMsgInvalid
-  maxBound = K_EMsgWGConnectionLegacyWGResponse
+  maxBound = K_EMsgBaseSecretServer
 instance Prelude.Enum EMsg where
   toEnum k__
     = Prelude.maybe
@@ -8914,6 +8754,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgLicenseProcessingComplete = 316
   fromEnum K_EMsgSetTestFlag = 317
   fromEnum K_EMsgQueuedEmailsComplete = 318
+  fromEnum K_EMsgGMReportPHPError = 319
   fromEnum K_EMsgGMDRMSync = 320
   fromEnum K_EMsgPhysicalBoxInventory = 321
   fromEnum K_EMsgUpdateConfigFile = 322
@@ -8931,8 +8772,6 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgExpectShellRestart = 336
   fromEnum K_EMsgHotFixProgress = 337
   fromEnum K_EMsgGMStatsForwardToAdminConnections = 338
-  fromEnum K_EMsgGMGetModifiedConVars = 339
-  fromEnum K_EMsgGMGetModifiedConVarsResponse = 340
   fromEnum K_EMsgBaseAIS = 400
   fromEnum K_EMsgAISRequestContentDescription = 402
   fromEnum K_EMsgAISUpdateAppInfo = 403
@@ -9336,8 +9175,11 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientDPSendSpecialSurveyResponse = 1622
   fromEnum K_EMsgClientDPSendSpecialSurveyResponseReply = 1623
   fromEnum K_EMsgDPStoreSaleStatistics = 1624
+  fromEnum K_EMsgClientDPUpdateAppJobReport = 1625
+  fromEnum K_EMsgClientDPUnsignedInstallScript = 1627
   fromEnum K_EMsgDPPartnerMicroTxns = 1628
   fromEnum K_EMsgDPPartnerMicroTxnsResponse = 1629
+  fromEnum K_EMsgClientDPContentStatsReport = 1630
   fromEnum K_EMsgDPVRUniquePlayersStat = 1631
   fromEnum K_EMsgBaseCM = 1700
   fromEnum K_EMsgCMSetAllowState = 1701
@@ -9383,9 +9225,6 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgGCHAppCheersReceived = 2242
   fromEnum K_EMsgGCHAppCheersGetAllowedTypes = 2243
   fromEnum K_EMsgGCHAppCheersGetAllowedTypesResponse = 2244
-  fromEnum K_EMsgGCHRoutingRulesFromGCHtoGM = 2245
-  fromEnum K_EMsgGCHRoutingRulesToGCHfromGM = 2246
-  fromEnum K_EMsgUpdateCMMessageRateRules = 2247
   fromEnum K_EMsgBaseP2P = 2500
   fromEnum K_EMsgP2PIntroducerMessage = 2502
   fromEnum K_EMsgBaseSM = 2900
@@ -9531,6 +9370,8 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgAMSendQueuedEmails = 4152
   fromEnum K_EMsgAMSetLicenseFlags = 4153
   fromEnum K_EMsgCommunityDeleteUserNews = 4155
+  fromEnum K_EMsgAMAllowUserFilesRequest = 4156
+  fromEnum K_EMsgAMAllowUserFilesResponse = 4157
   fromEnum K_EMsgAMGetAccountStatus = 4158
   fromEnum K_EMsgAMGetAccountStatusResponse = 4159
   fromEnum K_EMsgAMEditBanReason = 4160
@@ -9558,6 +9399,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgAMSupportIsAccountEnabledResponse = 4210
   fromEnum K_EMsgUGSGetUserStats = 4211
   fromEnum K_EMsgAMGSSearch = 4213
+  fromEnum K_EMsgMarketingMessageUpdate = 4216
   fromEnum K_EMsgChatServerRouteFriendMsg = 4219
   fromEnum K_EMsgAMTicketAuthRequestOrResponse = 4220
   fromEnum K_EMsgAMAddFreeLicense = 4224
@@ -9584,6 +9426,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgAMCreateFinancialAdjustment = 4265
   fromEnum K_EMsgAMPlayerNicknameList = 4266
   fromEnum K_EMsgAMPlayerNicknameListResponse = 4267
+  fromEnum K_EMsgAMSetDRMTestConfig = 4268
   fromEnum K_EMsgAMGetUserCurrentGameInfo = 4269
   fromEnum K_EMsgAMGetUserCurrentGameInfoResponse = 4270
   fromEnum K_EMsgAMGetGSPlayerList = 4271
@@ -9714,7 +9557,6 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgAMPerfectWorldPaymentResponse = 4422
   fromEnum K_EMsgAMECommPayPayment = 4423
   fromEnum K_EMsgAMECommPayPaymentResponse = 4424
-  fromEnum K_EMsgAMSetRemoteClientID = 4425
   fromEnum K_EMsgBasePSRange = 5000
   fromEnum K_EMsgPSCreateShoppingCart = 5001
   fromEnum K_EMsgPSCreateShoppingCartResponse = 5002
@@ -9804,6 +9646,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientP2PConnectionFailInfo = 5435
   fromEnum K_EMsgClientGetDepotDecryptionKey = 5438
   fromEnum K_EMsgClientGetDepotDecryptionKeyResponse = 5439
+  fromEnum K_EMsgGSPerformHardwareSurvey = 5440
   fromEnum K_EMsgClientEnableTestLicense = 5443
   fromEnum K_EMsgClientEnableTestLicenseResponse = 5444
   fromEnum K_EMsgClientDisableTestLicense = 5445
@@ -9843,10 +9686,8 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientOGSEndSession = 5492
   fromEnum K_EMsgClientOGSEndSessionResponse = 5493
   fromEnum K_EMsgClientOGSWriteRow = 5494
-  fromEnum K_EMsgClientGetPeerContentInfo = 5495
-  fromEnum K_EMsgClientGetPeerContentInfoResponse = 5496
-  fromEnum K_EMsgClientStartPeerContentServer = 5497
-  fromEnum K_EMsgClientStartPeerContentServerResponse = 5498
+  fromEnum K_EMsgClientDRMTest = 5495
+  fromEnum K_EMsgClientDRMTestResult = 5496
   fromEnum K_EMsgClientServerUnavailable = 5500
   fromEnum K_EMsgClientServersAvailable = 5501
   fromEnum K_EMsgClientRegisterAuthTicketWithCM = 5502
@@ -9856,6 +9697,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientMicroTxnAuthorizeResponse = 5506
   fromEnum K_EMsgClientGetMicroTxnInfo = 5508
   fromEnum K_EMsgClientGetMicroTxnInfoResponse = 5509
+  fromEnum K_EMsgClientMarketingMessageUpdate2 = 5510
   fromEnum K_EMsgClientDeregisterWithServer = 5511
   fromEnum K_EMsgClientSubscribeToPersonaFeed = 5512
   fromEnum K_EMsgClientLogon = 5514
@@ -10071,6 +9913,8 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientUCMUpdatePublishedFileResponse = 7326
   fromEnum K_EMsgUCMUpdatePublishedFile = 7327
   fromEnum K_EMsgUCMUpdatePublishedFileResponse = 7328
+  fromEnum K_EMsgUCMDeletePublishedFile = 7329
+  fromEnum K_EMsgUCMDeletePublishedFileResponse = 7330
   fromEnum K_EMsgUCMUpdatePublishedFileStat = 7331
   fromEnum K_EMsgUCMReloadPublishedFile = 7337
   fromEnum K_EMsgUCMReloadUserFileListCaches = 7338
@@ -10103,6 +9947,8 @@ instance Prelude.Enum EMsg where
     = 7379
   fromEnum K_EMsgUCMPublishedFileContentUpdated = 7380
   fromEnum K_EMsgClientUCMPublishedFileUpdated = 7381
+  fromEnum K_EMsgClientWorkshopItemChangesRequest = 7382
+  fromEnum K_EMsgClientWorkshopItemChangesResponse = 7383
   fromEnum K_EMsgFSBase = 7500
   fromEnum K_EMsgClientRichPresenceUpload = 7501
   fromEnum K_EMsgClientRichPresenceRequest = 7502
@@ -10261,14 +10107,14 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgRemoteClientStartStreamResponse = 9504
   fromEnum K_EMsgRemoteClientPing = 9505
   fromEnum K_EMsgRemoteClientPingResponse = 9506
-  fromEnum K_EMsgClientUnlockH264 = 9507
-  fromEnum K_EMsgClientUnlockH264Response = 9508
+  fromEnum K_EMsgClientUnlockStreaming = 9507
+  fromEnum K_EMsgClientUnlockStreamingResponse = 9508
   fromEnum K_EMsgRemoteClientAcceptEULA = 9509
   fromEnum K_EMsgRemoteClientGetControllerConfig = 9510
   fromEnum K_EMsgRemoteClientGetControllerConfigResponse = 9511
   fromEnum K_EMsgRemoteClientStreamingEnabled = 9512
-  fromEnum K_EMsgClientUnlockHEVC_OBSOLETE = 9513
-  fromEnum K_EMsgClientUnlockHEVCResponse_OBSOLETE = 9514
+  fromEnum K_EMsgClientUnlockHEVC = 9513
+  fromEnum K_EMsgClientUnlockHEVCResponse = 9514
   fromEnum K_EMsgRemoteClientStatusRequest = 9515
   fromEnum K_EMsgRemoteClientStatusResponse = 9516
   fromEnum K_EMsgClientConcurrentSessionsBase = 9600
@@ -10276,6 +10122,7 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientBroadcastBase = 9700
   fromEnum K_EMsgClientBroadcastFrames = 9701
   fromEnum K_EMsgClientBroadcastDisconnect = 9702
+  fromEnum K_EMsgClientBroadcastScreenshot = 9703
   fromEnum K_EMsgClientBroadcastUploadConfig = 9704
   fromEnum K_EMsgBaseClient3 = 9800
   fromEnum K_EMsgClientVoiceCallPreAuthorizeResponse = 9801
@@ -10283,12 +10130,8 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgClientServerTimestampResponse = 9803
   fromEnum K_EMsgServiceMethodCallFromClientNonAuthed = 9804
   fromEnum K_EMsgClientHello = 9805
-  fromEnum K_EMsgClientEnableOrDisableDownloads = 9806
-  fromEnum K_EMsgClientEnableOrDisableDownloadsResponse = 9807
   fromEnum K_EMsgClientLANP2PBase = 9900
   fromEnum K_EMsgClientLANP2PRequestChunkResponse = 9901
-  fromEnum K_EMsgClientPeerChunkRequest = 9902
-  fromEnum K_EMsgClientPeerChunkResponse = 9903
   fromEnum K_EMsgClientLANP2PMax = 9999
   fromEnum K_EMsgBaseWatchdogServer = 10000
   fromEnum K_EMsgClientSiteLicenseBase = 10100
@@ -10302,14 +10145,9 @@ instance Prelude.Enum EMsg where
   fromEnum K_EMsgChatServerGetPendingNotificationCountResponse
     = 12001
   fromEnum K_EMsgBaseSecretServer = 12100
-  fromEnum K_EMsgBaseWG = 12200
-  fromEnum K_EMsgWGConnectionValidateUserToken = 12201
-  fromEnum K_EMsgWGConnectionValidateUserTokenResponse = 12202
-  fromEnum K_EMsgWGConnectionLegacyWGRequest = 12203
-  fromEnum K_EMsgWGConnectionLegacyWGResponse = 12204
-  succ K_EMsgWGConnectionLegacyWGResponse
+  succ K_EMsgBaseSecretServer
     = Prelude.error
-        "EMsg.succ: bad argument K_EMsgWGConnectionLegacyWGResponse. This value would be out of bounds."
+        "EMsg.succ: bad argument K_EMsgBaseSecretServer. This value would be out of bounds."
   succ K_EMsgInvalid = K_EMsgMulti
   succ K_EMsgMulti = K_EMsgProtobufWrapped
   succ K_EMsgProtobufWrapped = K_EMsgBaseGeneral
@@ -10391,7 +10229,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgGracefulExitShell = K_EMsgLicenseProcessingComplete
   succ K_EMsgLicenseProcessingComplete = K_EMsgSetTestFlag
   succ K_EMsgSetTestFlag = K_EMsgQueuedEmailsComplete
-  succ K_EMsgQueuedEmailsComplete = K_EMsgGMDRMSync
+  succ K_EMsgQueuedEmailsComplete = K_EMsgGMReportPHPError
+  succ K_EMsgGMReportPHPError = K_EMsgGMDRMSync
   succ K_EMsgGMDRMSync = K_EMsgPhysicalBoxInventory
   succ K_EMsgPhysicalBoxInventory = K_EMsgUpdateConfigFile
   succ K_EMsgUpdateConfigFile = K_EMsgTestInitDB
@@ -10413,11 +10252,7 @@ instance Prelude.Enum EMsg where
     = K_EMsgExpectShellRestart
   succ K_EMsgExpectShellRestart = K_EMsgHotFixProgress
   succ K_EMsgHotFixProgress = K_EMsgGMStatsForwardToAdminConnections
-  succ K_EMsgGMStatsForwardToAdminConnections
-    = K_EMsgGMGetModifiedConVars
-  succ K_EMsgGMGetModifiedConVars
-    = K_EMsgGMGetModifiedConVarsResponse
-  succ K_EMsgGMGetModifiedConVarsResponse = K_EMsgBaseAIS
+  succ K_EMsgGMStatsForwardToAdminConnections = K_EMsgBaseAIS
   succ K_EMsgBaseAIS = K_EMsgAISRequestContentDescription
   succ K_EMsgAISRequestContentDescription = K_EMsgAISUpdateAppInfo
   succ K_EMsgAISUpdateAppInfo = K_EMsgAISGetPackageChangeNumber
@@ -10928,9 +10763,14 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientDPSendSpecialSurveyResponseReply
   succ K_EMsgClientDPSendSpecialSurveyResponseReply
     = K_EMsgDPStoreSaleStatistics
-  succ K_EMsgDPStoreSaleStatistics = K_EMsgDPPartnerMicroTxns
+  succ K_EMsgDPStoreSaleStatistics = K_EMsgClientDPUpdateAppJobReport
+  succ K_EMsgClientDPUpdateAppJobReport
+    = K_EMsgClientDPUnsignedInstallScript
+  succ K_EMsgClientDPUnsignedInstallScript = K_EMsgDPPartnerMicroTxns
   succ K_EMsgDPPartnerMicroTxns = K_EMsgDPPartnerMicroTxnsResponse
-  succ K_EMsgDPPartnerMicroTxnsResponse = K_EMsgDPVRUniquePlayersStat
+  succ K_EMsgDPPartnerMicroTxnsResponse
+    = K_EMsgClientDPContentStatsReport
+  succ K_EMsgClientDPContentStatsReport = K_EMsgDPVRUniquePlayersStat
   succ K_EMsgDPVRUniquePlayersStat = K_EMsgBaseCM
   succ K_EMsgBaseCM = K_EMsgCMSetAllowState
   succ K_EMsgCMSetAllowState = K_EMsgCMSpewAllowState
@@ -10985,13 +10825,7 @@ instance Prelude.Enum EMsg where
   succ K_EMsgGCHAppCheersReceived = K_EMsgGCHAppCheersGetAllowedTypes
   succ K_EMsgGCHAppCheersGetAllowedTypes
     = K_EMsgGCHAppCheersGetAllowedTypesResponse
-  succ K_EMsgGCHAppCheersGetAllowedTypesResponse
-    = K_EMsgGCHRoutingRulesFromGCHtoGM
-  succ K_EMsgGCHRoutingRulesFromGCHtoGM
-    = K_EMsgGCHRoutingRulesToGCHfromGM
-  succ K_EMsgGCHRoutingRulesToGCHfromGM
-    = K_EMsgUpdateCMMessageRateRules
-  succ K_EMsgUpdateCMMessageRateRules = K_EMsgBaseP2P
+  succ K_EMsgGCHAppCheersGetAllowedTypesResponse = K_EMsgBaseP2P
   succ K_EMsgBaseP2P = K_EMsgP2PIntroducerMessage
   succ K_EMsgP2PIntroducerMessage = K_EMsgBaseSM
   succ K_EMsgBaseSM = K_EMsgSMExpensiveReport
@@ -11171,7 +11005,9 @@ instance Prelude.Enum EMsg where
   succ K_EMsgAMSetUserNewsSubscriptions = K_EMsgAMSendQueuedEmails
   succ K_EMsgAMSendQueuedEmails = K_EMsgAMSetLicenseFlags
   succ K_EMsgAMSetLicenseFlags = K_EMsgCommunityDeleteUserNews
-  succ K_EMsgCommunityDeleteUserNews = K_EMsgAMGetAccountStatus
+  succ K_EMsgCommunityDeleteUserNews = K_EMsgAMAllowUserFilesRequest
+  succ K_EMsgAMAllowUserFilesRequest = K_EMsgAMAllowUserFilesResponse
+  succ K_EMsgAMAllowUserFilesResponse = K_EMsgAMGetAccountStatus
   succ K_EMsgAMGetAccountStatus = K_EMsgAMGetAccountStatusResponse
   succ K_EMsgAMGetAccountStatusResponse = K_EMsgAMEditBanReason
   succ K_EMsgAMEditBanReason = K_EMsgAMCheckClanMembershipResponse
@@ -11213,7 +11049,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgAMSupportIsAccountEnabledResponse
     = K_EMsgUGSGetUserStats
   succ K_EMsgUGSGetUserStats = K_EMsgAMGSSearch
-  succ K_EMsgAMGSSearch = K_EMsgChatServerRouteFriendMsg
+  succ K_EMsgAMGSSearch = K_EMsgMarketingMessageUpdate
+  succ K_EMsgMarketingMessageUpdate = K_EMsgChatServerRouteFriendMsg
   succ K_EMsgChatServerRouteFriendMsg
     = K_EMsgAMTicketAuthRequestOrResponse
   succ K_EMsgAMTicketAuthRequestOrResponse = K_EMsgAMAddFreeLicense
@@ -11247,8 +11084,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgAMCreateFinancialAdjustment = K_EMsgAMPlayerNicknameList
   succ K_EMsgAMPlayerNicknameList
     = K_EMsgAMPlayerNicknameListResponse
-  succ K_EMsgAMPlayerNicknameListResponse
-    = K_EMsgAMGetUserCurrentGameInfo
+  succ K_EMsgAMPlayerNicknameListResponse = K_EMsgAMSetDRMTestConfig
+  succ K_EMsgAMSetDRMTestConfig = K_EMsgAMGetUserCurrentGameInfo
   succ K_EMsgAMGetUserCurrentGameInfo
     = K_EMsgAMGetUserCurrentGameInfoResponse
   succ K_EMsgAMGetUserCurrentGameInfoResponse
@@ -11447,8 +11284,7 @@ instance Prelude.Enum EMsg where
     = K_EMsgAMPerfectWorldPaymentResponse
   succ K_EMsgAMPerfectWorldPaymentResponse = K_EMsgAMECommPayPayment
   succ K_EMsgAMECommPayPayment = K_EMsgAMECommPayPaymentResponse
-  succ K_EMsgAMECommPayPaymentResponse = K_EMsgAMSetRemoteClientID
-  succ K_EMsgAMSetRemoteClientID = K_EMsgBasePSRange
+  succ K_EMsgAMECommPayPaymentResponse = K_EMsgBasePSRange
   succ K_EMsgBasePSRange = K_EMsgPSCreateShoppingCart
   succ K_EMsgPSCreateShoppingCart
     = K_EMsgPSCreateShoppingCartResponse
@@ -11591,7 +11427,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgClientGetDepotDecryptionKey
     = K_EMsgClientGetDepotDecryptionKeyResponse
   succ K_EMsgClientGetDepotDecryptionKeyResponse
-    = K_EMsgClientEnableTestLicense
+    = K_EMsgGSPerformHardwareSurvey
+  succ K_EMsgGSPerformHardwareSurvey = K_EMsgClientEnableTestLicense
   succ K_EMsgClientEnableTestLicense
     = K_EMsgClientEnableTestLicenseResponse
   succ K_EMsgClientEnableTestLicenseResponse
@@ -11652,15 +11489,9 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientOGSEndSession
   succ K_EMsgClientOGSEndSession = K_EMsgClientOGSEndSessionResponse
   succ K_EMsgClientOGSEndSessionResponse = K_EMsgClientOGSWriteRow
-  succ K_EMsgClientOGSWriteRow = K_EMsgClientGetPeerContentInfo
-  succ K_EMsgClientGetPeerContentInfo
-    = K_EMsgClientGetPeerContentInfoResponse
-  succ K_EMsgClientGetPeerContentInfoResponse
-    = K_EMsgClientStartPeerContentServer
-  succ K_EMsgClientStartPeerContentServer
-    = K_EMsgClientStartPeerContentServerResponse
-  succ K_EMsgClientStartPeerContentServerResponse
-    = K_EMsgClientServerUnavailable
+  succ K_EMsgClientOGSWriteRow = K_EMsgClientDRMTest
+  succ K_EMsgClientDRMTest = K_EMsgClientDRMTestResult
+  succ K_EMsgClientDRMTestResult = K_EMsgClientServerUnavailable
   succ K_EMsgClientServerUnavailable = K_EMsgClientServersAvailable
   succ K_EMsgClientServersAvailable
     = K_EMsgClientRegisterAuthTicketWithCM
@@ -11675,6 +11506,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgClientGetMicroTxnInfo
     = K_EMsgClientGetMicroTxnInfoResponse
   succ K_EMsgClientGetMicroTxnInfoResponse
+    = K_EMsgClientMarketingMessageUpdate2
+  succ K_EMsgClientMarketingMessageUpdate2
     = K_EMsgClientDeregisterWithServer
   succ K_EMsgClientDeregisterWithServer
     = K_EMsgClientSubscribeToPersonaFeed
@@ -12007,6 +11840,10 @@ instance Prelude.Enum EMsg where
   succ K_EMsgUCMUpdatePublishedFile
     = K_EMsgUCMUpdatePublishedFileResponse
   succ K_EMsgUCMUpdatePublishedFileResponse
+    = K_EMsgUCMDeletePublishedFile
+  succ K_EMsgUCMDeletePublishedFile
+    = K_EMsgUCMDeletePublishedFileResponse
+  succ K_EMsgUCMDeletePublishedFileResponse
     = K_EMsgUCMUpdatePublishedFileStat
   succ K_EMsgUCMUpdatePublishedFileStat
     = K_EMsgUCMReloadPublishedFile
@@ -12059,7 +11896,11 @@ instance Prelude.Enum EMsg where
     = K_EMsgUCMPublishedFileContentUpdated
   succ K_EMsgUCMPublishedFileContentUpdated
     = K_EMsgClientUCMPublishedFileUpdated
-  succ K_EMsgClientUCMPublishedFileUpdated = K_EMsgFSBase
+  succ K_EMsgClientUCMPublishedFileUpdated
+    = K_EMsgClientWorkshopItemChangesRequest
+  succ K_EMsgClientWorkshopItemChangesRequest
+    = K_EMsgClientWorkshopItemChangesResponse
+  succ K_EMsgClientWorkshopItemChangesResponse = K_EMsgFSBase
   succ K_EMsgFSBase = K_EMsgClientRichPresenceUpload
   succ K_EMsgClientRichPresenceUpload
     = K_EMsgClientRichPresenceRequest
@@ -12311,20 +12152,20 @@ instance Prelude.Enum EMsg where
     = K_EMsgRemoteClientStartStreamResponse
   succ K_EMsgRemoteClientStartStreamResponse = K_EMsgRemoteClientPing
   succ K_EMsgRemoteClientPing = K_EMsgRemoteClientPingResponse
-  succ K_EMsgRemoteClientPingResponse = K_EMsgClientUnlockH264
-  succ K_EMsgClientUnlockH264 = K_EMsgClientUnlockH264Response
-  succ K_EMsgClientUnlockH264Response = K_EMsgRemoteClientAcceptEULA
+  succ K_EMsgRemoteClientPingResponse = K_EMsgClientUnlockStreaming
+  succ K_EMsgClientUnlockStreaming
+    = K_EMsgClientUnlockStreamingResponse
+  succ K_EMsgClientUnlockStreamingResponse
+    = K_EMsgRemoteClientAcceptEULA
   succ K_EMsgRemoteClientAcceptEULA
     = K_EMsgRemoteClientGetControllerConfig
   succ K_EMsgRemoteClientGetControllerConfig
     = K_EMsgRemoteClientGetControllerConfigResponse
   succ K_EMsgRemoteClientGetControllerConfigResponse
     = K_EMsgRemoteClientStreamingEnabled
-  succ K_EMsgRemoteClientStreamingEnabled
-    = K_EMsgClientUnlockHEVC_OBSOLETE
-  succ K_EMsgClientUnlockHEVC_OBSOLETE
-    = K_EMsgClientUnlockHEVCResponse_OBSOLETE
-  succ K_EMsgClientUnlockHEVCResponse_OBSOLETE
+  succ K_EMsgRemoteClientStreamingEnabled = K_EMsgClientUnlockHEVC
+  succ K_EMsgClientUnlockHEVC = K_EMsgClientUnlockHEVCResponse
+  succ K_EMsgClientUnlockHEVCResponse
     = K_EMsgRemoteClientStatusRequest
   succ K_EMsgRemoteClientStatusRequest
     = K_EMsgRemoteClientStatusResponse
@@ -12336,6 +12177,8 @@ instance Prelude.Enum EMsg where
   succ K_EMsgClientBroadcastBase = K_EMsgClientBroadcastFrames
   succ K_EMsgClientBroadcastFrames = K_EMsgClientBroadcastDisconnect
   succ K_EMsgClientBroadcastDisconnect
+    = K_EMsgClientBroadcastScreenshot
+  succ K_EMsgClientBroadcastScreenshot
     = K_EMsgClientBroadcastUploadConfig
   succ K_EMsgClientBroadcastUploadConfig = K_EMsgBaseClient3
   succ K_EMsgBaseClient3 = K_EMsgClientVoiceCallPreAuthorizeResponse
@@ -12346,17 +12189,10 @@ instance Prelude.Enum EMsg where
   succ K_EMsgClientServerTimestampResponse
     = K_EMsgServiceMethodCallFromClientNonAuthed
   succ K_EMsgServiceMethodCallFromClientNonAuthed = K_EMsgClientHello
-  succ K_EMsgClientHello = K_EMsgClientEnableOrDisableDownloads
-  succ K_EMsgClientEnableOrDisableDownloads
-    = K_EMsgClientEnableOrDisableDownloadsResponse
-  succ K_EMsgClientEnableOrDisableDownloadsResponse
-    = K_EMsgClientLANP2PBase
+  succ K_EMsgClientHello = K_EMsgClientLANP2PBase
   succ K_EMsgClientLANP2PBase
     = K_EMsgClientLANP2PRequestChunkResponse
-  succ K_EMsgClientLANP2PRequestChunkResponse
-    = K_EMsgClientPeerChunkRequest
-  succ K_EMsgClientPeerChunkRequest = K_EMsgClientPeerChunkResponse
-  succ K_EMsgClientPeerChunkResponse = K_EMsgClientLANP2PMax
+  succ K_EMsgClientLANP2PRequestChunkResponse = K_EMsgClientLANP2PMax
   succ K_EMsgClientLANP2PMax = K_EMsgBaseWatchdogServer
   succ K_EMsgBaseWatchdogServer = K_EMsgClientSiteLicenseBase
   succ K_EMsgClientSiteLicenseBase = K_EMsgClientSiteLicenseCheckout
@@ -12376,14 +12212,6 @@ instance Prelude.Enum EMsg where
     = K_EMsgChatServerGetPendingNotificationCountResponse
   succ K_EMsgChatServerGetPendingNotificationCountResponse
     = K_EMsgBaseSecretServer
-  succ K_EMsgBaseSecretServer = K_EMsgBaseWG
-  succ K_EMsgBaseWG = K_EMsgWGConnectionValidateUserToken
-  succ K_EMsgWGConnectionValidateUserToken
-    = K_EMsgWGConnectionValidateUserTokenResponse
-  succ K_EMsgWGConnectionValidateUserTokenResponse
-    = K_EMsgWGConnectionLegacyWGRequest
-  succ K_EMsgWGConnectionLegacyWGRequest
-    = K_EMsgWGConnectionLegacyWGResponse
   pred K_EMsgInvalid
     = Prelude.error
         "EMsg.pred: bad argument K_EMsgInvalid. This value would be out of bounds."
@@ -12468,7 +12296,8 @@ instance Prelude.Enum EMsg where
   pred K_EMsgLicenseProcessingComplete = K_EMsgGracefulExitShell
   pred K_EMsgSetTestFlag = K_EMsgLicenseProcessingComplete
   pred K_EMsgQueuedEmailsComplete = K_EMsgSetTestFlag
-  pred K_EMsgGMDRMSync = K_EMsgQueuedEmailsComplete
+  pred K_EMsgGMReportPHPError = K_EMsgQueuedEmailsComplete
+  pred K_EMsgGMDRMSync = K_EMsgGMReportPHPError
   pred K_EMsgPhysicalBoxInventory = K_EMsgGMDRMSync
   pred K_EMsgUpdateConfigFile = K_EMsgPhysicalBoxInventory
   pred K_EMsgTestInitDB = K_EMsgUpdateConfigFile
@@ -12490,11 +12319,7 @@ instance Prelude.Enum EMsg where
     = K_EMsgGMTestNextBuildSchemaConversionResponse
   pred K_EMsgHotFixProgress = K_EMsgExpectShellRestart
   pred K_EMsgGMStatsForwardToAdminConnections = K_EMsgHotFixProgress
-  pred K_EMsgGMGetModifiedConVars
-    = K_EMsgGMStatsForwardToAdminConnections
-  pred K_EMsgGMGetModifiedConVarsResponse
-    = K_EMsgGMGetModifiedConVars
-  pred K_EMsgBaseAIS = K_EMsgGMGetModifiedConVarsResponse
+  pred K_EMsgBaseAIS = K_EMsgGMStatsForwardToAdminConnections
   pred K_EMsgAISRequestContentDescription = K_EMsgBaseAIS
   pred K_EMsgAISUpdateAppInfo = K_EMsgAISRequestContentDescription
   pred K_EMsgAISGetPackageChangeNumber = K_EMsgAISUpdateAppInfo
@@ -13005,9 +12830,14 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientDPSendSpecialSurveyResponse
   pred K_EMsgDPStoreSaleStatistics
     = K_EMsgClientDPSendSpecialSurveyResponseReply
-  pred K_EMsgDPPartnerMicroTxns = K_EMsgDPStoreSaleStatistics
+  pred K_EMsgClientDPUpdateAppJobReport = K_EMsgDPStoreSaleStatistics
+  pred K_EMsgClientDPUnsignedInstallScript
+    = K_EMsgClientDPUpdateAppJobReport
+  pred K_EMsgDPPartnerMicroTxns = K_EMsgClientDPUnsignedInstallScript
   pred K_EMsgDPPartnerMicroTxnsResponse = K_EMsgDPPartnerMicroTxns
-  pred K_EMsgDPVRUniquePlayersStat = K_EMsgDPPartnerMicroTxnsResponse
+  pred K_EMsgClientDPContentStatsReport
+    = K_EMsgDPPartnerMicroTxnsResponse
+  pred K_EMsgDPVRUniquePlayersStat = K_EMsgClientDPContentStatsReport
   pred K_EMsgBaseCM = K_EMsgDPVRUniquePlayersStat
   pred K_EMsgCMSetAllowState = K_EMsgBaseCM
   pred K_EMsgCMSpewAllowState = K_EMsgCMSetAllowState
@@ -13062,13 +12892,7 @@ instance Prelude.Enum EMsg where
   pred K_EMsgGCHAppCheersGetAllowedTypes = K_EMsgGCHAppCheersReceived
   pred K_EMsgGCHAppCheersGetAllowedTypesResponse
     = K_EMsgGCHAppCheersGetAllowedTypes
-  pred K_EMsgGCHRoutingRulesFromGCHtoGM
-    = K_EMsgGCHAppCheersGetAllowedTypesResponse
-  pred K_EMsgGCHRoutingRulesToGCHfromGM
-    = K_EMsgGCHRoutingRulesFromGCHtoGM
-  pred K_EMsgUpdateCMMessageRateRules
-    = K_EMsgGCHRoutingRulesToGCHfromGM
-  pred K_EMsgBaseP2P = K_EMsgUpdateCMMessageRateRules
+  pred K_EMsgBaseP2P = K_EMsgGCHAppCheersGetAllowedTypesResponse
   pred K_EMsgP2PIntroducerMessage = K_EMsgBaseP2P
   pred K_EMsgBaseSM = K_EMsgP2PIntroducerMessage
   pred K_EMsgSMExpensiveReport = K_EMsgBaseSM
@@ -13248,7 +13072,9 @@ instance Prelude.Enum EMsg where
   pred K_EMsgAMSendQueuedEmails = K_EMsgAMSetUserNewsSubscriptions
   pred K_EMsgAMSetLicenseFlags = K_EMsgAMSendQueuedEmails
   pred K_EMsgCommunityDeleteUserNews = K_EMsgAMSetLicenseFlags
-  pred K_EMsgAMGetAccountStatus = K_EMsgCommunityDeleteUserNews
+  pred K_EMsgAMAllowUserFilesRequest = K_EMsgCommunityDeleteUserNews
+  pred K_EMsgAMAllowUserFilesResponse = K_EMsgAMAllowUserFilesRequest
+  pred K_EMsgAMGetAccountStatus = K_EMsgAMAllowUserFilesResponse
   pred K_EMsgAMGetAccountStatusResponse = K_EMsgAMGetAccountStatus
   pred K_EMsgAMEditBanReason = K_EMsgAMGetAccountStatusResponse
   pred K_EMsgAMCheckClanMembershipResponse = K_EMsgAMEditBanReason
@@ -13290,7 +13116,8 @@ instance Prelude.Enum EMsg where
   pred K_EMsgUGSGetUserStats
     = K_EMsgAMSupportIsAccountEnabledResponse
   pred K_EMsgAMGSSearch = K_EMsgUGSGetUserStats
-  pred K_EMsgChatServerRouteFriendMsg = K_EMsgAMGSSearch
+  pred K_EMsgMarketingMessageUpdate = K_EMsgAMGSSearch
+  pred K_EMsgChatServerRouteFriendMsg = K_EMsgMarketingMessageUpdate
   pred K_EMsgAMTicketAuthRequestOrResponse
     = K_EMsgChatServerRouteFriendMsg
   pred K_EMsgAMAddFreeLicense = K_EMsgAMTicketAuthRequestOrResponse
@@ -13324,8 +13151,8 @@ instance Prelude.Enum EMsg where
   pred K_EMsgAMPlayerNicknameList = K_EMsgAMCreateFinancialAdjustment
   pred K_EMsgAMPlayerNicknameListResponse
     = K_EMsgAMPlayerNicknameList
-  pred K_EMsgAMGetUserCurrentGameInfo
-    = K_EMsgAMPlayerNicknameListResponse
+  pred K_EMsgAMSetDRMTestConfig = K_EMsgAMPlayerNicknameListResponse
+  pred K_EMsgAMGetUserCurrentGameInfo = K_EMsgAMSetDRMTestConfig
   pred K_EMsgAMGetUserCurrentGameInfoResponse
     = K_EMsgAMGetUserCurrentGameInfo
   pred K_EMsgAMGetGSPlayerList
@@ -13524,8 +13351,7 @@ instance Prelude.Enum EMsg where
     = K_EMsgAMPerfectWorldPayment
   pred K_EMsgAMECommPayPayment = K_EMsgAMPerfectWorldPaymentResponse
   pred K_EMsgAMECommPayPaymentResponse = K_EMsgAMECommPayPayment
-  pred K_EMsgAMSetRemoteClientID = K_EMsgAMECommPayPaymentResponse
-  pred K_EMsgBasePSRange = K_EMsgAMSetRemoteClientID
+  pred K_EMsgBasePSRange = K_EMsgAMECommPayPaymentResponse
   pred K_EMsgPSCreateShoppingCart = K_EMsgBasePSRange
   pred K_EMsgPSCreateShoppingCartResponse
     = K_EMsgPSCreateShoppingCart
@@ -13667,8 +13493,9 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientP2PConnectionFailInfo
   pred K_EMsgClientGetDepotDecryptionKeyResponse
     = K_EMsgClientGetDepotDecryptionKey
-  pred K_EMsgClientEnableTestLicense
+  pred K_EMsgGSPerformHardwareSurvey
     = K_EMsgClientGetDepotDecryptionKeyResponse
+  pred K_EMsgClientEnableTestLicense = K_EMsgGSPerformHardwareSurvey
   pred K_EMsgClientEnableTestLicenseResponse
     = K_EMsgClientEnableTestLicense
   pred K_EMsgClientDisableTestLicense
@@ -13729,15 +13556,9 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientOGSBeginSessionResponse
   pred K_EMsgClientOGSEndSessionResponse = K_EMsgClientOGSEndSession
   pred K_EMsgClientOGSWriteRow = K_EMsgClientOGSEndSessionResponse
-  pred K_EMsgClientGetPeerContentInfo = K_EMsgClientOGSWriteRow
-  pred K_EMsgClientGetPeerContentInfoResponse
-    = K_EMsgClientGetPeerContentInfo
-  pred K_EMsgClientStartPeerContentServer
-    = K_EMsgClientGetPeerContentInfoResponse
-  pred K_EMsgClientStartPeerContentServerResponse
-    = K_EMsgClientStartPeerContentServer
-  pred K_EMsgClientServerUnavailable
-    = K_EMsgClientStartPeerContentServerResponse
+  pred K_EMsgClientDRMTest = K_EMsgClientOGSWriteRow
+  pred K_EMsgClientDRMTestResult = K_EMsgClientDRMTest
+  pred K_EMsgClientServerUnavailable = K_EMsgClientDRMTestResult
   pred K_EMsgClientServersAvailable = K_EMsgClientServerUnavailable
   pred K_EMsgClientRegisterAuthTicketWithCM
     = K_EMsgClientServersAvailable
@@ -13751,8 +13572,10 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientMicroTxnAuthorizeResponse
   pred K_EMsgClientGetMicroTxnInfoResponse
     = K_EMsgClientGetMicroTxnInfo
-  pred K_EMsgClientDeregisterWithServer
+  pred K_EMsgClientMarketingMessageUpdate2
     = K_EMsgClientGetMicroTxnInfoResponse
+  pred K_EMsgClientDeregisterWithServer
+    = K_EMsgClientMarketingMessageUpdate2
   pred K_EMsgClientSubscribeToPersonaFeed
     = K_EMsgClientDeregisterWithServer
   pred K_EMsgClientLogon = K_EMsgClientSubscribeToPersonaFeed
@@ -14083,8 +13906,12 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientUCMUpdatePublishedFileResponse
   pred K_EMsgUCMUpdatePublishedFileResponse
     = K_EMsgUCMUpdatePublishedFile
-  pred K_EMsgUCMUpdatePublishedFileStat
+  pred K_EMsgUCMDeletePublishedFile
     = K_EMsgUCMUpdatePublishedFileResponse
+  pred K_EMsgUCMDeletePublishedFileResponse
+    = K_EMsgUCMDeletePublishedFile
+  pred K_EMsgUCMUpdatePublishedFileStat
+    = K_EMsgUCMDeletePublishedFileResponse
   pred K_EMsgUCMReloadPublishedFile
     = K_EMsgUCMUpdatePublishedFileStat
   pred K_EMsgUCMReloadUserFileListCaches
@@ -14136,7 +13963,11 @@ instance Prelude.Enum EMsg where
     = K_EMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse
   pred K_EMsgClientUCMPublishedFileUpdated
     = K_EMsgUCMPublishedFileContentUpdated
-  pred K_EMsgFSBase = K_EMsgClientUCMPublishedFileUpdated
+  pred K_EMsgClientWorkshopItemChangesRequest
+    = K_EMsgClientUCMPublishedFileUpdated
+  pred K_EMsgClientWorkshopItemChangesResponse
+    = K_EMsgClientWorkshopItemChangesRequest
+  pred K_EMsgFSBase = K_EMsgClientWorkshopItemChangesResponse
   pred K_EMsgClientRichPresenceUpload = K_EMsgFSBase
   pred K_EMsgClientRichPresenceRequest
     = K_EMsgClientRichPresenceUpload
@@ -14388,21 +14219,21 @@ instance Prelude.Enum EMsg where
     = K_EMsgRemoteClientStartStream
   pred K_EMsgRemoteClientPing = K_EMsgRemoteClientStartStreamResponse
   pred K_EMsgRemoteClientPingResponse = K_EMsgRemoteClientPing
-  pred K_EMsgClientUnlockH264 = K_EMsgRemoteClientPingResponse
-  pred K_EMsgClientUnlockH264Response = K_EMsgClientUnlockH264
-  pred K_EMsgRemoteClientAcceptEULA = K_EMsgClientUnlockH264Response
+  pred K_EMsgClientUnlockStreaming = K_EMsgRemoteClientPingResponse
+  pred K_EMsgClientUnlockStreamingResponse
+    = K_EMsgClientUnlockStreaming
+  pred K_EMsgRemoteClientAcceptEULA
+    = K_EMsgClientUnlockStreamingResponse
   pred K_EMsgRemoteClientGetControllerConfig
     = K_EMsgRemoteClientAcceptEULA
   pred K_EMsgRemoteClientGetControllerConfigResponse
     = K_EMsgRemoteClientGetControllerConfig
   pred K_EMsgRemoteClientStreamingEnabled
     = K_EMsgRemoteClientGetControllerConfigResponse
-  pred K_EMsgClientUnlockHEVC_OBSOLETE
-    = K_EMsgRemoteClientStreamingEnabled
-  pred K_EMsgClientUnlockHEVCResponse_OBSOLETE
-    = K_EMsgClientUnlockHEVC_OBSOLETE
+  pred K_EMsgClientUnlockHEVC = K_EMsgRemoteClientStreamingEnabled
+  pred K_EMsgClientUnlockHEVCResponse = K_EMsgClientUnlockHEVC
   pred K_EMsgRemoteClientStatusRequest
-    = K_EMsgClientUnlockHEVCResponse_OBSOLETE
+    = K_EMsgClientUnlockHEVCResponse
   pred K_EMsgRemoteClientStatusResponse
     = K_EMsgRemoteClientStatusRequest
   pred K_EMsgClientConcurrentSessionsBase
@@ -14412,8 +14243,10 @@ instance Prelude.Enum EMsg where
   pred K_EMsgClientBroadcastBase = K_EMsgClientKickPlayingSession
   pred K_EMsgClientBroadcastFrames = K_EMsgClientBroadcastBase
   pred K_EMsgClientBroadcastDisconnect = K_EMsgClientBroadcastFrames
-  pred K_EMsgClientBroadcastUploadConfig
+  pred K_EMsgClientBroadcastScreenshot
     = K_EMsgClientBroadcastDisconnect
+  pred K_EMsgClientBroadcastUploadConfig
+    = K_EMsgClientBroadcastScreenshot
   pred K_EMsgBaseClient3 = K_EMsgClientBroadcastUploadConfig
   pred K_EMsgClientVoiceCallPreAuthorizeResponse = K_EMsgBaseClient3
   pred K_EMsgClientServerTimestampRequest
@@ -14423,17 +14256,10 @@ instance Prelude.Enum EMsg where
   pred K_EMsgServiceMethodCallFromClientNonAuthed
     = K_EMsgClientServerTimestampResponse
   pred K_EMsgClientHello = K_EMsgServiceMethodCallFromClientNonAuthed
-  pred K_EMsgClientEnableOrDisableDownloads = K_EMsgClientHello
-  pred K_EMsgClientEnableOrDisableDownloadsResponse
-    = K_EMsgClientEnableOrDisableDownloads
-  pred K_EMsgClientLANP2PBase
-    = K_EMsgClientEnableOrDisableDownloadsResponse
+  pred K_EMsgClientLANP2PBase = K_EMsgClientHello
   pred K_EMsgClientLANP2PRequestChunkResponse
     = K_EMsgClientLANP2PBase
-  pred K_EMsgClientPeerChunkRequest
-    = K_EMsgClientLANP2PRequestChunkResponse
-  pred K_EMsgClientPeerChunkResponse = K_EMsgClientPeerChunkRequest
-  pred K_EMsgClientLANP2PMax = K_EMsgClientPeerChunkResponse
+  pred K_EMsgClientLANP2PMax = K_EMsgClientLANP2PRequestChunkResponse
   pred K_EMsgBaseWatchdogServer = K_EMsgClientLANP2PMax
   pred K_EMsgClientSiteLicenseBase = K_EMsgBaseWatchdogServer
   pred K_EMsgClientSiteLicenseCheckout = K_EMsgClientSiteLicenseBase
@@ -14453,14 +14279,6 @@ instance Prelude.Enum EMsg where
     = K_EMsgBaseChatServer
   pred K_EMsgBaseSecretServer
     = K_EMsgChatServerGetPendingNotificationCountResponse
-  pred K_EMsgBaseWG = K_EMsgBaseSecretServer
-  pred K_EMsgWGConnectionValidateUserToken = K_EMsgBaseWG
-  pred K_EMsgWGConnectionValidateUserTokenResponse
-    = K_EMsgWGConnectionValidateUserToken
-  pred K_EMsgWGConnectionLegacyWGRequest
-    = K_EMsgWGConnectionValidateUserTokenResponse
-  pred K_EMsgWGConnectionLegacyWGResponse
-    = K_EMsgWGConnectionLegacyWGRequest
   enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
   enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
   enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
@@ -14529,8 +14347,6 @@ pattern K_EMsgChatServerGetPendingNotificationCount :: EMsg
 pattern K_EMsgChatServerGetPendingNotificationCount = K_EMsgBaseChatServer
 pattern K_EMsgServerSecretChanged :: EMsg
 pattern K_EMsgServerSecretChanged = K_EMsgBaseSecretServer
-pattern K_EMsgWGConnectionProtocolError :: EMsg
-pattern K_EMsgWGConnectionProtocolError = K_EMsgBaseWG
 data EMsgClanAccountFlags
   = K_EMsgClanAccountFlagPublic |
     K_EMsgClanAccountFlagLarge |

@@ -1021,6 +1021,13 @@ data EDOTAGCMsg
     K_EMsgClientToGCMonsterHunterClaimCodexRewardResponse |
     K_EMsgClientToGCMonsterHunterClaimSetReward |
     K_EMsgClientToGCMonsterHunterClaimSetRewardResponse |
+    K_EMsgClientToGCItemBattlerGetUserData |
+    K_EMsgClientToGCItemBattlerGetUserDataResponse |
+    K_EMsgClientToGCItemBattlerGameAction |
+    K_EMsgClientToGCItemBattlerGameActionResponse |
+    K_EMsgGCToClientItemBattlerUserDataUpdated |
+    K_EMsgClientToGCItemBattlerDevGrantItem |
+    K_EMsgClientToGCItemBattlerDevGrantItemResponse |
     K_EMsgClientToGCGetEventRanking |
     K_EMsgClientToGCGetEventRankingResponse |
     K_EMsgClientToGCGetEventCoupon |
@@ -1030,7 +1037,13 @@ data EDOTAGCMsg
     K_EMsgServerToGCWarningLowServerFramerate |
     K_EMsgServerToGCWarningInvalidBotAbilityUsage |
     K_EMsgClientToGCInviteToDemoMode |
-    K_EMsgGCToClientInviteToDemoMode
+    K_EMsgGCToClientInviteToDemoMode |
+    K_EMsgClientToGCOverworldDevSetFortune |
+    K_EMsgClientToGCOverworldDevSetFortuneResponse |
+    K_EMsgClientToGCOverworldRequestFortune |
+    K_EMsgClientToGCOverworldRequestFortuneResponse |
+    K_EMsgClientToGCOverworldDevClearFortune |
+    K_EMsgClientToGCOverworldDevClearFortuneResponse
   deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
 instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
   maybeToEnum 7000 = Prelude.Just K_EMsgGCDOTABase
@@ -2584,6 +2597,20 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     = Prelude.Just K_EMsgClientToGCMonsterHunterClaimSetReward
   maybeToEnum 9050
     = Prelude.Just K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
+  maybeToEnum 9100
+    = Prelude.Just K_EMsgClientToGCItemBattlerGetUserData
+  maybeToEnum 9101
+    = Prelude.Just K_EMsgClientToGCItemBattlerGetUserDataResponse
+  maybeToEnum 9102
+    = Prelude.Just K_EMsgClientToGCItemBattlerGameAction
+  maybeToEnum 9103
+    = Prelude.Just K_EMsgClientToGCItemBattlerGameActionResponse
+  maybeToEnum 9104
+    = Prelude.Just K_EMsgGCToClientItemBattlerUserDataUpdated
+  maybeToEnum 9105
+    = Prelude.Just K_EMsgClientToGCItemBattlerDevGrantItem
+  maybeToEnum 9106
+    = Prelude.Just K_EMsgClientToGCItemBattlerDevGrantItemResponse
   maybeToEnum 9107 = Prelude.Just K_EMsgClientToGCGetEventRanking
   maybeToEnum 9108
     = Prelude.Just K_EMsgClientToGCGetEventRankingResponse
@@ -2599,6 +2626,18 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     = Prelude.Just K_EMsgServerToGCWarningInvalidBotAbilityUsage
   maybeToEnum 9115 = Prelude.Just K_EMsgClientToGCInviteToDemoMode
   maybeToEnum 9116 = Prelude.Just K_EMsgGCToClientInviteToDemoMode
+  maybeToEnum 9117
+    = Prelude.Just K_EMsgClientToGCOverworldDevSetFortune
+  maybeToEnum 9118
+    = Prelude.Just K_EMsgClientToGCOverworldDevSetFortuneResponse
+  maybeToEnum 9119
+    = Prelude.Just K_EMsgClientToGCOverworldRequestFortune
+  maybeToEnum 9120
+    = Prelude.Just K_EMsgClientToGCOverworldRequestFortuneResponse
+  maybeToEnum 9121
+    = Prelude.Just K_EMsgClientToGCOverworldDevClearFortune
+  maybeToEnum 9122
+    = Prelude.Just K_EMsgClientToGCOverworldDevClearFortuneResponse
   maybeToEnum _ = Prelude.Nothing
   showEnum K_EMsgGCDOTABase = "k_EMsgGCDOTABase"
   showEnum K_EMsgGCGameMatchSignOut = "k_EMsgGCGameMatchSignOut"
@@ -4479,6 +4518,20 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     = "k_EMsgClientToGCMonsterHunterClaimSetReward"
   showEnum K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
     = "k_EMsgClientToGCMonsterHunterClaimSetRewardResponse"
+  showEnum K_EMsgClientToGCItemBattlerGetUserData
+    = "k_EMsgClientToGCItemBattlerGetUserData"
+  showEnum K_EMsgClientToGCItemBattlerGetUserDataResponse
+    = "k_EMsgClientToGCItemBattlerGetUserDataResponse"
+  showEnum K_EMsgClientToGCItemBattlerGameAction
+    = "k_EMsgClientToGCItemBattlerGameAction"
+  showEnum K_EMsgClientToGCItemBattlerGameActionResponse
+    = "k_EMsgClientToGCItemBattlerGameActionResponse"
+  showEnum K_EMsgGCToClientItemBattlerUserDataUpdated
+    = "k_EMsgGCToClientItemBattlerUserDataUpdated"
+  showEnum K_EMsgClientToGCItemBattlerDevGrantItem
+    = "k_EMsgClientToGCItemBattlerDevGrantItem"
+  showEnum K_EMsgClientToGCItemBattlerDevGrantItemResponse
+    = "k_EMsgClientToGCItemBattlerDevGrantItemResponse"
   showEnum K_EMsgClientToGCGetEventRanking
     = "k_EMsgClientToGCGetEventRanking"
   showEnum K_EMsgClientToGCGetEventRankingResponse
@@ -4499,6 +4552,18 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     = "k_EMsgClientToGCInviteToDemoMode"
   showEnum K_EMsgGCToClientInviteToDemoMode
     = "k_EMsgGCToClientInviteToDemoMode"
+  showEnum K_EMsgClientToGCOverworldDevSetFortune
+    = "k_EMsgClientToGCOverworldDevSetFortune"
+  showEnum K_EMsgClientToGCOverworldDevSetFortuneResponse
+    = "k_EMsgClientToGCOverworldDevSetFortuneResponse"
+  showEnum K_EMsgClientToGCOverworldRequestFortune
+    = "k_EMsgClientToGCOverworldRequestFortune"
+  showEnum K_EMsgClientToGCOverworldRequestFortuneResponse
+    = "k_EMsgClientToGCOverworldRequestFortuneResponse"
+  showEnum K_EMsgClientToGCOverworldDevClearFortune
+    = "k_EMsgClientToGCOverworldDevClearFortune"
+  showEnum K_EMsgClientToGCOverworldDevClearFortuneResponse
+    = "k_EMsgClientToGCOverworldDevClearFortuneResponse"
   readEnum k
     | (Prelude.==) k "k_EMsgGCDOTABase" = Prelude.Just K_EMsgGCDOTABase
     | (Prelude.==) k "k_EMsgGCGameMatchSignOut"
@@ -6609,6 +6674,20 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     | (Prelude.==)
         k "k_EMsgClientToGCMonsterHunterClaimSetRewardResponse"
     = Prelude.Just K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerGetUserData"
+    = Prelude.Just K_EMsgClientToGCItemBattlerGetUserData
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerGetUserDataResponse"
+    = Prelude.Just K_EMsgClientToGCItemBattlerGetUserDataResponse
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerGameAction"
+    = Prelude.Just K_EMsgClientToGCItemBattlerGameAction
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerGameActionResponse"
+    = Prelude.Just K_EMsgClientToGCItemBattlerGameActionResponse
+    | (Prelude.==) k "k_EMsgGCToClientItemBattlerUserDataUpdated"
+    = Prelude.Just K_EMsgGCToClientItemBattlerUserDataUpdated
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerDevGrantItem"
+    = Prelude.Just K_EMsgClientToGCItemBattlerDevGrantItem
+    | (Prelude.==) k "k_EMsgClientToGCItemBattlerDevGrantItemResponse"
+    = Prelude.Just K_EMsgClientToGCItemBattlerDevGrantItemResponse
     | (Prelude.==) k "k_EMsgClientToGCGetEventRanking"
     = Prelude.Just K_EMsgClientToGCGetEventRanking
     | (Prelude.==) k "k_EMsgClientToGCGetEventRankingResponse"
@@ -6629,11 +6708,23 @@ instance Data.ProtoLens.MessageEnum EDOTAGCMsg where
     = Prelude.Just K_EMsgClientToGCInviteToDemoMode
     | (Prelude.==) k "k_EMsgGCToClientInviteToDemoMode"
     = Prelude.Just K_EMsgGCToClientInviteToDemoMode
+    | (Prelude.==) k "k_EMsgClientToGCOverworldDevSetFortune"
+    = Prelude.Just K_EMsgClientToGCOverworldDevSetFortune
+    | (Prelude.==) k "k_EMsgClientToGCOverworldDevSetFortuneResponse"
+    = Prelude.Just K_EMsgClientToGCOverworldDevSetFortuneResponse
+    | (Prelude.==) k "k_EMsgClientToGCOverworldRequestFortune"
+    = Prelude.Just K_EMsgClientToGCOverworldRequestFortune
+    | (Prelude.==) k "k_EMsgClientToGCOverworldRequestFortuneResponse"
+    = Prelude.Just K_EMsgClientToGCOverworldRequestFortuneResponse
+    | (Prelude.==) k "k_EMsgClientToGCOverworldDevClearFortune"
+    = Prelude.Just K_EMsgClientToGCOverworldDevClearFortune
+    | (Prelude.==) k "k_EMsgClientToGCOverworldDevClearFortuneResponse"
+    = Prelude.Just K_EMsgClientToGCOverworldDevClearFortuneResponse
     | Prelude.otherwise
     = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
 instance Prelude.Bounded EDOTAGCMsg where
   minBound = K_EMsgGCDOTABase
-  maxBound = K_EMsgGCToClientInviteToDemoMode
+  maxBound = K_EMsgClientToGCOverworldDevClearFortuneResponse
 instance Prelude.Enum EDOTAGCMsg where
   toEnum k__
     = Prelude.maybe
@@ -7685,6 +7776,13 @@ instance Prelude.Enum EDOTAGCMsg where
     = 9048
   fromEnum K_EMsgClientToGCMonsterHunterClaimSetReward = 9049
   fromEnum K_EMsgClientToGCMonsterHunterClaimSetRewardResponse = 9050
+  fromEnum K_EMsgClientToGCItemBattlerGetUserData = 9100
+  fromEnum K_EMsgClientToGCItemBattlerGetUserDataResponse = 9101
+  fromEnum K_EMsgClientToGCItemBattlerGameAction = 9102
+  fromEnum K_EMsgClientToGCItemBattlerGameActionResponse = 9103
+  fromEnum K_EMsgGCToClientItemBattlerUserDataUpdated = 9104
+  fromEnum K_EMsgClientToGCItemBattlerDevGrantItem = 9105
+  fromEnum K_EMsgClientToGCItemBattlerDevGrantItemResponse = 9106
   fromEnum K_EMsgClientToGCGetEventRanking = 9107
   fromEnum K_EMsgClientToGCGetEventRankingResponse = 9108
   fromEnum K_EMsgClientToGCGetEventCoupon = 9109
@@ -7695,9 +7793,15 @@ instance Prelude.Enum EDOTAGCMsg where
   fromEnum K_EMsgServerToGCWarningInvalidBotAbilityUsage = 9114
   fromEnum K_EMsgClientToGCInviteToDemoMode = 9115
   fromEnum K_EMsgGCToClientInviteToDemoMode = 9116
-  succ K_EMsgGCToClientInviteToDemoMode
+  fromEnum K_EMsgClientToGCOverworldDevSetFortune = 9117
+  fromEnum K_EMsgClientToGCOverworldDevSetFortuneResponse = 9118
+  fromEnum K_EMsgClientToGCOverworldRequestFortune = 9119
+  fromEnum K_EMsgClientToGCOverworldRequestFortuneResponse = 9120
+  fromEnum K_EMsgClientToGCOverworldDevClearFortune = 9121
+  fromEnum K_EMsgClientToGCOverworldDevClearFortuneResponse = 9122
+  succ K_EMsgClientToGCOverworldDevClearFortuneResponse
     = Prelude.error
-        "EDOTAGCMsg.succ: bad argument K_EMsgGCToClientInviteToDemoMode. This value would be out of bounds."
+        "EDOTAGCMsg.succ: bad argument K_EMsgClientToGCOverworldDevClearFortuneResponse. This value would be out of bounds."
   succ K_EMsgGCDOTABase = K_EMsgGCGameMatchSignOut
   succ K_EMsgGCGameMatchSignOut = K_EMsgGCGameMatchSignOutResponse
   succ K_EMsgGCGameMatchSignOutResponse = K_EMsgGCJoinChatChannel
@@ -9509,6 +9613,20 @@ instance Prelude.Enum EDOTAGCMsg where
   succ K_EMsgClientToGCMonsterHunterClaimSetReward
     = K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
   succ K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
+    = K_EMsgClientToGCItemBattlerGetUserData
+  succ K_EMsgClientToGCItemBattlerGetUserData
+    = K_EMsgClientToGCItemBattlerGetUserDataResponse
+  succ K_EMsgClientToGCItemBattlerGetUserDataResponse
+    = K_EMsgClientToGCItemBattlerGameAction
+  succ K_EMsgClientToGCItemBattlerGameAction
+    = K_EMsgClientToGCItemBattlerGameActionResponse
+  succ K_EMsgClientToGCItemBattlerGameActionResponse
+    = K_EMsgGCToClientItemBattlerUserDataUpdated
+  succ K_EMsgGCToClientItemBattlerUserDataUpdated
+    = K_EMsgClientToGCItemBattlerDevGrantItem
+  succ K_EMsgClientToGCItemBattlerDevGrantItem
+    = K_EMsgClientToGCItemBattlerDevGrantItemResponse
+  succ K_EMsgClientToGCItemBattlerDevGrantItemResponse
     = K_EMsgClientToGCGetEventRanking
   succ K_EMsgClientToGCGetEventRanking
     = K_EMsgClientToGCGetEventRankingResponse
@@ -9528,6 +9646,18 @@ instance Prelude.Enum EDOTAGCMsg where
     = K_EMsgClientToGCInviteToDemoMode
   succ K_EMsgClientToGCInviteToDemoMode
     = K_EMsgGCToClientInviteToDemoMode
+  succ K_EMsgGCToClientInviteToDemoMode
+    = K_EMsgClientToGCOverworldDevSetFortune
+  succ K_EMsgClientToGCOverworldDevSetFortune
+    = K_EMsgClientToGCOverworldDevSetFortuneResponse
+  succ K_EMsgClientToGCOverworldDevSetFortuneResponse
+    = K_EMsgClientToGCOverworldRequestFortune
+  succ K_EMsgClientToGCOverworldRequestFortune
+    = K_EMsgClientToGCOverworldRequestFortuneResponse
+  succ K_EMsgClientToGCOverworldRequestFortuneResponse
+    = K_EMsgClientToGCOverworldDevClearFortune
+  succ K_EMsgClientToGCOverworldDevClearFortune
+    = K_EMsgClientToGCOverworldDevClearFortuneResponse
   pred K_EMsgGCDOTABase
     = Prelude.error
         "EDOTAGCMsg.pred: bad argument K_EMsgGCDOTABase. This value would be out of bounds."
@@ -11341,8 +11471,22 @@ instance Prelude.Enum EDOTAGCMsg where
     = K_EMsgClientToGCMonsterHunterClaimCodexRewardResponse
   pred K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
     = K_EMsgClientToGCMonsterHunterClaimSetReward
-  pred K_EMsgClientToGCGetEventRanking
+  pred K_EMsgClientToGCItemBattlerGetUserData
     = K_EMsgClientToGCMonsterHunterClaimSetRewardResponse
+  pred K_EMsgClientToGCItemBattlerGetUserDataResponse
+    = K_EMsgClientToGCItemBattlerGetUserData
+  pred K_EMsgClientToGCItemBattlerGameAction
+    = K_EMsgClientToGCItemBattlerGetUserDataResponse
+  pred K_EMsgClientToGCItemBattlerGameActionResponse
+    = K_EMsgClientToGCItemBattlerGameAction
+  pred K_EMsgGCToClientItemBattlerUserDataUpdated
+    = K_EMsgClientToGCItemBattlerGameActionResponse
+  pred K_EMsgClientToGCItemBattlerDevGrantItem
+    = K_EMsgGCToClientItemBattlerUserDataUpdated
+  pred K_EMsgClientToGCItemBattlerDevGrantItemResponse
+    = K_EMsgClientToGCItemBattlerDevGrantItem
+  pred K_EMsgClientToGCGetEventRanking
+    = K_EMsgClientToGCItemBattlerDevGrantItemResponse
   pred K_EMsgClientToGCGetEventRankingResponse
     = K_EMsgClientToGCGetEventRanking
   pred K_EMsgClientToGCGetEventCoupon
@@ -11361,6 +11505,18 @@ instance Prelude.Enum EDOTAGCMsg where
     = K_EMsgServerToGCWarningInvalidBotAbilityUsage
   pred K_EMsgGCToClientInviteToDemoMode
     = K_EMsgClientToGCInviteToDemoMode
+  pred K_EMsgClientToGCOverworldDevSetFortune
+    = K_EMsgGCToClientInviteToDemoMode
+  pred K_EMsgClientToGCOverworldDevSetFortuneResponse
+    = K_EMsgClientToGCOverworldDevSetFortune
+  pred K_EMsgClientToGCOverworldRequestFortune
+    = K_EMsgClientToGCOverworldDevSetFortuneResponse
+  pred K_EMsgClientToGCOverworldRequestFortuneResponse
+    = K_EMsgClientToGCOverworldRequestFortune
+  pred K_EMsgClientToGCOverworldDevClearFortune
+    = K_EMsgClientToGCOverworldRequestFortuneResponse
+  pred K_EMsgClientToGCOverworldDevClearFortuneResponse
+    = K_EMsgClientToGCOverworldDevClearFortune
   enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
   enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
   enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen

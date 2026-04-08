@@ -31,7 +31,6 @@ import qualified Data.ProtoLens.Runtime.Data.Vector as Data.Vector
 import qualified Data.ProtoLens.Runtime.Data.Vector.Generic as Data.Vector.Generic
 import qualified Data.ProtoLens.Runtime.Data.Vector.Unboxed as Data.Vector.Unboxed
 import qualified Data.ProtoLens.Runtime.Text.Read as Text.Read
-
 {- | Fields :
      
          * 'Proto.EngineGcmessages_Fields.matchId' @:: Lens' CEngineGotvSyncPacket Data.Word.Word64@

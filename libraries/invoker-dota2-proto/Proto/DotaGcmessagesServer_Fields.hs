@@ -145,6 +145,12 @@ alliedHeroIds ::
    Data.ProtoLens.Field.HasField s "alliedHeroIds" a) =>
   Lens.Family2.LensLike' f s a
 alliedHeroIds = Data.ProtoLens.Field.field @"alliedHeroIds"
+alliedHeroes ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "alliedHeroes" a) =>
+  Lens.Family2.LensLike' f s a
+alliedHeroes = Data.ProtoLens.Field.field @"alliedHeroes"
 allowCheats ::
   forall f s a.
   (Prelude.Functor f,
@@ -270,6 +276,13 @@ averageInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 averageInputProcessingTime
   = Data.ProtoLens.Field.field @"averageInputProcessingTime"
+averageMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "averageMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+averageMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"averageMissedSnapshotRate"
 averageMmr ::
   forall f s a.
   (Prelude.Functor f,
@@ -1166,6 +1179,12 @@ enemyHeroIds ::
    Data.ProtoLens.Field.HasField s "enemyHeroIds" a) =>
   Lens.Family2.LensLike' f s a
 enemyHeroIds = Data.ProtoLens.Field.field @"enemyHeroIds"
+enemyHeroes ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "enemyHeroes" a) =>
+  Lens.Family2.LensLike' f s a
+enemyHeroes = Data.ProtoLens.Field.field @"enemyHeroes"
 enemyRoshanKills ::
   forall f s a.
   (Prelude.Functor f,
@@ -2079,6 +2098,13 @@ maxInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 maxInputProcessingTime
   = Data.ProtoLens.Field.field @"maxInputProcessingTime"
+maxMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maxMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+maxMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"maxMissedSnapshotRate"
 maxOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -3888,6 +3914,13 @@ maybe'numBadIntervals ::
   Lens.Family2.LensLike' f s a
 maybe'numBadIntervals
   = Data.ProtoLens.Field.field @"maybe'numBadIntervals"
+maybe'numMultitickFrames ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'numMultitickFrames" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'numMultitickFrames
+  = Data.ProtoLens.Field.field @"maybe'numMultitickFrames"
 maybe'numPlayersInParty ::
   forall f s a.
   (Prelude.Functor f,
@@ -4602,6 +4635,21 @@ maybe'serverAverageFrameTime ::
   Lens.Family2.LensLike' f s a
 maybe'serverAverageFrameTime
   = Data.ProtoLens.Field.field @"maybe'serverAverageFrameTime"
+maybe'serverAverageOversleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'serverAverageOversleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'serverAverageOversleepFrameTime
+  = Data.ProtoLens.Field.field
+      @"maybe'serverAverageOversleepFrameTime"
+maybe'serverAverageSleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'serverAverageSleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'serverAverageSleepFrameTime
+  = Data.ProtoLens.Field.field @"maybe'serverAverageSleepFrameTime"
 maybe'serverCluster ::
   forall f s a.
   (Prelude.Functor f,
@@ -4643,6 +4691,20 @@ maybe'serverMaxFrameTime ::
   Lens.Family2.LensLike' f s a
 maybe'serverMaxFrameTime
   = Data.ProtoLens.Field.field @"maybe'serverMaxFrameTime"
+maybe'serverMaxOversleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'serverMaxOversleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'serverMaxOversleepFrameTime
+  = Data.ProtoLens.Field.field @"maybe'serverMaxOversleepFrameTime"
+maybe'serverMaxSleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'serverMaxSleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'serverMaxSleepFrameTime
+  = Data.ProtoLens.Field.field @"maybe'serverMaxSleepFrameTime"
 maybe'serverPort ::
   forall f s a.
   (Prelude.Functor f,
@@ -4982,6 +5044,13 @@ maybe'timestamp ::
    Data.ProtoLens.Field.HasField s "maybe'timestamp" a) =>
   Lens.Family2.LensLike' f s a
 maybe'timestamp = Data.ProtoLens.Field.field @"maybe'timestamp"
+maybe'tomeUpgraded ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'tomeUpgraded" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'tomeUpgraded
+  = Data.ProtoLens.Field.field @"maybe'tomeUpgraded"
 maybe'totalAttempt ::
   forall f s a.
   (Prelude.Functor f,
@@ -5099,6 +5168,12 @@ maybe'unpauses ::
    Data.ProtoLens.Field.HasField s "maybe'unpauses" a) =>
   Lens.Family2.LensLike' f s a
 maybe'unpauses = Data.ProtoLens.Field.field @"maybe'unpauses"
+maybe'value ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'value" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'value = Data.ProtoLens.Field.field @"maybe'value"
 maybe'version ::
   forall f s a.
   (Prelude.Functor f,
@@ -5354,6 +5429,13 @@ numBadIntervals ::
    Data.ProtoLens.Field.HasField s "numBadIntervals" a) =>
   Lens.Family2.LensLike' f s a
 numBadIntervals = Data.ProtoLens.Field.field @"numBadIntervals"
+numMultitickFrames ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "numMultitickFrames" a) =>
+  Lens.Family2.LensLike' f s a
+numMultitickFrames
+  = Data.ProtoLens.Field.field @"numMultitickFrames"
 numPlayersInParty ::
   forall f s a.
   (Prelude.Functor f,
@@ -6154,6 +6236,20 @@ serverAverageFrameTime ::
   Lens.Family2.LensLike' f s a
 serverAverageFrameTime
   = Data.ProtoLens.Field.field @"serverAverageFrameTime"
+serverAverageOversleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "serverAverageOversleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+serverAverageOversleepFrameTime
+  = Data.ProtoLens.Field.field @"serverAverageOversleepFrameTime"
+serverAverageSleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "serverAverageSleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+serverAverageSleepFrameTime
+  = Data.ProtoLens.Field.field @"serverAverageSleepFrameTime"
 serverCluster ::
   forall f s a.
   (Prelude.Functor f,
@@ -6191,6 +6287,20 @@ serverMaxFrameTime ::
   Lens.Family2.LensLike' f s a
 serverMaxFrameTime
   = Data.ProtoLens.Field.field @"serverMaxFrameTime"
+serverMaxOversleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "serverMaxOversleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+serverMaxOversleepFrameTime
+  = Data.ProtoLens.Field.field @"serverMaxOversleepFrameTime"
+serverMaxSleepFrameTime ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "serverMaxSleepFrameTime" a) =>
+  Lens.Family2.LensLike' f s a
+serverMaxSleepFrameTime
+  = Data.ProtoLens.Field.field @"serverMaxSleepFrameTime"
 serverPort ::
   forall f s a.
   (Prelude.Functor f,
@@ -6587,6 +6697,12 @@ timestamp ::
    Data.ProtoLens.Field.HasField s "timestamp" a) =>
   Lens.Family2.LensLike' f s a
 timestamp = Data.ProtoLens.Field.field @"timestamp"
+tomeUpgraded ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "tomeUpgraded" a) =>
+  Lens.Family2.LensLike' f s a
+tomeUpgraded = Data.ProtoLens.Field.field @"tomeUpgraded"
 totalAttempt ::
   forall f s a.
   (Prelude.Functor f,
@@ -6777,6 +6893,12 @@ vec'alliedHeroIds ::
    Data.ProtoLens.Field.HasField s "vec'alliedHeroIds" a) =>
   Lens.Family2.LensLike' f s a
 vec'alliedHeroIds = Data.ProtoLens.Field.field @"vec'alliedHeroIds"
+vec'alliedHeroes ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'alliedHeroes" a) =>
+  Lens.Family2.LensLike' f s a
+vec'alliedHeroes = Data.ProtoLens.Field.field @"vec'alliedHeroes"
 vec'arcanaOwners ::
   forall f s a.
   (Prelude.Functor f,
@@ -6839,6 +6961,13 @@ vec'averageInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 vec'averageInputProcessingTime
   = Data.ProtoLens.Field.field @"vec'averageInputProcessingTime"
+vec'averageMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'averageMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+vec'averageMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"vec'averageMissedSnapshotRate"
 vec'averageOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -7009,6 +7138,12 @@ vec'enemyHeroIds ::
    Data.ProtoLens.Field.HasField s "vec'enemyHeroIds" a) =>
   Lens.Family2.LensLike' f s a
 vec'enemyHeroIds = Data.ProtoLens.Field.field @"vec'enemyHeroIds"
+vec'enemyHeroes ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'enemyHeroes" a) =>
+  Lens.Family2.LensLike' f s a
+vec'enemyHeroes = Data.ProtoLens.Field.field @"vec'enemyHeroes"
 vec'enhancementOptions ::
   forall f s a.
   (Prelude.Functor f,
@@ -7248,6 +7383,13 @@ vec'maxInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 vec'maxInputProcessingTime
   = Data.ProtoLens.Field.field @"vec'maxInputProcessingTime"
+vec'maxMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'maxMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+vec'maxMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"vec'maxMissedSnapshotRate"
 vec'maxOutputTime ::
   forall f s a.
   (Prelude.Functor f,

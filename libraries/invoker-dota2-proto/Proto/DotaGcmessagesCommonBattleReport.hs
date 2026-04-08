@@ -141,8 +141,8 @@ instance Data.ProtoLens.Message CMsgBattleReport where
       \\tmmr_delta\CAN\ETX \SOH(\ENQR\bmmrDelta\DC2'\n\
       \\SIhighlight_score\CAN\EOT \SOH(\STXR\SOhighlightScore\SUB\180\EOT\n\
       \\tHighlight\DC2!\n\
-      \\fhighlight_id\CAN\SOH \STX(\rR\vhighlightId\DC2T\n\
-      \\bcategory\CAN\STX \STX(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
+      \\fhighlight_id\CAN\SOH \SOH(\rR\vhighlightId\DC2T\n\
+      \\bcategory\CAN\STX \SOH(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
       \\EOTtier\CAN\ETX \SOH(\SO2\US.CMsgBattleReport_HighlightTier:\DC3k_eHighlightTierLowR\EOTtier\DC2M\n\
       \\ACKrarity\CAN\EOT \SOH(\SO2!.CMsgBattleReport_HighlightRarity:\DC2k_eHighlightCommonR\ACKrarity\DC2\DC4\n\
       \\ENQscore\CAN\ENQ \SOH(\STXR\ENQscore\DC2\RS\n\
@@ -290,7 +290,9 @@ instance Control.DeepSeq.NFData CMsgBattleReport where
 {- | Fields :
      
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.highlightId' @:: Lens' CMsgBattleReport'Highlight Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonBattleReport_Fields.maybe'highlightId' @:: Lens' CMsgBattleReport'Highlight (Prelude.Maybe Data.Word.Word32)@
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.category' @:: Lens' CMsgBattleReport'Highlight CMsgBattleReport_HighlightCategory@
+         * 'Proto.DotaGcmessagesCommonBattleReport_Fields.maybe'category' @:: Lens' CMsgBattleReport'Highlight (Prelude.Maybe CMsgBattleReport_HighlightCategory)@
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.tier' @:: Lens' CMsgBattleReport'Highlight CMsgBattleReport_HighlightTier@
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.maybe'tier' @:: Lens' CMsgBattleReport'Highlight (Prelude.Maybe CMsgBattleReport_HighlightTier)@
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.rarity' @:: Lens' CMsgBattleReport'Highlight CMsgBattleReport_HighlightRarity@
@@ -308,8 +310,8 @@ instance Control.DeepSeq.NFData CMsgBattleReport where
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.context' @:: Lens' CMsgBattleReport'Highlight CMsgBattleReport_CompareContext@
          * 'Proto.DotaGcmessagesCommonBattleReport_Fields.maybe'context' @:: Lens' CMsgBattleReport'Highlight (Prelude.Maybe CMsgBattleReport_CompareContext)@ -}
 data CMsgBattleReport'Highlight
-  = CMsgBattleReport'Highlight'_constructor {_CMsgBattleReport'Highlight'highlightId :: !Data.Word.Word32,
-                                             _CMsgBattleReport'Highlight'category :: !CMsgBattleReport_HighlightCategory,
+  = CMsgBattleReport'Highlight'_constructor {_CMsgBattleReport'Highlight'highlightId :: !(Prelude.Maybe Data.Word.Word32),
+                                             _CMsgBattleReport'Highlight'category :: !(Prelude.Maybe CMsgBattleReport_HighlightCategory),
                                              _CMsgBattleReport'Highlight'tier :: !(Prelude.Maybe CMsgBattleReport_HighlightTier),
                                              _CMsgBattleReport'Highlight'rarity :: !(Prelude.Maybe CMsgBattleReport_HighlightRarity),
                                              _CMsgBattleReport'Highlight'score :: !(Prelude.Maybe Prelude.Float),
@@ -332,8 +334,22 @@ instance Data.ProtoLens.Field.HasField CMsgBattleReport'Highlight "highlightId" 
         (Lens.Family2.Unchecked.lens
            _CMsgBattleReport'Highlight'highlightId
            (\ x__ y__ -> x__ {_CMsgBattleReport'Highlight'highlightId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgBattleReport'Highlight "maybe'highlightId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgBattleReport'Highlight'highlightId
+           (\ x__ y__ -> x__ {_CMsgBattleReport'Highlight'highlightId = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CMsgBattleReport'Highlight "category" CMsgBattleReport_HighlightCategory where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgBattleReport'Highlight'category
+           (\ x__ y__ -> x__ {_CMsgBattleReport'Highlight'category = y__}))
+        (Data.ProtoLens.maybeLens K_eHighlightGeneral)
+instance Data.ProtoLens.Field.HasField CMsgBattleReport'Highlight "maybe'category" (Prelude.Maybe CMsgBattleReport_HighlightCategory) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -459,8 +475,8 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
   packedMessageDescriptor _
     = "\n\
       \\tHighlight\DC2!\n\
-      \\fhighlight_id\CAN\SOH \STX(\rR\vhighlightId\DC2T\n\
-      \\bcategory\CAN\STX \STX(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
+      \\fhighlight_id\CAN\SOH \SOH(\rR\vhighlightId\DC2T\n\
+      \\bcategory\CAN\STX \SOH(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
       \\EOTtier\CAN\ETX \SOH(\SO2\US.CMsgBattleReport_HighlightTier:\DC3k_eHighlightTierLowR\EOTtier\DC2M\n\
       \\ACKrarity\CAN\EOT \SOH(\SO2!.CMsgBattleReport_HighlightRarity:\DC2k_eHighlightCommonR\ACKrarity\DC2\DC4\n\
       \\ENQscore\CAN\ENQ \SOH(\STXR\ENQscore\DC2\RS\n\
@@ -480,18 +496,16 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
               "highlight_id"
               (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"highlightId")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'highlightId")) ::
               Data.ProtoLens.FieldDescriptor CMsgBattleReport'Highlight
         category__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "category"
               (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
                  Data.ProtoLens.FieldTypeDescriptor CMsgBattleReport_HighlightCategory)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"category")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'category")) ::
               Data.ProtoLens.FieldDescriptor CMsgBattleReport'Highlight
         tier__field_descriptor
           = Data.ProtoLens.FieldDescriptor
@@ -576,8 +590,8 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
            -> x__ {_CMsgBattleReport'Highlight'_unknownFields = y__})
   defMessage
     = CMsgBattleReport'Highlight'_constructor
-        {_CMsgBattleReport'Highlight'highlightId = Data.ProtoLens.fieldDefault,
-         _CMsgBattleReport'Highlight'category = K_eHighlightGeneral,
+        {_CMsgBattleReport'Highlight'highlightId = Prelude.Nothing,
+         _CMsgBattleReport'Highlight'category = Prelude.Nothing,
          _CMsgBattleReport'Highlight'tier = Prelude.Nothing,
          _CMsgBattleReport'Highlight'rarity = Prelude.Nothing,
          _CMsgBattleReport'Highlight'score = Prelude.Nothing,
@@ -591,17 +605,11 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
     = let
         loop ::
           CMsgBattleReport'Highlight
-          -> Prelude.Bool
-             -> Prelude.Bool
-                -> Data.ProtoLens.Encoding.Bytes.Parser CMsgBattleReport'Highlight
-        loop x required'category required'highlightId
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgBattleReport'Highlight
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing
-                           = (if required'category then (:) "category" else Prelude.id)
-                               ((if required'highlightId then (:) "highlight_id" else Prelude.id)
-                                  [])
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -623,7 +631,6 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                        "highlight_id"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"highlightId") y x)
-                                  required'category Prelude.False
                         16
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -634,7 +641,6 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                        "category"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"category") y x)
-                                  Prelude.False required'highlightId
                         24
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -643,9 +649,7 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                              Prelude.fromIntegral
                                              Data.ProtoLens.Encoding.Bytes.getVarInt))
                                        "tier"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"tier") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"tier") y x)
                         32
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -654,18 +658,14 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                              Prelude.fromIntegral
                                              Data.ProtoLens.Encoding.Bytes.getVarInt))
                                        "rarity"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"rarity") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"rarity") y x)
                         45
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Data.ProtoLens.Encoding.Bytes.wordToFloat
                                           Data.ProtoLens.Encoding.Bytes.getFixed32)
                                        "score"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"score") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"score") y x)
                         53
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -674,16 +674,13 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                        "confidence"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"confidence") y x)
-                                  required'category required'highlightId
                         56
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "hero_id"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"heroId") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"heroId") y x)
                         64
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -692,9 +689,7 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                              Prelude.fromIntegral
                                              Data.ProtoLens.Encoding.Bytes.getVarInt))
                                        "role"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"role") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"role") y x)
                         77
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -704,7 +699,6 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"comparisonDeltaValue") y x)
-                                  required'category required'highlightId
                         80
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -713,37 +707,41 @@ instance Data.ProtoLens.Message CMsgBattleReport'Highlight where
                                              Prelude.fromIntegral
                                              Data.ProtoLens.Encoding.Bytes.getVarInt))
                                        "context"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"context") y x)
-                                  required'category required'highlightId
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"context") y x)
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'category required'highlightId
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop Data.ProtoLens.defMessage Prelude.True Prelude.True)
-          "Highlight"
+          (do loop Data.ProtoLens.defMessage) "Highlight"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'highlightId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
              ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                   (Lens.Family2.view
-                      (Data.ProtoLens.Field.field @"highlightId") _x)))
-             ((Data.Monoid.<>)
-                ((Data.Monoid.<>)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
-                   ((Prelude..)
-                      ((Prelude..)
-                         Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
-                      Prelude.fromEnum
-                      (Lens.Family2.view (Data.ProtoLens.Field.field @"category") _x)))
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'category") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                             Prelude.fromEnum _v))
                 ((Data.Monoid.<>)
                    (case
                         Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'tier") _x
@@ -11618,8 +11616,8 @@ packedFileDescriptor
     \\tmmr_delta\CAN\ETX \SOH(\ENQR\bmmrDelta\DC2'\n\
     \\SIhighlight_score\CAN\EOT \SOH(\STXR\SOhighlightScore\SUB\180\EOT\n\
     \\tHighlight\DC2!\n\
-    \\fhighlight_id\CAN\SOH \STX(\rR\vhighlightId\DC2T\n\
-    \\bcategory\CAN\STX \STX(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
+    \\fhighlight_id\CAN\SOH \SOH(\rR\vhighlightId\DC2T\n\
+    \\bcategory\CAN\STX \SOH(\SO2#.CMsgBattleReport_HighlightCategory:\DC3k_eHighlightGeneralR\bcategory\DC2H\n\
     \\EOTtier\CAN\ETX \SOH(\SO2\US.CMsgBattleReport_HighlightTier:\DC3k_eHighlightTierLowR\EOTtier\DC2M\n\
     \\ACKrarity\CAN\EOT \SOH(\SO2!.CMsgBattleReport_HighlightRarity:\DC2k_eHighlightCommonR\ACKrarity\DC2\DC4\n\
     \\ENQscore\CAN\ENQ \SOH(\STXR\ENQscore\DC2\RS\n\

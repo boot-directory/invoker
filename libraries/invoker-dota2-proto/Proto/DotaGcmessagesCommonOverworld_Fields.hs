@@ -60,6 +60,12 @@ currencyAmount ::
    Data.ProtoLens.Field.HasField s "currencyAmount" a) =>
   Lens.Family2.LensLike' f s a
 currencyAmount = Data.ProtoLens.Field.field @"currencyAmount"
+currentFortune ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "currentFortune" a) =>
+  Lens.Family2.LensLike' f s a
+currentFortune = Data.ProtoLens.Field.field @"currentFortune"
 currentNodeId ::
   forall f s a.
   (Prelude.Functor f,
@@ -102,6 +108,30 @@ format ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "format" a) =>
   Lens.Family2.LensLike' f s a
 format = Data.ProtoLens.Field.field @"format"
+fortune1 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "fortune1" a) =>
+  Lens.Family2.LensLike' f s a
+fortune1 = Data.ProtoLens.Field.field @"fortune1"
+fortune2 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "fortune2" a) =>
+  Lens.Family2.LensLike' f s a
+fortune2 = Data.ProtoLens.Field.field @"fortune2"
+fortune3 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "fortune3" a) =>
+  Lens.Family2.LensLike' f s a
+fortune3 = Data.ProtoLens.Field.field @"fortune3"
+fortuneId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "fortuneId" a) =>
+  Lens.Family2.LensLike' f s a
+fortuneId = Data.ProtoLens.Field.field @"fortuneId"
 friendAccountId ::
   forall f s a.
   (Prelude.Functor f,
@@ -206,6 +236,13 @@ maybe'currencyAmount ::
   Lens.Family2.LensLike' f s a
 maybe'currencyAmount
   = Data.ProtoLens.Field.field @"maybe'currencyAmount"
+maybe'currentFortune ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'currentFortune" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'currentFortune
+  = Data.ProtoLens.Field.field @"maybe'currentFortune"
 maybe'currentNodeId ::
   forall f s a.
   (Prelude.Functor f,
@@ -244,6 +281,30 @@ maybe'format ::
    Data.ProtoLens.Field.HasField s "maybe'format" a) =>
   Lens.Family2.LensLike' f s a
 maybe'format = Data.ProtoLens.Field.field @"maybe'format"
+maybe'fortune1 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'fortune1" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'fortune1 = Data.ProtoLens.Field.field @"maybe'fortune1"
+maybe'fortune2 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'fortune2" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'fortune2 = Data.ProtoLens.Field.field @"maybe'fortune2"
+maybe'fortune3 ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'fortune3" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'fortune3 = Data.ProtoLens.Field.field @"maybe'fortune3"
+maybe'fortuneId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'fortuneId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'fortuneId = Data.ProtoLens.Field.field @"maybe'fortuneId"
 maybe'friendAccountId ::
   forall f s a.
   (Prelude.Functor f,
@@ -433,6 +494,12 @@ maybe'survivorsData ::
   Lens.Family2.LensLike' f s a
 maybe'survivorsData
   = Data.ProtoLens.Field.field @"maybe'survivorsData"
+maybe'timestamp ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'timestamp" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'timestamp = Data.ProtoLens.Field.field @"maybe'timestamp"
 maybe'tokenCost ::
   forall f s a.
   (Prelude.Functor f,
@@ -668,6 +735,12 @@ survivorsData ::
    Data.ProtoLens.Field.HasField s "survivorsData" a) =>
   Lens.Family2.LensLike' f s a
 survivorsData = Data.ProtoLens.Field.field @"survivorsData"
+timestamp ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "timestamp" a) =>
+  Lens.Family2.LensLike' f s a
+timestamp = Data.ProtoLens.Field.field @"timestamp"
 tokenCost ::
   forall f s a.
   (Prelude.Functor f,

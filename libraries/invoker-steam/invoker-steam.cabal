@@ -30,6 +30,7 @@ Library
     Invoker.Steam.Crypto
     Invoker.Steam.Packets.Handshake
     Invoker.Steam.Packets.Internal
+    Invoker.Steam.Packets.LogOn
   hs-source-dirs:
     ./library/
   ghc-options:
@@ -42,6 +43,7 @@ Library
 
     -- Internal
     , binary-buff
+    , invoker-steam-proto
 
     -- External
     , aeson

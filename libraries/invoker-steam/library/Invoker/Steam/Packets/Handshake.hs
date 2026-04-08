@@ -10,19 +10,17 @@ import Data.Word (Word32, Word64)
 -- Internal
 import Invoker.Steam.Packets.Internal
 import BinaryBuff
+import Proto.EnumsClientserver (EMsg(K_EMsgChannelEncryptResponse))
 
 -------------------------------------------------------------------------------
 -- * ChannelEncryptResponse
 -------------------------------------------------------------------------------
 
-channelEncryptResponse :: Word32
-channelEncryptResponse = 1304
-
 writeChannelEncryptResponse :: Buffer -> ChannelEncryptResponse -> IO ()
 writeChannelEncryptResponse buf resp = writePacket buf body
   where
   body =
-    encodeHeader (mkHeader channelEncryptResponse)
+    encodeHeader (mkHeader K_EMsgChannelEncryptResponse)
     <> word32LE resp.protocol
     <> word32LE (fromIntegral $ BS.length resp.sessionKey)
     <> byteString resp.sessionKey

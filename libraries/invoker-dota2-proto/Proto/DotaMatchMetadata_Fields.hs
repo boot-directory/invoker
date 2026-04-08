@@ -96,6 +96,18 @@ assists ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "assists" a) =>
   Lens.Family2.LensLike' f s a
 assists = Data.ProtoLens.Field.field @"assists"
+attackerAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "attackerAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+attackerAbilityId = Data.ProtoLens.Field.field @"attackerAbilityId"
+attackerHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "attackerHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+attackerHeroId = Data.ProtoLens.Field.field @"attackerHeroId"
 attribute ::
   forall f s a.
   (Prelude.Functor f,
@@ -417,6 +429,25 @@ contractStars ::
    Data.ProtoLens.Field.HasField s "contractStars" a) =>
   Lens.Family2.LensLike' f s a
 contractStars = Data.ProtoLens.Field.field @"contractStars"
+contributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "contributions" a) =>
+  Lens.Family2.LensLike' f s a
+contributions = Data.ProtoLens.Field.field @"contributions"
+contributorAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "contributorAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+contributorAbilityId
+  = Data.ProtoLens.Field.field @"contributorAbilityId"
+contributorHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "contributorHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+contributorHeroId = Data.ProtoLens.Field.field @"contributorHeroId"
 count ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "count" a) =>
@@ -458,6 +489,19 @@ damageByAbility ::
    Data.ProtoLens.Field.HasField s "damageByAbility" a) =>
   Lens.Family2.LensLike' f s a
 damageByAbility = Data.ProtoLens.Field.field @"damageByAbility"
+damageContributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "damageContributions" a) =>
+  Lens.Family2.LensLike' f s a
+damageContributions
+  = Data.ProtoLens.Field.field @"damageContributions"
+damageMitigations ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "damageMitigations" a) =>
+  Lens.Family2.LensLike' f s a
+damageMitigations = Data.ProtoLens.Field.field @"damageMitigations"
 damageUnitNames ::
   forall f s a.
   (Prelude.Functor f,
@@ -486,12 +530,23 @@ denies ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "denies" a) =>
   Lens.Family2.LensLike' f s a
 denies = Data.ProtoLens.Field.field @"denies"
+dispels ::
+  forall f s a.
+  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "dispels" a) =>
+  Lens.Family2.LensLike' f s a
+dispels = Data.ProtoLens.Field.field @"dispels"
 dotaTeam ::
   forall f s a.
   (Prelude.Functor f,
    Data.ProtoLens.Field.HasField s "dotaTeam" a) =>
   Lens.Family2.LensLike' f s a
 dotaTeam = Data.ProtoLens.Field.field @"dotaTeam"
+durationReduced ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "durationReduced" a) =>
+  Lens.Family2.LensLike' f s a
+durationReduced = Data.ProtoLens.Field.field @"durationReduced"
 elapsedDuration ::
   forall f s a.
   (Prelude.Functor f,
@@ -711,6 +766,19 @@ healingByAbility ::
    Data.ProtoLens.Field.HasField s "healingByAbility" a) =>
   Lens.Family2.LensLike' f s a
 healingByAbility = Data.ProtoLens.Field.field @"healingByAbility"
+healingContributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "healingContributions" a) =>
+  Lens.Family2.LensLike' f s a
+healingContributions
+  = Data.ProtoLens.Field.field @"healingContributions"
+healingReductions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "healingReductions" a) =>
+  Lens.Family2.LensLike' f s a
+healingReductions = Data.ProtoLens.Field.field @"healingReductions"
 heroId ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "heroId" a) =>
@@ -738,6 +806,13 @@ individualProgress ::
   Lens.Family2.LensLike' f s a
 individualProgress
   = Data.ProtoLens.Field.field @"individualProgress"
+inflictorAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "inflictorAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+inflictorAbilityId
+  = Data.ProtoLens.Field.field @"inflictorAbilityId"
 instanceCount ::
   forall f s a.
   (Prelude.Functor f,
@@ -796,6 +871,12 @@ killerPlayerSlot ::
    Data.ProtoLens.Field.HasField s "killerPlayerSlot" a) =>
   Lens.Family2.LensLike' f s a
 killerPlayerSlot = Data.ProtoLens.Field.field @"killerPlayerSlot"
+killingBlows ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "killingBlows" a) =>
+  Lens.Family2.LensLike' f s a
+killingBlows = Data.ProtoLens.Field.field @"killingBlows"
 kills ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "kills" a) =>
@@ -916,6 +997,20 @@ maybe'assists ::
    Data.ProtoLens.Field.HasField s "maybe'assists" a) =>
   Lens.Family2.LensLike' f s a
 maybe'assists = Data.ProtoLens.Field.field @"maybe'assists"
+maybe'attackerAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'attackerAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'attackerAbilityId
+  = Data.ProtoLens.Field.field @"maybe'attackerAbilityId"
+maybe'attackerHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'attackerHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'attackerHeroId
+  = Data.ProtoLens.Field.field @"maybe'attackerHeroId"
 maybe'audit ::
   forall f s a.
   (Prelude.Functor f,
@@ -1199,6 +1294,20 @@ maybe'contractStars ::
   Lens.Family2.LensLike' f s a
 maybe'contractStars
   = Data.ProtoLens.Field.field @"maybe'contractStars"
+maybe'contributorAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'contributorAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'contributorAbilityId
+  = Data.ProtoLens.Field.field @"maybe'contributorAbilityId"
+maybe'contributorHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'contributorHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'contributorHeroId
+  = Data.ProtoLens.Field.field @"maybe'contributorHeroId"
 maybe'count ::
   forall f s a.
   (Prelude.Functor f,
@@ -1261,6 +1370,13 @@ maybe'dotaTeam ::
    Data.ProtoLens.Field.HasField s "maybe'dotaTeam" a) =>
   Lens.Family2.LensLike' f s a
 maybe'dotaTeam = Data.ProtoLens.Field.field @"maybe'dotaTeam"
+maybe'durationReduced ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'durationReduced" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'durationReduced
+  = Data.ProtoLens.Field.field @"maybe'durationReduced"
 maybe'elapsedDuration ::
   forall f s a.
   (Prelude.Functor f,
@@ -1407,6 +1523,13 @@ maybe'id ::
    Data.ProtoLens.Field.HasField s "maybe'id" a) =>
   Lens.Family2.LensLike' f s a
 maybe'id = Data.ProtoLens.Field.field @"maybe'id"
+maybe'inflictorAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'inflictorAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'inflictorAbilityId
+  = Data.ProtoLens.Field.field @"maybe'inflictorAbilityId"
 maybe'instanceCount ::
   forall f s a.
   (Prelude.Functor f,
@@ -1483,6 +1606,12 @@ maybe'lobbyId ::
    Data.ProtoLens.Field.HasField s "maybe'lobbyId" a) =>
   Lens.Family2.LensLike' f s a
 maybe'lobbyId = Data.ProtoLens.Field.field @"maybe'lobbyId"
+maybe'matchId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'matchId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'matchId = Data.ProtoLens.Field.field @"maybe'matchId"
 maybe'matchmakingStats ::
   forall f s a.
   (Prelude.Functor f,
@@ -1508,6 +1637,13 @@ maybe'metadata ::
    Data.ProtoLens.Field.HasField s "maybe'metadata" a) =>
   Lens.Family2.LensLike' f s a
 maybe'metadata = Data.ProtoLens.Field.field @"maybe'metadata"
+maybe'modifierAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'modifierAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'modifierAbilityId
+  = Data.ProtoLens.Field.field @"maybe'modifierAbilityId"
 maybe'monsterHunterRewards ::
   forall f s a.
   (Prelude.Functor f,
@@ -1823,6 +1959,13 @@ maybe'supportScore ::
   Lens.Family2.LensLike' f s a
 maybe'supportScore
   = Data.ProtoLens.Field.field @"maybe'supportScore"
+maybe'targetHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'targetHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'targetHeroId
+  = Data.ProtoLens.Field.field @"maybe'targetHeroId"
 maybe'targetPlayerSlot ::
   forall f s a.
   (Prelude.Functor f,
@@ -1880,6 +2023,12 @@ maybe'tripleKills ::
    Data.ProtoLens.Field.HasField s "maybe'tripleKills" a) =>
   Lens.Family2.LensLike' f s a
 maybe'tripleKills = Data.ProtoLens.Field.field @"maybe'tripleKills"
+maybe'type' ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'type'" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'type' = Data.ProtoLens.Field.field @"maybe'type'"
 maybe'unitName ::
   forall f s a.
   (Prelude.Functor f,
@@ -1892,6 +2041,12 @@ maybe'value ::
    Data.ProtoLens.Field.HasField s "maybe'value" a) =>
   Lens.Family2.LensLike' f s a
 maybe'value = Data.ProtoLens.Field.field @"maybe'value"
+maybe'version ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'version" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'version = Data.ProtoLens.Field.field @"maybe'version"
 maybe'victimPlayerSlot ::
   forall f s a.
   (Prelude.Functor f,
@@ -1950,6 +2105,12 @@ metadata ::
    Data.ProtoLens.Field.HasField s "metadata" a) =>
   Lens.Family2.LensLike' f s a
 metadata = Data.ProtoLens.Field.field @"metadata"
+modifierAbilityId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "modifierAbilityId" a) =>
+  Lens.Family2.LensLike' f s a
+modifierAbilityId = Data.ProtoLens.Field.field @"modifierAbilityId"
 monsterHunterRewards ::
   forall f s a.
   (Prelude.Functor f,
@@ -2271,6 +2432,12 @@ supportScore ::
    Data.ProtoLens.Field.HasField s "supportScore" a) =>
   Lens.Family2.LensLike' f s a
 supportScore = Data.ProtoLens.Field.field @"supportScore"
+targetHeroId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "targetHeroId" a) =>
+  Lens.Family2.LensLike' f s a
+targetHeroId = Data.ProtoLens.Field.field @"targetHeroId"
 targetPlayerSlot ::
   forall f s a.
   (Prelude.Functor f,
@@ -2334,6 +2501,11 @@ tripleKills ::
    Data.ProtoLens.Field.HasField s "tripleKills" a) =>
   Lens.Family2.LensLike' f s a
 tripleKills = Data.ProtoLens.Field.field @"tripleKills"
+type' ::
+  forall f s a.
+  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "type'" a) =>
+  Lens.Family2.LensLike' f s a
+type' = Data.ProtoLens.Field.field @"type'"
 unitName ::
   forall f s a.
   (Prelude.Functor f,
@@ -2425,6 +2597,12 @@ vec'contractProgress ::
   Lens.Family2.LensLike' f s a
 vec'contractProgress
   = Data.ProtoLens.Field.field @"vec'contractProgress"
+vec'contributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'contributions" a) =>
+  Lens.Family2.LensLike' f s a
+vec'contributions = Data.ProtoLens.Field.field @"vec'contributions"
 vec'craftworksQuestRewards ::
   forall f s a.
   (Prelude.Functor f,
@@ -2439,6 +2617,20 @@ vec'damageByAbility ::
   Lens.Family2.LensLike' f s a
 vec'damageByAbility
   = Data.ProtoLens.Field.field @"vec'damageByAbility"
+vec'damageContributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'damageContributions" a) =>
+  Lens.Family2.LensLike' f s a
+vec'damageContributions
+  = Data.ProtoLens.Field.field @"vec'damageContributions"
+vec'damageMitigations ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'damageMitigations" a) =>
+  Lens.Family2.LensLike' f s a
+vec'damageMitigations
+  = Data.ProtoLens.Field.field @"vec'damageMitigations"
 vec'damageUnitNames ::
   forall f s a.
   (Prelude.Functor f,
@@ -2446,6 +2638,12 @@ vec'damageUnitNames ::
   Lens.Family2.LensLike' f s a
 vec'damageUnitNames
   = Data.ProtoLens.Field.field @"vec'damageUnitNames"
+vec'dispels ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'dispels" a) =>
+  Lens.Family2.LensLike' f s a
+vec'dispels = Data.ProtoLens.Field.field @"vec'dispels"
 vec'equippedEconItems ::
   forall f s a.
   (Prelude.Functor f,
@@ -2556,6 +2754,20 @@ vec'healingByAbility ::
   Lens.Family2.LensLike' f s a
 vec'healingByAbility
   = Data.ProtoLens.Field.field @"vec'healingByAbility"
+vec'healingContributions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'healingContributions" a) =>
+  Lens.Family2.LensLike' f s a
+vec'healingContributions
+  = Data.ProtoLens.Field.field @"vec'healingContributions"
+vec'healingReductions ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'healingReductions" a) =>
+  Lens.Family2.LensLike' f s a
+vec'healingReductions
+  = Data.ProtoLens.Field.field @"vec'healingReductions"
 vec'individualProgress ::
   forall f s a.
   (Prelude.Functor f,
@@ -2589,6 +2801,12 @@ vec'killerPlayerSlot ::
   Lens.Family2.LensLike' f s a
 vec'killerPlayerSlot
   = Data.ProtoLens.Field.field @"vec'killerPlayerSlot"
+vec'killingBlows ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "vec'killingBlows" a) =>
+  Lens.Family2.LensLike' f s a
+vec'killingBlows = Data.ProtoLens.Field.field @"vec'killingBlows"
 vec'kills ::
   forall f s a.
   (Prelude.Functor f,

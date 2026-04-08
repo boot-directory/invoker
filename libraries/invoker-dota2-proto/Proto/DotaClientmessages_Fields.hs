@@ -48,6 +48,12 @@ abilityIndex ::
    Data.ProtoLens.Field.HasField s "abilityIndex" a) =>
   Lens.Family2.LensLike' f s a
 abilityIndex = Data.ProtoLens.Field.field @"abilityIndex"
+abilityToImbue ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "abilityToImbue" a) =>
+  Lens.Family2.LensLike' f s a
+abilityToImbue = Data.ProtoLens.Field.field @"abilityToImbue"
 accepterPlayerId ::
   forall f s a.
   (Prelude.Functor f,
@@ -59,6 +65,12 @@ action ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "action" a) =>
   Lens.Family2.LensLike' f s a
 action = Data.ProtoLens.Field.field @"action"
+aghanimId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "aghanimId" a) =>
+  Lens.Family2.LensLike' f s a
+aghanimId = Data.ProtoLens.Field.field @"aghanimId"
 alertType ::
   forall f s a.
   (Prelude.Functor f,
@@ -124,6 +136,13 @@ averageInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 averageInputProcessingTime
   = Data.ProtoLens.Field.field @"averageInputProcessingTime"
+averageMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "averageMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+averageMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"averageMissedSnapshotRate"
 averageOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -150,6 +169,12 @@ behavior ::
    Data.ProtoLens.Field.HasField s "behavior" a) =>
   Lens.Family2.LensLike' f s a
 behavior = Data.ProtoLens.Field.field @"behavior"
+blessing ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "blessing" a) =>
+  Lens.Family2.LensLike' f s a
+blessing = Data.ProtoLens.Field.field @"blessing"
 broadcast ::
   forall f s a.
   (Prelude.Functor f,
@@ -609,6 +634,13 @@ maxInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 maxInputProcessingTime
   = Data.ProtoLens.Field.field @"maxInputProcessingTime"
+maxMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maxMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+maxMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"maxMissedSnapshotRate"
 maxOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -648,6 +680,13 @@ maybe'abilityIndex ::
   Lens.Family2.LensLike' f s a
 maybe'abilityIndex
   = Data.ProtoLens.Field.field @"maybe'abilityIndex"
+maybe'abilityToImbue ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'abilityToImbue" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'abilityToImbue
+  = Data.ProtoLens.Field.field @"maybe'abilityToImbue"
 maybe'accepterPlayerId ::
   forall f s a.
   (Prelude.Functor f,
@@ -661,6 +700,12 @@ maybe'action ::
    Data.ProtoLens.Field.HasField s "maybe'action" a) =>
   Lens.Family2.LensLike' f s a
 maybe'action = Data.ProtoLens.Field.field @"maybe'action"
+maybe'aghanimId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'aghanimId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'aghanimId = Data.ProtoLens.Field.field @"maybe'aghanimId"
 maybe'alertType ::
   forall f s a.
   (Prelude.Functor f,
@@ -729,6 +774,13 @@ maybe'averageInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 maybe'averageInputProcessingTime
   = Data.ProtoLens.Field.field @"maybe'averageInputProcessingTime"
+maybe'averageMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'averageMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'averageMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"maybe'averageMissedSnapshotRate"
 maybe'averageOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -757,6 +809,12 @@ maybe'behavior ::
    Data.ProtoLens.Field.HasField s "maybe'behavior" a) =>
   Lens.Family2.LensLike' f s a
 maybe'behavior = Data.ProtoLens.Field.field @"maybe'behavior"
+maybe'blessing ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'blessing" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'blessing = Data.ProtoLens.Field.field @"maybe'blessing"
 maybe'broadcast ::
   forall f s a.
   (Prelude.Functor f,
@@ -1223,6 +1281,13 @@ maybe'maxInputProcessingTime ::
   Lens.Family2.LensLike' f s a
 maybe'maxInputProcessingTime
   = Data.ProtoLens.Field.field @"maybe'maxInputProcessingTime"
+maybe'maxMissedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'maxMissedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'maxMissedSnapshotRate
+  = Data.ProtoLens.Field.field @"maybe'maxMissedSnapshotRate"
 maybe'maxOutputTime ::
   forall f s a.
   (Prelude.Functor f,
@@ -1250,6 +1315,13 @@ maybe'messageText ::
    Data.ProtoLens.Field.HasField s "maybe'messageText" a) =>
   Lens.Family2.LensLike' f s a
 maybe'messageText = Data.ProtoLens.Field.field @"maybe'messageText"
+maybe'missedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'missedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'missedSnapshotRate
+  = Data.ProtoLens.Field.field @"maybe'missedSnapshotRate"
 maybe'mode ::
   forall f s a.
   (Prelude.Functor f,
@@ -1462,6 +1534,12 @@ maybe'runeType ::
    Data.ProtoLens.Field.HasField s "maybe'runeType" a) =>
   Lens.Family2.LensLike' f s a
 maybe'runeType = Data.ProtoLens.Field.field @"maybe'runeType"
+maybe'scepter ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'scepter" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'scepter = Data.ProtoLens.Field.field @"maybe'scepter"
 maybe'search ::
   forall f s a.
   (Prelude.Functor f,
@@ -1611,6 +1689,12 @@ maybe'team ::
    Data.ProtoLens.Field.HasField s "maybe'team" a) =>
   Lens.Family2.LensLike' f s a
 maybe'team = Data.ProtoLens.Field.field @"maybe'team"
+maybe'tick ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'tick" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'tick = Data.ProtoLens.Field.field @"maybe'tick"
 maybe'timerAlertType ::
   forall f s a.
   (Prelude.Functor f,
@@ -1725,6 +1809,13 @@ messageText ::
    Data.ProtoLens.Field.HasField s "messageText" a) =>
   Lens.Family2.LensLike' f s a
 messageText = Data.ProtoLens.Field.field @"messageText"
+missedSnapshotRate ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "missedSnapshotRate" a) =>
+  Lens.Family2.LensLike' f s a
+missedSnapshotRate
+  = Data.ProtoLens.Field.field @"missedSnapshotRate"
 mode ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "mode" a) =>
@@ -1931,6 +2022,11 @@ runeType ::
    Data.ProtoLens.Field.HasField s "runeType" a) =>
   Lens.Family2.LensLike' f s a
 runeType = Data.ProtoLens.Field.field @"runeType"
+scepter ::
+  forall f s a.
+  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "scepter" a) =>
+  Lens.Family2.LensLike' f s a
+scepter = Data.ProtoLens.Field.field @"scepter"
 search ::
   forall f s a.
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "search" a) =>
@@ -2066,6 +2162,11 @@ team ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "team" a) =>
   Lens.Family2.LensLike' f s a
 team = Data.ProtoLens.Field.field @"team"
+tick ::
+  forall f s a.
+  (Prelude.Functor f, Data.ProtoLens.Field.HasField s "tick" a) =>
+  Lens.Family2.LensLike' f s a
+tick = Data.ProtoLens.Field.field @"tick"
 timerAlertType ::
   forall f s a.
   (Prelude.Functor f,

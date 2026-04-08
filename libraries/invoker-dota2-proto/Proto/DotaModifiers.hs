@@ -36,10 +36,12 @@ import qualified Proto.Networkbasetypes
 {- | Fields :
      
          * 'Proto.DotaModifiers_Fields.modifierType' @:: Lens' CDOTALuaModifierEntry Data.Int.Int32@
-         * 'Proto.DotaModifiers_Fields.modifierFilename' @:: Lens' CDOTALuaModifierEntry Data.Text.Text@ -}
+         * 'Proto.DotaModifiers_Fields.maybe'modifierType' @:: Lens' CDOTALuaModifierEntry (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.DotaModifiers_Fields.modifierFilename' @:: Lens' CDOTALuaModifierEntry Data.Text.Text@
+         * 'Proto.DotaModifiers_Fields.maybe'modifierFilename' @:: Lens' CDOTALuaModifierEntry (Prelude.Maybe Data.Text.Text)@ -}
 data CDOTALuaModifierEntry
-  = CDOTALuaModifierEntry'_constructor {_CDOTALuaModifierEntry'modifierType :: !Data.Int.Int32,
-                                        _CDOTALuaModifierEntry'modifierFilename :: !Data.Text.Text,
+  = CDOTALuaModifierEntry'_constructor {_CDOTALuaModifierEntry'modifierType :: !(Prelude.Maybe Data.Int.Int32),
+                                        _CDOTALuaModifierEntry'modifierFilename :: !(Prelude.Maybe Data.Text.Text),
                                         _CDOTALuaModifierEntry'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CDOTALuaModifierEntry where
@@ -54,8 +56,22 @@ instance Data.ProtoLens.Field.HasField CDOTALuaModifierEntry "modifierType" Data
         (Lens.Family2.Unchecked.lens
            _CDOTALuaModifierEntry'modifierType
            (\ x__ y__ -> x__ {_CDOTALuaModifierEntry'modifierType = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTALuaModifierEntry "maybe'modifierType" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTALuaModifierEntry'modifierType
+           (\ x__ y__ -> x__ {_CDOTALuaModifierEntry'modifierType = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CDOTALuaModifierEntry "modifierFilename" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTALuaModifierEntry'modifierFilename
+           (\ x__ y__ -> x__ {_CDOTALuaModifierEntry'modifierFilename = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTALuaModifierEntry "maybe'modifierFilename" (Prelude.Maybe Data.Text.Text) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -67,8 +83,8 @@ instance Data.ProtoLens.Message CDOTALuaModifierEntry where
   packedMessageDescriptor _
     = "\n\
       \\NAKCDOTALuaModifierEntry\DC2#\n\
-      \\rmodifier_type\CAN\SOH \STX(\ENQR\fmodifierType\DC2+\n\
-      \\DC1modifier_filename\CAN\STX \STX(\tR\DLEmodifierFilename"
+      \\rmodifier_type\CAN\SOH \SOH(\ENQR\fmodifierType\DC2+\n\
+      \\DC1modifier_filename\CAN\STX \SOH(\tR\DLEmodifierFilename"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -77,18 +93,16 @@ instance Data.ProtoLens.Message CDOTALuaModifierEntry where
               "modifier_type"
               (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"modifierType")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'modifierType")) ::
               Data.ProtoLens.FieldDescriptor CDOTALuaModifierEntry
         modifierFilename__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "modifier_filename"
               (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"modifierFilename")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'modifierFilename")) ::
               Data.ProtoLens.FieldDescriptor CDOTALuaModifierEntry
       in
         Data.Map.fromList
@@ -100,30 +114,18 @@ instance Data.ProtoLens.Message CDOTALuaModifierEntry where
         (\ x__ y__ -> x__ {_CDOTALuaModifierEntry'_unknownFields = y__})
   defMessage
     = CDOTALuaModifierEntry'_constructor
-        {_CDOTALuaModifierEntry'modifierType = Data.ProtoLens.fieldDefault,
-         _CDOTALuaModifierEntry'modifierFilename = Data.ProtoLens.fieldDefault,
+        {_CDOTALuaModifierEntry'modifierType = Prelude.Nothing,
+         _CDOTALuaModifierEntry'modifierFilename = Prelude.Nothing,
          _CDOTALuaModifierEntry'_unknownFields = []}
   parseMessage
     = let
         loop ::
           CDOTALuaModifierEntry
-          -> Prelude.Bool
-             -> Prelude.Bool
-                -> Data.ProtoLens.Encoding.Bytes.Parser CDOTALuaModifierEntry
-        loop x required'modifierFilename required'modifierType
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTALuaModifierEntry
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing
-                           = (if required'modifierFilename then
-                                  (:) "modifier_filename"
-                              else
-                                  Prelude.id)
-                               ((if required'modifierType then
-                                     (:) "modifier_type"
-                                 else
-                                     Prelude.id)
-                                  [])
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -146,7 +148,6 @@ instance Data.ProtoLens.Message CDOTALuaModifierEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"modifierType") y x)
-                                  required'modifierFilename Prelude.False
                         18
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -156,39 +157,44 @@ instance Data.ProtoLens.Message CDOTALuaModifierEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"modifierFilename") y x)
-                                  Prelude.False required'modifierType
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'modifierFilename required'modifierType
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop Data.ProtoLens.defMessage Prelude.True Prelude.True)
-          "CDOTALuaModifierEntry"
+          (do loop Data.ProtoLens.defMessage) "CDOTALuaModifierEntry"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'modifierType") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
              ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                   (Lens.Family2.view
-                      (Data.ProtoLens.Field.field @"modifierType") _x)))
-             ((Data.Monoid.<>)
-                ((Data.Monoid.<>)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt 18)
-                   ((Prelude..)
-                      (\ bs
-                         -> (Data.Monoid.<>)
-                              (Data.ProtoLens.Encoding.Bytes.putVarInt
-                                 (Prelude.fromIntegral (Data.ByteString.length bs)))
-                              (Data.ProtoLens.Encoding.Bytes.putBytes bs))
-                      Data.Text.Encoding.encodeUtf8
-                      (Lens.Family2.view
-                         (Data.ProtoLens.Field.field @"modifierFilename") _x)))
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'modifierFilename") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 18)
+                          ((Prelude..)
+                             (\ bs
+                                -> (Data.Monoid.<>)
+                                     (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                        (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                     (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                             Data.Text.Encoding.encodeUtf8 _v))
                 (Data.ProtoLens.Encoding.Wire.buildFieldSet
                    (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
 instance Control.DeepSeq.NFData CDOTALuaModifierEntry where
@@ -203,9 +209,13 @@ instance Control.DeepSeq.NFData CDOTALuaModifierEntry where
 {- | Fields :
      
          * 'Proto.DotaModifiers_Fields.entryType' @:: Lens' CDOTAModifierBuffTableEntry DOTA_MODIFIER_ENTRY_TYPE@
+         * 'Proto.DotaModifiers_Fields.maybe'entryType' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe DOTA_MODIFIER_ENTRY_TYPE)@
          * 'Proto.DotaModifiers_Fields.parent' @:: Lens' CDOTAModifierBuffTableEntry Data.Word.Word32@
+         * 'Proto.DotaModifiers_Fields.maybe'parent' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Data.Word.Word32)@
          * 'Proto.DotaModifiers_Fields.index' @:: Lens' CDOTAModifierBuffTableEntry Data.Int.Int32@
+         * 'Proto.DotaModifiers_Fields.maybe'index' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Data.Int.Int32)@
          * 'Proto.DotaModifiers_Fields.serialNum' @:: Lens' CDOTAModifierBuffTableEntry Data.Int.Int32@
+         * 'Proto.DotaModifiers_Fields.maybe'serialNum' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Data.Int.Int32)@
          * 'Proto.DotaModifiers_Fields.modifierClass' @:: Lens' CDOTAModifierBuffTableEntry Data.Int.Int32@
          * 'Proto.DotaModifiers_Fields.maybe'modifierClass' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Data.Int.Int32)@
          * 'Proto.DotaModifiers_Fields.abilityLevel' @:: Lens' CDOTAModifierBuffTableEntry Data.Int.Int32@
@@ -277,12 +287,16 @@ instance Control.DeepSeq.NFData CDOTALuaModifierEntry where
          * 'Proto.DotaModifiers_Fields.auraWithinRange' @:: Lens' CDOTAModifierBuffTableEntry Prelude.Bool@
          * 'Proto.DotaModifiers_Fields.maybe'auraWithinRange' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Prelude.Bool)@
          * 'Proto.DotaModifiers_Fields.moveSlow' @:: Lens' CDOTAModifierBuffTableEntry Prelude.Float@
-         * 'Proto.DotaModifiers_Fields.maybe'moveSlow' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Prelude.Float)@ -}
+         * 'Proto.DotaModifiers_Fields.maybe'moveSlow' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Prelude.Float)@
+         * 'Proto.DotaModifiers_Fields.hasScepter' @:: Lens' CDOTAModifierBuffTableEntry Prelude.Bool@
+         * 'Proto.DotaModifiers_Fields.maybe'hasScepter' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Prelude.Bool)@
+         * 'Proto.DotaModifiers_Fields.hasShard' @:: Lens' CDOTAModifierBuffTableEntry Prelude.Bool@
+         * 'Proto.DotaModifiers_Fields.maybe'hasShard' @:: Lens' CDOTAModifierBuffTableEntry (Prelude.Maybe Prelude.Bool)@ -}
 data CDOTAModifierBuffTableEntry
-  = CDOTAModifierBuffTableEntry'_constructor {_CDOTAModifierBuffTableEntry'entryType :: !DOTA_MODIFIER_ENTRY_TYPE,
-                                              _CDOTAModifierBuffTableEntry'parent :: !Data.Word.Word32,
-                                              _CDOTAModifierBuffTableEntry'index :: !Data.Int.Int32,
-                                              _CDOTAModifierBuffTableEntry'serialNum :: !Data.Int.Int32,
+  = CDOTAModifierBuffTableEntry'_constructor {_CDOTAModifierBuffTableEntry'entryType :: !(Prelude.Maybe DOTA_MODIFIER_ENTRY_TYPE),
+                                              _CDOTAModifierBuffTableEntry'parent :: !(Prelude.Maybe Data.Word.Word32),
+                                              _CDOTAModifierBuffTableEntry'index :: !(Prelude.Maybe Data.Int.Int32),
+                                              _CDOTAModifierBuffTableEntry'serialNum :: !(Prelude.Maybe Data.Int.Int32),
                                               _CDOTAModifierBuffTableEntry'modifierClass :: !(Prelude.Maybe Data.Int.Int32),
                                               _CDOTAModifierBuffTableEntry'abilityLevel :: !(Prelude.Maybe Data.Int.Int32),
                                               _CDOTAModifierBuffTableEntry'stackCount :: !(Prelude.Maybe Data.Int.Int32),
@@ -319,6 +333,8 @@ data CDOTAModifierBuffTableEntry
                                               _CDOTAModifierBuffTableEntry'customEntity :: !(Prelude.Maybe Data.Word.Word32),
                                               _CDOTAModifierBuffTableEntry'auraWithinRange :: !(Prelude.Maybe Prelude.Bool),
                                               _CDOTAModifierBuffTableEntry'moveSlow :: !(Prelude.Maybe Prelude.Float),
+                                              _CDOTAModifierBuffTableEntry'hasScepter :: !(Prelude.Maybe Prelude.Bool),
+                                              _CDOTAModifierBuffTableEntry'hasShard :: !(Prelude.Maybe Prelude.Bool),
                                               _CDOTAModifierBuffTableEntry'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CDOTAModifierBuffTableEntry where
@@ -333,8 +349,22 @@ instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "entryType" D
         (Lens.Family2.Unchecked.lens
            _CDOTAModifierBuffTableEntry'entryType
            (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'entryType = y__}))
+        (Data.ProtoLens.maybeLens DOTA_MODIFIER_ENTRY_TYPE_ACTIVE)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'entryType" (Prelude.Maybe DOTA_MODIFIER_ENTRY_TYPE) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'entryType
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'entryType = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "parent" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'parent
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'parent = y__}))
+        (Data.ProtoLens.maybeLens 16777215)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'parent" (Prelude.Maybe Data.Word.Word32) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -347,8 +377,22 @@ instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "index" Data.
         (Lens.Family2.Unchecked.lens
            _CDOTAModifierBuffTableEntry'index
            (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'index = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'index" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'index
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'index = y__}))
         Prelude.id
 instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "serialNum" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'serialNum
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'serialNum = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'serialNum" (Prelude.Maybe Data.Int.Int32) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -893,17 +937,45 @@ instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'moveSl
            _CDOTAModifierBuffTableEntry'moveSlow
            (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'moveSlow = y__}))
         Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "hasScepter" Prelude.Bool where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'hasScepter
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'hasScepter = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'hasScepter" (Prelude.Maybe Prelude.Bool) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'hasScepter
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'hasScepter = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "hasShard" Prelude.Bool where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'hasShard
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'hasShard = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CDOTAModifierBuffTableEntry "maybe'hasShard" (Prelude.Maybe Prelude.Bool) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTAModifierBuffTableEntry'hasShard
+           (\ x__ y__ -> x__ {_CDOTAModifierBuffTableEntry'hasShard = y__}))
+        Prelude.id
 instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
   messageName _ = Data.Text.pack "CDOTAModifierBuffTableEntry"
   packedMessageDescriptor _
     = "\n\
       \\ESCCDOTAModifierBuffTableEntry\DC2Y\n\
       \\n\
-      \entry_type\CAN\SOH \STX(\SO2\EM.DOTA_MODIFIER_ENTRY_TYPE:\USDOTA_MODIFIER_ENTRY_TYPE_ACTIVER\tentryType\DC2 \n\
-      \\ACKparent\CAN\STX \STX(\r:\b16777215R\ACKparent\DC2\DC4\n\
-      \\ENQindex\CAN\ETX \STX(\ENQR\ENQindex\DC2\GS\n\
+      \entry_type\CAN\SOH \SOH(\SO2\EM.DOTA_MODIFIER_ENTRY_TYPE:\USDOTA_MODIFIER_ENTRY_TYPE_ACTIVER\tentryType\DC2 \n\
+      \\ACKparent\CAN\STX \SOH(\r:\b16777215R\ACKparent\DC2\DC4\n\
+      \\ENQindex\CAN\ETX \SOH(\ENQR\ENQindex\DC2\GS\n\
       \\n\
-      \serial_num\CAN\EOT \STX(\ENQR\tserialNum\DC2%\n\
+      \serial_num\CAN\EOT \SOH(\ENQR\tserialNum\DC2%\n\
       \\SOmodifier_class\CAN\ENQ \SOH(\ENQR\rmodifierClass\DC2#\n\
       \\rability_level\CAN\ACK \SOH(\ENQR\fabilityLevel\DC2\US\n\
       \\vstack_count\CAN\a \SOH(\ENQR\n\
@@ -944,7 +1016,10 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
       \bonus_mana\CAN% \SOH(\ENQR\tbonusMana\DC2-\n\
       \\rcustom_entity\CAN& \SOH(\r:\b16777215R\fcustomEntity\DC2*\n\
       \\DC1aura_within_range\CAN' \SOH(\bR\SIauraWithinRange\DC2\ESC\n\
-      \\tmove_slow\CAN( \SOH(\STXR\bmoveSlow"
+      \\tmove_slow\CAN( \SOH(\STXR\bmoveSlow\DC2\US\n\
+      \\vhas_scepter\CAN) \SOH(\bR\n\
+      \hasScepter\DC2\ESC\n\
+      \\thas_shard\CAN* \SOH(\bR\bhasShard"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -953,34 +1028,32 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
               "entry_type"
               (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
                  Data.ProtoLens.FieldTypeDescriptor DOTA_MODIFIER_ENTRY_TYPE)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"entryType")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'entryType")) ::
               Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
         parent__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "parent"
               (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"parent")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'parent")) ::
               Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
         index__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "index"
               (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"index")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'index")) ::
               Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
         serialNum__field_descriptor
           = Data.ProtoLens.FieldDescriptor
               "serial_num"
               (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
                  Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required
-                 (Data.ProtoLens.Field.field @"serialNum")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'serialNum")) ::
               Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
         modifierClass__field_descriptor
           = Data.ProtoLens.FieldDescriptor
@@ -1270,6 +1343,22 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
               (Data.ProtoLens.OptionalField
                  (Data.ProtoLens.Field.field @"maybe'moveSlow")) ::
               Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
+        hasScepter__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "has_scepter"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.BoolField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Bool)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'hasScepter")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
+        hasShard__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "has_shard"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.BoolField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Bool)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'hasShard")) ::
+              Data.ProtoLens.FieldDescriptor CDOTAModifierBuffTableEntry
       in
         Data.Map.fromList
           [(Data.ProtoLens.Tag 1, entryType__field_descriptor),
@@ -1311,7 +1400,9 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
            (Data.ProtoLens.Tag 37, bonusMana__field_descriptor),
            (Data.ProtoLens.Tag 38, customEntity__field_descriptor),
            (Data.ProtoLens.Tag 39, auraWithinRange__field_descriptor),
-           (Data.ProtoLens.Tag 40, moveSlow__field_descriptor)]
+           (Data.ProtoLens.Tag 40, moveSlow__field_descriptor),
+           (Data.ProtoLens.Tag 41, hasScepter__field_descriptor),
+           (Data.ProtoLens.Tag 42, hasShard__field_descriptor)]
   unknownFields
     = Lens.Family2.Unchecked.lens
         _CDOTAModifierBuffTableEntry'_unknownFields
@@ -1319,10 +1410,10 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
            -> x__ {_CDOTAModifierBuffTableEntry'_unknownFields = y__})
   defMessage
     = CDOTAModifierBuffTableEntry'_constructor
-        {_CDOTAModifierBuffTableEntry'entryType = DOTA_MODIFIER_ENTRY_TYPE_ACTIVE,
-         _CDOTAModifierBuffTableEntry'parent = 16777215,
-         _CDOTAModifierBuffTableEntry'index = Data.ProtoLens.fieldDefault,
-         _CDOTAModifierBuffTableEntry'serialNum = Data.ProtoLens.fieldDefault,
+        {_CDOTAModifierBuffTableEntry'entryType = Prelude.Nothing,
+         _CDOTAModifierBuffTableEntry'parent = Prelude.Nothing,
+         _CDOTAModifierBuffTableEntry'index = Prelude.Nothing,
+         _CDOTAModifierBuffTableEntry'serialNum = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'modifierClass = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'abilityLevel = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'stackCount = Prelude.Nothing,
@@ -1359,31 +1450,18 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
          _CDOTAModifierBuffTableEntry'customEntity = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'auraWithinRange = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'moveSlow = Prelude.Nothing,
+         _CDOTAModifierBuffTableEntry'hasScepter = Prelude.Nothing,
+         _CDOTAModifierBuffTableEntry'hasShard = Prelude.Nothing,
          _CDOTAModifierBuffTableEntry'_unknownFields = []}
   parseMessage
     = let
         loop ::
           CDOTAModifierBuffTableEntry
-          -> Prelude.Bool
-             -> Prelude.Bool
-                -> Prelude.Bool
-                   -> Prelude.Bool
-                      -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAModifierBuffTableEntry
-        loop
-          x
-          required'entryType
-          required'index
-          required'parent
-          required'serialNum
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTAModifierBuffTableEntry
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing
-                           = (if required'entryType then (:) "entry_type" else Prelude.id)
-                               ((if required'index then (:) "index" else Prelude.id)
-                                  ((if required'parent then (:) "parent" else Prelude.id)
-                                     ((if required'serialNum then (:) "serial_num" else Prelude.id)
-                                        [])))
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -1407,26 +1485,20 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "entry_type"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"entryType") y x)
-                                  Prelude.False required'index required'parent required'serialNum
                         16
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "parent"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"parent") y x)
-                                  required'entryType required'index Prelude.False required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"parent") y x)
                         24
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "index"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"index") y x)
-                                  required'entryType Prelude.False required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"index") y x)
                         32
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1435,7 +1507,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "serial_num"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"serialNum") y x)
-                                  required'entryType required'index required'parent Prelude.False
                         40
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1445,8 +1516,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"modifierClass") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         48
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1456,8 +1525,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"abilityLevel") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         56
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1466,8 +1533,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "stack_count"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"stackCount") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         69
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1477,8 +1542,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"creationTime") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         77
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1487,38 +1550,27 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "duration"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"duration") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         80
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "caster"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"caster") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"caster") y x)
                         88
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "ability"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"ability") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"ability") y x)
                         96
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "armor"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"armor") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"armor") y x)
                         109
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1527,17 +1579,12 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "fade_time"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"fadeTime") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         112
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "subtle"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"subtle") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"subtle") y x)
                         125
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1546,28 +1593,20 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "channel_time"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"channelTime") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         130
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
                                            Data.ProtoLens.Encoding.Bytes.isolate
                                              (Prelude.fromIntegral len) Data.ProtoLens.parseMessage)
                                        "v_start"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"vStart") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"vStart") y x)
                         138
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
                                            Data.ProtoLens.Encoding.Bytes.isolate
                                              (Prelude.fromIntegral len) Data.ProtoLens.parseMessage)
                                        "v_end"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"vEnd") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"vEnd") y x)
                         146
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1577,8 +1616,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"portalLoopAppear") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         154
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1588,8 +1625,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"portalLoopDisappear") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         162
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1599,8 +1634,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"heroLoopAppear") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         170
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1610,8 +1643,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"heroLoopDisappear") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         176
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1621,17 +1652,12 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"movementSpeed") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         184
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "aura"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"aura") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"aura") y x)
                         192
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1640,28 +1666,20 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "activity"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"activity") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         200
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "damage"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"damage") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"damage") y x)
                         208
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           Prelude.fromIntegral
                                           Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "range"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"range") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"range") y x)
                         216
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1671,8 +1689,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"ddModifierIndex") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         224
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1681,8 +1697,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "dd_ability_id"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"ddAbilityId") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         234
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1692,17 +1706,12 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"illusionLabel") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         240
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
                                           ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
                                        "active"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"active") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"active") y x)
                         250
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
@@ -1711,18 +1720,13 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "player_ids"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"playerIds") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         258
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
                                            Data.ProtoLens.Encoding.Bytes.getText
                                              (Prelude.fromIntegral len))
                                        "lua_name"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"luaName") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"luaName") y x)
                         264
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1731,8 +1735,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "attack_speed"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"attackSpeed") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         272
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1741,8 +1743,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "aura_owner"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"auraOwner") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         280
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1752,8 +1752,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"bonusAllStats") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         288
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1762,8 +1760,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "bonus_health"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"bonusHealth") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         296
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1772,8 +1768,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "bonus_mana"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"bonusMana") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         304
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1783,8 +1777,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"customEntity") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         312
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1793,8 +1785,6 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"auraWithinRange") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
                         325
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (Prelude.fmap
@@ -1803,50 +1793,75 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                        "move_slow"
                                 loop
                                   (Lens.Family2.set (Data.ProtoLens.Field.field @"moveSlow") y x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
+                        328
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "has_scepter"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"hasScepter") y x)
+                        336
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          ((Prelude./=) 0) Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "has_shard"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"hasShard") y x)
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'entryType required'index required'parent
-                                  required'serialNum
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop
-                Data.ProtoLens.defMessage Prelude.True Prelude.True Prelude.True
-                Prelude.True)
-          "CDOTAModifierBuffTableEntry"
+          (do loop Data.ProtoLens.defMessage) "CDOTAModifierBuffTableEntry"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'entryType") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                          Prelude.fromEnum _v))
              ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   ((Prelude..)
-                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
-                   Prelude.fromEnum
-                   (Lens.Family2.view (Data.ProtoLens.Field.field @"entryType") _x)))
-             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'parent") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
                 ((Data.Monoid.<>)
-                   (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
-                   ((Prelude..)
-                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                      (Lens.Family2.view (Data.ProtoLens.Field.field @"parent") _x)))
-                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'index") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
                    ((Data.Monoid.<>)
-                      (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
-                      ((Prelude..)
-                         Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                         (Lens.Family2.view (Data.ProtoLens.Field.field @"index") _x)))
-                   ((Data.Monoid.<>)
-                      ((Data.Monoid.<>)
-                         (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
-                         ((Prelude..)
-                            Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral
-                            (Lens.Family2.view (Data.ProtoLens.Field.field @"serialNum") _x)))
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'serialNum") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
                       ((Data.Monoid.<>)
                          (case
                               Lens.Family2.view
@@ -2489,10 +2504,52 @@ instance Data.ProtoLens.Message CDOTAModifierBuffTableEntry where
                                                                                                                                                Data.ProtoLens.Encoding.Bytes.putFixed32
                                                                                                                                                Data.ProtoLens.Encoding.Bytes.floatToWord
                                                                                                                                                _v))
-                                                                                                                                  (Data.ProtoLens.Encoding.Wire.buildFieldSet
-                                                                                                                                     (Lens.Family2.view
-                                                                                                                                        Data.ProtoLens.unknownFields
-                                                                                                                                        _x)))))))))))))))))))))))))))))))))))))))))
+                                                                                                                                  ((Data.Monoid.<>)
+                                                                                                                                     (case
+                                                                                                                                          Lens.Family2.view
+                                                                                                                                            (Data.ProtoLens.Field.field
+                                                                                                                                               @"maybe'hasScepter")
+                                                                                                                                            _x
+                                                                                                                                      of
+                                                                                                                                        Prelude.Nothing
+                                                                                                                                          -> Data.Monoid.mempty
+                                                                                                                                        (Prelude.Just _v)
+                                                                                                                                          -> (Data.Monoid.<>)
+                                                                                                                                               (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                                                                                                  328)
+                                                                                                                                               ((Prelude..)
+                                                                                                                                                  Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                                                                                                  (\ b
+                                                                                                                                                     -> if b then
+                                                                                                                                                            1
+                                                                                                                                                        else
+                                                                                                                                                            0)
+                                                                                                                                                  _v))
+                                                                                                                                     ((Data.Monoid.<>)
+                                                                                                                                        (case
+                                                                                                                                             Lens.Family2.view
+                                                                                                                                               (Data.ProtoLens.Field.field
+                                                                                                                                                  @"maybe'hasShard")
+                                                                                                                                               _x
+                                                                                                                                         of
+                                                                                                                                           Prelude.Nothing
+                                                                                                                                             -> Data.Monoid.mempty
+                                                                                                                                           (Prelude.Just _v)
+                                                                                                                                             -> (Data.Monoid.<>)
+                                                                                                                                                  (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                                                                                                     336)
+                                                                                                                                                  ((Prelude..)
+                                                                                                                                                     Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                                                                                                     (\ b
+                                                                                                                                                        -> if b then
+                                                                                                                                                               1
+                                                                                                                                                           else
+                                                                                                                                                               0)
+                                                                                                                                                     _v))
+                                                                                                                                        (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                                                                                                                           (Lens.Family2.view
+                                                                                                                                              Data.ProtoLens.unknownFields
+                                                                                                                                              _x)))))))))))))))))))))))))))))))))))))))))))
 instance Control.DeepSeq.NFData CDOTAModifierBuffTableEntry where
   rnf
     = \ x__
@@ -2604,7 +2661,13 @@ instance Control.DeepSeq.NFData CDOTAModifierBuffTableEntry where
                                                                                                                                   (Control.DeepSeq.deepseq
                                                                                                                                      (_CDOTAModifierBuffTableEntry'moveSlow
                                                                                                                                         x__)
-                                                                                                                                     ()))))))))))))))))))))))))))))))))))))))))
+                                                                                                                                     (Control.DeepSeq.deepseq
+                                                                                                                                        (_CDOTAModifierBuffTableEntry'hasScepter
+                                                                                                                                           x__)
+                                                                                                                                        (Control.DeepSeq.deepseq
+                                                                                                                                           (_CDOTAModifierBuffTableEntry'hasShard
+                                                                                                                                              x__)
+                                                                                                                                           ()))))))))))))))))))))))))))))))))))))))))))
 data DOTA_MODIFIER_ENTRY_TYPE
   = DOTA_MODIFIER_ENTRY_TYPE_ACTIVE |
     DOTA_MODIFIER_ENTRY_TYPE_REMOVED
@@ -2658,14 +2721,14 @@ instance Control.DeepSeq.NFData DOTA_MODIFIER_ENTRY_TYPE where
 packedFileDescriptor :: Data.ByteString.ByteString
 packedFileDescriptor
   = "\n\
-    \\DC4dota_modifiers.proto\SUB\SYNnetworkbasetypes.proto\"\185\v\n\
+    \\DC4dota_modifiers.proto\SUB\SYNnetworkbasetypes.proto\"\247\v\n\
     \\ESCCDOTAModifierBuffTableEntry\DC2Y\n\
     \\n\
-    \entry_type\CAN\SOH \STX(\SO2\EM.DOTA_MODIFIER_ENTRY_TYPE:\USDOTA_MODIFIER_ENTRY_TYPE_ACTIVER\tentryType\DC2 \n\
-    \\ACKparent\CAN\STX \STX(\r:\b16777215R\ACKparent\DC2\DC4\n\
-    \\ENQindex\CAN\ETX \STX(\ENQR\ENQindex\DC2\GS\n\
+    \entry_type\CAN\SOH \SOH(\SO2\EM.DOTA_MODIFIER_ENTRY_TYPE:\USDOTA_MODIFIER_ENTRY_TYPE_ACTIVER\tentryType\DC2 \n\
+    \\ACKparent\CAN\STX \SOH(\r:\b16777215R\ACKparent\DC2\DC4\n\
+    \\ENQindex\CAN\ETX \SOH(\ENQR\ENQindex\DC2\GS\n\
     \\n\
-    \serial_num\CAN\EOT \STX(\ENQR\tserialNum\DC2%\n\
+    \serial_num\CAN\EOT \SOH(\ENQR\tserialNum\DC2%\n\
     \\SOmodifier_class\CAN\ENQ \SOH(\ENQR\rmodifierClass\DC2#\n\
     \\rability_level\CAN\ACK \SOH(\ENQR\fabilityLevel\DC2\US\n\
     \\vstack_count\CAN\a \SOH(\ENQR\n\
@@ -2706,14 +2769,17 @@ packedFileDescriptor
     \bonus_mana\CAN% \SOH(\ENQR\tbonusMana\DC2-\n\
     \\rcustom_entity\CAN& \SOH(\r:\b16777215R\fcustomEntity\DC2*\n\
     \\DC1aura_within_range\CAN' \SOH(\bR\SIauraWithinRange\DC2\ESC\n\
-    \\tmove_slow\CAN( \SOH(\STXR\bmoveSlow\"i\n\
+    \\tmove_slow\CAN( \SOH(\STXR\bmoveSlow\DC2\US\n\
+    \\vhas_scepter\CAN) \SOH(\bR\n\
+    \hasScepter\DC2\ESC\n\
+    \\thas_shard\CAN* \SOH(\bR\bhasShard\"i\n\
     \\NAKCDOTALuaModifierEntry\DC2#\n\
-    \\rmodifier_type\CAN\SOH \STX(\ENQR\fmodifierType\DC2+\n\
-    \\DC1modifier_filename\CAN\STX \STX(\tR\DLEmodifierFilename*e\n\
+    \\rmodifier_type\CAN\SOH \SOH(\ENQR\fmodifierType\DC2+\n\
+    \\DC1modifier_filename\CAN\STX \SOH(\tR\DLEmodifierFilename*e\n\
     \\CANDOTA_MODIFIER_ENTRY_TYPE\DC2#\n\
     \\USDOTA_MODIFIER_ENTRY_TYPE_ACTIVE\DLE\SOH\DC2$\n\
-    \ DOTA_MODIFIER_ENTRY_TYPE_REMOVED\DLE\STXJ\223\EM\n\
-    \\ACK\DC2\EOT\NUL\NUL5\SOH\n\
+    \ DOTA_MODIFIER_ENTRY_TYPE_REMOVED\DLE\STXJ\233\SUB\n\
+    \\ACK\DC2\EOT\NUL\NUL7\SOH\n\
     \\t\n\
     \\STX\ETX\NUL\DC2\ETX\NUL\NUL \n\
     \\n\
@@ -2736,7 +2802,7 @@ packedFileDescriptor
     \\ENQ\ENQ\NUL\STX\SOH\STX\DC2\ETX\EOT+,\n\
     \\n\
     \\n\
-    \\STX\EOT\NUL\DC2\EOT\a\NUL0\SOH\n\
+    \\STX\EOT\NUL\DC2\EOT\a\NUL2\SOH\n\
     \\n\
     \\n\
     \\ETX\EOT\NUL\SOH\DC2\ETX\a\b#\n\
@@ -3184,29 +3250,49 @@ packedFileDescriptor
     \\ENQ\EOT\NUL\STX'\SOH\DC2\ETX/\ETB \n\
     \\f\n\
     \\ENQ\EOT\NUL\STX'\ETX\DC2\ETX/#%\n\
-    \\n\
-    \\n\
-    \\STX\EOT\SOH\DC2\EOT2\NUL5\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\EOT\SOH\SOH\DC2\ETX2\b\GS\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\NUL\DC2\ETX3\b)\n\
+    \\EOT\EOT\NUL\STX(\DC2\ETX0\b'\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX3\b\DLE\n\
+    \\ENQ\EOT\NUL\STX(\EOT\DC2\ETX0\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ENQ\DC2\ETX3\DC1\SYN\n\
+    \\ENQ\EOT\NUL\STX(\ENQ\DC2\ETX0\DC1\NAK\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX3\ETB$\n\
+    \\ENQ\EOT\NUL\STX(\SOH\DC2\ETX0\SYN!\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX3'(\n\
+    \\ENQ\EOT\NUL\STX(\ETX\DC2\ETX0$&\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\SOH\DC2\ETX4\b.\n\
+    \\EOT\EOT\NUL\STX)\DC2\ETX1\b%\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\EOT\DC2\ETX4\b\DLE\n\
+    \\ENQ\EOT\NUL\STX)\EOT\DC2\ETX1\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\ENQ\DC2\ETX4\DC1\ETB\n\
+    \\ENQ\EOT\NUL\STX)\ENQ\DC2\ETX1\DC1\NAK\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\SOH\DC2\ETX4\CAN)\n\
+    \\ENQ\EOT\NUL\STX)\SOH\DC2\ETX1\SYN\US\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\ETX\DC2\ETX4,-"
+    \\ENQ\EOT\NUL\STX)\ETX\DC2\ETX1\"$\n\
+    \\n\
+    \\n\
+    \\STX\EOT\SOH\DC2\EOT4\NUL7\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\SOH\SOH\DC2\ETX4\b\GS\n\
+    \\v\n\
+    \\EOT\EOT\SOH\STX\NUL\DC2\ETX5\b)\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX5\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\ENQ\DC2\ETX5\DC1\SYN\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX5\ETB$\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX5'(\n\
+    \\v\n\
+    \\EOT\EOT\SOH\STX\SOH\DC2\ETX6\b.\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\SOH\EOT\DC2\ETX6\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\SOH\ENQ\DC2\ETX6\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\SOH\SOH\DC2\ETX6\CAN)\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\SOH\ETX\DC2\ETX6,-"

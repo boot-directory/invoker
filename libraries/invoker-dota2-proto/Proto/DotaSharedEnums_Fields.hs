@@ -816,6 +816,13 @@ maybe'modifierPurged ::
   Lens.Family2.LensLike' f s a
 maybe'modifierPurged
   = Data.ProtoLens.Field.field @"maybe'modifierPurged"
+maybe'modifierPurgedDuration ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'modifierPurgedDuration" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'modifierPurgedDuration
+  = Data.ProtoLens.Field.field @"maybe'modifierPurgedDuration"
 maybe'motionControllerModifier ::
   forall f s a.
   (Prelude.Functor f,
@@ -1170,6 +1177,13 @@ modifierPurged ::
    Data.ProtoLens.Field.HasField s "modifierPurged" a) =>
   Lens.Family2.LensLike' f s a
 modifierPurged = Data.ProtoLens.Field.field @"modifierPurged"
+modifierPurgedDuration ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "modifierPurgedDuration" a) =>
+  Lens.Family2.LensLike' f s a
+modifierPurgedDuration
+  = Data.ProtoLens.Field.field @"modifierPurgedDuration"
 motionControllerModifier ::
   forall f s a.
   (Prelude.Functor f,

@@ -12,6 +12,10 @@ module Proto.DotaGcmessagesCommonOverworld (
         CMsgClientToGCOverworldCompletePathResponse(),
         CMsgClientToGCOverworldCompletePathResponse'EResponse(..),
         CMsgClientToGCOverworldCompletePathResponse'EResponse(),
+        CMsgClientToGCOverworldDevClearFortune(),
+        CMsgClientToGCOverworldDevClearFortuneResponse(),
+        CMsgClientToGCOverworldDevClearFortuneResponse'EResponse(..),
+        CMsgClientToGCOverworldDevClearFortuneResponse'EResponse(),
         CMsgClientToGCOverworldDevClearInventory(),
         CMsgClientToGCOverworldDevClearInventoryResponse(),
         CMsgClientToGCOverworldDevClearInventoryResponse'EResponse(..),
@@ -28,6 +32,10 @@ module Proto.DotaGcmessagesCommonOverworld (
         CMsgClientToGCOverworldDevResetNodeResponse(),
         CMsgClientToGCOverworldDevResetNodeResponse'EResponse(..),
         CMsgClientToGCOverworldDevResetNodeResponse'EResponse(),
+        CMsgClientToGCOverworldDevSetFortune(),
+        CMsgClientToGCOverworldDevSetFortuneResponse(),
+        CMsgClientToGCOverworldDevSetFortuneResponse'EResponse(..),
+        CMsgClientToGCOverworldDevSetFortuneResponse'EResponse(),
         CMsgClientToGCOverworldFeedback(),
         CMsgClientToGCOverworldFeedbackResponse(),
         CMsgClientToGCOverworldFeedbackResponse'EResponse(..),
@@ -53,6 +61,10 @@ module Proto.DotaGcmessagesCommonOverworld (
         CMsgClientToGCOverworldMoveToNodeResponse(),
         CMsgClientToGCOverworldMoveToNodeResponse'EResponse(..),
         CMsgClientToGCOverworldMoveToNodeResponse'EResponse(),
+        CMsgClientToGCOverworldRequestFortune(),
+        CMsgClientToGCOverworldRequestFortuneResponse(),
+        CMsgClientToGCOverworldRequestFortuneResponse'EResponse(..),
+        CMsgClientToGCOverworldRequestFortuneResponse'EResponse(),
         CMsgClientToGCOverworldRequestTokensNeededByFriend(),
         CMsgClientToGCOverworldRequestTokensNeededByFriendResponse(),
         CMsgClientToGCOverworldRequestTokensNeededByFriendResponse'EResponse(..),
@@ -74,8 +86,8 @@ module Proto.DotaGcmessagesCommonOverworld (
         CMsgOverworldEncounterTokenQuestData'Quest(),
         CMsgOverworldEncounterTokenTreasureData(),
         CMsgOverworldEncounterTokenTreasureData'RewardOption(),
-        CMsgOverworldHeroList(), CMsgOverworldMatchRewards(),
-        CMsgOverworldMatchRewards'Player(),
+        CMsgOverworldFortune(), CMsgOverworldHeroList(),
+        CMsgOverworldMatchRewards(), CMsgOverworldMatchRewards'Player(),
         CMsgOverworldMinigameCustomData(),
         CMsgOverworldMinigameCustomData'MinigameType(..),
         _CMsgOverworldMinigameCustomData'SurvivorsData,
@@ -1835,6 +1847,469 @@ instance Control.DeepSeq.NFData CMsgClientToGCOverworldCompletePathResponse'ERes
   rnf x__ = Prelude.seq x__ ()
 {- | Fields :
      
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.overworldId' @:: Lens' CMsgClientToGCOverworldDevClearFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'overworldId' @:: Lens' CMsgClientToGCOverworldDevClearFortune (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.fortuneId' @:: Lens' CMsgClientToGCOverworldDevClearFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'fortuneId' @:: Lens' CMsgClientToGCOverworldDevClearFortune (Prelude.Maybe Data.Word.Word32)@ -}
+data CMsgClientToGCOverworldDevClearFortune
+  = CMsgClientToGCOverworldDevClearFortune'_constructor {_CMsgClientToGCOverworldDevClearFortune'overworldId :: !(Prelude.Maybe Data.Word.Word32),
+                                                         _CMsgClientToGCOverworldDevClearFortune'fortuneId :: !(Prelude.Maybe Data.Word.Word32),
+                                                         _CMsgClientToGCOverworldDevClearFortune'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldDevClearFortune where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortune "overworldId" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortune'overworldId
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevClearFortune'overworldId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortune "maybe'overworldId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortune'overworldId
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevClearFortune'overworldId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortune "fortuneId" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortune'fortuneId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevClearFortune'fortuneId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortune "maybe'fortuneId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortune'fortuneId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevClearFortune'fortuneId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldDevClearFortune where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldDevClearFortune"
+  packedMessageDescriptor _
+    = "\n\
+      \&CMsgClientToGCOverworldDevClearFortune\DC2!\n\
+      \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId\DC2\GS\n\
+      \\n\
+      \fortune_id\CAN\STX \SOH(\rR\tfortuneId"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        overworldId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "overworld_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'overworldId")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevClearFortune
+        fortuneId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "fortune_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'fortuneId")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevClearFortune
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, overworldId__field_descriptor),
+           (Data.ProtoLens.Tag 2, fortuneId__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldDevClearFortune'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldDevClearFortune'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldDevClearFortune'_constructor
+        {_CMsgClientToGCOverworldDevClearFortune'overworldId = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevClearFortune'fortuneId = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevClearFortune'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldDevClearFortune
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldDevClearFortune
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "overworld_id"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"overworldId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "fortune_id"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"fortuneId") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldDevClearFortune"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'overworldId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'fortuneId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                   (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevClearFortune where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldDevClearFortune'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldDevClearFortune'overworldId x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgClientToGCOverworldDevClearFortune'fortuneId x__) ()))
+{- | Fields :
+     
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.response' @:: Lens' CMsgClientToGCOverworldDevClearFortuneResponse CMsgClientToGCOverworldDevClearFortuneResponse'EResponse@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'response' @:: Lens' CMsgClientToGCOverworldDevClearFortuneResponse (Prelude.Maybe CMsgClientToGCOverworldDevClearFortuneResponse'EResponse)@ -}
+data CMsgClientToGCOverworldDevClearFortuneResponse
+  = CMsgClientToGCOverworldDevClearFortuneResponse'_constructor {_CMsgClientToGCOverworldDevClearFortuneResponse'response :: !(Prelude.Maybe CMsgClientToGCOverworldDevClearFortuneResponse'EResponse),
+                                                                 _CMsgClientToGCOverworldDevClearFortuneResponse'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldDevClearFortuneResponse where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortuneResponse "response" CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevClearFortuneResponse'response = y__}))
+        (Data.ProtoLens.maybeLens
+           CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevClearFortuneResponse "maybe'response" (Prelude.Maybe CMsgClientToGCOverworldDevClearFortuneResponse'EResponse) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevClearFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevClearFortuneResponse'response = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldDevClearFortuneResponse where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldDevClearFortuneResponse"
+  packedMessageDescriptor _
+    = "\n\
+      \.CMsgClientToGCOverworldDevClearFortuneResponse\DC2g\n\
+      \\bresponse\CAN\SOH \SOH(\SO29.CMsgClientToGCOverworldDevClearFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+      \\tEResponse\DC2\DC4\n\
+      \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+      \\n\
+      \k_eSuccess\DLE\SOH\DC2\SO\n\
+      \\n\
+      \k_eTooBusy\DLE\STX\DC2\SI\n\
+      \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+      \\n\
+      \k_eTimeout\DLE\EOT\DC2\DC1\n\
+      \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+      \\DC3k_eInvalidOverworld\DLE\ACK"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        response__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "response"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgClientToGCOverworldDevClearFortuneResponse'EResponse)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'response")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevClearFortuneResponse
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, response__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldDevClearFortuneResponse'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldDevClearFortuneResponse'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldDevClearFortuneResponse'_constructor
+        {_CMsgClientToGCOverworldDevClearFortuneResponse'response = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevClearFortuneResponse'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldDevClearFortuneResponse
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldDevClearFortuneResponse
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.toEnum
+                                          (Prelude.fmap
+                                             Prelude.fromIntegral
+                                             Data.ProtoLens.Encoding.Bytes.getVarInt))
+                                       "response"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"response") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldDevClearFortuneResponse"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'response") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                          Prelude.fromEnum _v))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevClearFortuneResponse where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldDevClearFortuneResponse'_unknownFields
+                x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldDevClearFortuneResponse'response x__) ())
+data CMsgClientToGCOverworldDevClearFortuneResponse'EResponse
+  = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed |
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
+instance Data.ProtoLens.MessageEnum CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  maybeToEnum 0
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+  maybeToEnum 1
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+  maybeToEnum 2
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+  maybeToEnum 3
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+  maybeToEnum 4
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+  maybeToEnum 5
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+  maybeToEnum 6
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+  maybeToEnum _ = Prelude.Nothing
+  showEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+    = "k_eInternalError"
+  showEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+    = "k_eSuccess"
+  showEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+    = "k_eTooBusy"
+  showEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+    = "k_eDisabled"
+  showEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+    = "k_eTimeout"
+  showEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+    = "k_eNotAllowed"
+  showEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+    = "k_eInvalidOverworld"
+  readEnum k
+    | (Prelude.==) k "k_eInternalError"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+    | (Prelude.==) k "k_eSuccess"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+    | (Prelude.==) k "k_eTooBusy"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+    | (Prelude.==) k "k_eDisabled"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+    | (Prelude.==) k "k_eTimeout"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+    | (Prelude.==) k "k_eNotAllowed"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+    | (Prelude.==) k "k_eInvalidOverworld"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+    | Prelude.otherwise
+    = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
+instance Prelude.Bounded CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  minBound
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+  maxBound
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+instance Prelude.Enum CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  toEnum k__
+    = Prelude.maybe
+        (Prelude.error
+           ((Prelude.++)
+              "toEnum: unknown value for enum EResponse: " (Prelude.show k__)))
+        Prelude.id (Data.ProtoLens.maybeToEnum k__)
+  fromEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+    = 0
+  fromEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+    = 1
+  fromEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+    = 2
+  fromEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+    = 3
+  fromEnum CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+    = 4
+  fromEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+    = 5
+  fromEnum
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+    = 6
+  succ
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+    = Prelude.error
+        "CMsgClientToGCOverworldDevClearFortuneResponse'EResponse.succ: bad argument CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld. This value would be out of bounds."
+  succ
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+  succ CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+  succ CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+  succ CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+  succ CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+  succ CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+  pred
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+    = Prelude.error
+        "CMsgClientToGCOverworldDevClearFortuneResponse'EResponse.pred: bad argument CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError. This value would be out of bounds."
+  pred CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+  pred CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eSuccess
+  pred CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eTooBusy
+  pred CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eDisabled
+  pred CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eTimeout
+  pred
+    CMsgClientToGCOverworldDevClearFortuneResponse'K_eInvalidOverworld
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eNotAllowed
+  enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
+  enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
+  enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
+  enumFromThenTo = Data.ProtoLens.Message.Enum.messageEnumFromThenTo
+instance Data.ProtoLens.FieldDefault CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  fieldDefault
+    = CMsgClientToGCOverworldDevClearFortuneResponse'K_eInternalError
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevClearFortuneResponse'EResponse where
+  rnf x__ = Prelude.seq x__ ()
+{- | Fields :
+     
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.overworldId' @:: Lens' CMsgClientToGCOverworldDevClearInventory Data.Word.Word32@
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'overworldId' @:: Lens' CMsgClientToGCOverworldDevClearInventory (Prelude.Maybe Data.Word.Word32)@ -}
 data CMsgClientToGCOverworldDevClearInventory
@@ -3578,6 +4053,462 @@ instance Data.ProtoLens.FieldDefault CMsgClientToGCOverworldDevResetNodeResponse
   fieldDefault
     = CMsgClientToGCOverworldDevResetNodeResponse'K_eInternalError
 instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevResetNodeResponse'EResponse where
+  rnf x__ = Prelude.seq x__ ()
+{- | Fields :
+     
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.overworldId' @:: Lens' CMsgClientToGCOverworldDevSetFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'overworldId' @:: Lens' CMsgClientToGCOverworldDevSetFortune (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.fortuneId' @:: Lens' CMsgClientToGCOverworldDevSetFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'fortuneId' @:: Lens' CMsgClientToGCOverworldDevSetFortune (Prelude.Maybe Data.Word.Word32)@ -}
+data CMsgClientToGCOverworldDevSetFortune
+  = CMsgClientToGCOverworldDevSetFortune'_constructor {_CMsgClientToGCOverworldDevSetFortune'overworldId :: !(Prelude.Maybe Data.Word.Word32),
+                                                       _CMsgClientToGCOverworldDevSetFortune'fortuneId :: !(Prelude.Maybe Data.Word.Word32),
+                                                       _CMsgClientToGCOverworldDevSetFortune'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldDevSetFortune where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortune "overworldId" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortune'overworldId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevSetFortune'overworldId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortune "maybe'overworldId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortune'overworldId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevSetFortune'overworldId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortune "fortuneId" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortune'fortuneId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevSetFortune'fortuneId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortune "maybe'fortuneId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortune'fortuneId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldDevSetFortune'fortuneId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldDevSetFortune where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldDevSetFortune"
+  packedMessageDescriptor _
+    = "\n\
+      \$CMsgClientToGCOverworldDevSetFortune\DC2!\n\
+      \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId\DC2\GS\n\
+      \\n\
+      \fortune_id\CAN\STX \SOH(\rR\tfortuneId"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        overworldId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "overworld_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'overworldId")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevSetFortune
+        fortuneId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "fortune_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'fortuneId")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevSetFortune
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, overworldId__field_descriptor),
+           (Data.ProtoLens.Tag 2, fortuneId__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldDevSetFortune'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldDevSetFortune'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldDevSetFortune'_constructor
+        {_CMsgClientToGCOverworldDevSetFortune'overworldId = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevSetFortune'fortuneId = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevSetFortune'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldDevSetFortune
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldDevSetFortune
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "overworld_id"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"overworldId") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "fortune_id"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"fortuneId") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldDevSetFortune"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'overworldId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'fortuneId") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                   (Lens.Family2.view Data.ProtoLens.unknownFields _x)))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevSetFortune where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldDevSetFortune'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldDevSetFortune'overworldId x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgClientToGCOverworldDevSetFortune'fortuneId x__) ()))
+{- | Fields :
+     
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.response' @:: Lens' CMsgClientToGCOverworldDevSetFortuneResponse CMsgClientToGCOverworldDevSetFortuneResponse'EResponse@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'response' @:: Lens' CMsgClientToGCOverworldDevSetFortuneResponse (Prelude.Maybe CMsgClientToGCOverworldDevSetFortuneResponse'EResponse)@ -}
+data CMsgClientToGCOverworldDevSetFortuneResponse
+  = CMsgClientToGCOverworldDevSetFortuneResponse'_constructor {_CMsgClientToGCOverworldDevSetFortuneResponse'response :: !(Prelude.Maybe CMsgClientToGCOverworldDevSetFortuneResponse'EResponse),
+                                                               _CMsgClientToGCOverworldDevSetFortuneResponse'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldDevSetFortuneResponse where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortuneResponse "response" CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevSetFortuneResponse'response = y__}))
+        (Data.ProtoLens.maybeLens
+           CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldDevSetFortuneResponse "maybe'response" (Prelude.Maybe CMsgClientToGCOverworldDevSetFortuneResponse'EResponse) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldDevSetFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldDevSetFortuneResponse'response = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldDevSetFortuneResponse where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldDevSetFortuneResponse"
+  packedMessageDescriptor _
+    = "\n\
+      \,CMsgClientToGCOverworldDevSetFortuneResponse\DC2e\n\
+      \\bresponse\CAN\SOH \SOH(\SO27.CMsgClientToGCOverworldDevSetFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+      \\tEResponse\DC2\DC4\n\
+      \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+      \\n\
+      \k_eSuccess\DLE\SOH\DC2\SO\n\
+      \\n\
+      \k_eTooBusy\DLE\STX\DC2\SI\n\
+      \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+      \\n\
+      \k_eTimeout\DLE\EOT\DC2\DC1\n\
+      \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+      \\DC3k_eInvalidOverworld\DLE\ACK"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        response__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "response"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgClientToGCOverworldDevSetFortuneResponse'EResponse)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'response")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldDevSetFortuneResponse
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, response__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldDevSetFortuneResponse'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldDevSetFortuneResponse'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldDevSetFortuneResponse'_constructor
+        {_CMsgClientToGCOverworldDevSetFortuneResponse'response = Prelude.Nothing,
+         _CMsgClientToGCOverworldDevSetFortuneResponse'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldDevSetFortuneResponse
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldDevSetFortuneResponse
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.toEnum
+                                          (Prelude.fmap
+                                             Prelude.fromIntegral
+                                             Data.ProtoLens.Encoding.Bytes.getVarInt))
+                                       "response"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"response") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldDevSetFortuneResponse"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'response") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                          Prelude.fromEnum _v))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevSetFortuneResponse where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldDevSetFortuneResponse'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldDevSetFortuneResponse'response x__) ())
+data CMsgClientToGCOverworldDevSetFortuneResponse'EResponse
+  = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed |
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
+instance Data.ProtoLens.MessageEnum CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
+  maybeToEnum 0
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+  maybeToEnum 1
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+  maybeToEnum 2
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+  maybeToEnum 3
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+  maybeToEnum 4
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+  maybeToEnum 5
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+  maybeToEnum 6
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+  maybeToEnum _ = Prelude.Nothing
+  showEnum
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+    = "k_eInternalError"
+  showEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+    = "k_eSuccess"
+  showEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+    = "k_eTooBusy"
+  showEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+    = "k_eDisabled"
+  showEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+    = "k_eTimeout"
+  showEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+    = "k_eNotAllowed"
+  showEnum
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+    = "k_eInvalidOverworld"
+  readEnum k
+    | (Prelude.==) k "k_eInternalError"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+    | (Prelude.==) k "k_eSuccess"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+    | (Prelude.==) k "k_eTooBusy"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+    | (Prelude.==) k "k_eDisabled"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+    | (Prelude.==) k "k_eTimeout"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+    | (Prelude.==) k "k_eNotAllowed"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+    | (Prelude.==) k "k_eInvalidOverworld"
+    = Prelude.Just
+        CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+    | Prelude.otherwise
+    = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
+instance Prelude.Bounded CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
+  minBound
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+  maxBound
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+instance Prelude.Enum CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
+  toEnum k__
+    = Prelude.maybe
+        (Prelude.error
+           ((Prelude.++)
+              "toEnum: unknown value for enum EResponse: " (Prelude.show k__)))
+        Prelude.id (Data.ProtoLens.maybeToEnum k__)
+  fromEnum
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+    = 0
+  fromEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+    = 1
+  fromEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+    = 2
+  fromEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+    = 3
+  fromEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+    = 4
+  fromEnum CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+    = 5
+  fromEnum
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+    = 6
+  succ
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+    = Prelude.error
+        "CMsgClientToGCOverworldDevSetFortuneResponse'EResponse.succ: bad argument CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld. This value would be out of bounds."
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+  succ CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+    = Prelude.error
+        "CMsgClientToGCOverworldDevSetFortuneResponse'EResponse.pred: bad argument CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError. This value would be out of bounds."
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eSuccess
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eTooBusy
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eDisabled
+  pred CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eTimeout
+  pred
+    CMsgClientToGCOverworldDevSetFortuneResponse'K_eInvalidOverworld
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eNotAllowed
+  enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
+  enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
+  enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
+  enumFromThenTo = Data.ProtoLens.Message.Enum.messageEnumFromThenTo
+instance Data.ProtoLens.FieldDefault CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
+  fieldDefault
+    = CMsgClientToGCOverworldDevSetFortuneResponse'K_eInternalError
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldDevSetFortuneResponse'EResponse where
   rnf x__ = Prelude.seq x__ ()
 {- | Fields :
      
@@ -7152,6 +8083,412 @@ instance Data.ProtoLens.FieldDefault CMsgClientToGCOverworldMoveToNodeResponse'E
   fieldDefault
     = CMsgClientToGCOverworldMoveToNodeResponse'K_eInternalError
 instance Control.DeepSeq.NFData CMsgClientToGCOverworldMoveToNodeResponse'EResponse where
+  rnf x__ = Prelude.seq x__ ()
+{- | Fields :
+     
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.overworldId' @:: Lens' CMsgClientToGCOverworldRequestFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'overworldId' @:: Lens' CMsgClientToGCOverworldRequestFortune (Prelude.Maybe Data.Word.Word32)@ -}
+data CMsgClientToGCOverworldRequestFortune
+  = CMsgClientToGCOverworldRequestFortune'_constructor {_CMsgClientToGCOverworldRequestFortune'overworldId :: !(Prelude.Maybe Data.Word.Word32),
+                                                        _CMsgClientToGCOverworldRequestFortune'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldRequestFortune where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldRequestFortune "overworldId" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldRequestFortune'overworldId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldRequestFortune'overworldId = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldRequestFortune "maybe'overworldId" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldRequestFortune'overworldId
+           (\ x__ y__
+              -> x__ {_CMsgClientToGCOverworldRequestFortune'overworldId = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldRequestFortune where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldRequestFortune"
+  packedMessageDescriptor _
+    = "\n\
+      \%CMsgClientToGCOverworldRequestFortune\DC2!\n\
+      \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        overworldId__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "overworld_id"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'overworldId")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldRequestFortune
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, overworldId__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldRequestFortune'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldRequestFortune'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldRequestFortune'_constructor
+        {_CMsgClientToGCOverworldRequestFortune'overworldId = Prelude.Nothing,
+         _CMsgClientToGCOverworldRequestFortune'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldRequestFortune
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldRequestFortune
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "overworld_id"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"overworldId") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldRequestFortune"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'overworldId") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldRequestFortune where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldRequestFortune'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldRequestFortune'overworldId x__) ())
+{- | Fields :
+     
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.response' @:: Lens' CMsgClientToGCOverworldRequestFortuneResponse CMsgClientToGCOverworldRequestFortuneResponse'EResponse@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'response' @:: Lens' CMsgClientToGCOverworldRequestFortuneResponse (Prelude.Maybe CMsgClientToGCOverworldRequestFortuneResponse'EResponse)@ -}
+data CMsgClientToGCOverworldRequestFortuneResponse
+  = CMsgClientToGCOverworldRequestFortuneResponse'_constructor {_CMsgClientToGCOverworldRequestFortuneResponse'response :: !(Prelude.Maybe CMsgClientToGCOverworldRequestFortuneResponse'EResponse),
+                                                                _CMsgClientToGCOverworldRequestFortuneResponse'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClientToGCOverworldRequestFortuneResponse where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldRequestFortuneResponse "response" CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldRequestFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldRequestFortuneResponse'response = y__}))
+        (Data.ProtoLens.maybeLens
+           CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError)
+instance Data.ProtoLens.Field.HasField CMsgClientToGCOverworldRequestFortuneResponse "maybe'response" (Prelude.Maybe CMsgClientToGCOverworldRequestFortuneResponse'EResponse) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClientToGCOverworldRequestFortuneResponse'response
+           (\ x__ y__
+              -> x__
+                   {_CMsgClientToGCOverworldRequestFortuneResponse'response = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClientToGCOverworldRequestFortuneResponse where
+  messageName _
+    = Data.Text.pack "CMsgClientToGCOverworldRequestFortuneResponse"
+  packedMessageDescriptor _
+    = "\n\
+      \-CMsgClientToGCOverworldRequestFortuneResponse\DC2f\n\
+      \\bresponse\CAN\SOH \SOH(\SO28.CMsgClientToGCOverworldRequestFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+      \\tEResponse\DC2\DC4\n\
+      \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+      \\n\
+      \k_eSuccess\DLE\SOH\DC2\SO\n\
+      \\n\
+      \k_eTooBusy\DLE\STX\DC2\SI\n\
+      \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+      \\n\
+      \k_eTimeout\DLE\EOT\DC2\DC1\n\
+      \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+      \\DC3k_eInvalidOverworld\DLE\ACK"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        response__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "response"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgClientToGCOverworldRequestFortuneResponse'EResponse)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'response")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClientToGCOverworldRequestFortuneResponse
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, response__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClientToGCOverworldRequestFortuneResponse'_unknownFields
+        (\ x__ y__
+           -> x__
+                {_CMsgClientToGCOverworldRequestFortuneResponse'_unknownFields = y__})
+  defMessage
+    = CMsgClientToGCOverworldRequestFortuneResponse'_constructor
+        {_CMsgClientToGCOverworldRequestFortuneResponse'response = Prelude.Nothing,
+         _CMsgClientToGCOverworldRequestFortuneResponse'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClientToGCOverworldRequestFortuneResponse
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClientToGCOverworldRequestFortuneResponse
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.toEnum
+                                          (Prelude.fmap
+                                             Prelude.fromIntegral
+                                             Data.ProtoLens.Encoding.Bytes.getVarInt))
+                                       "response"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"response") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage)
+          "CMsgClientToGCOverworldRequestFortuneResponse"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'response") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                          Prelude.fromEnum _v))
+             (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                (Lens.Family2.view Data.ProtoLens.unknownFields _x))
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldRequestFortuneResponse where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClientToGCOverworldRequestFortuneResponse'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClientToGCOverworldRequestFortuneResponse'response x__) ())
+data CMsgClientToGCOverworldRequestFortuneResponse'EResponse
+  = CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed |
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+  deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
+instance Data.ProtoLens.MessageEnum CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
+  maybeToEnum 0
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+  maybeToEnum 1
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+  maybeToEnum 2
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+  maybeToEnum 3
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+  maybeToEnum 4
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+  maybeToEnum 5
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+  maybeToEnum 6
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+  maybeToEnum _ = Prelude.Nothing
+  showEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+    = "k_eInternalError"
+  showEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+    = "k_eSuccess"
+  showEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+    = "k_eTooBusy"
+  showEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+    = "k_eDisabled"
+  showEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+    = "k_eTimeout"
+  showEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+    = "k_eNotAllowed"
+  showEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+    = "k_eInvalidOverworld"
+  readEnum k
+    | (Prelude.==) k "k_eInternalError"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+    | (Prelude.==) k "k_eSuccess"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+    | (Prelude.==) k "k_eTooBusy"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+    | (Prelude.==) k "k_eDisabled"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+    | (Prelude.==) k "k_eTimeout"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+    | (Prelude.==) k "k_eNotAllowed"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+    | (Prelude.==) k "k_eInvalidOverworld"
+    = Prelude.Just
+        CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+    | Prelude.otherwise
+    = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
+instance Prelude.Bounded CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
+  minBound
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+  maxBound
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+instance Prelude.Enum CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
+  toEnum k__
+    = Prelude.maybe
+        (Prelude.error
+           ((Prelude.++)
+              "toEnum: unknown value for enum EResponse: " (Prelude.show k__)))
+        Prelude.id (Data.ProtoLens.maybeToEnum k__)
+  fromEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+    = 0
+  fromEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+    = 1
+  fromEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+    = 2
+  fromEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+    = 3
+  fromEnum CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+    = 4
+  fromEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+    = 5
+  fromEnum
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+    = 6
+  succ
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+    = Prelude.error
+        "CMsgClientToGCOverworldRequestFortuneResponse'EResponse.succ: bad argument CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld. This value would be out of bounds."
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+  succ CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+    = Prelude.error
+        "CMsgClientToGCOverworldRequestFortuneResponse'EResponse.pred: bad argument CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError. This value would be out of bounds."
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eSuccess
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eTooBusy
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eDisabled
+  pred CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eTimeout
+  pred
+    CMsgClientToGCOverworldRequestFortuneResponse'K_eInvalidOverworld
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eNotAllowed
+  enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
+  enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
+  enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
+  enumFromThenTo = Data.ProtoLens.Message.Enum.messageEnumFromThenTo
+instance Data.ProtoLens.FieldDefault CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
+  fieldDefault
+    = CMsgClientToGCOverworldRequestFortuneResponse'K_eInternalError
+instance Control.DeepSeq.NFData CMsgClientToGCOverworldRequestFortuneResponse'EResponse where
   rnf x__ = Prelude.seq x__ ()
 {- | Fields :
      
@@ -10781,6 +12118,267 @@ instance Control.DeepSeq.NFData CMsgOverworldEncounterTokenTreasureData'RewardOp
                       ())))
 {- | Fields :
      
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.fortune1' @:: Lens' CMsgOverworldFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'fortune1' @:: Lens' CMsgOverworldFortune (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.fortune2' @:: Lens' CMsgOverworldFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'fortune2' @:: Lens' CMsgOverworldFortune (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.fortune3' @:: Lens' CMsgOverworldFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'fortune3' @:: Lens' CMsgOverworldFortune (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.timestamp' @:: Lens' CMsgOverworldFortune Data.Word.Word32@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'timestamp' @:: Lens' CMsgOverworldFortune (Prelude.Maybe Data.Word.Word32)@ -}
+data CMsgOverworldFortune
+  = CMsgOverworldFortune'_constructor {_CMsgOverworldFortune'fortune1 :: !(Prelude.Maybe Data.Word.Word32),
+                                       _CMsgOverworldFortune'fortune2 :: !(Prelude.Maybe Data.Word.Word32),
+                                       _CMsgOverworldFortune'fortune3 :: !(Prelude.Maybe Data.Word.Word32),
+                                       _CMsgOverworldFortune'timestamp :: !(Prelude.Maybe Data.Word.Word32),
+                                       _CMsgOverworldFortune'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgOverworldFortune where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "fortune1" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune1
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune1 = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "maybe'fortune1" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune1
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune1 = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "fortune2" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune2
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune2 = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "maybe'fortune2" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune2
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune2 = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "fortune3" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune3
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune3 = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "maybe'fortune3" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'fortune3
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'fortune3 = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "timestamp" Data.Word.Word32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'timestamp
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'timestamp = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgOverworldFortune "maybe'timestamp" (Prelude.Maybe Data.Word.Word32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldFortune'timestamp
+           (\ x__ y__ -> x__ {_CMsgOverworldFortune'timestamp = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgOverworldFortune where
+  messageName _ = Data.Text.pack "CMsgOverworldFortune"
+  packedMessageDescriptor _
+    = "\n\
+      \\DC4CMsgOverworldFortune\DC2\SUB\n\
+      \\bfortune1\CAN\SOH \SOH(\rR\bfortune1\DC2\SUB\n\
+      \\bfortune2\CAN\STX \SOH(\rR\bfortune2\DC2\SUB\n\
+      \\bfortune3\CAN\ETX \SOH(\rR\bfortune3\DC2\FS\n\
+      \\ttimestamp\CAN\EOT \SOH(\rR\ttimestamp"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        fortune1__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "fortune1"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'fortune1")) ::
+              Data.ProtoLens.FieldDescriptor CMsgOverworldFortune
+        fortune2__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "fortune2"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'fortune2")) ::
+              Data.ProtoLens.FieldDescriptor CMsgOverworldFortune
+        fortune3__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "fortune3"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'fortune3")) ::
+              Data.ProtoLens.FieldDescriptor CMsgOverworldFortune
+        timestamp__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "timestamp"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.UInt32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Word.Word32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'timestamp")) ::
+              Data.ProtoLens.FieldDescriptor CMsgOverworldFortune
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, fortune1__field_descriptor),
+           (Data.ProtoLens.Tag 2, fortune2__field_descriptor),
+           (Data.ProtoLens.Tag 3, fortune3__field_descriptor),
+           (Data.ProtoLens.Tag 4, timestamp__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgOverworldFortune'_unknownFields
+        (\ x__ y__ -> x__ {_CMsgOverworldFortune'_unknownFields = y__})
+  defMessage
+    = CMsgOverworldFortune'_constructor
+        {_CMsgOverworldFortune'fortune1 = Prelude.Nothing,
+         _CMsgOverworldFortune'fortune2 = Prelude.Nothing,
+         _CMsgOverworldFortune'fortune3 = Prelude.Nothing,
+         _CMsgOverworldFortune'timestamp = Prelude.Nothing,
+         _CMsgOverworldFortune'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgOverworldFortune
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgOverworldFortune
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "fortune1"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"fortune1") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "fortune2"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"fortune2") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "fortune3"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"fortune3") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "timestamp"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"timestamp") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "CMsgOverworldFortune"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'fortune1") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'fortune2") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'fortune3") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view
+                             (Data.ProtoLens.Field.field @"maybe'timestamp") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                         (Lens.Family2.view Data.ProtoLens.unknownFields _x)))))
+instance Control.DeepSeq.NFData CMsgOverworldFortune where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgOverworldFortune'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgOverworldFortune'fortune1 x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgOverworldFortune'fortune2 x__)
+                   (Control.DeepSeq.deepseq
+                      (_CMsgOverworldFortune'fortune3 x__)
+                      (Control.DeepSeq.deepseq
+                         (_CMsgOverworldFortune'timestamp x__) ()))))
+{- | Fields :
+     
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.heroIds' @:: Lens' CMsgOverworldHeroList [Data.Int.Int32]@
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.vec'heroIds' @:: Lens' CMsgOverworldHeroList (Data.Vector.Unboxed.Vector Data.Int.Int32)@ -}
 data CMsgOverworldHeroList
@@ -12447,13 +14045,16 @@ instance Control.DeepSeq.NFData CMsgOverworldTokenQuantity where
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.currentNodeId' @:: Lens' CMsgOverworldUserData Data.Word.Word32@
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'currentNodeId' @:: Lens' CMsgOverworldUserData (Prelude.Maybe Data.Word.Word32)@
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.minigameData' @:: Lens' CMsgOverworldUserData [CMsgOverworldUserData'MinigameDataEntry]@
-         * 'Proto.DotaGcmessagesCommonOverworld_Fields.vec'minigameData' @:: Lens' CMsgOverworldUserData (Data.Vector.Vector CMsgOverworldUserData'MinigameDataEntry)@ -}
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.vec'minigameData' @:: Lens' CMsgOverworldUserData (Data.Vector.Vector CMsgOverworldUserData'MinigameDataEntry)@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.currentFortune' @:: Lens' CMsgOverworldUserData CMsgOverworldFortune@
+         * 'Proto.DotaGcmessagesCommonOverworld_Fields.maybe'currentFortune' @:: Lens' CMsgOverworldUserData (Prelude.Maybe CMsgOverworldFortune)@ -}
 data CMsgOverworldUserData
   = CMsgOverworldUserData'_constructor {_CMsgOverworldUserData'tokenInventory :: !(Prelude.Maybe CMsgOverworldTokenQuantity),
                                         _CMsgOverworldUserData'overworldNodes :: !(Data.Vector.Vector CMsgOverworldNode),
                                         _CMsgOverworldUserData'overworldPaths :: !(Data.Vector.Vector CMsgOverworldPath),
                                         _CMsgOverworldUserData'currentNodeId :: !(Prelude.Maybe Data.Word.Word32),
                                         _CMsgOverworldUserData'minigameData :: !(Data.Vector.Vector CMsgOverworldUserData'MinigameDataEntry),
+                                        _CMsgOverworldUserData'currentFortune :: !(Prelude.Maybe CMsgOverworldFortune),
                                         _CMsgOverworldUserData'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CMsgOverworldUserData where
@@ -12538,6 +14139,20 @@ instance Data.ProtoLens.Field.HasField CMsgOverworldUserData "vec'minigameData" 
            _CMsgOverworldUserData'minigameData
            (\ x__ y__ -> x__ {_CMsgOverworldUserData'minigameData = y__}))
         Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgOverworldUserData "currentFortune" CMsgOverworldFortune where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldUserData'currentFortune
+           (\ x__ y__ -> x__ {_CMsgOverworldUserData'currentFortune = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.defMessage)
+instance Data.ProtoLens.Field.HasField CMsgOverworldUserData "maybe'currentFortune" (Prelude.Maybe CMsgOverworldFortune) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgOverworldUserData'currentFortune
+           (\ x__ y__ -> x__ {_CMsgOverworldUserData'currentFortune = y__}))
+        Prelude.id
 instance Data.ProtoLens.Message CMsgOverworldUserData where
   messageName _ = Data.Text.pack "CMsgOverworldUserData"
   packedMessageDescriptor _
@@ -12547,7 +14162,8 @@ instance Data.ProtoLens.Message CMsgOverworldUserData where
       \\SIoverworld_nodes\CAN\STX \ETX(\v2\DC2.CMsgOverworldNodeR\SOoverworldNodes\DC2;\n\
       \\SIoverworld_paths\CAN\ETX \ETX(\v2\DC2.CMsgOverworldPathR\SOoverworldPaths\DC2&\n\
       \\SIcurrent_node_id\CAN\EOT \SOH(\rR\rcurrentNodeId\DC2M\n\
-      \\rminigame_data\CAN\ENQ \ETX(\v2(.CMsgOverworldUserData.MinigameDataEntryR\fminigameData\SUB[\n\
+      \\rminigame_data\CAN\ENQ \ETX(\v2(.CMsgOverworldUserData.MinigameDataEntryR\fminigameData\DC2>\n\
+      \\SIcurrent_fortune\CAN\ACK \SOH(\v2\NAK.CMsgOverworldFortuneR\SOcurrentFortune\SUB[\n\
       \\DC1MinigameDataEntry\DC2\DLE\n\
       \\ETXkey\CAN\SOH \SOH(\rR\ETXkey\DC24\n\
       \\ENQvalue\CAN\STX \SOH(\v2\RS.CMsgOverworldMinigameUserDataR\ENQvalue"
@@ -12597,13 +14213,22 @@ instance Data.ProtoLens.Message CMsgOverworldUserData where
                  Data.ProtoLens.Unpacked
                  (Data.ProtoLens.Field.field @"minigameData")) ::
               Data.ProtoLens.FieldDescriptor CMsgOverworldUserData
+        currentFortune__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "current_fortune"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor CMsgOverworldFortune)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'currentFortune")) ::
+              Data.ProtoLens.FieldDescriptor CMsgOverworldUserData
       in
         Data.Map.fromList
           [(Data.ProtoLens.Tag 1, tokenInventory__field_descriptor),
            (Data.ProtoLens.Tag 2, overworldNodes__field_descriptor),
            (Data.ProtoLens.Tag 3, overworldPaths__field_descriptor),
            (Data.ProtoLens.Tag 4, currentNodeId__field_descriptor),
-           (Data.ProtoLens.Tag 5, minigameData__field_descriptor)]
+           (Data.ProtoLens.Tag 5, minigameData__field_descriptor),
+           (Data.ProtoLens.Tag 6, currentFortune__field_descriptor)]
   unknownFields
     = Lens.Family2.Unchecked.lens
         _CMsgOverworldUserData'_unknownFields
@@ -12615,6 +14240,7 @@ instance Data.ProtoLens.Message CMsgOverworldUserData where
          _CMsgOverworldUserData'overworldPaths = Data.Vector.Generic.empty,
          _CMsgOverworldUserData'currentNodeId = Prelude.Nothing,
          _CMsgOverworldUserData'minigameData = Data.Vector.Generic.empty,
+         _CMsgOverworldUserData'currentFortune = Prelude.Nothing,
          _CMsgOverworldUserData'_unknownFields = []}
   parseMessage
     = let
@@ -12717,6 +14343,16 @@ instance Data.ProtoLens.Message CMsgOverworldUserData where
                                        (Data.ProtoLens.Encoding.Growing.append
                                           mutable'minigameData y)
                                 loop x v mutable'overworldNodes mutable'overworldPaths
+                        50
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.isolate
+                                             (Prelude.fromIntegral len) Data.ProtoLens.parseMessage)
+                                       "current_fortune"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"currentFortune") y x)
+                                  mutable'minigameData mutable'overworldNodes mutable'overworldPaths
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
@@ -12808,8 +14444,25 @@ instance Data.ProtoLens.Message CMsgOverworldUserData where
                                        Data.ProtoLens.encodeMessage _v))
                             (Lens.Family2.view
                                (Data.ProtoLens.Field.field @"vec'minigameData") _x))
-                         (Data.ProtoLens.Encoding.Wire.buildFieldSet
-                            (Lens.Family2.view Data.ProtoLens.unknownFields _x))))))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view
+                                   (Data.ProtoLens.Field.field @"maybe'currentFortune") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 50)
+                                      ((Prelude..)
+                                         (\ bs
+                                            -> (Data.Monoid.<>)
+                                                 (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                    (Prelude.fromIntegral
+                                                       (Data.ByteString.length bs)))
+                                                 (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                         Data.ProtoLens.encodeMessage _v))
+                            (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                               (Lens.Family2.view Data.ProtoLens.unknownFields _x)))))))
 instance Control.DeepSeq.NFData CMsgOverworldUserData where
   rnf
     = \ x__
@@ -12824,7 +14477,9 @@ instance Control.DeepSeq.NFData CMsgOverworldUserData where
                       (Control.DeepSeq.deepseq
                          (_CMsgOverworldUserData'currentNodeId x__)
                          (Control.DeepSeq.deepseq
-                            (_CMsgOverworldUserData'minigameData x__) ())))))
+                            (_CMsgOverworldUserData'minigameData x__)
+                            (Control.DeepSeq.deepseq
+                               (_CMsgOverworldUserData'currentFortune x__) ()))))))
 {- | Fields :
      
          * 'Proto.DotaGcmessagesCommonOverworld_Fields.key' @:: Lens' CMsgOverworldUserData'MinigameDataEntry Data.Word.Word32@
@@ -13016,7 +14671,10 @@ data EOverworldAuditAction
     K_eOverworldAuditAction_EncounterRewardTokenCost |
     K_eOverworldAuditAction_EncounterRewardTokenReward |
     K_eOverworldAuditAction_SupportGrantTokens |
-    K_eOverworldAuditAction_TokenGiftSent
+    K_eOverworldAuditAction_TokenGiftSent |
+    K_eOverworldAuditAction_DevSetFortune |
+    K_eOverworldAuditAction_DevClearFortune |
+    K_eOverworldAuditAction_RequestFortune
   deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
 instance Data.ProtoLens.MessageEnum EOverworldAuditAction where
   maybeToEnum 0 = Prelude.Just K_eOverworldAuditAction_Invalid
@@ -13047,6 +14705,11 @@ instance Data.ProtoLens.MessageEnum EOverworldAuditAction where
   maybeToEnum 16
     = Prelude.Just K_eOverworldAuditAction_SupportGrantTokens
   maybeToEnum 17 = Prelude.Just K_eOverworldAuditAction_TokenGiftSent
+  maybeToEnum 18 = Prelude.Just K_eOverworldAuditAction_DevSetFortune
+  maybeToEnum 19
+    = Prelude.Just K_eOverworldAuditAction_DevClearFortune
+  maybeToEnum 20
+    = Prelude.Just K_eOverworldAuditAction_RequestFortune
   maybeToEnum _ = Prelude.Nothing
   showEnum K_eOverworldAuditAction_Invalid
     = "k_eOverworldAuditAction_Invalid"
@@ -13082,6 +14745,12 @@ instance Data.ProtoLens.MessageEnum EOverworldAuditAction where
     = "k_eOverworldAuditAction_SupportGrantTokens"
   showEnum K_eOverworldAuditAction_TokenGiftSent
     = "k_eOverworldAuditAction_TokenGiftSent"
+  showEnum K_eOverworldAuditAction_DevSetFortune
+    = "k_eOverworldAuditAction_DevSetFortune"
+  showEnum K_eOverworldAuditAction_DevClearFortune
+    = "k_eOverworldAuditAction_DevClearFortune"
+  showEnum K_eOverworldAuditAction_RequestFortune
+    = "k_eOverworldAuditAction_RequestFortune"
   readEnum k
     | (Prelude.==) k "k_eOverworldAuditAction_Invalid"
     = Prelude.Just K_eOverworldAuditAction_Invalid
@@ -13118,11 +14787,17 @@ instance Data.ProtoLens.MessageEnum EOverworldAuditAction where
     = Prelude.Just K_eOverworldAuditAction_SupportGrantTokens
     | (Prelude.==) k "k_eOverworldAuditAction_TokenGiftSent"
     = Prelude.Just K_eOverworldAuditAction_TokenGiftSent
+    | (Prelude.==) k "k_eOverworldAuditAction_DevSetFortune"
+    = Prelude.Just K_eOverworldAuditAction_DevSetFortune
+    | (Prelude.==) k "k_eOverworldAuditAction_DevClearFortune"
+    = Prelude.Just K_eOverworldAuditAction_DevClearFortune
+    | (Prelude.==) k "k_eOverworldAuditAction_RequestFortune"
+    = Prelude.Just K_eOverworldAuditAction_RequestFortune
     | Prelude.otherwise
     = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
 instance Prelude.Bounded EOverworldAuditAction where
   minBound = K_eOverworldAuditAction_Invalid
-  maxBound = K_eOverworldAuditAction_TokenGiftSent
+  maxBound = K_eOverworldAuditAction_RequestFortune
 instance Prelude.Enum EOverworldAuditAction where
   toEnum k__
     = Prelude.maybe
@@ -13148,9 +14823,12 @@ instance Prelude.Enum EOverworldAuditAction where
   fromEnum K_eOverworldAuditAction_EncounterRewardTokenReward = 14
   fromEnum K_eOverworldAuditAction_SupportGrantTokens = 16
   fromEnum K_eOverworldAuditAction_TokenGiftSent = 17
-  succ K_eOverworldAuditAction_TokenGiftSent
+  fromEnum K_eOverworldAuditAction_DevSetFortune = 18
+  fromEnum K_eOverworldAuditAction_DevClearFortune = 19
+  fromEnum K_eOverworldAuditAction_RequestFortune = 20
+  succ K_eOverworldAuditAction_RequestFortune
     = Prelude.error
-        "EOverworldAuditAction.succ: bad argument K_eOverworldAuditAction_TokenGiftSent. This value would be out of bounds."
+        "EOverworldAuditAction.succ: bad argument K_eOverworldAuditAction_RequestFortune. This value would be out of bounds."
   succ K_eOverworldAuditAction_Invalid
     = K_eOverworldAuditAction_DevModifyTokens
   succ K_eOverworldAuditAction_DevModifyTokens
@@ -13183,6 +14861,12 @@ instance Prelude.Enum EOverworldAuditAction where
     = K_eOverworldAuditAction_SupportGrantTokens
   succ K_eOverworldAuditAction_SupportGrantTokens
     = K_eOverworldAuditAction_TokenGiftSent
+  succ K_eOverworldAuditAction_TokenGiftSent
+    = K_eOverworldAuditAction_DevSetFortune
+  succ K_eOverworldAuditAction_DevSetFortune
+    = K_eOverworldAuditAction_DevClearFortune
+  succ K_eOverworldAuditAction_DevClearFortune
+    = K_eOverworldAuditAction_RequestFortune
   pred K_eOverworldAuditAction_Invalid
     = Prelude.error
         "EOverworldAuditAction.pred: bad argument K_eOverworldAuditAction_Invalid. This value would be out of bounds."
@@ -13218,6 +14902,12 @@ instance Prelude.Enum EOverworldAuditAction where
     = K_eOverworldAuditAction_EncounterRewardTokenReward
   pred K_eOverworldAuditAction_TokenGiftSent
     = K_eOverworldAuditAction_SupportGrantTokens
+  pred K_eOverworldAuditAction_DevSetFortune
+    = K_eOverworldAuditAction_TokenGiftSent
+  pred K_eOverworldAuditAction_DevClearFortune
+    = K_eOverworldAuditAction_DevSetFortune
+  pred K_eOverworldAuditAction_RequestFortune
+    = K_eOverworldAuditAction_DevClearFortune
   enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
   enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
   enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
@@ -13507,13 +15197,19 @@ packedFileDescriptor
     \\anode_id\CAN\SOH \SOH(\rR\ACKnodeId\DC2'\n\
     \\SIcurrency_amount\CAN\STX \SOH(\rR\SOcurrencyAmount\DC2A\n\
     \\vcustom_data\CAN\ETX \SOH(\v2 .CMsgOverworldMinigameCustomDataR\n\
-    \customData\"\171\ETX\n\
+    \customData\"\136\SOH\n\
+    \\DC4CMsgOverworldFortune\DC2\SUB\n\
+    \\bfortune1\CAN\SOH \SOH(\rR\bfortune1\DC2\SUB\n\
+    \\bfortune2\CAN\STX \SOH(\rR\bfortune2\DC2\SUB\n\
+    \\bfortune3\CAN\ETX \SOH(\rR\bfortune3\DC2\FS\n\
+    \\ttimestamp\CAN\EOT \SOH(\rR\ttimestamp\"\235\ETX\n\
     \\NAKCMsgOverworldUserData\DC2D\n\
     \\SItoken_inventory\CAN\SOH \SOH(\v2\ESC.CMsgOverworldTokenQuantityR\SOtokenInventory\DC2;\n\
     \\SIoverworld_nodes\CAN\STX \ETX(\v2\DC2.CMsgOverworldNodeR\SOoverworldNodes\DC2;\n\
     \\SIoverworld_paths\CAN\ETX \ETX(\v2\DC2.CMsgOverworldPathR\SOoverworldPaths\DC2&\n\
     \\SIcurrent_node_id\CAN\EOT \SOH(\rR\rcurrentNodeId\DC2M\n\
-    \\rminigame_data\CAN\ENQ \ETX(\v2(.CMsgOverworldUserData.MinigameDataEntryR\fminigameData\SUB[\n\
+    \\rminigame_data\CAN\ENQ \ETX(\v2(.CMsgOverworldUserData.MinigameDataEntryR\fminigameData\DC2>\n\
+    \\SIcurrent_fortune\CAN\ACK \SOH(\v2\NAK.CMsgOverworldFortuneR\SOcurrentFortune\SUB[\n\
     \\DC1MinigameDataEntry\DC2\DLE\n\
     \\ETXkey\CAN\SOH \SOH(\rR\ETXkey\DC24\n\
     \\ENQvalue\CAN\STX \SOH(\v2\RS.CMsgOverworldMinigameUserDataR\ENQvalue\"\220\SOH\n\
@@ -13774,6 +15470,55 @@ packedFileDescriptor
     \\n\
     \k_eTimeout\DLE\EOT\DC2\DC1\n\
     \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+    \\DC3k_eInvalidOverworld\DLE\ACK\"h\n\
+    \$CMsgClientToGCOverworldDevSetFortune\DC2!\n\
+    \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId\DC2\GS\n\
+    \\n\
+    \fortune_id\CAN\STX \SOH(\rR\tfortuneId\"\166\STX\n\
+    \,CMsgClientToGCOverworldDevSetFortuneResponse\DC2e\n\
+    \\bresponse\CAN\SOH \SOH(\SO27.CMsgClientToGCOverworldDevSetFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+    \\tEResponse\DC2\DC4\n\
+    \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+    \\n\
+    \k_eSuccess\DLE\SOH\DC2\SO\n\
+    \\n\
+    \k_eTooBusy\DLE\STX\DC2\SI\n\
+    \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+    \\n\
+    \k_eTimeout\DLE\EOT\DC2\DC1\n\
+    \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+    \\DC3k_eInvalidOverworld\DLE\ACK\"j\n\
+    \&CMsgClientToGCOverworldDevClearFortune\DC2!\n\
+    \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId\DC2\GS\n\
+    \\n\
+    \fortune_id\CAN\STX \SOH(\rR\tfortuneId\"\170\STX\n\
+    \.CMsgClientToGCOverworldDevClearFortuneResponse\DC2g\n\
+    \\bresponse\CAN\SOH \SOH(\SO29.CMsgClientToGCOverworldDevClearFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+    \\tEResponse\DC2\DC4\n\
+    \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+    \\n\
+    \k_eSuccess\DLE\SOH\DC2\SO\n\
+    \\n\
+    \k_eTooBusy\DLE\STX\DC2\SI\n\
+    \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+    \\n\
+    \k_eTimeout\DLE\EOT\DC2\DC1\n\
+    \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
+    \\DC3k_eInvalidOverworld\DLE\ACK\"J\n\
+    \%CMsgClientToGCOverworldRequestFortune\DC2!\n\
+    \\foverworld_id\CAN\SOH \SOH(\rR\voverworldId\"\168\STX\n\
+    \-CMsgClientToGCOverworldRequestFortuneResponse\DC2f\n\
+    \\bresponse\CAN\SOH \SOH(\SO28.CMsgClientToGCOverworldRequestFortuneResponse.EResponse:\DLEk_eInternalErrorR\bresponse\"\142\SOH\n\
+    \\tEResponse\DC2\DC4\n\
+    \\DLEk_eInternalError\DLE\NUL\DC2\SO\n\
+    \\n\
+    \k_eSuccess\DLE\SOH\DC2\SO\n\
+    \\n\
+    \k_eTooBusy\DLE\STX\DC2\SI\n\
+    \\vk_eDisabled\DLE\ETX\DC2\SO\n\
+    \\n\
+    \k_eTimeout\DLE\EOT\DC2\DC1\n\
+    \\rk_eNotAllowed\DLE\ENQ\DC2\ETB\n\
     \\DC3k_eInvalidOverworld\DLE\ACK\"|\n\
     \\USCMsgClientToGCOverworldFeedback\DC2\SUB\n\
     \\blanguage\CAN\SOH \SOH(\rR\blanguage\DC2!\n\
@@ -13845,7 +15590,7 @@ packedFileDescriptor
     \\DC3EOverworldPathState\DC2!\n\
     \\GSk_eOverworldPathState_Invalid\DLE\NUL\DC2$\n\
     \ k_eOverworldPathState_Incomplete\DLE\SOH\DC2\"\n\
-    \\RSk_eOverworldPathState_Complete\DLE\STX*\168\ACK\n\
+    \\RSk_eOverworldPathState_Complete\DLE\STX*\172\a\n\
     \\NAKEOverworldAuditAction\DC2#\n\
     \\USk_eOverworldAuditAction_Invalid\DLE\NUL\DC2+\n\
     \'k_eOverworldAuditAction_DevModifyTokens\DLE\SOH\DC2-\n\
@@ -13864,7 +15609,10 @@ packedFileDescriptor
     \0k_eOverworldAuditAction_EncounterRewardTokenCost\DLE\r\DC26\n\
     \2k_eOverworldAuditAction_EncounterRewardTokenReward\DLE\SO\DC2.\n\
     \*k_eOverworldAuditAction_SupportGrantTokens\DLE\DLE\DC2)\n\
-    \%k_eOverworldAuditAction_TokenGiftSent\DLE\DC1*\212\STX\n\
+    \%k_eOverworldAuditAction_TokenGiftSent\DLE\DC1\DC2)\n\
+    \%k_eOverworldAuditAction_DevSetFortune\DLE\DC2\DC2+\n\
+    \'k_eOverworldAuditAction_DevClearFortune\DLE\DC3\DC2*\n\
+    \&k_eOverworldAuditAction_RequestFortune\DLE\DC4*\212\STX\n\
     \\CANEOverworldMinigameAction\DC2&\n\
     \\"k_eOverworldMinigameAction_Invalid\DLE\NUL\DC2'\n\
     \#k_eOverworldMinigameAction_DevReset\DLE\SOH\DC2.\n\
@@ -13872,8 +15620,8 @@ packedFileDescriptor
     \#k_eOverworldMinigameAction_Purchase\DLE\ETX\DC2(\n\
     \$k_eOverworldMinigameAction_SetOption\DLE\EOT\DC23\n\
     \/k_eOverworldMinigameAction_ReportCurrencyGained\DLE\ENQ\DC2/\n\
-    \+k_eOverworldMinigameAction_UnlockDifficulty\DLE\ACKJ\143\149\SOH\n\
-    \\a\DC2\ENQ\NUL\NUL\242\ETX\SOH\n\
+    \+k_eOverworldMinigameAction_UnlockDifficulty\DLE\ACKJ\221\168\SOH\n\
+    \\a\DC2\ENQ\NUL\NUL\181\EOT\SOH\n\
     \\t\n\
     \\STX\ETX\NUL\DC2\ETX\NUL\NUL\GS\n\
     \\t\n\
@@ -13935,7 +15683,7 @@ packedFileDescriptor
     \\ENQ\ENQ\SOH\STX\STX\STX\DC2\ETX\SI)*\n\
     \\n\
     \\n\
-    \\STX\ENQ\STX\DC2\EOT\DC2\NUL$\SOH\n\
+    \\STX\ENQ\STX\DC2\EOT\DC2\NUL'\SOH\n\
     \\n\
     \\n\
     \\ETX\ENQ\STX\SOH\DC2\ETX\DC2\ENQ\SUB\n\
@@ -14044,2405 +15792,2731 @@ packedFileDescriptor
     \\ENQ\ENQ\STX\STX\DLE\SOH\DC2\ETX#\b-\n\
     \\f\n\
     \\ENQ\ENQ\STX\STX\DLE\STX\DC2\ETX#02\n\
-    \\n\
-    \\n\
-    \\STX\ENQ\ETX\DC2\EOT&\NUL.\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\ENQ\ETX\SOH\DC2\ETX&\ENQ\GS\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\NUL\DC2\ETX'\b/\n\
+    \\EOT\ENQ\STX\STX\DC1\DC2\ETX$\b3\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\NUL\SOH\DC2\ETX'\b*\n\
+    \\ENQ\ENQ\STX\STX\DC1\SOH\DC2\ETX$\b-\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\NUL\STX\DC2\ETX'-.\n\
+    \\ENQ\ENQ\STX\STX\DC1\STX\DC2\ETX$02\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\SOH\DC2\ETX(\b0\n\
+    \\EOT\ENQ\STX\STX\DC2\DC2\ETX%\b5\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\SOH\SOH\DC2\ETX(\b+\n\
+    \\ENQ\ENQ\STX\STX\DC2\SOH\DC2\ETX%\b/\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\SOH\STX\DC2\ETX(./\n\
+    \\ENQ\ENQ\STX\STX\DC2\STX\DC2\ETX%24\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\STX\DC2\ETX)\b7\n\
+    \\EOT\ENQ\STX\STX\DC3\DC2\ETX&\b4\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\STX\SOH\DC2\ETX)\b2\n\
+    \\ENQ\ENQ\STX\STX\DC3\SOH\DC2\ETX&\b.\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\STX\STX\DC2\ETX)56\n\
+    \\ENQ\ENQ\STX\STX\DC3\STX\DC2\ETX&13\n\
+    \\n\
+    \\n\
+    \\STX\ENQ\ETX\DC2\EOT)\NUL1\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\ENQ\ETX\SOH\DC2\ETX)\ENQ\GS\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\ETX\DC2\ETX*\b0\n\
+    \\EOT\ENQ\ETX\STX\NUL\DC2\ETX*\b/\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ETX\SOH\DC2\ETX*\b+\n\
+    \\ENQ\ENQ\ETX\STX\NUL\SOH\DC2\ETX*\b*\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ETX\STX\DC2\ETX*./\n\
+    \\ENQ\ENQ\ETX\STX\NUL\STX\DC2\ETX*-.\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\EOT\DC2\ETX+\b1\n\
+    \\EOT\ENQ\ETX\STX\SOH\DC2\ETX+\b0\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\EOT\SOH\DC2\ETX+\b,\n\
+    \\ENQ\ENQ\ETX\STX\SOH\SOH\DC2\ETX+\b+\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\EOT\STX\DC2\ETX+/0\n\
+    \\ENQ\ENQ\ETX\STX\SOH\STX\DC2\ETX+./\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\ENQ\DC2\ETX,\b<\n\
+    \\EOT\ENQ\ETX\STX\STX\DC2\ETX,\b7\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ENQ\SOH\DC2\ETX,\b7\n\
+    \\ENQ\ENQ\ETX\STX\STX\SOH\DC2\ETX,\b2\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ENQ\STX\DC2\ETX,:;\n\
+    \\ENQ\ENQ\ETX\STX\STX\STX\DC2\ETX,56\n\
     \\v\n\
-    \\EOT\ENQ\ETX\STX\ACK\DC2\ETX-\b8\n\
+    \\EOT\ENQ\ETX\STX\ETX\DC2\ETX-\b0\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ACK\SOH\DC2\ETX-\b3\n\
+    \\ENQ\ENQ\ETX\STX\ETX\SOH\DC2\ETX-\b+\n\
     \\f\n\
-    \\ENQ\ENQ\ETX\STX\ACK\STX\DC2\ETX-67\n\
-    \\n\
-    \\n\
-    \\STX\EOT\NUL\DC2\EOT0\NUL3\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\EOT\NUL\SOH\DC2\ETX0\b\US\n\
+    \\ENQ\ENQ\ETX\STX\ETX\STX\DC2\ETX-./\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\NUL\DC2\ETX1\b%\n\
+    \\EOT\ENQ\ETX\STX\EOT\DC2\ETX.\b1\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX1\b\DLE\n\
+    \\ENQ\ENQ\ETX\STX\EOT\SOH\DC2\ETX.\b,\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX1\DC1\ETB\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX1\CAN \n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX1#$\n\
+    \\ENQ\ENQ\ETX\STX\EOT\STX\DC2\ETX./0\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\SOH\DC2\ETX2\b(\n\
+    \\EOT\ENQ\ETX\STX\ENQ\DC2\ETX/\b<\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX2\b\DLE\n\
+    \\ENQ\ENQ\ETX\STX\ENQ\SOH\DC2\ETX/\b7\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX2\DC1\ETB\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX2\CAN#\n\
-    \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX2&'\n\
-    \\n\
-    \\n\
-    \\STX\EOT\SOH\DC2\EOT5\NUL7\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\EOT\SOH\SOH\DC2\ETX5\b\"\n\
+    \\ENQ\ENQ\ETX\STX\ENQ\STX\DC2\ETX/:;\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\NUL\DC2\ETX6\b;\n\
+    \\EOT\ENQ\ETX\STX\ACK\DC2\ETX0\b8\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX6\b\DLE\n\
+    \\ENQ\ENQ\ETX\STX\ACK\SOH\DC2\ETX0\b3\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ACK\DC2\ETX6\DC1)\n\
-    \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX6*6\n\
-    \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX69:\n\
+    \\ENQ\ENQ\ETX\STX\ACK\STX\DC2\ETX067\n\
     \\n\
     \\n\
-    \\STX\EOT\STX\DC2\EOT9\NULA\SOH\n\
+    \\STX\EOT\NUL\DC2\EOT3\NUL6\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\STX\SOH\DC2\ETX9\b/\n\
+    \\ETX\EOT\NUL\SOH\DC2\ETX3\b\US\n\
+    \\v\n\
+    \\EOT\EOT\NUL\STX\NUL\DC2\ETX4\b%\n\
     \\f\n\
-    \\EOT\EOT\STX\ETX\NUL\DC2\EOT:\b>\t\n\
+    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX4\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\STX\ETX\NUL\SOH\DC2\ETX:\DLE\FS\n\
+    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX4\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX4\CAN \n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX4#$\n\
+    \\v\n\
+    \\EOT\EOT\NUL\STX\SOH\DC2\ETX5\b(\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX5\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX5\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX5\CAN#\n\
+    \\f\n\
+    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX5&'\n\
+    \\n\
+    \\n\
+    \\STX\EOT\SOH\DC2\EOT8\NUL:\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\SOH\SOH\DC2\ETX8\b\"\n\
+    \\v\n\
+    \\EOT\EOT\SOH\STX\NUL\DC2\ETX9\b;\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX9\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\ACK\DC2\ETX9\DC1)\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX9*6\n\
+    \\f\n\
+    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX99:\n\
+    \\n\
+    \\n\
+    \\STX\EOT\STX\DC2\EOT<\NULD\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\STX\SOH\DC2\ETX<\b/\n\
+    \\f\n\
+    \\EOT\EOT\STX\ETX\NUL\DC2\EOT=\bA\t\n\
+    \\f\n\
+    \\ENQ\EOT\STX\ETX\NUL\SOH\DC2\ETX=\DLE\FS\n\
     \\r\n\
-    \\ACK\EOT\STX\ETX\NUL\STX\NUL\DC2\ETX;\DLE0\n\
+    \\ACK\EOT\STX\ETX\NUL\STX\NUL\DC2\ETX>\DLE0\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\NUL\EOT\DC2\ETX;\DLE\CAN\n\
+    \\a\EOT\STX\ETX\NUL\STX\NUL\EOT\DC2\ETX>\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\NUL\ENQ\DC2\ETX;\EM\US\n\
+    \\a\EOT\STX\ETX\NUL\STX\NUL\ENQ\DC2\ETX>\EM\US\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\NUL\SOH\DC2\ETX; +\n\
+    \\a\EOT\STX\ETX\NUL\STX\NUL\SOH\DC2\ETX> +\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\NUL\ETX\DC2\ETX;./\n\
+    \\a\EOT\STX\ETX\NUL\STX\NUL\ETX\DC2\ETX>./\n\
     \\r\n\
-    \\ACK\EOT\STX\ETX\NUL\STX\SOH\DC2\ETX<\DLED\n\
+    \\ACK\EOT\STX\ETX\NUL\STX\SOH\DC2\ETX?\DLED\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\SOH\EOT\DC2\ETX<\DLE\CAN\n\
+    \\a\EOT\STX\ETX\NUL\STX\SOH\EOT\DC2\ETX?\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\SOH\ACK\DC2\ETX<\EM4\n\
+    \\a\EOT\STX\ETX\NUL\STX\SOH\ACK\DC2\ETX?\EM4\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\SOH\SOH\DC2\ETX<5?\n\
+    \\a\EOT\STX\ETX\NUL\STX\SOH\SOH\DC2\ETX?5?\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\SOH\ETX\DC2\ETX<BC\n\
+    \\a\EOT\STX\ETX\NUL\STX\SOH\ETX\DC2\ETX?BC\n\
     \\r\n\
-    \\ACK\EOT\STX\ETX\NUL\STX\STX\DC2\ETX=\DLEF\n\
+    \\ACK\EOT\STX\ETX\NUL\STX\STX\DC2\ETX@\DLEF\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\STX\EOT\DC2\ETX=\DLE\CAN\n\
+    \\a\EOT\STX\ETX\NUL\STX\STX\EOT\DC2\ETX@\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\STX\ACK\DC2\ETX=\EM4\n\
+    \\a\EOT\STX\ETX\NUL\STX\STX\ACK\DC2\ETX@\EM4\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\STX\SOH\DC2\ETX=5A\n\
+    \\a\EOT\STX\ETX\NUL\STX\STX\SOH\DC2\ETX@5A\n\
     \\SO\n\
-    \\a\EOT\STX\ETX\NUL\STX\STX\ETX\DC2\ETX=DE\n\
+    \\a\EOT\STX\ETX\NUL\STX\STX\ETX\DC2\ETX@DE\n\
     \\v\n\
-    \\EOT\EOT\STX\STX\NUL\DC2\ETX@\bZ\n\
+    \\EOT\EOT\STX\STX\NUL\DC2\ETXC\bZ\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\ETX@\b\DLE\n\
+    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\ETXC\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\ACK\DC2\ETX@\DC1F\n\
+    \\ENQ\EOT\STX\STX\NUL\ACK\DC2\ETXC\DC1F\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\ETX@GU\n\
+    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\ETXCGU\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\ETX@XY\n\
+    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\ETXCXY\n\
     \\n\
     \\n\
-    \\STX\EOT\ETX\DC2\EOTC\NULK\SOH\n\
+    \\STX\EOT\ETX\DC2\EOTF\NULN\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ETX\SOH\DC2\ETXC\b,\n\
+    \\ETX\EOT\ETX\SOH\DC2\ETXF\b,\n\
     \\f\n\
-    \\EOT\EOT\ETX\ETX\NUL\DC2\EOTD\bH\t\n\
+    \\EOT\EOT\ETX\ETX\NUL\DC2\EOTG\bK\t\n\
     \\f\n\
-    \\ENQ\EOT\ETX\ETX\NUL\SOH\DC2\ETXD\DLE\NAK\n\
+    \\ENQ\EOT\ETX\ETX\NUL\SOH\DC2\ETXG\DLE\NAK\n\
     \\r\n\
-    \\ACK\EOT\ETX\ETX\NUL\STX\NUL\DC2\ETXE\DLE0\n\
+    \\ACK\EOT\ETX\ETX\NUL\STX\NUL\DC2\ETXH\DLE0\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\NUL\EOT\DC2\ETXE\DLE\CAN\n\
+    \\a\EOT\ETX\ETX\NUL\STX\NUL\EOT\DC2\ETXH\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\NUL\ENQ\DC2\ETXE\EM\US\n\
+    \\a\EOT\ETX\ETX\NUL\STX\NUL\ENQ\DC2\ETXH\EM\US\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\NUL\SOH\DC2\ETXE +\n\
+    \\a\EOT\ETX\ETX\NUL\STX\NUL\SOH\DC2\ETXH +\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\NUL\ETX\DC2\ETXE./\n\
+    \\a\EOT\ETX\ETX\NUL\STX\NUL\ETX\DC2\ETXH./\n\
     \\r\n\
-    \\ACK\EOT\ETX\ETX\NUL\STX\SOH\DC2\ETXF\DLED\n\
+    \\ACK\EOT\ETX\ETX\NUL\STX\SOH\DC2\ETXI\DLED\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\SOH\EOT\DC2\ETXF\DLE\CAN\n\
+    \\a\EOT\ETX\ETX\NUL\STX\SOH\EOT\DC2\ETXI\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\SOH\ACK\DC2\ETXF\EM4\n\
+    \\a\EOT\ETX\ETX\NUL\STX\SOH\ACK\DC2\ETXI\EM4\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\SOH\SOH\DC2\ETXF5?\n\
+    \\a\EOT\ETX\ETX\NUL\STX\SOH\SOH\DC2\ETXI5?\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\SOH\ETX\DC2\ETXFBC\n\
+    \\a\EOT\ETX\ETX\NUL\STX\SOH\ETX\DC2\ETXIBC\n\
     \\r\n\
-    \\ACK\EOT\ETX\ETX\NUL\STX\STX\DC2\ETXG\DLEF\n\
+    \\ACK\EOT\ETX\ETX\NUL\STX\STX\DC2\ETXJ\DLEF\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\STX\EOT\DC2\ETXG\DLE\CAN\n\
+    \\a\EOT\ETX\ETX\NUL\STX\STX\EOT\DC2\ETXJ\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\STX\ACK\DC2\ETXG\EM4\n\
+    \\a\EOT\ETX\ETX\NUL\STX\STX\ACK\DC2\ETXJ\EM4\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\STX\SOH\DC2\ETXG5A\n\
+    \\a\EOT\ETX\ETX\NUL\STX\STX\SOH\DC2\ETXJ5A\n\
     \\SO\n\
-    \\a\EOT\ETX\ETX\NUL\STX\STX\ETX\DC2\ETXGDE\n\
+    \\a\EOT\ETX\ETX\NUL\STX\STX\ETX\DC2\ETXJDE\n\
     \\v\n\
-    \\EOT\EOT\ETX\STX\NUL\DC2\ETXJ\bH\n\
+    \\EOT\EOT\ETX\STX\NUL\DC2\ETXM\bH\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\EOT\DC2\ETXJ\b\DLE\n\
+    \\ENQ\EOT\ETX\STX\NUL\EOT\DC2\ETXM\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\ACK\DC2\ETXJ\DC1<\n\
+    \\ENQ\EOT\ETX\STX\NUL\ACK\DC2\ETXM\DC1<\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\SOH\DC2\ETXJ=C\n\
+    \\ENQ\EOT\ETX\STX\NUL\SOH\DC2\ETXM=C\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\ETX\DC2\ETXJFG\n\
+    \\ENQ\EOT\ETX\STX\NUL\ETX\DC2\ETXMFG\n\
     \\n\
     \\n\
-    \\STX\EOT\EOT\DC2\EOTM\NULO\SOH\n\
+    \\STX\EOT\EOT\DC2\EOTP\NULR\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\EOT\SOH\DC2\ETXM\b\GS\n\
+    \\ETX\EOT\EOT\SOH\DC2\ETXP\b\GS\n\
     \\v\n\
-    \\EOT\EOT\EOT\STX\NUL\DC2\ETXN\b$\n\
+    \\EOT\EOT\EOT\STX\NUL\DC2\ETXQ\b$\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\EOT\DC2\ETXN\b\DLE\n\
+    \\ENQ\EOT\EOT\STX\NUL\EOT\DC2\ETXQ\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\ENQ\DC2\ETXN\DC1\SYN\n\
+    \\ENQ\EOT\EOT\STX\NUL\ENQ\DC2\ETXQ\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\SOH\DC2\ETXN\ETB\US\n\
+    \\ENQ\EOT\EOT\STX\NUL\SOH\DC2\ETXQ\ETB\US\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\ETX\DC2\ETXN\"#\n\
+    \\ENQ\EOT\EOT\STX\NUL\ETX\DC2\ETXQ\"#\n\
     \\n\
     \\n\
-    \\STX\EOT\ENQ\DC2\EOTQ\NULT\SOH\n\
+    \\STX\EOT\ENQ\DC2\EOTT\NULW\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ENQ\SOH\DC2\ETXQ\b,\n\
+    \\ETX\EOT\ENQ\SOH\DC2\ETXT\b,\n\
     \\v\n\
-    \\EOT\EOT\ENQ\STX\NUL\DC2\ETXR\b6\n\
+    \\EOT\EOT\ENQ\STX\NUL\DC2\ETXU\b6\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\EOT\DC2\ETXR\b\DLE\n\
+    \\ENQ\EOT\ENQ\STX\NUL\EOT\DC2\ETXU\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\ACK\DC2\ETXR\DC1'\n\
+    \\ENQ\EOT\ENQ\STX\NUL\ACK\DC2\ETXU\DC1'\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\SOH\DC2\ETXR(1\n\
+    \\ENQ\EOT\ENQ\STX\NUL\SOH\DC2\ETXU(1\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\ETX\DC2\ETXR45\n\
+    \\ENQ\EOT\ENQ\STX\NUL\ETX\DC2\ETXU45\n\
     \\v\n\
-    \\EOT\EOT\ENQ\STX\SOH\DC2\ETXS\b#\n\
+    \\EOT\EOT\ENQ\STX\SOH\DC2\ETXV\b#\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\SOH\EOT\DC2\ETXS\b\DLE\n\
+    \\ENQ\EOT\ENQ\STX\SOH\EOT\DC2\ETXV\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\SOH\ENQ\DC2\ETXS\DC1\NAK\n\
+    \\ENQ\EOT\ENQ\STX\SOH\ENQ\DC2\ETXV\DC1\NAK\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\SOH\SOH\DC2\ETXS\SYN\RS\n\
+    \\ENQ\EOT\ENQ\STX\SOH\SOH\DC2\ETXV\SYN\RS\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\SOH\ETX\DC2\ETXS!\"\n\
+    \\ENQ\EOT\ENQ\STX\SOH\ETX\DC2\ETXV!\"\n\
     \\n\
     \\n\
-    \\STX\EOT\ACK\DC2\EOTV\NUL[\SOH\n\
+    \\STX\EOT\ACK\DC2\EOTY\NUL^\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ACK\SOH\DC2\ETXV\b*\n\
+    \\ETX\EOT\ACK\SOH\DC2\ETXY\b*\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\NUL\DC2\ETXW\b\"\n\
+    \\EOT\EOT\ACK\STX\NUL\DC2\ETXZ\b\"\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\EOT\DC2\ETXW\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\NUL\EOT\DC2\ETXZ\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\ENQ\DC2\ETXW\DC1\SYN\n\
+    \\ENQ\EOT\ACK\STX\NUL\ENQ\DC2\ETXZ\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\SOH\DC2\ETXW\ETB\GS\n\
+    \\ENQ\EOT\ACK\STX\NUL\SOH\DC2\ETXZ\ETB\GS\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\ETX\DC2\ETXW !\n\
+    \\ENQ\EOT\ACK\STX\NUL\ETX\DC2\ETXZ !\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\SOH\DC2\ETXX\b$\n\
+    \\EOT\EOT\ACK\STX\SOH\DC2\ETX[\b$\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\EOT\DC2\ETXX\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\SOH\EOT\DC2\ETX[\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\ENQ\DC2\ETXX\DC1\SYN\n\
+    \\ENQ\EOT\ACK\STX\SOH\ENQ\DC2\ETX[\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\SOH\DC2\ETXX\ETB\US\n\
+    \\ENQ\EOT\ACK\STX\SOH\SOH\DC2\ETX[\ETB\US\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\ETX\DC2\ETXX\"#\n\
+    \\ENQ\EOT\ACK\STX\SOH\ETX\DC2\ETX[\"#\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\STX\DC2\ETXY\b(\n\
+    \\EOT\EOT\ACK\STX\STX\DC2\ETX\\\b(\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\STX\EOT\DC2\ETXY\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\STX\EOT\DC2\ETX\\\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\STX\ENQ\DC2\ETXY\DC1\SYN\n\
+    \\ENQ\EOT\ACK\STX\STX\ENQ\DC2\ETX\\\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\STX\SOH\DC2\ETXY\ETB#\n\
+    \\ENQ\EOT\ACK\STX\STX\SOH\DC2\ETX\\\ETB#\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\STX\ETX\DC2\ETXY&'\n\
+    \\ENQ\EOT\ACK\STX\STX\ETX\DC2\ETX\\&'\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\ETX\DC2\ETXZ\b\"\n\
+    \\EOT\EOT\ACK\STX\ETX\DC2\ETX]\b\"\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\ETX\EOT\DC2\ETXZ\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\ETX\EOT\DC2\ETX]\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\ETX\ENQ\DC2\ETXZ\DC1\NAK\n\
+    \\ENQ\EOT\ACK\STX\ETX\ENQ\DC2\ETX]\DC1\NAK\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\ETX\SOH\DC2\ETXZ\SYN\GS\n\
+    \\ENQ\EOT\ACK\STX\ETX\SOH\DC2\ETX]\SYN\GS\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\ETX\ETX\DC2\ETXZ !\n\
+    \\ENQ\EOT\ACK\STX\ETX\ETX\DC2\ETX] !\n\
     \\n\
     \\n\
-    \\STX\EOT\a\DC2\EOT]\NUL_\SOH\n\
+    \\STX\EOT\a\DC2\EOT`\NULb\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\a\SOH\DC2\ETX]\b\"\n\
+    \\ETX\EOT\a\SOH\DC2\ETX`\b\"\n\
     \\v\n\
-    \\EOT\EOT\a\STX\NUL\DC2\ETX^\b:\n\
+    \\EOT\EOT\a\STX\NUL\DC2\ETXa\b:\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\EOT\DC2\ETX^\b\DLE\n\
+    \\ENQ\EOT\a\STX\NUL\EOT\DC2\ETXa\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\ACK\DC2\ETX^\DC1 \n\
+    \\ENQ\EOT\a\STX\NUL\ACK\DC2\ETXa\DC1 \n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\SOH\DC2\ETX^!5\n\
+    \\ENQ\EOT\a\STX\NUL\SOH\DC2\ETXa!5\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\ETX\DC2\ETX^89\n\
+    \\ENQ\EOT\a\STX\NUL\ETX\DC2\ETXa89\n\
     \\n\
     \\n\
-    \\STX\EOT\b\DC2\EOTa\NULe\SOH\n\
+    \\STX\EOT\b\DC2\EOTd\NULh\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\b\SOH\DC2\ETXa\b\EM\n\
+    \\ETX\EOT\b\SOH\DC2\ETXd\b\EM\n\
     \\v\n\
-    \\EOT\EOT\b\STX\NUL\DC2\ETXb\b$\n\
+    \\EOT\EOT\b\STX\NUL\DC2\ETXe\b$\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\EOT\DC2\ETXb\b\DLE\n\
+    \\ENQ\EOT\b\STX\NUL\EOT\DC2\ETXe\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\ENQ\DC2\ETXb\DC1\ETB\n\
+    \\ENQ\EOT\b\STX\NUL\ENQ\DC2\ETXe\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\SOH\DC2\ETXb\CAN\US\n\
+    \\ENQ\EOT\b\STX\NUL\SOH\DC2\ETXe\CAN\US\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\ETX\DC2\ETXb\"#\n\
+    \\ENQ\EOT\b\STX\NUL\ETX\DC2\ETXe\"#\n\
     \\v\n\
-    \\EOT\EOT\b\STX\SOH\DC2\ETXc\b_\n\
+    \\EOT\EOT\b\STX\SOH\DC2\ETXf\b_\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\EOT\DC2\ETXc\b\DLE\n\
+    \\ENQ\EOT\b\STX\SOH\EOT\DC2\ETXf\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\ACK\DC2\ETXc\DC1%\n\
+    \\ENQ\EOT\b\STX\SOH\ACK\DC2\ETXf\DC1%\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\SOH\DC2\ETXc&0\n\
+    \\ENQ\EOT\b\STX\SOH\SOH\DC2\ETXf&0\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\ETX\DC2\ETXc34\n\
+    \\ENQ\EOT\b\STX\SOH\ETX\DC2\ETXf34\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\b\DC2\ETXc5^\n\
+    \\ENQ\EOT\b\STX\SOH\b\DC2\ETXf5^\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\a\DC2\ETXc@]\n\
+    \\ENQ\EOT\b\STX\SOH\a\DC2\ETXf@]\n\
     \\v\n\
-    \\EOT\EOT\b\STX\STX\DC2\ETXd\bE\n\
+    \\EOT\EOT\b\STX\STX\DC2\ETXg\bE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\EOT\DC2\ETXd\b\DLE\n\
+    \\ENQ\EOT\b\STX\STX\EOT\DC2\ETXg\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\ACK\DC2\ETXd\DC1,\n\
+    \\ENQ\EOT\b\STX\STX\ACK\DC2\ETXg\DC1,\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\SOH\DC2\ETXd-@\n\
+    \\ENQ\EOT\b\STX\STX\SOH\DC2\ETXg-@\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\ETX\DC2\ETXdCD\n\
+    \\ENQ\EOT\b\STX\STX\ETX\DC2\ETXgCD\n\
     \\n\
     \\n\
-    \\STX\EOT\t\DC2\EOTg\NULk\SOH\n\
+    \\STX\EOT\t\DC2\EOTj\NULn\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\t\SOH\DC2\ETXg\b\EM\n\
+    \\ETX\EOT\t\SOH\DC2\ETXj\b\EM\n\
     \\v\n\
-    \\EOT\EOT\t\STX\NUL\DC2\ETXh\b$\n\
+    \\EOT\EOT\t\STX\NUL\DC2\ETXk\b$\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\EOT\DC2\ETXh\b\DLE\n\
+    \\ENQ\EOT\t\STX\NUL\EOT\DC2\ETXk\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\ENQ\DC2\ETXh\DC1\ETB\n\
+    \\ENQ\EOT\t\STX\NUL\ENQ\DC2\ETXk\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\SOH\DC2\ETXh\CAN\US\n\
+    \\ENQ\EOT\t\STX\NUL\SOH\DC2\ETXk\CAN\US\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\ETX\DC2\ETXh\"#\n\
+    \\ENQ\EOT\t\STX\NUL\ETX\DC2\ETXk\"#\n\
     \\v\n\
-    \\EOT\EOT\t\STX\SOH\DC2\ETXi\b;\n\
+    \\EOT\EOT\t\STX\SOH\DC2\ETXl\b;\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\SOH\EOT\DC2\ETXi\b\DLE\n\
+    \\ENQ\EOT\t\STX\SOH\EOT\DC2\ETXl\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\SOH\ACK\DC2\ETXi\DC1,\n\
+    \\ENQ\EOT\t\STX\SOH\ACK\DC2\ETXl\DC1,\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\SOH\SOH\DC2\ETXi-6\n\
+    \\ENQ\EOT\t\STX\SOH\SOH\DC2\ETXl-6\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\SOH\ETX\DC2\ETXi9:\n\
+    \\ENQ\EOT\t\STX\SOH\ETX\DC2\ETXl9:\n\
     \\v\n\
-    \\EOT\EOT\t\STX\STX\DC2\ETXj\b_\n\
+    \\EOT\EOT\t\STX\STX\DC2\ETXm\b_\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\EOT\DC2\ETXj\b\DLE\n\
+    \\ENQ\EOT\t\STX\STX\EOT\DC2\ETXm\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\ACK\DC2\ETXj\DC1%\n\
+    \\ENQ\EOT\t\STX\STX\ACK\DC2\ETXm\DC1%\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\SOH\DC2\ETXj&0\n\
+    \\ENQ\EOT\t\STX\STX\SOH\DC2\ETXm&0\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\ETX\DC2\ETXj34\n\
+    \\ENQ\EOT\t\STX\STX\ETX\DC2\ETXm34\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\b\DC2\ETXj5^\n\
+    \\ENQ\EOT\t\STX\STX\b\DC2\ETXm5^\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\STX\a\DC2\ETXj@]\n\
+    \\ENQ\EOT\t\STX\STX\a\DC2\ETXm@]\n\
     \\n\
     \\n\
     \\STX\EOT\n\
-    \\DC2\EOTm\NULq\SOH\n\
+    \\DC2\EOTp\NULt\SOH\n\
     \\n\
     \\n\
     \\ETX\EOT\n\
-    \\SOH\DC2\ETXm\b'\n\
+    \\SOH\DC2\ETXp\b'\n\
     \\f\n\
     \\EOT\EOT\n\
-    \\b\NUL\DC2\EOTn\bp\t\n\
+    \\b\NUL\DC2\EOTq\bs\t\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\b\NUL\SOH\DC2\ETXn\SO\ESC\n\
+    \\b\NUL\SOH\DC2\ETXq\SO\ESC\n\
     \\v\n\
     \\EOT\EOT\n\
-    \\STX\NUL\DC2\ETXo\DLE:\n\
+    \\STX\NUL\DC2\ETXr\DLE:\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\ACK\DC2\ETXo\DLE&\n\
+    \\STX\NUL\ACK\DC2\ETXr\DLE&\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\SOH\DC2\ETXo'5\n\
+    \\STX\NUL\SOH\DC2\ETXr'5\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\ETX\DC2\ETXo89\n\
+    \\STX\NUL\ETX\DC2\ETXr89\n\
     \\n\
     \\n\
-    \\STX\EOT\v\DC2\EOTs\NULw\SOH\n\
+    \\STX\EOT\v\DC2\EOTv\NULz\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\v\SOH\DC2\ETXs\b%\n\
+    \\ETX\EOT\v\SOH\DC2\ETXv\b%\n\
     \\v\n\
-    \\EOT\EOT\v\STX\NUL\DC2\ETXt\b$\n\
+    \\EOT\EOT\v\STX\NUL\DC2\ETXw\b$\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\EOT\DC2\ETXt\b\DLE\n\
+    \\ENQ\EOT\v\STX\NUL\EOT\DC2\ETXw\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\ENQ\DC2\ETXt\DC1\ETB\n\
+    \\ENQ\EOT\v\STX\NUL\ENQ\DC2\ETXw\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\SOH\DC2\ETXt\CAN\US\n\
+    \\ENQ\EOT\v\STX\NUL\SOH\DC2\ETXw\CAN\US\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\ETX\DC2\ETXt\"#\n\
+    \\ENQ\EOT\v\STX\NUL\ETX\DC2\ETXw\"#\n\
     \\v\n\
-    \\EOT\EOT\v\STX\SOH\DC2\ETXu\b,\n\
+    \\EOT\EOT\v\STX\SOH\DC2\ETXx\b,\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\EOT\DC2\ETXu\b\DLE\n\
+    \\ENQ\EOT\v\STX\SOH\EOT\DC2\ETXx\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\ENQ\DC2\ETXu\DC1\ETB\n\
+    \\ENQ\EOT\v\STX\SOH\ENQ\DC2\ETXx\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\SOH\DC2\ETXu\CAN'\n\
+    \\ENQ\EOT\v\STX\SOH\SOH\DC2\ETXx\CAN'\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\ETX\DC2\ETXu*+\n\
+    \\ENQ\EOT\v\STX\SOH\ETX\DC2\ETXx*+\n\
     \\v\n\
-    \\EOT\EOT\v\STX\STX\DC2\ETXv\bB\n\
+    \\EOT\EOT\v\STX\STX\DC2\ETXy\bB\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\STX\EOT\DC2\ETXv\b\DLE\n\
+    \\ENQ\EOT\v\STX\STX\EOT\DC2\ETXy\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\STX\ACK\DC2\ETXv\DC11\n\
+    \\ENQ\EOT\v\STX\STX\ACK\DC2\ETXy\DC11\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\STX\SOH\DC2\ETXv2=\n\
+    \\ENQ\EOT\v\STX\STX\SOH\DC2\ETXy2=\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\STX\ETX\DC2\ETXv@A\n\
+    \\ENQ\EOT\v\STX\STX\ETX\DC2\ETXy@A\n\
     \\v\n\
-    \\STX\EOT\f\DC2\ENQy\NUL\132\SOH\SOH\n\
+    \\STX\EOT\f\DC2\ENQ|\NUL\129\SOH\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\f\SOH\DC2\ETXy\b\GS\n\
-    \\f\n\
-    \\EOT\EOT\f\ETX\NUL\DC2\EOTz\b}\t\n\
-    \\f\n\
-    \\ENQ\EOT\f\ETX\NUL\SOH\DC2\ETXz\DLE!\n\
-    \\r\n\
-    \\ACK\EOT\f\ETX\NUL\STX\NUL\DC2\ETX{\DLE(\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\NUL\EOT\DC2\ETX{\DLE\CAN\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\NUL\ENQ\DC2\ETX{\EM\US\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\NUL\SOH\DC2\ETX{ #\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\NUL\ETX\DC2\ETX{&'\n\
-    \\r\n\
-    \\ACK\EOT\f\ETX\NUL\STX\SOH\DC2\ETX|\DLEB\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\SOH\EOT\DC2\ETX|\DLE\CAN\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\SOH\ACK\DC2\ETX|\EM7\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\SOH\SOH\DC2\ETX|8=\n\
-    \\SO\n\
-    \\a\EOT\f\ETX\NUL\STX\SOH\ETX\DC2\ETX|@A\n\
+    \\ETX\EOT\f\SOH\DC2\ETX|\b\FS\n\
     \\v\n\
-    \\EOT\EOT\f\STX\NUL\DC2\ETX\DEL\bA\n\
+    \\EOT\EOT\f\STX\NUL\DC2\ETX}\b%\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\EOT\DC2\ETX\DEL\b\DLE\n\
+    \\ENQ\EOT\f\STX\NUL\EOT\DC2\ETX}\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\ACK\DC2\ETX\DEL\DC1,\n\
+    \\ENQ\EOT\f\STX\NUL\ENQ\DC2\ETX}\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\SOH\DC2\ETX\DEL-<\n\
+    \\ENQ\EOT\f\STX\NUL\SOH\DC2\ETX}\CAN \n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\ETX\DC2\ETX\DEL?@\n\
-    \\f\n\
-    \\EOT\EOT\f\STX\SOH\DC2\EOT\128\SOH\b8\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\SOH\EOT\DC2\EOT\128\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\SOH\ACK\DC2\EOT\128\SOH\DC1#\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\SOH\SOH\DC2\EOT\128\SOH$3\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\SOH\ETX\DC2\EOT\128\SOH67\n\
-    \\f\n\
-    \\EOT\EOT\f\STX\STX\DC2\EOT\129\SOH\b8\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\STX\EOT\DC2\EOT\129\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\STX\ACK\DC2\EOT\129\SOH\DC1#\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\STX\SOH\DC2\EOT\129\SOH$3\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\STX\ETX\DC2\EOT\129\SOH67\n\
-    \\f\n\
-    \\EOT\EOT\f\STX\ETX\DC2\EOT\130\SOH\b,\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\ETX\EOT\DC2\EOT\130\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\ETX\ENQ\DC2\EOT\130\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\ETX\SOH\DC2\EOT\130\SOH\CAN'\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\ETX\ETX\DC2\EOT\130\SOH*+\n\
-    \\f\n\
-    \\EOT\EOT\f\STX\EOT\DC2\EOT\131\SOH\bL\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\EOT\EOT\DC2\EOT\131\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\EOT\ACK\DC2\EOT\131\SOH\DC19\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\EOT\SOH\DC2\EOT\131\SOH:G\n\
-    \\r\n\
-    \\ENQ\EOT\f\STX\EOT\ETX\DC2\EOT\131\SOHJK\n\
-    \\f\n\
-    \\STX\EOT\r\DC2\ACK\134\SOH\NUL\142\SOH\SOH\n\
+    \\ENQ\EOT\f\STX\NUL\ETX\DC2\ETX}#$\n\
     \\v\n\
-    \\ETX\EOT\r\SOH\DC2\EOT\134\SOH\b!\n\
-    \\SO\n\
-    \\EOT\EOT\r\ETX\NUL\DC2\ACK\135\SOH\b\139\SOH\t\n\
-    \\r\n\
-    \\ENQ\EOT\r\ETX\NUL\SOH\DC2\EOT\135\SOH\DLE\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\r\ETX\NUL\STX\NUL\DC2\EOT\136\SOH\DLE0\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\NUL\EOT\DC2\EOT\136\SOH\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\NUL\ENQ\DC2\EOT\136\SOH\EM\US\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\NUL\SOH\DC2\EOT\136\SOH +\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\NUL\ETX\DC2\EOT\136\SOH./\n\
-    \\SO\n\
-    \\ACK\EOT\r\ETX\NUL\STX\SOH\DC2\EOT\137\SOH\DLE@\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\SOH\EOT\DC2\EOT\137\SOH\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\SOH\ACK\DC2\EOT\137\SOH\EM4\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\SOH\SOH\DC2\EOT\137\SOH5;\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\SOH\ETX\DC2\EOT\137\SOH>?\n\
-    \\SO\n\
-    \\ACK\EOT\r\ETX\NUL\STX\STX\DC2\EOT\138\SOH\DLE1\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\STX\EOT\DC2\EOT\138\SOH\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\STX\ENQ\DC2\EOT\138\SOH\EM\US\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\STX\SOH\DC2\EOT\138\SOH ,\n\
-    \\SI\n\
-    \\a\EOT\r\ETX\NUL\STX\STX\ETX\DC2\EOT\138\SOH/0\n\
+    \\EOT\EOT\f\STX\SOH\DC2\ETX~\b%\n\
     \\f\n\
-    \\EOT\EOT\r\STX\NUL\DC2\EOT\141\SOH\b?\n\
-    \\r\n\
-    \\ENQ\EOT\r\STX\NUL\EOT\DC2\EOT\141\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\r\STX\NUL\ACK\DC2\EOT\141\SOH\DC12\n\
-    \\r\n\
-    \\ENQ\EOT\r\STX\NUL\SOH\DC2\EOT\141\SOH3:\n\
-    \\r\n\
-    \\ENQ\EOT\r\STX\NUL\ETX\DC2\EOT\141\SOH=>\n\
+    \\ENQ\EOT\f\STX\SOH\EOT\DC2\ETX~\b\DLE\n\
     \\f\n\
-    \\STX\EOT\SO\DC2\ACK\144\SOH\NUL\146\SOH\SOH\n\
+    \\ENQ\EOT\f\STX\SOH\ENQ\DC2\ETX~\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\f\STX\SOH\SOH\DC2\ETX~\CAN \n\
+    \\f\n\
+    \\ENQ\EOT\f\STX\SOH\ETX\DC2\ETX~#$\n\
     \\v\n\
-    \\ETX\EOT\SO\SOH\DC2\EOT\144\SOH\b*\n\
+    \\EOT\EOT\f\STX\STX\DC2\ETX\DEL\b%\n\
     \\f\n\
-    \\EOT\EOT\SO\STX\NUL\DC2\EOT\145\SOH\b)\n\
-    \\r\n\
-    \\ENQ\EOT\SO\STX\NUL\EOT\DC2\EOT\145\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\SO\STX\NUL\ENQ\DC2\EOT\145\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\SO\STX\NUL\SOH\DC2\EOT\145\SOH\CAN$\n\
-    \\r\n\
-    \\ENQ\EOT\SO\STX\NUL\ETX\DC2\EOT\145\SOH'(\n\
+    \\ENQ\EOT\f\STX\STX\EOT\DC2\ETX\DEL\b\DLE\n\
     \\f\n\
-    \\STX\EOT\SI\DC2\ACK\148\SOH\NUL\160\SOH\SOH\n\
+    \\ENQ\EOT\f\STX\STX\ENQ\DC2\ETX\DEL\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\f\STX\STX\SOH\DC2\ETX\DEL\CAN \n\
+    \\f\n\
+    \\ENQ\EOT\f\STX\STX\ETX\DC2\ETX\DEL#$\n\
+    \\f\n\
+    \\EOT\EOT\f\STX\ETX\DC2\EOT\128\SOH\b&\n\
+    \\r\n\
+    \\ENQ\EOT\f\STX\ETX\EOT\DC2\EOT\128\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\f\STX\ETX\ENQ\DC2\EOT\128\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\f\STX\ETX\SOH\DC2\EOT\128\SOH\CAN!\n\
+    \\r\n\
+    \\ENQ\EOT\f\STX\ETX\ETX\DC2\EOT\128\SOH$%\n\
+    \\f\n\
+    \\STX\EOT\r\DC2\ACK\131\SOH\NUL\143\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\SI\SOH\DC2\EOT\148\SOH\b2\n\
+    \\ETX\EOT\r\SOH\DC2\EOT\131\SOH\b\GS\n\
     \\SO\n\
-    \\EOT\EOT\SI\EOT\NUL\DC2\ACK\149\SOH\b\156\SOH\t\n\
+    \\EOT\EOT\r\ETX\NUL\DC2\ACK\132\SOH\b\135\SOH\t\n\
     \\r\n\
-    \\ENQ\EOT\SI\EOT\NUL\SOH\DC2\EOT\149\SOH\r\SYN\n\
+    \\ENQ\EOT\r\ETX\NUL\SOH\DC2\EOT\132\SOH\DLE!\n\
     \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\NUL\DC2\EOT\150\SOH\DLE%\n\
+    \\ACK\EOT\r\ETX\NUL\STX\NUL\DC2\EOT\133\SOH\DLE(\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\NUL\SOH\DC2\EOT\150\SOH\DLE \n\
+    \\a\EOT\r\ETX\NUL\STX\NUL\EOT\DC2\EOT\133\SOH\DLE\CAN\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\NUL\STX\DC2\EOT\150\SOH#$\n\
+    \\a\EOT\r\ETX\NUL\STX\NUL\ENQ\DC2\EOT\133\SOH\EM\US\n\
+    \\SI\n\
+    \\a\EOT\r\ETX\NUL\STX\NUL\SOH\DC2\EOT\133\SOH #\n\
+    \\SI\n\
+    \\a\EOT\r\ETX\NUL\STX\NUL\ETX\DC2\EOT\133\SOH&'\n\
     \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\SOH\DC2\EOT\151\SOH\DLE\US\n\
+    \\ACK\EOT\r\ETX\NUL\STX\SOH\DC2\EOT\134\SOH\DLEB\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\SOH\SOH\DC2\EOT\151\SOH\DLE\SUB\n\
+    \\a\EOT\r\ETX\NUL\STX\SOH\EOT\DC2\EOT\134\SOH\DLE\CAN\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\SOH\STX\DC2\EOT\151\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\STX\DC2\EOT\152\SOH\DLE\US\n\
+    \\a\EOT\r\ETX\NUL\STX\SOH\ACK\DC2\EOT\134\SOH\EM7\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\STX\SOH\DC2\EOT\152\SOH\DLE\SUB\n\
+    \\a\EOT\r\ETX\NUL\STX\SOH\SOH\DC2\EOT\134\SOH8=\n\
     \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\STX\STX\DC2\EOT\152\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\ETX\DC2\EOT\153\SOH\DLE \n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\ETX\SOH\DC2\EOT\153\SOH\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\ETX\STX\DC2\EOT\153\SOH\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\EOT\DC2\EOT\154\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\EOT\SOH\DC2\EOT\154\SOH\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\EOT\STX\DC2\EOT\154\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\SI\EOT\NUL\STX\ENQ\DC2\EOT\155\SOH\DLE(\n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\ENQ\SOH\DC2\EOT\155\SOH\DLE#\n\
-    \\SI\n\
-    \\a\EOT\SI\EOT\NUL\STX\ENQ\STX\DC2\EOT\155\SOH&'\n\
+    \\a\EOT\r\ETX\NUL\STX\SOH\ETX\DC2\EOT\134\SOH@A\n\
     \\f\n\
-    \\EOT\EOT\SI\STX\NUL\DC2\EOT\158\SOH\bq\n\
+    \\EOT\EOT\r\STX\NUL\DC2\EOT\137\SOH\bA\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\EOT\DC2\EOT\158\SOH\b\DLE\n\
+    \\ENQ\EOT\r\STX\NUL\EOT\DC2\EOT\137\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\ACK\DC2\EOT\158\SOH\DC1F\n\
+    \\ENQ\EOT\r\STX\NUL\ACK\DC2\EOT\137\SOH\DC1,\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\SOH\DC2\EOT\158\SOHGO\n\
+    \\ENQ\EOT\r\STX\NUL\SOH\DC2\EOT\137\SOH-<\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\ETX\DC2\EOT\158\SOHRS\n\
-    \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\b\DC2\EOT\158\SOHTp\n\
-    \\r\n\
-    \\ENQ\EOT\SI\STX\NUL\a\DC2\EOT\158\SOH_o\n\
+    \\ENQ\EOT\r\STX\NUL\ETX\DC2\EOT\137\SOH?@\n\
     \\f\n\
-    \\EOT\EOT\SI\STX\SOH\DC2\EOT\159\SOH\b6\n\
+    \\EOT\EOT\r\STX\SOH\DC2\EOT\138\SOH\b8\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\SOH\EOT\DC2\EOT\159\SOH\b\DLE\n\
+    \\ENQ\EOT\r\STX\SOH\EOT\DC2\EOT\138\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\SOH\ACK\DC2\EOT\159\SOH\DC1'\n\
+    \\ENQ\EOT\r\STX\SOH\ACK\DC2\EOT\138\SOH\DC1#\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\SOH\SOH\DC2\EOT\159\SOH(1\n\
+    \\ENQ\EOT\r\STX\SOH\SOH\DC2\EOT\138\SOH$3\n\
     \\r\n\
-    \\ENQ\EOT\SI\STX\SOH\ETX\DC2\EOT\159\SOH45\n\
+    \\ENQ\EOT\r\STX\SOH\ETX\DC2\EOT\138\SOH67\n\
     \\f\n\
-    \\STX\EOT\DLE\DC2\ACK\162\SOH\NUL\165\SOH\SOH\n\
+    \\EOT\EOT\r\STX\STX\DC2\EOT\139\SOH\b8\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\STX\EOT\DC2\EOT\139\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\STX\ACK\DC2\EOT\139\SOH\DC1#\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\STX\SOH\DC2\EOT\139\SOH$3\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\STX\ETX\DC2\EOT\139\SOH67\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\ETX\DC2\EOT\140\SOH\b,\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\EOT\DC2\EOT\140\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\ENQ\DC2\EOT\140\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\SOH\DC2\EOT\140\SOH\CAN'\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\ETX\DC2\EOT\140\SOH*+\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\EOT\DC2\EOT\141\SOH\bL\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\EOT\DC2\EOT\141\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\ACK\DC2\EOT\141\SOH\DC19\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\SOH\DC2\EOT\141\SOH:G\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\ETX\DC2\EOT\141\SOHJK\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\ENQ\DC2\EOT\142\SOH\b;\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\EOT\DC2\EOT\142\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\ACK\DC2\EOT\142\SOH\DC1&\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\SOH\DC2\EOT\142\SOH'6\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\ETX\DC2\EOT\142\SOH9:\n\
+    \\f\n\
+    \\STX\EOT\SO\DC2\ACK\145\SOH\NUL\153\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DLE\SOH\DC2\EOT\162\SOH\b.\n\
+    \\ETX\EOT\SO\SOH\DC2\EOT\145\SOH\b!\n\
+    \\SO\n\
+    \\EOT\EOT\SO\ETX\NUL\DC2\ACK\146\SOH\b\150\SOH\t\n\
+    \\r\n\
+    \\ENQ\EOT\SO\ETX\NUL\SOH\DC2\EOT\146\SOH\DLE\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\SO\ETX\NUL\STX\NUL\DC2\EOT\147\SOH\DLE0\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\NUL\EOT\DC2\EOT\147\SOH\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\NUL\ENQ\DC2\EOT\147\SOH\EM\US\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\NUL\SOH\DC2\EOT\147\SOH +\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\NUL\ETX\DC2\EOT\147\SOH./\n\
+    \\SO\n\
+    \\ACK\EOT\SO\ETX\NUL\STX\SOH\DC2\EOT\148\SOH\DLE@\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\SOH\EOT\DC2\EOT\148\SOH\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\SOH\ACK\DC2\EOT\148\SOH\EM4\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\SOH\SOH\DC2\EOT\148\SOH5;\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\SOH\ETX\DC2\EOT\148\SOH>?\n\
+    \\SO\n\
+    \\ACK\EOT\SO\ETX\NUL\STX\STX\DC2\EOT\149\SOH\DLE1\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\STX\EOT\DC2\EOT\149\SOH\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\STX\ENQ\DC2\EOT\149\SOH\EM\US\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\STX\SOH\DC2\EOT\149\SOH ,\n\
+    \\SI\n\
+    \\a\EOT\SO\ETX\NUL\STX\STX\ETX\DC2\EOT\149\SOH/0\n\
     \\f\n\
-    \\EOT\EOT\DLE\STX\NUL\DC2\EOT\163\SOH\b)\n\
+    \\EOT\EOT\SO\STX\NUL\DC2\EOT\152\SOH\b?\n\
     \\r\n\
-    \\ENQ\EOT\DLE\STX\NUL\EOT\DC2\EOT\163\SOH\b\DLE\n\
+    \\ENQ\EOT\SO\STX\NUL\EOT\DC2\EOT\152\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DLE\STX\NUL\ENQ\DC2\EOT\163\SOH\DC1\ETB\n\
+    \\ENQ\EOT\SO\STX\NUL\ACK\DC2\EOT\152\SOH\DC12\n\
     \\r\n\
-    \\ENQ\EOT\DLE\STX\NUL\SOH\DC2\EOT\163\SOH\CAN$\n\
+    \\ENQ\EOT\SO\STX\NUL\SOH\DC2\EOT\152\SOH3:\n\
     \\r\n\
-    \\ENQ\EOT\DLE\STX\NUL\ETX\DC2\EOT\163\SOH'(\n\
+    \\ENQ\EOT\SO\STX\NUL\ETX\DC2\EOT\152\SOH=>\n\
     \\f\n\
-    \\EOT\EOT\DLE\STX\SOH\DC2\EOT\164\SOH\b6\n\
-    \\r\n\
-    \\ENQ\EOT\DLE\STX\SOH\EOT\DC2\EOT\164\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DLE\STX\SOH\ACK\DC2\EOT\164\SOH\DC1'\n\
-    \\r\n\
-    \\ENQ\EOT\DLE\STX\SOH\SOH\DC2\EOT\164\SOH(1\n\
-    \\r\n\
-    \\ENQ\EOT\DLE\STX\SOH\ETX\DC2\EOT\164\SOH45\n\
-    \\f\n\
-    \\STX\EOT\DC1\DC2\ACK\167\SOH\NUL\170\SOH\SOH\n\
+    \\STX\EOT\SI\DC2\ACK\155\SOH\NUL\157\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DC1\SOH\DC2\EOT\167\SOH\b+\n\
+    \\ETX\EOT\SI\SOH\DC2\EOT\155\SOH\b*\n\
     \\f\n\
-    \\EOT\EOT\DC1\STX\NUL\DC2\EOT\168\SOH\b)\n\
+    \\EOT\EOT\SI\STX\NUL\DC2\EOT\156\SOH\b)\n\
     \\r\n\
-    \\ENQ\EOT\DC1\STX\NUL\EOT\DC2\EOT\168\SOH\b\DLE\n\
+    \\ENQ\EOT\SI\STX\NUL\EOT\DC2\EOT\156\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC1\STX\NUL\ENQ\DC2\EOT\168\SOH\DC1\ETB\n\
+    \\ENQ\EOT\SI\STX\NUL\ENQ\DC2\EOT\156\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\DC1\STX\NUL\SOH\DC2\EOT\168\SOH\CAN$\n\
+    \\ENQ\EOT\SI\STX\NUL\SOH\DC2\EOT\156\SOH\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\DC1\STX\NUL\ETX\DC2\EOT\168\SOH'(\n\
+    \\ENQ\EOT\SI\STX\NUL\ETX\DC2\EOT\156\SOH'(\n\
     \\f\n\
-    \\EOT\EOT\DC1\STX\SOH\DC2\EOT\169\SOH\b$\n\
-    \\r\n\
-    \\ENQ\EOT\DC1\STX\SOH\EOT\DC2\EOT\169\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC1\STX\SOH\ENQ\DC2\EOT\169\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\DC1\STX\SOH\SOH\DC2\EOT\169\SOH\CAN\US\n\
-    \\r\n\
-    \\ENQ\EOT\DC1\STX\SOH\ETX\DC2\EOT\169\SOH\"#\n\
-    \\f\n\
-    \\STX\EOT\DC2\DC2\ACK\172\SOH\NUL\189\SOH\SOH\n\
+    \\STX\EOT\DLE\DC2\ACK\159\SOH\NUL\171\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DC2\SOH\DC2\EOT\172\SOH\b3\n\
+    \\ETX\EOT\DLE\SOH\DC2\EOT\159\SOH\b2\n\
     \\SO\n\
-    \\EOT\EOT\DC2\EOT\NUL\DC2\ACK\173\SOH\b\185\SOH\t\n\
+    \\EOT\EOT\DLE\EOT\NUL\DC2\ACK\160\SOH\b\167\SOH\t\n\
     \\r\n\
-    \\ENQ\EOT\DC2\EOT\NUL\SOH\DC2\EOT\173\SOH\r\SYN\n\
+    \\ENQ\EOT\DLE\EOT\NUL\SOH\DC2\EOT\160\SOH\r\SYN\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\NUL\DC2\EOT\174\SOH\DLE%\n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\NUL\DC2\EOT\161\SOH\DLE%\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\NUL\SOH\DC2\EOT\174\SOH\DLE \n\
+    \\a\EOT\DLE\EOT\NUL\STX\NUL\SOH\DC2\EOT\161\SOH\DLE \n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\NUL\STX\DC2\EOT\174\SOH#$\n\
+    \\a\EOT\DLE\EOT\NUL\STX\NUL\STX\DC2\EOT\161\SOH#$\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\SOH\DC2\EOT\175\SOH\DLE\US\n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\SOH\DC2\EOT\162\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\SOH\SOH\DC2\EOT\175\SOH\DLE\SUB\n\
+    \\a\EOT\DLE\EOT\NUL\STX\SOH\SOH\DC2\EOT\162\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\SOH\STX\DC2\EOT\175\SOH\GS\RS\n\
+    \\a\EOT\DLE\EOT\NUL\STX\SOH\STX\DC2\EOT\162\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\STX\DC2\EOT\176\SOH\DLE\US\n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\STX\DC2\EOT\163\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\STX\SOH\DC2\EOT\176\SOH\DLE\SUB\n\
+    \\a\EOT\DLE\EOT\NUL\STX\STX\SOH\DC2\EOT\163\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\STX\STX\DC2\EOT\176\SOH\GS\RS\n\
+    \\a\EOT\DLE\EOT\NUL\STX\STX\STX\DC2\EOT\163\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\ETX\DC2\EOT\177\SOH\DLE \n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\ETX\DC2\EOT\164\SOH\DLE \n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ETX\SOH\DC2\EOT\177\SOH\DLE\ESC\n\
+    \\a\EOT\DLE\EOT\NUL\STX\ETX\SOH\DC2\EOT\164\SOH\DLE\ESC\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ETX\STX\DC2\EOT\177\SOH\RS\US\n\
+    \\a\EOT\DLE\EOT\NUL\STX\ETX\STX\DC2\EOT\164\SOH\RS\US\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\EOT\DC2\EOT\178\SOH\DLE\US\n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\EOT\DC2\EOT\165\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\EOT\SOH\DC2\EOT\178\SOH\DLE\SUB\n\
+    \\a\EOT\DLE\EOT\NUL\STX\EOT\SOH\DC2\EOT\165\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\EOT\STX\DC2\EOT\178\SOH\GS\RS\n\
+    \\a\EOT\DLE\EOT\NUL\STX\EOT\STX\DC2\EOT\165\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\ENQ\DC2\EOT\179\SOH\DLE(\n\
+    \\ACK\EOT\DLE\EOT\NUL\STX\ENQ\DC2\EOT\166\SOH\DLE(\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ENQ\SOH\DC2\EOT\179\SOH\DLE#\n\
+    \\a\EOT\DLE\EOT\NUL\STX\ENQ\SOH\DC2\EOT\166\SOH\DLE#\n\
     \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ENQ\STX\DC2\EOT\179\SOH&'\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\ACK\DC2\EOT\180\SOH\DLE#\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ACK\SOH\DC2\EOT\180\SOH\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\ACK\STX\DC2\EOT\180\SOH!\"\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\a\DC2\EOT\181\SOH\DLE'\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\a\SOH\DC2\EOT\181\SOH\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\a\STX\DC2\EOT\181\SOH%&\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\b\DC2\EOT\182\SOH\DLE$\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\b\SOH\DC2\EOT\182\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\b\STX\DC2\EOT\182\SOH\"#\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\t\DC2\EOT\183\SOH\DLE+\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\t\SOH\DC2\EOT\183\SOH\DLE&\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\t\STX\DC2\EOT\183\SOH)*\n\
-    \\SO\n\
-    \\ACK\EOT\DC2\EOT\NUL\STX\n\
-    \\DC2\EOT\184\SOH\DLE%\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\n\
-    \\SOH\DC2\EOT\184\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\DC2\EOT\NUL\STX\n\
-    \\STX\DC2\EOT\184\SOH\"$\n\
+    \\a\EOT\DLE\EOT\NUL\STX\ENQ\STX\DC2\EOT\166\SOH&'\n\
     \\f\n\
-    \\EOT\EOT\DC2\STX\NUL\DC2\EOT\187\SOH\br\n\
+    \\EOT\EOT\DLE\STX\NUL\DC2\EOT\169\SOH\bq\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\EOT\DC2\EOT\187\SOH\b\DLE\n\
+    \\ENQ\EOT\DLE\STX\NUL\EOT\DC2\EOT\169\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\ACK\DC2\EOT\187\SOH\DC1G\n\
+    \\ENQ\EOT\DLE\STX\NUL\ACK\DC2\EOT\169\SOH\DC1F\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\SOH\DC2\EOT\187\SOHHP\n\
+    \\ENQ\EOT\DLE\STX\NUL\SOH\DC2\EOT\169\SOHGO\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\ETX\DC2\EOT\187\SOHST\n\
+    \\ENQ\EOT\DLE\STX\NUL\ETX\DC2\EOT\169\SOHRS\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\b\DC2\EOT\187\SOHUq\n\
+    \\ENQ\EOT\DLE\STX\NUL\b\DC2\EOT\169\SOHTp\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\NUL\a\DC2\EOT\187\SOH`p\n\
+    \\ENQ\EOT\DLE\STX\NUL\a\DC2\EOT\169\SOH_o\n\
     \\f\n\
-    \\EOT\EOT\DC2\STX\SOH\DC2\EOT\188\SOH\bF\n\
+    \\EOT\EOT\DLE\STX\SOH\DC2\EOT\170\SOH\b6\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\EOT\DC2\EOT\188\SOH\b\DLE\n\
+    \\ENQ\EOT\DLE\STX\SOH\EOT\DC2\EOT\170\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\ACK\DC2\EOT\188\SOH\DC12\n\
+    \\ENQ\EOT\DLE\STX\SOH\ACK\DC2\EOT\170\SOH\DC1'\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\SOH\DC2\EOT\188\SOH3A\n\
+    \\ENQ\EOT\DLE\STX\SOH\SOH\DC2\EOT\170\SOH(1\n\
     \\r\n\
-    \\ENQ\EOT\DC2\STX\SOH\ETX\DC2\EOT\188\SOHDE\n\
+    \\ENQ\EOT\DLE\STX\SOH\ETX\DC2\EOT\170\SOH45\n\
     \\f\n\
-    \\STX\EOT\DC3\DC2\ACK\191\SOH\NUL\194\SOH\SOH\n\
+    \\STX\EOT\DC1\DC2\ACK\173\SOH\NUL\176\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DC3\SOH\DC2\EOT\191\SOH\b2\n\
+    \\ETX\EOT\DC1\SOH\DC2\EOT\173\SOH\b.\n\
     \\f\n\
-    \\EOT\EOT\DC3\STX\NUL\DC2\EOT\192\SOH\b%\n\
+    \\EOT\EOT\DC1\STX\NUL\DC2\EOT\174\SOH\b)\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\NUL\EOT\DC2\EOT\192\SOH\b\DLE\n\
+    \\ENQ\EOT\DC1\STX\NUL\EOT\DC2\EOT\174\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\NUL\ENQ\DC2\EOT\192\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC1\STX\NUL\ENQ\DC2\EOT\174\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\NUL\SOH\DC2\EOT\192\SOH\CAN \n\
+    \\ENQ\EOT\DC1\STX\NUL\SOH\DC2\EOT\174\SOH\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\NUL\ETX\DC2\EOT\192\SOH#$\n\
+    \\ENQ\EOT\DC1\STX\NUL\ETX\DC2\EOT\174\SOH'(\n\
     \\f\n\
-    \\EOT\EOT\DC3\STX\SOH\DC2\EOT\193\SOH\b#\n\
+    \\EOT\EOT\DC1\STX\SOH\DC2\EOT\175\SOH\b6\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\SOH\EOT\DC2\EOT\193\SOH\b\DLE\n\
+    \\ENQ\EOT\DC1\STX\SOH\EOT\DC2\EOT\175\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\SOH\ENQ\DC2\EOT\193\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC1\STX\SOH\ACK\DC2\EOT\175\SOH\DC1'\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\SOH\SOH\DC2\EOT\193\SOH\CAN\RS\n\
+    \\ENQ\EOT\DC1\STX\SOH\SOH\DC2\EOT\175\SOH(1\n\
     \\r\n\
-    \\ENQ\EOT\DC3\STX\SOH\ETX\DC2\EOT\193\SOH!\"\n\
+    \\ENQ\EOT\DC1\STX\SOH\ETX\DC2\EOT\175\SOH45\n\
     \\f\n\
-    \\STX\EOT\DC4\DC2\ACK\196\SOH\NUL\205\SOH\SOH\n\
+    \\STX\EOT\DC2\DC2\ACK\178\SOH\NUL\181\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\DC4\SOH\DC2\EOT\196\SOH\b3\n\
+    \\ETX\EOT\DC2\SOH\DC2\EOT\178\SOH\b+\n\
     \\f\n\
-    \\EOT\EOT\DC4\STX\NUL\DC2\EOT\197\SOH\b)\n\
+    \\EOT\EOT\DC2\STX\NUL\DC2\EOT\179\SOH\b)\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\NUL\EOT\DC2\EOT\197\SOH\b\DLE\n\
+    \\ENQ\EOT\DC2\STX\NUL\EOT\DC2\EOT\179\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\NUL\ENQ\DC2\EOT\197\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC2\STX\NUL\ENQ\DC2\EOT\179\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\NUL\SOH\DC2\EOT\197\SOH\CAN$\n\
+    \\ENQ\EOT\DC2\STX\NUL\SOH\DC2\EOT\179\SOH\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\NUL\ETX\DC2\EOT\197\SOH'(\n\
+    \\ENQ\EOT\DC2\STX\NUL\ETX\DC2\EOT\179\SOH'(\n\
     \\f\n\
-    \\EOT\EOT\DC4\STX\SOH\DC2\EOT\198\SOH\b$\n\
+    \\EOT\EOT\DC2\STX\SOH\DC2\EOT\180\SOH\b$\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\SOH\EOT\DC2\EOT\198\SOH\b\DLE\n\
+    \\ENQ\EOT\DC2\STX\SOH\EOT\DC2\EOT\180\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\SOH\ENQ\DC2\EOT\198\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC2\STX\SOH\ENQ\DC2\EOT\180\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\SOH\SOH\DC2\EOT\198\SOH\CAN\US\n\
+    \\ENQ\EOT\DC2\STX\SOH\SOH\DC2\EOT\180\SOH\CAN\US\n\
     \\r\n\
-    \\ENQ\EOT\DC4\STX\SOH\ETX\DC2\EOT\198\SOH\"#\n\
+    \\ENQ\EOT\DC2\STX\SOH\ETX\DC2\EOT\180\SOH\"#\n\
     \\f\n\
-    \\EOT\EOT\DC4\STX\STX\DC2\EOT\199\SOH\b(\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\STX\EOT\DC2\EOT\199\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\STX\ENQ\DC2\EOT\199\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\STX\SOH\DC2\EOT\199\SOH\CAN#\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\STX\ETX\DC2\EOT\199\SOH&'\n\
-    \\f\n\
-    \\EOT\EOT\DC4\STX\ETX\DC2\EOT\200\SOH\b1\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ETX\EOT\DC2\EOT\200\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ETX\ENQ\DC2\EOT\200\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ETX\SOH\DC2\EOT\200\SOH\CAN,\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ETX\ETX\DC2\EOT\200\SOH/0\n\
-    \\f\n\
-    \\EOT\EOT\DC4\STX\EOT\DC2\EOT\201\SOH\bC\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\EOT\EOT\DC2\EOT\201\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\EOT\ACK\DC2\EOT\201\SOH\DC1,\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\EOT\SOH\DC2\EOT\201\SOH->\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\EOT\ETX\DC2\EOT\201\SOHAB\n\
-    \\f\n\
-    \\EOT\EOT\DC4\STX\ENQ\DC2\EOT\202\SOH\b-\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ENQ\EOT\DC2\EOT\202\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ENQ\ENQ\DC2\EOT\202\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ENQ\SOH\DC2\EOT\202\SOH\CAN(\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ENQ\ETX\DC2\EOT\202\SOH+,\n\
-    \\f\n\
-    \\EOT\EOT\DC4\STX\ACK\DC2\EOT\203\SOH\b.\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ACK\EOT\DC2\EOT\203\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ACK\ENQ\DC2\EOT\203\SOH\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ACK\SOH\DC2\EOT\203\SOH\CAN)\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\ACK\ETX\DC2\EOT\203\SOH,-\n\
-    \\f\n\
-    \\EOT\EOT\DC4\STX\a\DC2\EOT\204\SOH\b.\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\a\EOT\DC2\EOT\204\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\a\ENQ\DC2\EOT\204\SOH\DC1\NAK\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\a\SOH\DC2\EOT\204\SOH\SYN)\n\
-    \\r\n\
-    \\ENQ\EOT\DC4\STX\a\ETX\DC2\EOT\204\SOH,-\n\
-    \\f\n\
-    \\STX\EOT\NAK\DC2\ACK\207\SOH\NUL\231\SOH\SOH\n\
+    \\STX\EOT\DC3\DC2\ACK\183\SOH\NUL\200\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\NAK\SOH\DC2\EOT\207\SOH\b;\n\
+    \\ETX\EOT\DC3\SOH\DC2\EOT\183\SOH\b3\n\
     \\SO\n\
-    \\EOT\EOT\NAK\EOT\NUL\DC2\ACK\208\SOH\b\226\SOH\t\n\
+    \\EOT\EOT\DC3\EOT\NUL\DC2\ACK\184\SOH\b\196\SOH\t\n\
     \\r\n\
-    \\ENQ\EOT\NAK\EOT\NUL\SOH\DC2\EOT\208\SOH\r\SYN\n\
+    \\ENQ\EOT\DC3\EOT\NUL\SOH\DC2\EOT\184\SOH\r\SYN\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\NUL\DC2\EOT\209\SOH\DLE%\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\NUL\DC2\EOT\185\SOH\DLE%\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\NUL\SOH\DC2\EOT\209\SOH\DLE \n\
+    \\a\EOT\DC3\EOT\NUL\STX\NUL\SOH\DC2\EOT\185\SOH\DLE \n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\NUL\STX\DC2\EOT\209\SOH#$\n\
+    \\a\EOT\DC3\EOT\NUL\STX\NUL\STX\DC2\EOT\185\SOH#$\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\SOH\DC2\EOT\210\SOH\DLE\US\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\SOH\DC2\EOT\186\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SOH\SOH\DC2\EOT\210\SOH\DLE\SUB\n\
+    \\a\EOT\DC3\EOT\NUL\STX\SOH\SOH\DC2\EOT\186\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SOH\STX\DC2\EOT\210\SOH\GS\RS\n\
+    \\a\EOT\DC3\EOT\NUL\STX\SOH\STX\DC2\EOT\186\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\STX\DC2\EOT\211\SOH\DLE\US\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\STX\DC2\EOT\187\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\STX\SOH\DC2\EOT\211\SOH\DLE\SUB\n\
+    \\a\EOT\DC3\EOT\NUL\STX\STX\SOH\DC2\EOT\187\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\STX\STX\DC2\EOT\211\SOH\GS\RS\n\
+    \\a\EOT\DC3\EOT\NUL\STX\STX\STX\DC2\EOT\187\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\ETX\DC2\EOT\212\SOH\DLE \n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\ETX\DC2\EOT\188\SOH\DLE \n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ETX\SOH\DC2\EOT\212\SOH\DLE\ESC\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ETX\SOH\DC2\EOT\188\SOH\DLE\ESC\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ETX\STX\DC2\EOT\212\SOH\RS\US\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ETX\STX\DC2\EOT\188\SOH\RS\US\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\EOT\DC2\EOT\213\SOH\DLE\US\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\EOT\DC2\EOT\189\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\EOT\SOH\DC2\EOT\213\SOH\DLE\SUB\n\
+    \\a\EOT\DC3\EOT\NUL\STX\EOT\SOH\DC2\EOT\189\SOH\DLE\SUB\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\EOT\STX\DC2\EOT\213\SOH\GS\RS\n\
+    \\a\EOT\DC3\EOT\NUL\STX\EOT\STX\DC2\EOT\189\SOH\GS\RS\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\ENQ\DC2\EOT\214\SOH\DLE(\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\ENQ\DC2\EOT\190\SOH\DLE(\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ENQ\SOH\DC2\EOT\214\SOH\DLE#\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ENQ\SOH\DC2\EOT\190\SOH\DLE#\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ENQ\STX\DC2\EOT\214\SOH&'\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ENQ\STX\DC2\EOT\190\SOH&'\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\ACK\DC2\EOT\215\SOH\DLE#\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\ACK\DC2\EOT\191\SOH\DLE#\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ACK\SOH\DC2\EOT\215\SOH\DLE\RS\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ACK\SOH\DC2\EOT\191\SOH\DLE\RS\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\ACK\STX\DC2\EOT\215\SOH!\"\n\
+    \\a\EOT\DC3\EOT\NUL\STX\ACK\STX\DC2\EOT\191\SOH!\"\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\a\DC2\EOT\216\SOH\DLE\"\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\a\DC2\EOT\192\SOH\DLE'\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\a\SOH\DC2\EOT\216\SOH\DLE\GS\n\
+    \\a\EOT\DC3\EOT\NUL\STX\a\SOH\DC2\EOT\192\SOH\DLE\"\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\a\STX\DC2\EOT\216\SOH !\n\
+    \\a\EOT\DC3\EOT\NUL\STX\a\STX\DC2\EOT\192\SOH%&\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\b\DC2\EOT\217\SOH\DLE,\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\b\DC2\EOT\193\SOH\DLE$\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\b\SOH\DC2\EOT\217\SOH\DLE'\n\
+    \\a\EOT\DC3\EOT\NUL\STX\b\SOH\DC2\EOT\193\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\b\STX\DC2\EOT\217\SOH*+\n\
+    \\a\EOT\DC3\EOT\NUL\STX\b\STX\DC2\EOT\193\SOH\"#\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\t\DC2\EOT\218\SOH\DLE(\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\t\DC2\EOT\194\SOH\DLE+\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\t\SOH\DC2\EOT\218\SOH\DLE#\n\
+    \\a\EOT\DC3\EOT\NUL\STX\t\SOH\DC2\EOT\194\SOH\DLE&\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\t\STX\DC2\EOT\218\SOH&'\n\
+    \\a\EOT\DC3\EOT\NUL\STX\t\STX\DC2\EOT\194\SOH)*\n\
     \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\n\
-    \\DC2\EOT\219\SOH\DLE0\n\
+    \\ACK\EOT\DC3\EOT\NUL\STX\n\
+    \\DC2\EOT\195\SOH\DLE%\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\n\
-    \\SOH\DC2\EOT\219\SOH\DLE*\n\
+    \\a\EOT\DC3\EOT\NUL\STX\n\
+    \\SOH\DC2\EOT\195\SOH\DLE\US\n\
     \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\n\
-    \\STX\DC2\EOT\219\SOH-/\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\v\DC2\EOT\220\SOH\DLE4\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\v\SOH\DC2\EOT\220\SOH\DLE.\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\v\STX\DC2\EOT\220\SOH13\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\f\DC2\EOT\221\SOH\DLE-\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\f\SOH\DC2\EOT\221\SOH\DLE'\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\f\STX\DC2\EOT\221\SOH*,\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\r\DC2\EOT\222\SOH\DLE1\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\r\SOH\DC2\EOT\222\SOH\DLE+\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\r\STX\DC2\EOT\222\SOH.0\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\SO\DC2\EOT\223\SOH\DLE3\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SO\SOH\DC2\EOT\223\SOH\DLE-\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SO\STX\DC2\EOT\223\SOH02\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\SI\DC2\EOT\224\SOH\DLE*\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SI\SOH\DC2\EOT\224\SOH\DLE$\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\SI\STX\DC2\EOT\224\SOH')\n\
-    \\SO\n\
-    \\ACK\EOT\NAK\EOT\NUL\STX\DLE\DC2\EOT\225\SOH\DLE%\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\DLE\SOH\DC2\EOT\225\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\NAK\EOT\NUL\STX\DLE\STX\DC2\EOT\225\SOH\"$\n\
+    \\a\EOT\DC3\EOT\NUL\STX\n\
+    \\STX\DC2\EOT\195\SOH\"$\n\
     \\f\n\
-    \\EOT\EOT\NAK\STX\NUL\DC2\EOT\228\SOH\bz\n\
+    \\EOT\EOT\DC3\STX\NUL\DC2\EOT\198\SOH\br\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\EOT\DC2\EOT\228\SOH\b\DLE\n\
+    \\ENQ\EOT\DC3\STX\NUL\EOT\DC2\EOT\198\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\ACK\DC2\EOT\228\SOH\DC1O\n\
+    \\ENQ\EOT\DC3\STX\NUL\ACK\DC2\EOT\198\SOH\DC1G\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\SOH\DC2\EOT\228\SOHPX\n\
+    \\ENQ\EOT\DC3\STX\NUL\SOH\DC2\EOT\198\SOHHP\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\ETX\DC2\EOT\228\SOH[\\\n\
+    \\ENQ\EOT\DC3\STX\NUL\ETX\DC2\EOT\198\SOHST\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\b\DC2\EOT\228\SOH]y\n\
+    \\ENQ\EOT\DC3\STX\NUL\b\DC2\EOT\198\SOHUq\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\NUL\a\DC2\EOT\228\SOHhx\n\
+    \\ENQ\EOT\DC3\STX\NUL\a\DC2\EOT\198\SOH`p\n\
     \\f\n\
-    \\EOT\EOT\NAK\STX\SOH\DC2\EOT\229\SOH\bF\n\
+    \\EOT\EOT\DC3\STX\SOH\DC2\EOT\199\SOH\bF\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\SOH\EOT\DC2\EOT\229\SOH\b\DLE\n\
+    \\ENQ\EOT\DC3\STX\SOH\EOT\DC2\EOT\199\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\SOH\ACK\DC2\EOT\229\SOH\DC12\n\
+    \\ENQ\EOT\DC3\STX\SOH\ACK\DC2\EOT\199\SOH\DC12\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\SOH\SOH\DC2\EOT\229\SOH3A\n\
+    \\ENQ\EOT\DC3\STX\SOH\SOH\DC2\EOT\199\SOH3A\n\
     \\r\n\
-    \\ENQ\EOT\NAK\STX\SOH\ETX\DC2\EOT\229\SOHDE\n\
+    \\ENQ\EOT\DC3\STX\SOH\ETX\DC2\EOT\199\SOHDE\n\
     \\f\n\
-    \\EOT\EOT\NAK\STX\STX\DC2\EOT\230\SOH\bA\n\
-    \\r\n\
-    \\ENQ\EOT\NAK\STX\STX\EOT\DC2\EOT\230\SOH\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\NAK\STX\STX\ACK\DC2\EOT\230\SOH\DC1,\n\
-    \\r\n\
-    \\ENQ\EOT\NAK\STX\STX\SOH\DC2\EOT\230\SOH-<\n\
-    \\r\n\
-    \\ENQ\EOT\NAK\STX\STX\ETX\DC2\EOT\230\SOH?@\n\
-    \\f\n\
-    \\STX\EOT\SYN\DC2\ACK\233\SOH\NUL\236\SOH\SOH\n\
+    \\STX\EOT\DC4\DC2\ACK\202\SOH\NUL\205\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\SYN\SOH\DC2\EOT\233\SOH\b-\n\
+    \\ETX\EOT\DC4\SOH\DC2\EOT\202\SOH\b2\n\
     \\f\n\
-    \\EOT\EOT\SYN\STX\NUL\DC2\EOT\234\SOH\b)\n\
+    \\EOT\EOT\DC4\STX\NUL\DC2\EOT\203\SOH\b%\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\NUL\EOT\DC2\EOT\234\SOH\b\DLE\n\
+    \\ENQ\EOT\DC4\STX\NUL\EOT\DC2\EOT\203\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\NUL\ENQ\DC2\EOT\234\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC4\STX\NUL\ENQ\DC2\EOT\203\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\NUL\SOH\DC2\EOT\234\SOH\CAN$\n\
+    \\ENQ\EOT\DC4\STX\NUL\SOH\DC2\EOT\203\SOH\CAN \n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\NUL\ETX\DC2\EOT\234\SOH'(\n\
+    \\ENQ\EOT\DC4\STX\NUL\ETX\DC2\EOT\203\SOH#$\n\
     \\f\n\
-    \\EOT\EOT\SYN\STX\SOH\DC2\EOT\235\SOH\b$\n\
+    \\EOT\EOT\DC4\STX\SOH\DC2\EOT\204\SOH\b#\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\SOH\EOT\DC2\EOT\235\SOH\b\DLE\n\
+    \\ENQ\EOT\DC4\STX\SOH\EOT\DC2\EOT\204\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\SOH\ENQ\DC2\EOT\235\SOH\DC1\ETB\n\
+    \\ENQ\EOT\DC4\STX\SOH\ENQ\DC2\EOT\204\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\SOH\SOH\DC2\EOT\235\SOH\CAN\US\n\
+    \\ENQ\EOT\DC4\STX\SOH\SOH\DC2\EOT\204\SOH\CAN\RS\n\
     \\r\n\
-    \\ENQ\EOT\SYN\STX\SOH\ETX\DC2\EOT\235\SOH\"#\n\
+    \\ENQ\EOT\DC4\STX\SOH\ETX\DC2\EOT\204\SOH!\"\n\
     \\f\n\
-    \\STX\EOT\ETB\DC2\ACK\238\SOH\NUL\253\SOH\SOH\n\
+    \\STX\EOT\NAK\DC2\ACK\207\SOH\NUL\216\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\ETB\SOH\DC2\EOT\238\SOH\b5\n\
-    \\SO\n\
-    \\EOT\EOT\ETB\EOT\NUL\DC2\ACK\239\SOH\b\250\SOH\t\n\
-    \\r\n\
-    \\ENQ\EOT\ETB\EOT\NUL\SOH\DC2\EOT\239\SOH\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\NUL\DC2\EOT\240\SOH\DLE%\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\NUL\SOH\DC2\EOT\240\SOH\DLE \n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\NUL\STX\DC2\EOT\240\SOH#$\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\SOH\DC2\EOT\241\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\SOH\SOH\DC2\EOT\241\SOH\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\SOH\STX\DC2\EOT\241\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\STX\DC2\EOT\242\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\STX\SOH\DC2\EOT\242\SOH\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\STX\STX\DC2\EOT\242\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\ETX\DC2\EOT\243\SOH\DLE \n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ETX\SOH\DC2\EOT\243\SOH\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ETX\STX\DC2\EOT\243\SOH\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\EOT\DC2\EOT\244\SOH\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\EOT\SOH\DC2\EOT\244\SOH\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\EOT\STX\DC2\EOT\244\SOH\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\ENQ\DC2\EOT\245\SOH\DLE(\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ENQ\SOH\DC2\EOT\245\SOH\DLE#\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ENQ\STX\DC2\EOT\245\SOH&'\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\ACK\DC2\EOT\246\SOH\DLE#\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ACK\SOH\DC2\EOT\246\SOH\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\ACK\STX\DC2\EOT\246\SOH!\"\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\a\DC2\EOT\247\SOH\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\a\SOH\DC2\EOT\247\SOH\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\a\STX\DC2\EOT\247\SOH !\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\b\DC2\EOT\248\SOH\DLE(\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\b\SOH\DC2\EOT\248\SOH\DLE#\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\b\STX\DC2\EOT\248\SOH&'\n\
-    \\SO\n\
-    \\ACK\EOT\ETB\EOT\NUL\STX\t\DC2\EOT\249\SOH\DLE&\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\t\SOH\DC2\EOT\249\SOH\DLE!\n\
-    \\SI\n\
-    \\a\EOT\ETB\EOT\NUL\STX\t\STX\DC2\EOT\249\SOH$%\n\
+    \\ETX\EOT\NAK\SOH\DC2\EOT\207\SOH\b3\n\
     \\f\n\
-    \\EOT\EOT\ETB\STX\NUL\DC2\EOT\252\SOH\bt\n\
+    \\EOT\EOT\NAK\STX\NUL\DC2\EOT\208\SOH\b)\n\
     \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\EOT\DC2\EOT\252\SOH\b\DLE\n\
+    \\ENQ\EOT\NAK\STX\NUL\EOT\DC2\EOT\208\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\ACK\DC2\EOT\252\SOH\DC1I\n\
+    \\ENQ\EOT\NAK\STX\NUL\ENQ\DC2\EOT\208\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\SOH\DC2\EOT\252\SOHJR\n\
+    \\ENQ\EOT\NAK\STX\NUL\SOH\DC2\EOT\208\SOH\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\ETX\DC2\EOT\252\SOHUV\n\
-    \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\b\DC2\EOT\252\SOHWs\n\
-    \\r\n\
-    \\ENQ\EOT\ETB\STX\NUL\a\DC2\EOT\252\SOHbr\n\
+    \\ENQ\EOT\NAK\STX\NUL\ETX\DC2\EOT\208\SOH'(\n\
     \\f\n\
-    \\STX\EOT\CAN\DC2\ACK\255\SOH\NUL\130\STX\SOH\n\
+    \\EOT\EOT\NAK\STX\SOH\DC2\EOT\209\SOH\b$\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\SOH\EOT\DC2\EOT\209\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\SOH\ENQ\DC2\EOT\209\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\SOH\SOH\DC2\EOT\209\SOH\CAN\US\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\SOH\ETX\DC2\EOT\209\SOH\"#\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\STX\DC2\EOT\210\SOH\b(\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\STX\EOT\DC2\EOT\210\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\STX\ENQ\DC2\EOT\210\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\STX\SOH\DC2\EOT\210\SOH\CAN#\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\STX\ETX\DC2\EOT\210\SOH&'\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\ETX\DC2\EOT\211\SOH\b1\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ETX\EOT\DC2\EOT\211\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ETX\ENQ\DC2\EOT\211\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ETX\SOH\DC2\EOT\211\SOH\CAN,\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ETX\ETX\DC2\EOT\211\SOH/0\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\EOT\DC2\EOT\212\SOH\bC\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\EOT\EOT\DC2\EOT\212\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\EOT\ACK\DC2\EOT\212\SOH\DC1,\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\EOT\SOH\DC2\EOT\212\SOH->\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\EOT\ETX\DC2\EOT\212\SOHAB\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\ENQ\DC2\EOT\213\SOH\b-\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ENQ\EOT\DC2\EOT\213\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ENQ\ENQ\DC2\EOT\213\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ENQ\SOH\DC2\EOT\213\SOH\CAN(\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ENQ\ETX\DC2\EOT\213\SOH+,\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\ACK\DC2\EOT\214\SOH\b.\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ACK\EOT\DC2\EOT\214\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ACK\ENQ\DC2\EOT\214\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ACK\SOH\DC2\EOT\214\SOH\CAN)\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\ACK\ETX\DC2\EOT\214\SOH,-\n\
+    \\f\n\
+    \\EOT\EOT\NAK\STX\a\DC2\EOT\215\SOH\b.\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\a\EOT\DC2\EOT\215\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\a\ENQ\DC2\EOT\215\SOH\DC1\NAK\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\a\SOH\DC2\EOT\215\SOH\SYN)\n\
+    \\r\n\
+    \\ENQ\EOT\NAK\STX\a\ETX\DC2\EOT\215\SOH,-\n\
+    \\f\n\
+    \\STX\EOT\SYN\DC2\ACK\218\SOH\NUL\242\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\CAN\SOH\DC2\EOT\255\SOH\b)\n\
+    \\ETX\EOT\SYN\SOH\DC2\EOT\218\SOH\b;\n\
+    \\SO\n\
+    \\EOT\EOT\SYN\EOT\NUL\DC2\ACK\219\SOH\b\237\SOH\t\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\EOT\NUL\SOH\DC2\EOT\219\SOH\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\NUL\DC2\EOT\220\SOH\DLE%\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\NUL\SOH\DC2\EOT\220\SOH\DLE \n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\NUL\STX\DC2\EOT\220\SOH#$\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\SOH\DC2\EOT\221\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SOH\SOH\DC2\EOT\221\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SOH\STX\DC2\EOT\221\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\STX\DC2\EOT\222\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\STX\SOH\DC2\EOT\222\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\STX\STX\DC2\EOT\222\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\ETX\DC2\EOT\223\SOH\DLE \n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ETX\SOH\DC2\EOT\223\SOH\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ETX\STX\DC2\EOT\223\SOH\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\EOT\DC2\EOT\224\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\EOT\SOH\DC2\EOT\224\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\EOT\STX\DC2\EOT\224\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\ENQ\DC2\EOT\225\SOH\DLE(\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ENQ\SOH\DC2\EOT\225\SOH\DLE#\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ENQ\STX\DC2\EOT\225\SOH&'\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\ACK\DC2\EOT\226\SOH\DLE#\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ACK\SOH\DC2\EOT\226\SOH\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\ACK\STX\DC2\EOT\226\SOH!\"\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\a\DC2\EOT\227\SOH\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\a\SOH\DC2\EOT\227\SOH\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\a\STX\DC2\EOT\227\SOH !\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\b\DC2\EOT\228\SOH\DLE,\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\b\SOH\DC2\EOT\228\SOH\DLE'\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\b\STX\DC2\EOT\228\SOH*+\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\t\DC2\EOT\229\SOH\DLE(\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\t\SOH\DC2\EOT\229\SOH\DLE#\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\t\STX\DC2\EOT\229\SOH&'\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\n\
+    \\DC2\EOT\230\SOH\DLE0\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\n\
+    \\SOH\DC2\EOT\230\SOH\DLE*\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\n\
+    \\STX\DC2\EOT\230\SOH-/\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\v\DC2\EOT\231\SOH\DLE4\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\v\SOH\DC2\EOT\231\SOH\DLE.\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\v\STX\DC2\EOT\231\SOH13\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\f\DC2\EOT\232\SOH\DLE-\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\f\SOH\DC2\EOT\232\SOH\DLE'\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\f\STX\DC2\EOT\232\SOH*,\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\r\DC2\EOT\233\SOH\DLE1\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\r\SOH\DC2\EOT\233\SOH\DLE+\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\r\STX\DC2\EOT\233\SOH.0\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\SO\DC2\EOT\234\SOH\DLE3\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SO\SOH\DC2\EOT\234\SOH\DLE-\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SO\STX\DC2\EOT\234\SOH02\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\SI\DC2\EOT\235\SOH\DLE*\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SI\SOH\DC2\EOT\235\SOH\DLE$\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\SI\STX\DC2\EOT\235\SOH')\n\
+    \\SO\n\
+    \\ACK\EOT\SYN\EOT\NUL\STX\DLE\DC2\EOT\236\SOH\DLE%\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\DLE\SOH\DC2\EOT\236\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SYN\EOT\NUL\STX\DLE\STX\DC2\EOT\236\SOH\"$\n\
     \\f\n\
-    \\EOT\EOT\CAN\STX\NUL\DC2\EOT\128\STX\b)\n\
+    \\EOT\EOT\SYN\STX\NUL\DC2\EOT\239\SOH\bz\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\NUL\EOT\DC2\EOT\128\STX\b\DLE\n\
+    \\ENQ\EOT\SYN\STX\NUL\EOT\DC2\EOT\239\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\NUL\ENQ\DC2\EOT\128\STX\DC1\ETB\n\
+    \\ENQ\EOT\SYN\STX\NUL\ACK\DC2\EOT\239\SOH\DC1O\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\NUL\SOH\DC2\EOT\128\STX\CAN$\n\
+    \\ENQ\EOT\SYN\STX\NUL\SOH\DC2\EOT\239\SOHPX\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\NUL\ETX\DC2\EOT\128\STX'(\n\
+    \\ENQ\EOT\SYN\STX\NUL\ETX\DC2\EOT\239\SOH[\\\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\NUL\b\DC2\EOT\239\SOH]y\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\NUL\a\DC2\EOT\239\SOHhx\n\
     \\f\n\
-    \\EOT\EOT\CAN\STX\SOH\DC2\EOT\129\STX\b$\n\
+    \\EOT\EOT\SYN\STX\SOH\DC2\EOT\240\SOH\bF\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\SOH\EOT\DC2\EOT\129\STX\b\DLE\n\
+    \\ENQ\EOT\SYN\STX\SOH\EOT\DC2\EOT\240\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\SOH\ENQ\DC2\EOT\129\STX\DC1\ETB\n\
+    \\ENQ\EOT\SYN\STX\SOH\ACK\DC2\EOT\240\SOH\DC12\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\SOH\SOH\DC2\EOT\129\STX\CAN\US\n\
+    \\ENQ\EOT\SYN\STX\SOH\SOH\DC2\EOT\240\SOH3A\n\
     \\r\n\
-    \\ENQ\EOT\CAN\STX\SOH\ETX\DC2\EOT\129\STX\"#\n\
+    \\ENQ\EOT\SYN\STX\SOH\ETX\DC2\EOT\240\SOHDE\n\
     \\f\n\
-    \\STX\EOT\EM\DC2\ACK\132\STX\NUL\145\STX\SOH\n\
+    \\EOT\EOT\SYN\STX\STX\DC2\EOT\241\SOH\bA\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\STX\EOT\DC2\EOT\241\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\STX\ACK\DC2\EOT\241\SOH\DC1,\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\STX\SOH\DC2\EOT\241\SOH-<\n\
+    \\r\n\
+    \\ENQ\EOT\SYN\STX\STX\ETX\DC2\EOT\241\SOH?@\n\
+    \\f\n\
+    \\STX\EOT\ETB\DC2\ACK\244\SOH\NUL\247\SOH\SOH\n\
     \\v\n\
-    \\ETX\EOT\EM\SOH\DC2\EOT\132\STX\b1\n\
-    \\SO\n\
-    \\EOT\EOT\EM\EOT\NUL\DC2\ACK\133\STX\b\142\STX\t\n\
-    \\r\n\
-    \\ENQ\EOT\EM\EOT\NUL\SOH\DC2\EOT\133\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\NUL\DC2\EOT\134\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\NUL\SOH\DC2\EOT\134\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\NUL\STX\DC2\EOT\134\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\SOH\DC2\EOT\135\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\SOH\SOH\DC2\EOT\135\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\SOH\STX\DC2\EOT\135\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\STX\DC2\EOT\136\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\STX\SOH\DC2\EOT\136\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\STX\STX\DC2\EOT\136\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\ETX\DC2\EOT\137\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ETX\SOH\DC2\EOT\137\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ETX\STX\DC2\EOT\137\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\EOT\DC2\EOT\138\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\EOT\SOH\DC2\EOT\138\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\EOT\STX\DC2\EOT\138\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\ENQ\DC2\EOT\139\STX\DLE(\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ENQ\SOH\DC2\EOT\139\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ENQ\STX\DC2\EOT\139\STX&'\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\ACK\DC2\EOT\140\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ACK\SOH\DC2\EOT\140\STX\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\ACK\STX\DC2\EOT\140\STX!\"\n\
-    \\SO\n\
-    \\ACK\EOT\EM\EOT\NUL\STX\a\DC2\EOT\141\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\a\SOH\DC2\EOT\141\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\EM\EOT\NUL\STX\a\STX\DC2\EOT\141\STX !\n\
+    \\ETX\EOT\ETB\SOH\DC2\EOT\244\SOH\b-\n\
     \\f\n\
-    \\EOT\EOT\EM\STX\NUL\DC2\EOT\144\STX\bp\n\
+    \\EOT\EOT\ETB\STX\NUL\DC2\EOT\245\SOH\b)\n\
     \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\EOT\DC2\EOT\144\STX\b\DLE\n\
+    \\ENQ\EOT\ETB\STX\NUL\EOT\DC2\EOT\245\SOH\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\ACK\DC2\EOT\144\STX\DC1E\n\
+    \\ENQ\EOT\ETB\STX\NUL\ENQ\DC2\EOT\245\SOH\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\SOH\DC2\EOT\144\STXFN\n\
+    \\ENQ\EOT\ETB\STX\NUL\SOH\DC2\EOT\245\SOH\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\ETX\DC2\EOT\144\STXQR\n\
-    \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\b\DC2\EOT\144\STXSo\n\
-    \\r\n\
-    \\ENQ\EOT\EM\STX\NUL\a\DC2\EOT\144\STX^n\n\
+    \\ENQ\EOT\ETB\STX\NUL\ETX\DC2\EOT\245\SOH'(\n\
     \\f\n\
-    \\STX\EOT\SUB\DC2\ACK\147\STX\NUL\153\STX\SOH\n\
+    \\EOT\EOT\ETB\STX\SOH\DC2\EOT\246\SOH\b$\n\
+    \\r\n\
+    \\ENQ\EOT\ETB\STX\SOH\EOT\DC2\EOT\246\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\ETB\STX\SOH\ENQ\DC2\EOT\246\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\ETB\STX\SOH\SOH\DC2\EOT\246\SOH\CAN\US\n\
+    \\r\n\
+    \\ENQ\EOT\ETB\STX\SOH\ETX\DC2\EOT\246\SOH\"#\n\
+    \\f\n\
+    \\STX\EOT\CAN\DC2\ACK\249\SOH\NUL\136\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\SUB\SOH\DC2\EOT\147\STX\b*\n\
+    \\ETX\EOT\CAN\SOH\DC2\EOT\249\SOH\b5\n\
+    \\SO\n\
+    \\EOT\EOT\CAN\EOT\NUL\DC2\ACK\250\SOH\b\133\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT\CAN\EOT\NUL\SOH\DC2\EOT\250\SOH\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\NUL\DC2\EOT\251\SOH\DLE%\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\NUL\SOH\DC2\EOT\251\SOH\DLE \n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\NUL\STX\DC2\EOT\251\SOH#$\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\SOH\DC2\EOT\252\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\SOH\SOH\DC2\EOT\252\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\SOH\STX\DC2\EOT\252\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\STX\DC2\EOT\253\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\STX\SOH\DC2\EOT\253\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\STX\STX\DC2\EOT\253\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\ETX\DC2\EOT\254\SOH\DLE \n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ETX\SOH\DC2\EOT\254\SOH\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ETX\STX\DC2\EOT\254\SOH\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\EOT\DC2\EOT\255\SOH\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\EOT\SOH\DC2\EOT\255\SOH\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\EOT\STX\DC2\EOT\255\SOH\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\ENQ\DC2\EOT\128\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ENQ\SOH\DC2\EOT\128\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ENQ\STX\DC2\EOT\128\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\ACK\DC2\EOT\129\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ACK\SOH\DC2\EOT\129\STX\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\ACK\STX\DC2\EOT\129\STX!\"\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\a\DC2\EOT\130\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\a\SOH\DC2\EOT\130\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\a\STX\DC2\EOT\130\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\b\DC2\EOT\131\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\b\SOH\DC2\EOT\131\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\b\STX\DC2\EOT\131\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT\CAN\EOT\NUL\STX\t\DC2\EOT\132\STX\DLE&\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\t\SOH\DC2\EOT\132\STX\DLE!\n\
+    \\SI\n\
+    \\a\EOT\CAN\EOT\NUL\STX\t\STX\DC2\EOT\132\STX$%\n\
     \\f\n\
-    \\EOT\EOT\SUB\STX\NUL\DC2\EOT\148\STX\b)\n\
+    \\EOT\EOT\CAN\STX\NUL\DC2\EOT\135\STX\bt\n\
     \\r\n\
-    \\ENQ\EOT\SUB\STX\NUL\EOT\DC2\EOT\148\STX\b\DLE\n\
+    \\ENQ\EOT\CAN\STX\NUL\EOT\DC2\EOT\135\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\SUB\STX\NUL\ENQ\DC2\EOT\148\STX\DC1\ETB\n\
+    \\ENQ\EOT\CAN\STX\NUL\ACK\DC2\EOT\135\STX\DC1I\n\
     \\r\n\
-    \\ENQ\EOT\SUB\STX\NUL\SOH\DC2\EOT\148\STX\CAN$\n\
+    \\ENQ\EOT\CAN\STX\NUL\SOH\DC2\EOT\135\STXJR\n\
     \\r\n\
-    \\ENQ\EOT\SUB\STX\NUL\ETX\DC2\EOT\148\STX'(\n\
+    \\ENQ\EOT\CAN\STX\NUL\ETX\DC2\EOT\135\STXUV\n\
+    \\r\n\
+    \\ENQ\EOT\CAN\STX\NUL\b\DC2\EOT\135\STXWs\n\
+    \\r\n\
+    \\ENQ\EOT\CAN\STX\NUL\a\DC2\EOT\135\STXbr\n\
     \\f\n\
-    \\EOT\EOT\SUB\STX\SOH\DC2\EOT\149\STX\b=\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\SOH\EOT\DC2\EOT\149\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\SOH\ACK\DC2\EOT\149\STX\DC1,\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\SOH\SOH\DC2\EOT\149\STX-8\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\SOH\ETX\DC2\EOT\149\STX;<\n\
-    \\f\n\
-    \\EOT\EOT\SUB\STX\STX\DC2\EOT\150\STX\b?\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\STX\EOT\DC2\EOT\150\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\STX\ACK\DC2\EOT\150\STX\DC1,\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\STX\SOH\DC2\EOT\150\STX-:\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\STX\ETX\DC2\EOT\150\STX=>\n\
-    \\f\n\
-    \\EOT\EOT\SUB\STX\ETX\DC2\EOT\151\STX\b#\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\ETX\EOT\DC2\EOT\151\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\ETX\ENQ\DC2\EOT\151\STX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\ETX\SOH\DC2\EOT\151\STX\CAN\RS\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\ETX\ETX\DC2\EOT\151\STX!\"\n\
-    \\f\n\
-    \\EOT\EOT\SUB\STX\EOT\DC2\EOT\152\STX\b)\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\EOT\EOT\DC2\EOT\152\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\EOT\ENQ\DC2\EOT\152\STX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\EOT\SOH\DC2\EOT\152\STX\CAN$\n\
-    \\r\n\
-    \\ENQ\EOT\SUB\STX\EOT\ETX\DC2\EOT\152\STX'(\n\
-    \\f\n\
-    \\STX\EOT\ESC\DC2\ACK\155\STX\NUL\174\STX\SOH\n\
+    \\STX\EOT\EM\DC2\ACK\138\STX\NUL\141\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\ESC\SOH\DC2\EOT\155\STX\b2\n\
-    \\SO\n\
-    \\EOT\EOT\ESC\EOT\NUL\DC2\ACK\156\STX\b\170\STX\t\n\
-    \\r\n\
-    \\ENQ\EOT\ESC\EOT\NUL\SOH\DC2\EOT\156\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\NUL\DC2\EOT\157\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\NUL\SOH\DC2\EOT\157\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\NUL\STX\DC2\EOT\157\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\SOH\DC2\EOT\158\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\SOH\SOH\DC2\EOT\158\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\SOH\STX\DC2\EOT\158\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\STX\DC2\EOT\159\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\STX\SOH\DC2\EOT\159\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\STX\STX\DC2\EOT\159\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\ETX\DC2\EOT\160\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ETX\SOH\DC2\EOT\160\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ETX\STX\DC2\EOT\160\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\EOT\DC2\EOT\161\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\EOT\SOH\DC2\EOT\161\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\EOT\STX\DC2\EOT\161\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\ENQ\DC2\EOT\162\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ENQ\SOH\DC2\EOT\162\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ENQ\STX\DC2\EOT\162\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\ACK\DC2\EOT\163\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ACK\SOH\DC2\EOT\163\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\ACK\STX\DC2\EOT\163\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\a\DC2\EOT\164\STX\DLE(\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\a\SOH\DC2\EOT\164\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\a\STX\DC2\EOT\164\STX&'\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\b\DC2\EOT\165\STX\DLE$\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\b\SOH\DC2\EOT\165\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\b\STX\DC2\EOT\165\STX\"#\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\t\DC2\EOT\166\STX\DLE'\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\t\SOH\DC2\EOT\166\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\t\STX\DC2\EOT\166\STX%&\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\n\
-    \\DC2\EOT\167\STX\DLE$\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\n\
-    \\SOH\DC2\EOT\167\STX\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\n\
-    \\STX\DC2\EOT\167\STX!#\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\v\DC2\EOT\168\STX\DLE)\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\v\SOH\DC2\EOT\168\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\v\STX\DC2\EOT\168\STX&(\n\
-    \\SO\n\
-    \\ACK\EOT\ESC\EOT\NUL\STX\f\DC2\EOT\169\STX\DLE1\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\f\SOH\DC2\EOT\169\STX\DLE+\n\
-    \\SI\n\
-    \\a\EOT\ESC\EOT\NUL\STX\f\STX\DC2\EOT\169\STX.0\n\
+    \\ETX\EOT\EM\SOH\DC2\EOT\138\STX\b)\n\
     \\f\n\
-    \\EOT\EOT\ESC\STX\NUL\DC2\EOT\172\STX\bq\n\
+    \\EOT\EOT\EM\STX\NUL\DC2\EOT\139\STX\b)\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\EOT\DC2\EOT\172\STX\b\DLE\n\
+    \\ENQ\EOT\EM\STX\NUL\EOT\DC2\EOT\139\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\ACK\DC2\EOT\172\STX\DC1F\n\
+    \\ENQ\EOT\EM\STX\NUL\ENQ\DC2\EOT\139\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\SOH\DC2\EOT\172\STXGO\n\
+    \\ENQ\EOT\EM\STX\NUL\SOH\DC2\EOT\139\STX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\ETX\DC2\EOT\172\STXRS\n\
-    \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\b\DC2\EOT\172\STXTp\n\
-    \\r\n\
-    \\ENQ\EOT\ESC\STX\NUL\a\DC2\EOT\172\STX_o\n\
+    \\ENQ\EOT\EM\STX\NUL\ETX\DC2\EOT\139\STX'(\n\
     \\f\n\
-    \\EOT\EOT\ESC\STX\SOH\DC2\EOT\173\STX\bA\n\
+    \\EOT\EOT\EM\STX\SOH\DC2\EOT\140\STX\b$\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\SOH\EOT\DC2\EOT\173\STX\b\DLE\n\
+    \\ENQ\EOT\EM\STX\SOH\EOT\DC2\EOT\140\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\SOH\ACK\DC2\EOT\173\STX\DC1,\n\
+    \\ENQ\EOT\EM\STX\SOH\ENQ\DC2\EOT\140\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\SOH\SOH\DC2\EOT\173\STX-<\n\
+    \\ENQ\EOT\EM\STX\SOH\SOH\DC2\EOT\140\STX\CAN\US\n\
     \\r\n\
-    \\ENQ\EOT\ESC\STX\SOH\ETX\DC2\EOT\173\STX?@\n\
+    \\ENQ\EOT\EM\STX\SOH\ETX\DC2\EOT\140\STX\"#\n\
     \\f\n\
-    \\STX\EOT\FS\DC2\ACK\176\STX\NUL\181\STX\SOH\n\
+    \\STX\EOT\SUB\DC2\ACK\143\STX\NUL\156\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\FS\SOH\DC2\EOT\176\STX\b)\n\
+    \\ETX\EOT\SUB\SOH\DC2\EOT\143\STX\b1\n\
+    \\SO\n\
+    \\EOT\EOT\SUB\EOT\NUL\DC2\ACK\144\STX\b\153\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT\SUB\EOT\NUL\SOH\DC2\EOT\144\STX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\NUL\DC2\EOT\145\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\NUL\SOH\DC2\EOT\145\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\NUL\STX\DC2\EOT\145\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\SOH\DC2\EOT\146\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\SOH\SOH\DC2\EOT\146\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\SOH\STX\DC2\EOT\146\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\STX\DC2\EOT\147\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\STX\SOH\DC2\EOT\147\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\STX\STX\DC2\EOT\147\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\ETX\DC2\EOT\148\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ETX\SOH\DC2\EOT\148\STX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ETX\STX\DC2\EOT\148\STX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\EOT\DC2\EOT\149\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\EOT\SOH\DC2\EOT\149\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\EOT\STX\DC2\EOT\149\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\ENQ\DC2\EOT\150\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ENQ\SOH\DC2\EOT\150\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ENQ\STX\DC2\EOT\150\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\ACK\DC2\EOT\151\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ACK\SOH\DC2\EOT\151\STX\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\ACK\STX\DC2\EOT\151\STX!\"\n\
+    \\SO\n\
+    \\ACK\EOT\SUB\EOT\NUL\STX\a\DC2\EOT\152\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\a\SOH\DC2\EOT\152\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\SUB\EOT\NUL\STX\a\STX\DC2\EOT\152\STX !\n\
     \\f\n\
-    \\EOT\EOT\FS\STX\NUL\DC2\EOT\177\STX\b)\n\
+    \\EOT\EOT\SUB\STX\NUL\DC2\EOT\155\STX\bp\n\
     \\r\n\
-    \\ENQ\EOT\FS\STX\NUL\EOT\DC2\EOT\177\STX\b\DLE\n\
+    \\ENQ\EOT\SUB\STX\NUL\EOT\DC2\EOT\155\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\FS\STX\NUL\ENQ\DC2\EOT\177\STX\DC1\ETB\n\
+    \\ENQ\EOT\SUB\STX\NUL\ACK\DC2\EOT\155\STX\DC1E\n\
     \\r\n\
-    \\ENQ\EOT\FS\STX\NUL\SOH\DC2\EOT\177\STX\CAN$\n\
+    \\ENQ\EOT\SUB\STX\NUL\SOH\DC2\EOT\155\STXFN\n\
     \\r\n\
-    \\ENQ\EOT\FS\STX\NUL\ETX\DC2\EOT\177\STX'(\n\
+    \\ENQ\EOT\SUB\STX\NUL\ETX\DC2\EOT\155\STXQR\n\
+    \\r\n\
+    \\ENQ\EOT\SUB\STX\NUL\b\DC2\EOT\155\STXSo\n\
+    \\r\n\
+    \\ENQ\EOT\SUB\STX\NUL\a\DC2\EOT\155\STX^n\n\
     \\f\n\
-    \\EOT\EOT\FS\STX\SOH\DC2\EOT\178\STX\b9\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\SOH\EOT\DC2\EOT\178\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\SOH\ACK\DC2\EOT\178\STX\DC1)\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\SOH\SOH\DC2\EOT\178\STX*4\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\SOH\ETX\DC2\EOT\178\STX78\n\
-    \\f\n\
-    \\EOT\EOT\FS\STX\STX\DC2\EOT\179\STX\b1\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\STX\EOT\DC2\EOT\179\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\STX\ENQ\DC2\EOT\179\STX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\STX\SOH\DC2\EOT\179\STX\CAN,\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\STX\ETX\DC2\EOT\179\STX/0\n\
-    \\f\n\
-    \\EOT\EOT\FS\STX\ETX\DC2\EOT\180\STX\b1\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\ETX\EOT\DC2\EOT\180\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\ETX\ENQ\DC2\EOT\180\STX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\ETX\SOH\DC2\EOT\180\STX\CAN,\n\
-    \\r\n\
-    \\ENQ\EOT\FS\STX\ETX\ETX\DC2\EOT\180\STX/0\n\
-    \\f\n\
-    \\STX\EOT\GS\DC2\ACK\183\STX\NUL\200\STX\SOH\n\
+    \\STX\EOT\ESC\DC2\ACK\158\STX\NUL\164\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\GS\SOH\DC2\EOT\183\STX\b1\n\
-    \\SO\n\
-    \\EOT\EOT\GS\EOT\NUL\DC2\ACK\184\STX\b\197\STX\t\n\
-    \\r\n\
-    \\ENQ\EOT\GS\EOT\NUL\SOH\DC2\EOT\184\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\NUL\DC2\EOT\185\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\NUL\SOH\DC2\EOT\185\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\NUL\STX\DC2\EOT\185\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\SOH\DC2\EOT\186\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\SOH\SOH\DC2\EOT\186\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\SOH\STX\DC2\EOT\186\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\STX\DC2\EOT\187\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\STX\SOH\DC2\EOT\187\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\STX\STX\DC2\EOT\187\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\ETX\DC2\EOT\188\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ETX\SOH\DC2\EOT\188\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ETX\STX\DC2\EOT\188\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\EOT\DC2\EOT\189\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\EOT\SOH\DC2\EOT\189\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\EOT\STX\DC2\EOT\189\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\ENQ\DC2\EOT\190\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ENQ\SOH\DC2\EOT\190\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ENQ\STX\DC2\EOT\190\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\ACK\DC2\EOT\191\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ACK\SOH\DC2\EOT\191\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\ACK\STX\DC2\EOT\191\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\a\DC2\EOT\192\STX\DLE(\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\a\SOH\DC2\EOT\192\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\a\STX\DC2\EOT\192\STX&'\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\b\DC2\EOT\193\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\b\SOH\DC2\EOT\193\STX\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\b\STX\DC2\EOT\193\STX!\"\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\t\DC2\EOT\194\STX\DLE'\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\t\SOH\DC2\EOT\194\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\t\STX\DC2\EOT\194\STX%&\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\n\
-    \\DC2\EOT\195\STX\DLE)\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\n\
-    \\SOH\DC2\EOT\195\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\n\
-    \\STX\DC2\EOT\195\STX&(\n\
-    \\SO\n\
-    \\ACK\EOT\GS\EOT\NUL\STX\v\DC2\EOT\196\STX\DLE2\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\v\SOH\DC2\EOT\196\STX\DLE,\n\
-    \\SI\n\
-    \\a\EOT\GS\EOT\NUL\STX\v\STX\DC2\EOT\196\STX/1\n\
+    \\ETX\EOT\ESC\SOH\DC2\EOT\158\STX\b*\n\
     \\f\n\
-    \\EOT\EOT\GS\STX\NUL\DC2\EOT\199\STX\bp\n\
+    \\EOT\EOT\ESC\STX\NUL\DC2\EOT\159\STX\b)\n\
     \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\EOT\DC2\EOT\199\STX\b\DLE\n\
+    \\ENQ\EOT\ESC\STX\NUL\EOT\DC2\EOT\159\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\ACK\DC2\EOT\199\STX\DC1E\n\
+    \\ENQ\EOT\ESC\STX\NUL\ENQ\DC2\EOT\159\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\SOH\DC2\EOT\199\STXFN\n\
+    \\ENQ\EOT\ESC\STX\NUL\SOH\DC2\EOT\159\STX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\ETX\DC2\EOT\199\STXQR\n\
-    \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\b\DC2\EOT\199\STXSo\n\
-    \\r\n\
-    \\ENQ\EOT\GS\STX\NUL\a\DC2\EOT\199\STX^n\n\
+    \\ENQ\EOT\ESC\STX\NUL\ETX\DC2\EOT\159\STX'(\n\
     \\f\n\
-    \\STX\EOT\RS\DC2\ACK\202\STX\NUL\205\STX\SOH\n\
+    \\EOT\EOT\ESC\STX\SOH\DC2\EOT\160\STX\b=\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\SOH\EOT\DC2\EOT\160\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\SOH\ACK\DC2\EOT\160\STX\DC1,\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\SOH\SOH\DC2\EOT\160\STX-8\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\SOH\ETX\DC2\EOT\160\STX;<\n\
+    \\f\n\
+    \\EOT\EOT\ESC\STX\STX\DC2\EOT\161\STX\b?\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\STX\EOT\DC2\EOT\161\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\STX\ACK\DC2\EOT\161\STX\DC1,\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\STX\SOH\DC2\EOT\161\STX-:\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\STX\ETX\DC2\EOT\161\STX=>\n\
+    \\f\n\
+    \\EOT\EOT\ESC\STX\ETX\DC2\EOT\162\STX\b#\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\ETX\EOT\DC2\EOT\162\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\ETX\ENQ\DC2\EOT\162\STX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\ETX\SOH\DC2\EOT\162\STX\CAN\RS\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\ETX\ETX\DC2\EOT\162\STX!\"\n\
+    \\f\n\
+    \\EOT\EOT\ESC\STX\EOT\DC2\EOT\163\STX\b)\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\EOT\EOT\DC2\EOT\163\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\EOT\ENQ\DC2\EOT\163\STX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\EOT\SOH\DC2\EOT\163\STX\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT\ESC\STX\EOT\ETX\DC2\EOT\163\STX'(\n\
+    \\f\n\
+    \\STX\EOT\FS\DC2\ACK\166\STX\NUL\185\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\RS\SOH\DC2\EOT\202\STX\b:\n\
+    \\ETX\EOT\FS\SOH\DC2\EOT\166\STX\b2\n\
+    \\SO\n\
+    \\EOT\EOT\FS\EOT\NUL\DC2\ACK\167\STX\b\181\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT\FS\EOT\NUL\SOH\DC2\EOT\167\STX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\NUL\DC2\EOT\168\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\NUL\SOH\DC2\EOT\168\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\NUL\STX\DC2\EOT\168\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\SOH\DC2\EOT\169\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\SOH\SOH\DC2\EOT\169\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\SOH\STX\DC2\EOT\169\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\STX\DC2\EOT\170\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\STX\SOH\DC2\EOT\170\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\STX\STX\DC2\EOT\170\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\ETX\DC2\EOT\171\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ETX\SOH\DC2\EOT\171\STX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ETX\STX\DC2\EOT\171\STX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\EOT\DC2\EOT\172\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\EOT\SOH\DC2\EOT\172\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\EOT\STX\DC2\EOT\172\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\ENQ\DC2\EOT\173\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ENQ\SOH\DC2\EOT\173\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ENQ\STX\DC2\EOT\173\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\ACK\DC2\EOT\174\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ACK\SOH\DC2\EOT\174\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\ACK\STX\DC2\EOT\174\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\a\DC2\EOT\175\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\a\SOH\DC2\EOT\175\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\a\STX\DC2\EOT\175\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\b\DC2\EOT\176\STX\DLE$\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\b\SOH\DC2\EOT\176\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\b\STX\DC2\EOT\176\STX\"#\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\t\DC2\EOT\177\STX\DLE'\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\t\SOH\DC2\EOT\177\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\t\STX\DC2\EOT\177\STX%&\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\n\
+    \\DC2\EOT\178\STX\DLE$\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\n\
+    \\SOH\DC2\EOT\178\STX\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\n\
+    \\STX\DC2\EOT\178\STX!#\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\v\DC2\EOT\179\STX\DLE)\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\v\SOH\DC2\EOT\179\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\v\STX\DC2\EOT\179\STX&(\n\
+    \\SO\n\
+    \\ACK\EOT\FS\EOT\NUL\STX\f\DC2\EOT\180\STX\DLE1\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\f\SOH\DC2\EOT\180\STX\DLE+\n\
+    \\SI\n\
+    \\a\EOT\FS\EOT\NUL\STX\f\STX\DC2\EOT\180\STX.0\n\
     \\f\n\
-    \\EOT\EOT\RS\STX\NUL\DC2\EOT\203\STX\b.\n\
+    \\EOT\EOT\FS\STX\NUL\DC2\EOT\183\STX\bq\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\NUL\EOT\DC2\EOT\203\STX\b\DLE\n\
+    \\ENQ\EOT\FS\STX\NUL\EOT\DC2\EOT\183\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\NUL\ENQ\DC2\EOT\203\STX\DC1\ETB\n\
+    \\ENQ\EOT\FS\STX\NUL\ACK\DC2\EOT\183\STX\DC1F\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\NUL\SOH\DC2\EOT\203\STX\CAN)\n\
+    \\ENQ\EOT\FS\STX\NUL\SOH\DC2\EOT\183\STXGO\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\NUL\ETX\DC2\EOT\203\STX,-\n\
+    \\ENQ\EOT\FS\STX\NUL\ETX\DC2\EOT\183\STXRS\n\
+    \\r\n\
+    \\ENQ\EOT\FS\STX\NUL\b\DC2\EOT\183\STXTp\n\
+    \\r\n\
+    \\ENQ\EOT\FS\STX\NUL\a\DC2\EOT\183\STX_o\n\
     \\f\n\
-    \\EOT\EOT\RS\STX\SOH\DC2\EOT\204\STX\b)\n\
+    \\EOT\EOT\FS\STX\SOH\DC2\EOT\184\STX\bA\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\SOH\EOT\DC2\EOT\204\STX\b\DLE\n\
+    \\ENQ\EOT\FS\STX\SOH\EOT\DC2\EOT\184\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\SOH\ENQ\DC2\EOT\204\STX\DC1\ETB\n\
+    \\ENQ\EOT\FS\STX\SOH\ACK\DC2\EOT\184\STX\DC1,\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\SOH\SOH\DC2\EOT\204\STX\CAN$\n\
+    \\ENQ\EOT\FS\STX\SOH\SOH\DC2\EOT\184\STX-<\n\
     \\r\n\
-    \\ENQ\EOT\RS\STX\SOH\ETX\DC2\EOT\204\STX'(\n\
+    \\ENQ\EOT\FS\STX\SOH\ETX\DC2\EOT\184\STX?@\n\
     \\f\n\
-    \\STX\EOT\US\DC2\ACK\207\STX\NUL\223\STX\SOH\n\
+    \\STX\EOT\GS\DC2\ACK\187\STX\NUL\192\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\US\SOH\DC2\EOT\207\STX\bB\n\
-    \\SO\n\
-    \\EOT\EOT\US\EOT\NUL\DC2\ACK\208\STX\b\219\STX\t\n\
-    \\r\n\
-    \\ENQ\EOT\US\EOT\NUL\SOH\DC2\EOT\208\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\NUL\DC2\EOT\209\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\NUL\SOH\DC2\EOT\209\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\NUL\STX\DC2\EOT\209\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\SOH\DC2\EOT\210\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\SOH\SOH\DC2\EOT\210\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\SOH\STX\DC2\EOT\210\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\STX\DC2\EOT\211\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\STX\SOH\DC2\EOT\211\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\STX\STX\DC2\EOT\211\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\ETX\DC2\EOT\212\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ETX\SOH\DC2\EOT\212\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ETX\STX\DC2\EOT\212\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\EOT\DC2\EOT\213\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\EOT\SOH\DC2\EOT\213\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\EOT\STX\DC2\EOT\213\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\ENQ\DC2\EOT\214\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ENQ\SOH\DC2\EOT\214\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ENQ\STX\DC2\EOT\214\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\ACK\DC2\EOT\215\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ACK\SOH\DC2\EOT\215\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\ACK\STX\DC2\EOT\215\STX !\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\a\DC2\EOT\216\STX\DLE(\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\a\SOH\DC2\EOT\216\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\a\STX\DC2\EOT\216\STX&'\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\b\DC2\EOT\217\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\b\SOH\DC2\EOT\217\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\b\STX\DC2\EOT\217\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT\US\EOT\NUL\STX\t\DC2\EOT\218\STX\DLE'\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\t\SOH\DC2\EOT\218\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT\US\EOT\NUL\STX\t\STX\DC2\EOT\218\STX%&\n\
-    \\r\n\
-    \\EOT\EOT\US\STX\NUL\DC2\ENQ\221\STX\b\129\SOH\n\
-    \\r\n\
-    \\ENQ\EOT\US\STX\NUL\EOT\DC2\EOT\221\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\US\STX\NUL\ACK\DC2\EOT\221\STX\DC1V\n\
-    \\r\n\
-    \\ENQ\EOT\US\STX\NUL\SOH\DC2\EOT\221\STXW_\n\
-    \\r\n\
-    \\ENQ\EOT\US\STX\NUL\ETX\DC2\EOT\221\STXbc\n\
-    \\SO\n\
-    \\ENQ\EOT\US\STX\NUL\b\DC2\ENQ\221\STXd\128\SOH\n\
-    \\r\n\
-    \\ENQ\EOT\US\STX\NUL\a\DC2\EOT\221\STXo\DEL\n\
+    \\ETX\EOT\GS\SOH\DC2\EOT\187\STX\b)\n\
     \\f\n\
-    \\EOT\EOT\US\STX\SOH\DC2\EOT\222\STX\b@\n\
+    \\EOT\EOT\GS\STX\NUL\DC2\EOT\188\STX\b)\n\
     \\r\n\
-    \\ENQ\EOT\US\STX\SOH\EOT\DC2\EOT\222\STX\b\DLE\n\
+    \\ENQ\EOT\GS\STX\NUL\EOT\DC2\EOT\188\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\US\STX\SOH\ACK\DC2\EOT\222\STX\DC1,\n\
+    \\ENQ\EOT\GS\STX\NUL\ENQ\DC2\EOT\188\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT\US\STX\SOH\SOH\DC2\EOT\222\STX-;\n\
+    \\ENQ\EOT\GS\STX\NUL\SOH\DC2\EOT\188\STX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT\US\STX\SOH\ETX\DC2\EOT\222\STX>?\n\
+    \\ENQ\EOT\GS\STX\NUL\ETX\DC2\EOT\188\STX'(\n\
     \\f\n\
-    \\STX\EOT \DC2\ACK\225\STX\NUL\227\STX\SOH\n\
+    \\EOT\EOT\GS\STX\SOH\DC2\EOT\189\STX\b9\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\SOH\EOT\DC2\EOT\189\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\SOH\ACK\DC2\EOT\189\STX\DC1)\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\SOH\SOH\DC2\EOT\189\STX*4\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\SOH\ETX\DC2\EOT\189\STX78\n\
+    \\f\n\
+    \\EOT\EOT\GS\STX\STX\DC2\EOT\190\STX\b1\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\STX\EOT\DC2\EOT\190\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\STX\ENQ\DC2\EOT\190\STX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\STX\SOH\DC2\EOT\190\STX\CAN,\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\STX\ETX\DC2\EOT\190\STX/0\n\
+    \\f\n\
+    \\EOT\EOT\GS\STX\ETX\DC2\EOT\191\STX\b1\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\ETX\EOT\DC2\EOT\191\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\ETX\ENQ\DC2\EOT\191\STX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\ETX\SOH\DC2\EOT\191\STX\CAN,\n\
+    \\r\n\
+    \\ENQ\EOT\GS\STX\ETX\ETX\DC2\EOT\191\STX/0\n\
+    \\f\n\
+    \\STX\EOT\RS\DC2\ACK\194\STX\NUL\211\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT \SOH\DC2\EOT\225\STX\b*\n\
+    \\ETX\EOT\RS\SOH\DC2\EOT\194\STX\b1\n\
+    \\SO\n\
+    \\EOT\EOT\RS\EOT\NUL\DC2\ACK\195\STX\b\208\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT\RS\EOT\NUL\SOH\DC2\EOT\195\STX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\NUL\DC2\EOT\196\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\NUL\SOH\DC2\EOT\196\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\NUL\STX\DC2\EOT\196\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\SOH\DC2\EOT\197\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\SOH\SOH\DC2\EOT\197\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\SOH\STX\DC2\EOT\197\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\STX\DC2\EOT\198\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\STX\SOH\DC2\EOT\198\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\STX\STX\DC2\EOT\198\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\ETX\DC2\EOT\199\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ETX\SOH\DC2\EOT\199\STX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ETX\STX\DC2\EOT\199\STX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\EOT\DC2\EOT\200\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\EOT\SOH\DC2\EOT\200\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\EOT\STX\DC2\EOT\200\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\ENQ\DC2\EOT\201\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ENQ\SOH\DC2\EOT\201\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ENQ\STX\DC2\EOT\201\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\ACK\DC2\EOT\202\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ACK\SOH\DC2\EOT\202\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\ACK\STX\DC2\EOT\202\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\a\DC2\EOT\203\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\a\SOH\DC2\EOT\203\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\a\STX\DC2\EOT\203\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\b\DC2\EOT\204\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\b\SOH\DC2\EOT\204\STX\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\b\STX\DC2\EOT\204\STX!\"\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\t\DC2\EOT\205\STX\DLE'\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\t\SOH\DC2\EOT\205\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\t\STX\DC2\EOT\205\STX%&\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\n\
+    \\DC2\EOT\206\STX\DLE)\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\n\
+    \\SOH\DC2\EOT\206\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\n\
+    \\STX\DC2\EOT\206\STX&(\n\
+    \\SO\n\
+    \\ACK\EOT\RS\EOT\NUL\STX\v\DC2\EOT\207\STX\DLE2\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\v\SOH\DC2\EOT\207\STX\DLE,\n\
+    \\SI\n\
+    \\a\EOT\RS\EOT\NUL\STX\v\STX\DC2\EOT\207\STX/1\n\
     \\f\n\
-    \\EOT\EOT \STX\NUL\DC2\EOT\226\STX\b)\n\
+    \\EOT\EOT\RS\STX\NUL\DC2\EOT\210\STX\bp\n\
     \\r\n\
-    \\ENQ\EOT \STX\NUL\EOT\DC2\EOT\226\STX\b\DLE\n\
+    \\ENQ\EOT\RS\STX\NUL\EOT\DC2\EOT\210\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT \STX\NUL\ENQ\DC2\EOT\226\STX\DC1\ETB\n\
+    \\ENQ\EOT\RS\STX\NUL\ACK\DC2\EOT\210\STX\DC1E\n\
     \\r\n\
-    \\ENQ\EOT \STX\NUL\SOH\DC2\EOT\226\STX\CAN$\n\
+    \\ENQ\EOT\RS\STX\NUL\SOH\DC2\EOT\210\STXFN\n\
     \\r\n\
-    \\ENQ\EOT \STX\NUL\ETX\DC2\EOT\226\STX'(\n\
+    \\ENQ\EOT\RS\STX\NUL\ETX\DC2\EOT\210\STXQR\n\
+    \\r\n\
+    \\ENQ\EOT\RS\STX\NUL\b\DC2\EOT\210\STXSo\n\
+    \\r\n\
+    \\ENQ\EOT\RS\STX\NUL\a\DC2\EOT\210\STX^n\n\
     \\f\n\
-    \\STX\EOT!\DC2\ACK\229\STX\NUL\241\STX\SOH\n\
+    \\STX\EOT\US\DC2\ACK\213\STX\NUL\216\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT!\SOH\DC2\EOT\229\STX\b2\n\
-    \\SO\n\
-    \\EOT\EOT!\EOT\NUL\DC2\ACK\230\STX\b\238\STX\t\n\
-    \\r\n\
-    \\ENQ\EOT!\EOT\NUL\SOH\DC2\EOT\230\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\NUL\DC2\EOT\231\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\NUL\SOH\DC2\EOT\231\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\NUL\STX\DC2\EOT\231\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\SOH\DC2\EOT\232\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\SOH\SOH\DC2\EOT\232\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\SOH\STX\DC2\EOT\232\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\STX\DC2\EOT\233\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\STX\SOH\DC2\EOT\233\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\STX\STX\DC2\EOT\233\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\ETX\DC2\EOT\234\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ETX\SOH\DC2\EOT\234\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ETX\STX\DC2\EOT\234\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\EOT\DC2\EOT\235\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\EOT\SOH\DC2\EOT\235\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\EOT\STX\DC2\EOT\235\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\ENQ\DC2\EOT\236\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ENQ\SOH\DC2\EOT\236\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ENQ\STX\DC2\EOT\236\STX !\n\
-    \\SO\n\
-    \\ACK\EOT!\EOT\NUL\STX\ACK\DC2\EOT\237\STX\DLE(\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ACK\SOH\DC2\EOT\237\STX\DLE#\n\
-    \\SI\n\
-    \\a\EOT!\EOT\NUL\STX\ACK\STX\DC2\EOT\237\STX&'\n\
+    \\ETX\EOT\US\SOH\DC2\EOT\213\STX\b:\n\
     \\f\n\
-    \\EOT\EOT!\STX\NUL\DC2\EOT\240\STX\bq\n\
+    \\EOT\EOT\US\STX\NUL\DC2\EOT\214\STX\b.\n\
     \\r\n\
-    \\ENQ\EOT!\STX\NUL\EOT\DC2\EOT\240\STX\b\DLE\n\
+    \\ENQ\EOT\US\STX\NUL\EOT\DC2\EOT\214\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT!\STX\NUL\ACK\DC2\EOT\240\STX\DC1F\n\
+    \\ENQ\EOT\US\STX\NUL\ENQ\DC2\EOT\214\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT!\STX\NUL\SOH\DC2\EOT\240\STXGO\n\
+    \\ENQ\EOT\US\STX\NUL\SOH\DC2\EOT\214\STX\CAN)\n\
     \\r\n\
-    \\ENQ\EOT!\STX\NUL\ETX\DC2\EOT\240\STXRS\n\
-    \\r\n\
-    \\ENQ\EOT!\STX\NUL\b\DC2\EOT\240\STXTp\n\
-    \\r\n\
-    \\ENQ\EOT!\STX\NUL\a\DC2\EOT\240\STX_o\n\
+    \\ENQ\EOT\US\STX\NUL\ETX\DC2\EOT\214\STX,-\n\
     \\f\n\
-    \\STX\EOT\"\DC2\ACK\243\STX\NUL\246\STX\SOH\n\
+    \\EOT\EOT\US\STX\SOH\DC2\EOT\215\STX\b)\n\
+    \\r\n\
+    \\ENQ\EOT\US\STX\SOH\EOT\DC2\EOT\215\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\US\STX\SOH\ENQ\DC2\EOT\215\STX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\US\STX\SOH\SOH\DC2\EOT\215\STX\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT\US\STX\SOH\ETX\DC2\EOT\215\STX'(\n\
+    \\f\n\
+    \\STX\EOT \DC2\ACK\218\STX\NUL\234\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT\"\SOH\DC2\EOT\243\STX\b+\n\
+    \\ETX\EOT \SOH\DC2\EOT\218\STX\bB\n\
+    \\SO\n\
+    \\EOT\EOT \EOT\NUL\DC2\ACK\219\STX\b\230\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT \EOT\NUL\SOH\DC2\EOT\219\STX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\NUL\DC2\EOT\220\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\NUL\SOH\DC2\EOT\220\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\NUL\STX\DC2\EOT\220\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\SOH\DC2\EOT\221\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\SOH\SOH\DC2\EOT\221\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\SOH\STX\DC2\EOT\221\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\STX\DC2\EOT\222\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\STX\SOH\DC2\EOT\222\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\STX\STX\DC2\EOT\222\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\ETX\DC2\EOT\223\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ETX\SOH\DC2\EOT\223\STX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ETX\STX\DC2\EOT\223\STX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\EOT\DC2\EOT\224\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\EOT\SOH\DC2\EOT\224\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\EOT\STX\DC2\EOT\224\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\ENQ\DC2\EOT\225\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ENQ\SOH\DC2\EOT\225\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ENQ\STX\DC2\EOT\225\STX !\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\ACK\DC2\EOT\226\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ACK\SOH\DC2\EOT\226\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\ACK\STX\DC2\EOT\226\STX !\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\a\DC2\EOT\227\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\a\SOH\DC2\EOT\227\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\a\STX\DC2\EOT\227\STX&'\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\b\DC2\EOT\228\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\b\SOH\DC2\EOT\228\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\b\STX\DC2\EOT\228\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT \EOT\NUL\STX\t\DC2\EOT\229\STX\DLE'\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\t\SOH\DC2\EOT\229\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT \EOT\NUL\STX\t\STX\DC2\EOT\229\STX%&\n\
+    \\r\n\
+    \\EOT\EOT \STX\NUL\DC2\ENQ\232\STX\b\129\SOH\n\
+    \\r\n\
+    \\ENQ\EOT \STX\NUL\EOT\DC2\EOT\232\STX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT \STX\NUL\ACK\DC2\EOT\232\STX\DC1V\n\
+    \\r\n\
+    \\ENQ\EOT \STX\NUL\SOH\DC2\EOT\232\STXW_\n\
+    \\r\n\
+    \\ENQ\EOT \STX\NUL\ETX\DC2\EOT\232\STXbc\n\
+    \\SO\n\
+    \\ENQ\EOT \STX\NUL\b\DC2\ENQ\232\STXd\128\SOH\n\
+    \\r\n\
+    \\ENQ\EOT \STX\NUL\a\DC2\EOT\232\STXo\DEL\n\
     \\f\n\
-    \\EOT\EOT\"\STX\NUL\DC2\EOT\244\STX\b)\n\
+    \\EOT\EOT \STX\SOH\DC2\EOT\233\STX\b@\n\
     \\r\n\
-    \\ENQ\EOT\"\STX\NUL\EOT\DC2\EOT\244\STX\b\DLE\n\
+    \\ENQ\EOT \STX\SOH\EOT\DC2\EOT\233\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT\"\STX\NUL\ENQ\DC2\EOT\244\STX\DC1\ETB\n\
+    \\ENQ\EOT \STX\SOH\ACK\DC2\EOT\233\STX\DC1,\n\
     \\r\n\
-    \\ENQ\EOT\"\STX\NUL\SOH\DC2\EOT\244\STX\CAN$\n\
+    \\ENQ\EOT \STX\SOH\SOH\DC2\EOT\233\STX-;\n\
     \\r\n\
-    \\ENQ\EOT\"\STX\NUL\ETX\DC2\EOT\244\STX'(\n\
+    \\ENQ\EOT \STX\SOH\ETX\DC2\EOT\233\STX>?\n\
     \\f\n\
-    \\EOT\EOT\"\STX\SOH\DC2\EOT\245\STX\b$\n\
-    \\r\n\
-    \\ENQ\EOT\"\STX\SOH\EOT\DC2\EOT\245\STX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT\"\STX\SOH\ENQ\DC2\EOT\245\STX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT\"\STX\SOH\SOH\DC2\EOT\245\STX\CAN\US\n\
-    \\r\n\
-    \\ENQ\EOT\"\STX\SOH\ETX\DC2\EOT\245\STX\"#\n\
-    \\f\n\
-    \\STX\EOT#\DC2\ACK\248\STX\NUL\133\ETX\SOH\n\
+    \\STX\EOT!\DC2\ACK\236\STX\NUL\238\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT#\SOH\DC2\EOT\248\STX\b3\n\
-    \\SO\n\
-    \\EOT\EOT#\EOT\NUL\DC2\ACK\249\STX\b\130\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT#\EOT\NUL\SOH\DC2\EOT\249\STX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\NUL\DC2\EOT\250\STX\DLE%\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\NUL\SOH\DC2\EOT\250\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\NUL\STX\DC2\EOT\250\STX#$\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\SOH\DC2\EOT\251\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\SOH\SOH\DC2\EOT\251\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\SOH\STX\DC2\EOT\251\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\STX\DC2\EOT\252\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\STX\SOH\DC2\EOT\252\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\STX\STX\DC2\EOT\252\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\ETX\DC2\EOT\253\STX\DLE \n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ETX\SOH\DC2\EOT\253\STX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ETX\STX\DC2\EOT\253\STX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\EOT\DC2\EOT\254\STX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\EOT\SOH\DC2\EOT\254\STX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\EOT\STX\DC2\EOT\254\STX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\ENQ\DC2\EOT\255\STX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ENQ\SOH\DC2\EOT\255\STX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ENQ\STX\DC2\EOT\255\STX !\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\ACK\DC2\EOT\128\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ACK\SOH\DC2\EOT\128\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\ACK\STX\DC2\EOT\128\ETX&'\n\
-    \\SO\n\
-    \\ACK\EOT#\EOT\NUL\STX\a\DC2\EOT\129\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\a\SOH\DC2\EOT\129\ETX\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT#\EOT\NUL\STX\a\STX\DC2\EOT\129\ETX!\"\n\
+    \\ETX\EOT!\SOH\DC2\EOT\236\STX\b*\n\
     \\f\n\
-    \\EOT\EOT#\STX\NUL\DC2\EOT\132\ETX\br\n\
+    \\EOT\EOT!\STX\NUL\DC2\EOT\237\STX\b)\n\
     \\r\n\
-    \\ENQ\EOT#\STX\NUL\EOT\DC2\EOT\132\ETX\b\DLE\n\
+    \\ENQ\EOT!\STX\NUL\EOT\DC2\EOT\237\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT#\STX\NUL\ACK\DC2\EOT\132\ETX\DC1G\n\
+    \\ENQ\EOT!\STX\NUL\ENQ\DC2\EOT\237\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT#\STX\NUL\SOH\DC2\EOT\132\ETXHP\n\
+    \\ENQ\EOT!\STX\NUL\SOH\DC2\EOT\237\STX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT#\STX\NUL\ETX\DC2\EOT\132\ETXST\n\
-    \\r\n\
-    \\ENQ\EOT#\STX\NUL\b\DC2\EOT\132\ETXUq\n\
-    \\r\n\
-    \\ENQ\EOT#\STX\NUL\a\DC2\EOT\132\ETX`p\n\
+    \\ENQ\EOT!\STX\NUL\ETX\DC2\EOT\237\STX'(\n\
     \\f\n\
-    \\STX\EOT$\DC2\ACK\135\ETX\NUL\138\ETX\SOH\n\
+    \\STX\EOT\"\DC2\ACK\240\STX\NUL\252\STX\SOH\n\
     \\v\n\
-    \\ETX\EOT$\SOH\DC2\EOT\135\ETX\b-\n\
+    \\ETX\EOT\"\SOH\DC2\EOT\240\STX\b2\n\
+    \\SO\n\
+    \\EOT\EOT\"\EOT\NUL\DC2\ACK\241\STX\b\249\STX\t\n\
+    \\r\n\
+    \\ENQ\EOT\"\EOT\NUL\SOH\DC2\EOT\241\STX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\NUL\DC2\EOT\242\STX\DLE%\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\NUL\SOH\DC2\EOT\242\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\NUL\STX\DC2\EOT\242\STX#$\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\SOH\DC2\EOT\243\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\SOH\SOH\DC2\EOT\243\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\SOH\STX\DC2\EOT\243\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\STX\DC2\EOT\244\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\STX\SOH\DC2\EOT\244\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\STX\STX\DC2\EOT\244\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\ETX\DC2\EOT\245\STX\DLE \n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ETX\SOH\DC2\EOT\245\STX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ETX\STX\DC2\EOT\245\STX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\EOT\DC2\EOT\246\STX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\EOT\SOH\DC2\EOT\246\STX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\EOT\STX\DC2\EOT\246\STX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\ENQ\DC2\EOT\247\STX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ENQ\SOH\DC2\EOT\247\STX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ENQ\STX\DC2\EOT\247\STX !\n\
+    \\SO\n\
+    \\ACK\EOT\"\EOT\NUL\STX\ACK\DC2\EOT\248\STX\DLE(\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ACK\SOH\DC2\EOT\248\STX\DLE#\n\
+    \\SI\n\
+    \\a\EOT\"\EOT\NUL\STX\ACK\STX\DC2\EOT\248\STX&'\n\
     \\f\n\
-    \\EOT\EOT$\STX\NUL\DC2\EOT\136\ETX\b)\n\
+    \\EOT\EOT\"\STX\NUL\DC2\EOT\251\STX\bq\n\
     \\r\n\
-    \\ENQ\EOT$\STX\NUL\EOT\DC2\EOT\136\ETX\b\DLE\n\
+    \\ENQ\EOT\"\STX\NUL\EOT\DC2\EOT\251\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT$\STX\NUL\ENQ\DC2\EOT\136\ETX\DC1\ETB\n\
+    \\ENQ\EOT\"\STX\NUL\ACK\DC2\EOT\251\STX\DC1F\n\
     \\r\n\
-    \\ENQ\EOT$\STX\NUL\SOH\DC2\EOT\136\ETX\CAN$\n\
+    \\ENQ\EOT\"\STX\NUL\SOH\DC2\EOT\251\STXGO\n\
     \\r\n\
-    \\ENQ\EOT$\STX\NUL\ETX\DC2\EOT\136\ETX'(\n\
+    \\ENQ\EOT\"\STX\NUL\ETX\DC2\EOT\251\STXRS\n\
+    \\r\n\
+    \\ENQ\EOT\"\STX\NUL\b\DC2\EOT\251\STXTp\n\
+    \\r\n\
+    \\ENQ\EOT\"\STX\NUL\a\DC2\EOT\251\STX_o\n\
     \\f\n\
-    \\EOT\EOT$\STX\SOH\DC2\EOT\137\ETX\b@\n\
-    \\r\n\
-    \\ENQ\EOT$\STX\SOH\EOT\DC2\EOT\137\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT$\STX\SOH\ACK\DC2\EOT\137\ETX\DC1,\n\
-    \\r\n\
-    \\ENQ\EOT$\STX\SOH\SOH\DC2\EOT\137\ETX-;\n\
-    \\r\n\
-    \\ENQ\EOT$\STX\SOH\ETX\DC2\EOT\137\ETX>?\n\
-    \\f\n\
-    \\STX\EOT%\DC2\ACK\140\ETX\NUL\152\ETX\SOH\n\
+    \\STX\EOT#\DC2\ACK\254\STX\NUL\129\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT%\SOH\DC2\EOT\140\ETX\b5\n\
-    \\SO\n\
-    \\EOT\EOT%\EOT\NUL\DC2\ACK\141\ETX\b\149\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT%\EOT\NUL\SOH\DC2\EOT\141\ETX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\NUL\DC2\EOT\142\ETX\DLE%\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\NUL\SOH\DC2\EOT\142\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\NUL\STX\DC2\EOT\142\ETX#$\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\SOH\DC2\EOT\143\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\SOH\SOH\DC2\EOT\143\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\SOH\STX\DC2\EOT\143\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\STX\DC2\EOT\144\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\STX\SOH\DC2\EOT\144\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\STX\STX\DC2\EOT\144\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\ETX\DC2\EOT\145\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ETX\SOH\DC2\EOT\145\ETX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ETX\STX\DC2\EOT\145\ETX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\EOT\DC2\EOT\146\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\EOT\SOH\DC2\EOT\146\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\EOT\STX\DC2\EOT\146\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\ENQ\DC2\EOT\147\ETX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ENQ\SOH\DC2\EOT\147\ETX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ENQ\STX\DC2\EOT\147\ETX !\n\
-    \\SO\n\
-    \\ACK\EOT%\EOT\NUL\STX\ACK\DC2\EOT\148\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ACK\SOH\DC2\EOT\148\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT%\EOT\NUL\STX\ACK\STX\DC2\EOT\148\ETX&'\n\
+    \\ETX\EOT#\SOH\DC2\EOT\254\STX\b+\n\
     \\f\n\
-    \\EOT\EOT%\STX\NUL\DC2\EOT\151\ETX\bt\n\
+    \\EOT\EOT#\STX\NUL\DC2\EOT\255\STX\b)\n\
     \\r\n\
-    \\ENQ\EOT%\STX\NUL\EOT\DC2\EOT\151\ETX\b\DLE\n\
+    \\ENQ\EOT#\STX\NUL\EOT\DC2\EOT\255\STX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT%\STX\NUL\ACK\DC2\EOT\151\ETX\DC1I\n\
+    \\ENQ\EOT#\STX\NUL\ENQ\DC2\EOT\255\STX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT%\STX\NUL\SOH\DC2\EOT\151\ETXJR\n\
+    \\ENQ\EOT#\STX\NUL\SOH\DC2\EOT\255\STX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT%\STX\NUL\ETX\DC2\EOT\151\ETXUV\n\
-    \\r\n\
-    \\ENQ\EOT%\STX\NUL\b\DC2\EOT\151\ETXWs\n\
-    \\r\n\
-    \\ENQ\EOT%\STX\NUL\a\DC2\EOT\151\ETXbr\n\
+    \\ENQ\EOT#\STX\NUL\ETX\DC2\EOT\255\STX'(\n\
     \\f\n\
-    \\STX\EOT&\DC2\ACK\154\ETX\NUL\156\ETX\SOH\n\
+    \\EOT\EOT#\STX\SOH\DC2\EOT\128\ETX\b$\n\
+    \\r\n\
+    \\ENQ\EOT#\STX\SOH\EOT\DC2\EOT\128\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT#\STX\SOH\ENQ\DC2\EOT\128\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT#\STX\SOH\SOH\DC2\EOT\128\ETX\CAN\US\n\
+    \\r\n\
+    \\ENQ\EOT#\STX\SOH\ETX\DC2\EOT\128\ETX\"#\n\
+    \\f\n\
+    \\STX\EOT$\DC2\ACK\131\ETX\NUL\144\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT&\SOH\DC2\EOT\154\ETX\b0\n\
+    \\ETX\EOT$\SOH\DC2\EOT\131\ETX\b3\n\
+    \\SO\n\
+    \\EOT\EOT$\EOT\NUL\DC2\ACK\132\ETX\b\141\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT$\EOT\NUL\SOH\DC2\EOT\132\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\NUL\DC2\EOT\133\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\NUL\SOH\DC2\EOT\133\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\NUL\STX\DC2\EOT\133\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\SOH\DC2\EOT\134\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\SOH\SOH\DC2\EOT\134\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\SOH\STX\DC2\EOT\134\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\STX\DC2\EOT\135\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\STX\SOH\DC2\EOT\135\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\STX\STX\DC2\EOT\135\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\ETX\DC2\EOT\136\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ETX\SOH\DC2\EOT\136\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ETX\STX\DC2\EOT\136\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\EOT\DC2\EOT\137\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\EOT\SOH\DC2\EOT\137\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\EOT\STX\DC2\EOT\137\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\ENQ\DC2\EOT\138\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ENQ\SOH\DC2\EOT\138\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ENQ\STX\DC2\EOT\138\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\ACK\DC2\EOT\139\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ACK\SOH\DC2\EOT\139\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\ACK\STX\DC2\EOT\139\ETX&'\n\
+    \\SO\n\
+    \\ACK\EOT$\EOT\NUL\STX\a\DC2\EOT\140\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\a\SOH\DC2\EOT\140\ETX\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT$\EOT\NUL\STX\a\STX\DC2\EOT\140\ETX!\"\n\
     \\f\n\
-    \\EOT\EOT&\STX\NUL\DC2\EOT\155\ETX\b)\n\
+    \\EOT\EOT$\STX\NUL\DC2\EOT\143\ETX\br\n\
     \\r\n\
-    \\ENQ\EOT&\STX\NUL\EOT\DC2\EOT\155\ETX\b\DLE\n\
+    \\ENQ\EOT$\STX\NUL\EOT\DC2\EOT\143\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT&\STX\NUL\ENQ\DC2\EOT\155\ETX\DC1\ETB\n\
+    \\ENQ\EOT$\STX\NUL\ACK\DC2\EOT\143\ETX\DC1G\n\
     \\r\n\
-    \\ENQ\EOT&\STX\NUL\SOH\DC2\EOT\155\ETX\CAN$\n\
+    \\ENQ\EOT$\STX\NUL\SOH\DC2\EOT\143\ETXHP\n\
     \\r\n\
-    \\ENQ\EOT&\STX\NUL\ETX\DC2\EOT\155\ETX'(\n\
+    \\ENQ\EOT$\STX\NUL\ETX\DC2\EOT\143\ETXST\n\
+    \\r\n\
+    \\ENQ\EOT$\STX\NUL\b\DC2\EOT\143\ETXUq\n\
+    \\r\n\
+    \\ENQ\EOT$\STX\NUL\a\DC2\EOT\143\ETX`p\n\
     \\f\n\
-    \\STX\EOT'\DC2\ACK\158\ETX\NUL\170\ETX\SOH\n\
+    \\STX\EOT%\DC2\ACK\146\ETX\NUL\149\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT'\SOH\DC2\EOT\158\ETX\b8\n\
-    \\SO\n\
-    \\EOT\EOT'\EOT\NUL\DC2\ACK\159\ETX\b\167\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT'\EOT\NUL\SOH\DC2\EOT\159\ETX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\NUL\DC2\EOT\160\ETX\DLE%\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\NUL\SOH\DC2\EOT\160\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\NUL\STX\DC2\EOT\160\ETX#$\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\SOH\DC2\EOT\161\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\SOH\SOH\DC2\EOT\161\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\SOH\STX\DC2\EOT\161\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\STX\DC2\EOT\162\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\STX\SOH\DC2\EOT\162\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\STX\STX\DC2\EOT\162\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\ETX\DC2\EOT\163\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ETX\SOH\DC2\EOT\163\ETX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ETX\STX\DC2\EOT\163\ETX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\EOT\DC2\EOT\164\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\EOT\SOH\DC2\EOT\164\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\EOT\STX\DC2\EOT\164\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\ENQ\DC2\EOT\165\ETX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ENQ\SOH\DC2\EOT\165\ETX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ENQ\STX\DC2\EOT\165\ETX !\n\
-    \\SO\n\
-    \\ACK\EOT'\EOT\NUL\STX\ACK\DC2\EOT\166\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ACK\SOH\DC2\EOT\166\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT'\EOT\NUL\STX\ACK\STX\DC2\EOT\166\ETX&'\n\
+    \\ETX\EOT%\SOH\DC2\EOT\146\ETX\b-\n\
     \\f\n\
-    \\EOT\EOT'\STX\NUL\DC2\EOT\169\ETX\bw\n\
+    \\EOT\EOT%\STX\NUL\DC2\EOT\147\ETX\b)\n\
     \\r\n\
-    \\ENQ\EOT'\STX\NUL\EOT\DC2\EOT\169\ETX\b\DLE\n\
+    \\ENQ\EOT%\STX\NUL\EOT\DC2\EOT\147\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT'\STX\NUL\ACK\DC2\EOT\169\ETX\DC1L\n\
+    \\ENQ\EOT%\STX\NUL\ENQ\DC2\EOT\147\ETX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT'\STX\NUL\SOH\DC2\EOT\169\ETXMU\n\
+    \\ENQ\EOT%\STX\NUL\SOH\DC2\EOT\147\ETX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT'\STX\NUL\ETX\DC2\EOT\169\ETXXY\n\
-    \\r\n\
-    \\ENQ\EOT'\STX\NUL\b\DC2\EOT\169\ETXZv\n\
-    \\r\n\
-    \\ENQ\EOT'\STX\NUL\a\DC2\EOT\169\ETXeu\n\
+    \\ENQ\EOT%\STX\NUL\ETX\DC2\EOT\147\ETX'(\n\
     \\f\n\
-    \\STX\EOT(\DC2\ACK\172\ETX\NUL\176\ETX\SOH\n\
+    \\EOT\EOT%\STX\SOH\DC2\EOT\148\ETX\b@\n\
+    \\r\n\
+    \\ENQ\EOT%\STX\SOH\EOT\DC2\EOT\148\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT%\STX\SOH\ACK\DC2\EOT\148\ETX\DC1,\n\
+    \\r\n\
+    \\ENQ\EOT%\STX\SOH\SOH\DC2\EOT\148\ETX-;\n\
+    \\r\n\
+    \\ENQ\EOT%\STX\SOH\ETX\DC2\EOT\148\ETX>?\n\
+    \\f\n\
+    \\STX\EOT&\DC2\ACK\151\ETX\NUL\163\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT(\SOH\DC2\EOT\172\ETX\b'\n\
+    \\ETX\EOT&\SOH\DC2\EOT\151\ETX\b5\n\
+    \\SO\n\
+    \\EOT\EOT&\EOT\NUL\DC2\ACK\152\ETX\b\160\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT&\EOT\NUL\SOH\DC2\EOT\152\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\NUL\DC2\EOT\153\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\NUL\SOH\DC2\EOT\153\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\NUL\STX\DC2\EOT\153\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\SOH\DC2\EOT\154\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\SOH\SOH\DC2\EOT\154\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\SOH\STX\DC2\EOT\154\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\STX\DC2\EOT\155\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\STX\SOH\DC2\EOT\155\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\STX\STX\DC2\EOT\155\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\ETX\DC2\EOT\156\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ETX\SOH\DC2\EOT\156\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ETX\STX\DC2\EOT\156\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\EOT\DC2\EOT\157\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\EOT\SOH\DC2\EOT\157\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\EOT\STX\DC2\EOT\157\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\ENQ\DC2\EOT\158\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ENQ\SOH\DC2\EOT\158\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ENQ\STX\DC2\EOT\158\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT&\EOT\NUL\STX\ACK\DC2\EOT\159\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ACK\SOH\DC2\EOT\159\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT&\EOT\NUL\STX\ACK\STX\DC2\EOT\159\ETX&'\n\
     \\f\n\
-    \\EOT\EOT(\STX\NUL\DC2\EOT\173\ETX\b%\n\
+    \\EOT\EOT&\STX\NUL\DC2\EOT\162\ETX\bt\n\
     \\r\n\
-    \\ENQ\EOT(\STX\NUL\EOT\DC2\EOT\173\ETX\b\DLE\n\
+    \\ENQ\EOT&\STX\NUL\EOT\DC2\EOT\162\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT(\STX\NUL\ENQ\DC2\EOT\173\ETX\DC1\ETB\n\
+    \\ENQ\EOT&\STX\NUL\ACK\DC2\EOT\162\ETX\DC1I\n\
     \\r\n\
-    \\ENQ\EOT(\STX\NUL\SOH\DC2\EOT\173\ETX\CAN \n\
+    \\ENQ\EOT&\STX\NUL\SOH\DC2\EOT\162\ETXJR\n\
     \\r\n\
-    \\ENQ\EOT(\STX\NUL\ETX\DC2\EOT\173\ETX#$\n\
+    \\ENQ\EOT&\STX\NUL\ETX\DC2\EOT\162\ETXUV\n\
+    \\r\n\
+    \\ENQ\EOT&\STX\NUL\b\DC2\EOT\162\ETXWs\n\
+    \\r\n\
+    \\ENQ\EOT&\STX\NUL\a\DC2\EOT\162\ETXbr\n\
     \\f\n\
-    \\EOT\EOT(\STX\SOH\DC2\EOT\174\ETX\b)\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\SOH\EOT\DC2\EOT\174\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\SOH\ENQ\DC2\EOT\174\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\SOH\SOH\DC2\EOT\174\ETX\CAN$\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\SOH\ETX\DC2\EOT\174\ETX'(\n\
-    \\f\n\
-    \\EOT\EOT(\STX\STX\DC2\EOT\175\ETX\b%\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\STX\EOT\DC2\EOT\175\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\STX\ENQ\DC2\EOT\175\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT(\STX\STX\SOH\DC2\EOT\175\ETX\CAN \n\
-    \\r\n\
-    \\ENQ\EOT(\STX\STX\ETX\DC2\EOT\175\ETX#$\n\
-    \\f\n\
-    \\STX\EOT)\DC2\ACK\178\ETX\NUL\190\ETX\SOH\n\
+    \\STX\EOT'\DC2\ACK\165\ETX\NUL\167\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT)\SOH\DC2\EOT\178\ETX\b/\n\
-    \\SO\n\
-    \\EOT\EOT)\EOT\NUL\DC2\ACK\179\ETX\b\187\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT)\EOT\NUL\SOH\DC2\EOT\179\ETX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\NUL\DC2\EOT\180\ETX\DLE%\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\NUL\SOH\DC2\EOT\180\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\NUL\STX\DC2\EOT\180\ETX#$\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\SOH\DC2\EOT\181\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\SOH\SOH\DC2\EOT\181\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\SOH\STX\DC2\EOT\181\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\STX\DC2\EOT\182\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\STX\SOH\DC2\EOT\182\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\STX\STX\DC2\EOT\182\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\ETX\DC2\EOT\183\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ETX\SOH\DC2\EOT\183\ETX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ETX\STX\DC2\EOT\183\ETX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\EOT\DC2\EOT\184\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\EOT\SOH\DC2\EOT\184\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\EOT\STX\DC2\EOT\184\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\ENQ\DC2\EOT\185\ETX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ENQ\SOH\DC2\EOT\185\ETX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ENQ\STX\DC2\EOT\185\ETX !\n\
-    \\SO\n\
-    \\ACK\EOT)\EOT\NUL\STX\ACK\DC2\EOT\186\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ACK\SOH\DC2\EOT\186\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT)\EOT\NUL\STX\ACK\STX\DC2\EOT\186\ETX&'\n\
+    \\ETX\EOT'\SOH\DC2\EOT\165\ETX\b0\n\
     \\f\n\
-    \\EOT\EOT)\STX\NUL\DC2\EOT\189\ETX\bn\n\
+    \\EOT\EOT'\STX\NUL\DC2\EOT\166\ETX\b)\n\
     \\r\n\
-    \\ENQ\EOT)\STX\NUL\EOT\DC2\EOT\189\ETX\b\DLE\n\
+    \\ENQ\EOT'\STX\NUL\EOT\DC2\EOT\166\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT)\STX\NUL\ACK\DC2\EOT\189\ETX\DC1C\n\
+    \\ENQ\EOT'\STX\NUL\ENQ\DC2\EOT\166\ETX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT)\STX\NUL\SOH\DC2\EOT\189\ETXDL\n\
+    \\ENQ\EOT'\STX\NUL\SOH\DC2\EOT\166\ETX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT)\STX\NUL\ETX\DC2\EOT\189\ETXOP\n\
-    \\r\n\
-    \\ENQ\EOT)\STX\NUL\b\DC2\EOT\189\ETXQm\n\
-    \\r\n\
-    \\ENQ\EOT)\STX\NUL\a\DC2\EOT\189\ETX\\l\n\
+    \\ENQ\EOT'\STX\NUL\ETX\DC2\EOT\166\ETX'(\n\
     \\f\n\
-    \\STX\EOT*\DC2\ACK\192\ETX\NUL\196\ETX\SOH\n\
+    \\STX\EOT(\DC2\ACK\169\ETX\NUL\181\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT*\SOH\DC2\EOT\192\ETX\b.\n\
+    \\ETX\EOT(\SOH\DC2\EOT\169\ETX\b8\n\
+    \\SO\n\
+    \\EOT\EOT(\EOT\NUL\DC2\ACK\170\ETX\b\178\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT(\EOT\NUL\SOH\DC2\EOT\170\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\NUL\DC2\EOT\171\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\NUL\SOH\DC2\EOT\171\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\NUL\STX\DC2\EOT\171\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\SOH\DC2\EOT\172\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\SOH\SOH\DC2\EOT\172\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\SOH\STX\DC2\EOT\172\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\STX\DC2\EOT\173\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\STX\SOH\DC2\EOT\173\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\STX\STX\DC2\EOT\173\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\ETX\DC2\EOT\174\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ETX\SOH\DC2\EOT\174\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ETX\STX\DC2\EOT\174\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\EOT\DC2\EOT\175\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\EOT\SOH\DC2\EOT\175\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\EOT\STX\DC2\EOT\175\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\ENQ\DC2\EOT\176\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ENQ\SOH\DC2\EOT\176\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ENQ\STX\DC2\EOT\176\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT(\EOT\NUL\STX\ACK\DC2\EOT\177\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ACK\SOH\DC2\EOT\177\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT(\EOT\NUL\STX\ACK\STX\DC2\EOT\177\ETX&'\n\
     \\f\n\
-    \\EOT\EOT*\STX\NUL\DC2\EOT\193\ETX\b\"\n\
+    \\EOT\EOT(\STX\NUL\DC2\EOT\180\ETX\bw\n\
     \\r\n\
-    \\ENQ\EOT*\STX\NUL\EOT\DC2\EOT\193\ETX\b\DLE\n\
+    \\ENQ\EOT(\STX\NUL\EOT\DC2\EOT\180\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT*\STX\NUL\ENQ\DC2\EOT\193\ETX\DC1\ETB\n\
+    \\ENQ\EOT(\STX\NUL\ACK\DC2\EOT\180\ETX\DC1L\n\
     \\r\n\
-    \\ENQ\EOT*\STX\NUL\SOH\DC2\EOT\193\ETX\CAN\GS\n\
+    \\ENQ\EOT(\STX\NUL\SOH\DC2\EOT\180\ETXMU\n\
     \\r\n\
-    \\ENQ\EOT*\STX\NUL\ETX\DC2\EOT\193\ETX !\n\
+    \\ENQ\EOT(\STX\NUL\ETX\DC2\EOT\180\ETXXY\n\
+    \\r\n\
+    \\ENQ\EOT(\STX\NUL\b\DC2\EOT\180\ETXZv\n\
+    \\r\n\
+    \\ENQ\EOT(\STX\NUL\a\DC2\EOT\180\ETXeu\n\
     \\f\n\
-    \\EOT\EOT*\STX\SOH\DC2\EOT\194\ETX\b%\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\SOH\EOT\DC2\EOT\194\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\SOH\ENQ\DC2\EOT\194\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\SOH\SOH\DC2\EOT\194\ETX\CAN \n\
-    \\r\n\
-    \\ENQ\EOT*\STX\SOH\ETX\DC2\EOT\194\ETX#$\n\
-    \\f\n\
-    \\EOT\EOT*\STX\STX\DC2\EOT\195\ETX\b%\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\STX\EOT\DC2\EOT\195\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\STX\ENQ\DC2\EOT\195\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT*\STX\STX\SOH\DC2\EOT\195\ETX\CAN \n\
-    \\r\n\
-    \\ENQ\EOT*\STX\STX\ETX\DC2\EOT\195\ETX#$\n\
-    \\f\n\
-    \\STX\EOT+\DC2\ACK\198\ETX\NUL\214\ETX\SOH\n\
+    \\STX\EOT)\DC2\ACK\183\ETX\NUL\186\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT+\SOH\DC2\EOT\198\ETX\b6\n\
-    \\SO\n\
-    \\EOT\EOT+\ETX\NUL\DC2\ACK\199\ETX\b\204\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT+\ETX\NUL\SOH\DC2\EOT\199\ETX\DLE\NAK\n\
-    \\SO\n\
-    \\ACK\EOT+\ETX\NUL\STX\NUL\DC2\EOT\200\ETX\DLE*\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\NUL\EOT\DC2\EOT\200\ETX\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\NUL\ENQ\DC2\EOT\200\ETX\EM\US\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\NUL\SOH\DC2\EOT\200\ETX %\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\NUL\ETX\DC2\EOT\200\ETX()\n\
-    \\SO\n\
-    \\ACK\EOT+\ETX\NUL\STX\SOH\DC2\EOT\201\ETX\DLE+\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\SOH\EOT\DC2\EOT\201\ETX\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\SOH\ENQ\DC2\EOT\201\ETX\EM\US\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\SOH\SOH\DC2\EOT\201\ETX &\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\SOH\ETX\DC2\EOT\201\ETX)*\n\
-    \\SO\n\
-    \\ACK\EOT+\ETX\NUL\STX\STX\DC2\EOT\202\ETX\DLE\DEL\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\EOT\DC2\EOT\202\ETX\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\ACK\DC2\EOT\202\ETX\EM\\\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\SOH\DC2\EOT\202\ETX]c\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\ETX\DC2\EOT\202\ETXfg\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\b\DC2\EOT\202\ETXh~\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\STX\a\DC2\EOT\202\ETXs}\n\
-    \\SO\n\
-    \\ACK\EOT+\ETX\NUL\STX\ETX\DC2\EOT\203\ETX\DLE/\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\ETX\EOT\DC2\EOT\203\ETX\DLE\CAN\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\ETX\ENQ\DC2\EOT\203\ETX\EM\RS\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\ETX\SOH\DC2\EOT\203\ETX\US*\n\
-    \\SI\n\
-    \\a\EOT+\ETX\NUL\STX\ETX\ETX\DC2\EOT\203\ETX-.\n\
-    \\SO\n\
-    \\EOT\EOT+\EOT\NUL\DC2\ACK\206\ETX\b\210\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT+\EOT\NUL\SOH\DC2\EOT\206\ETX\r \n\
-    \\SO\n\
-    \\ACK\EOT+\EOT\NUL\STX\NUL\DC2\EOT\207\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\NUL\SOH\DC2\EOT\207\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\NUL\STX\DC2\EOT\207\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT+\EOT\NUL\STX\SOH\DC2\EOT\208\ETX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\SOH\SOH\DC2\EOT\208\ETX\DLE\SYN\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\SOH\STX\DC2\EOT\208\ETX\EM\SUB\n\
-    \\SO\n\
-    \\ACK\EOT+\EOT\NUL\STX\STX\DC2\EOT\209\ETX\DLE\FS\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\STX\SOH\DC2\EOT\209\ETX\DLE\ETB\n\
-    \\SI\n\
-    \\a\EOT+\EOT\NUL\STX\STX\STX\DC2\EOT\209\ETX\SUB\ESC\n\
+    \\ETX\EOT)\SOH\DC2\EOT\183\ETX\b,\n\
     \\f\n\
-    \\EOT\EOT+\STX\NUL\DC2\EOT\212\ETX\b%\n\
+    \\EOT\EOT)\STX\NUL\DC2\EOT\184\ETX\b)\n\
     \\r\n\
-    \\ENQ\EOT+\STX\NUL\EOT\DC2\EOT\212\ETX\b\DLE\n\
+    \\ENQ\EOT)\STX\NUL\EOT\DC2\EOT\184\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT+\STX\NUL\ENQ\DC2\EOT\212\ETX\DC1\ETB\n\
+    \\ENQ\EOT)\STX\NUL\ENQ\DC2\EOT\184\ETX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT+\STX\NUL\SOH\DC2\EOT\212\ETX\CAN \n\
+    \\ENQ\EOT)\STX\NUL\SOH\DC2\EOT\184\ETX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT+\STX\NUL\ETX\DC2\EOT\212\ETX#$\n\
+    \\ENQ\EOT)\STX\NUL\ETX\DC2\EOT\184\ETX'(\n\
     \\f\n\
-    \\EOT\EOT+\STX\SOH\DC2\EOT\213\ETX\bR\n\
+    \\EOT\EOT)\STX\SOH\DC2\EOT\185\ETX\b'\n\
     \\r\n\
-    \\ENQ\EOT+\STX\SOH\EOT\DC2\EOT\213\ETX\b\DLE\n\
+    \\ENQ\EOT)\STX\SOH\EOT\DC2\EOT\185\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT+\STX\SOH\ACK\DC2\EOT\213\ETX\DC1F\n\
+    \\ENQ\EOT)\STX\SOH\ENQ\DC2\EOT\185\ETX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT+\STX\SOH\SOH\DC2\EOT\213\ETXGM\n\
+    \\ENQ\EOT)\STX\SOH\SOH\DC2\EOT\185\ETX\CAN\"\n\
     \\r\n\
-    \\ENQ\EOT+\STX\SOH\ETX\DC2\EOT\213\ETXPQ\n\
+    \\ENQ\EOT)\STX\SOH\ETX\DC2\EOT\185\ETX%&\n\
     \\f\n\
-    \\STX\EOT,\DC2\ACK\216\ETX\NUL\223\ETX\SOH\n\
+    \\STX\EOT*\DC2\ACK\188\ETX\NUL\200\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT,\SOH\DC2\EOT\216\ETX\b-\n\
+    \\ETX\EOT*\SOH\DC2\EOT\188\ETX\b4\n\
+    \\SO\n\
+    \\EOT\EOT*\EOT\NUL\DC2\ACK\189\ETX\b\197\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT*\EOT\NUL\SOH\DC2\EOT\189\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\NUL\DC2\EOT\190\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\NUL\SOH\DC2\EOT\190\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\NUL\STX\DC2\EOT\190\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\SOH\DC2\EOT\191\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\SOH\SOH\DC2\EOT\191\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\SOH\STX\DC2\EOT\191\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\STX\DC2\EOT\192\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\STX\SOH\DC2\EOT\192\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\STX\STX\DC2\EOT\192\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\ETX\DC2\EOT\193\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ETX\SOH\DC2\EOT\193\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ETX\STX\DC2\EOT\193\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\EOT\DC2\EOT\194\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\EOT\SOH\DC2\EOT\194\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\EOT\STX\DC2\EOT\194\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\ENQ\DC2\EOT\195\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ENQ\SOH\DC2\EOT\195\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ENQ\STX\DC2\EOT\195\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT*\EOT\NUL\STX\ACK\DC2\EOT\196\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ACK\SOH\DC2\EOT\196\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT*\EOT\NUL\STX\ACK\STX\DC2\EOT\196\ETX&'\n\
     \\f\n\
-    \\EOT\EOT,\STX\NUL\DC2\EOT\217\ETX\b)\n\
+    \\EOT\EOT*\STX\NUL\DC2\EOT\199\ETX\bs\n\
     \\r\n\
-    \\ENQ\EOT,\STX\NUL\EOT\DC2\EOT\217\ETX\b\DLE\n\
+    \\ENQ\EOT*\STX\NUL\EOT\DC2\EOT\199\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT,\STX\NUL\ENQ\DC2\EOT\217\ETX\DC1\ETB\n\
+    \\ENQ\EOT*\STX\NUL\ACK\DC2\EOT\199\ETX\DC1H\n\
     \\r\n\
-    \\ENQ\EOT,\STX\NUL\SOH\DC2\EOT\217\ETX\CAN$\n\
+    \\ENQ\EOT*\STX\NUL\SOH\DC2\EOT\199\ETXIQ\n\
     \\r\n\
-    \\ENQ\EOT,\STX\NUL\ETX\DC2\EOT\217\ETX'(\n\
+    \\ENQ\EOT*\STX\NUL\ETX\DC2\EOT\199\ETXTU\n\
+    \\r\n\
+    \\ENQ\EOT*\STX\NUL\b\DC2\EOT\199\ETXVr\n\
+    \\r\n\
+    \\ENQ\EOT*\STX\NUL\a\DC2\EOT\199\ETXaq\n\
     \\f\n\
-    \\EOT\EOT,\STX\SOH\DC2\EOT\218\ETX\b$\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\SOH\EOT\DC2\EOT\218\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\SOH\ENQ\DC2\EOT\218\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\SOH\SOH\DC2\EOT\218\ETX\CAN\US\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\SOH\ETX\DC2\EOT\218\ETX\"#\n\
-    \\f\n\
-    \\EOT\EOT,\STX\STX\DC2\EOT\219\ETX\be\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\EOT\DC2\EOT\219\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\ACK\DC2\EOT\219\ETX\DC1*\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\SOH\DC2\EOT\219\ETX+1\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\ETX\DC2\EOT\219\ETX45\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\b\DC2\EOT\219\ETX6d\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\STX\a\DC2\EOT\219\ETXAc\n\
-    \\f\n\
-    \\EOT\EOT,\STX\ETX\DC2\EOT\220\ETX\b&\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ETX\EOT\DC2\EOT\220\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ETX\ENQ\DC2\EOT\220\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ETX\SOH\DC2\EOT\220\ETX\CAN!\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ETX\ETX\DC2\EOT\220\ETX$%\n\
-    \\f\n\
-    \\EOT\EOT,\STX\EOT\DC2\EOT\221\ETX\b)\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\EOT\EOT\DC2\EOT\221\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\EOT\ENQ\DC2\EOT\221\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\EOT\SOH\DC2\EOT\221\ETX\CAN$\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\EOT\ETX\DC2\EOT\221\ETX'(\n\
-    \\f\n\
-    \\EOT\EOT,\STX\ENQ\DC2\EOT\222\ETX\b,\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ENQ\EOT\DC2\EOT\222\ETX\b\DLE\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ENQ\ENQ\DC2\EOT\222\ETX\DC1\ETB\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ENQ\SOH\DC2\EOT\222\ETX\CAN'\n\
-    \\r\n\
-    \\ENQ\EOT,\STX\ENQ\ETX\DC2\EOT\222\ETX*+\n\
-    \\f\n\
-    \\STX\EOT-\DC2\ACK\225\ETX\NUL\242\ETX\SOH\n\
+    \\STX\EOT+\DC2\ACK\202\ETX\NUL\205\ETX\SOH\n\
     \\v\n\
-    \\ETX\EOT-\SOH\DC2\EOT\225\ETX\b5\n\
-    \\SO\n\
-    \\EOT\EOT-\EOT\NUL\DC2\ACK\226\ETX\b\239\ETX\t\n\
-    \\r\n\
-    \\ENQ\EOT-\EOT\NUL\SOH\DC2\EOT\226\ETX\r\SYN\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\NUL\DC2\EOT\227\ETX\DLE%\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\NUL\SOH\DC2\EOT\227\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\NUL\STX\DC2\EOT\227\ETX#$\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\SOH\DC2\EOT\228\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\SOH\SOH\DC2\EOT\228\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\SOH\STX\DC2\EOT\228\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\STX\DC2\EOT\229\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\STX\SOH\DC2\EOT\229\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\STX\STX\DC2\EOT\229\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\ETX\DC2\EOT\230\ETX\DLE \n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ETX\SOH\DC2\EOT\230\ETX\DLE\ESC\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ETX\STX\DC2\EOT\230\ETX\RS\US\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\EOT\DC2\EOT\231\ETX\DLE\US\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\EOT\SOH\DC2\EOT\231\ETX\DLE\SUB\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\EOT\STX\DC2\EOT\231\ETX\GS\RS\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\ENQ\DC2\EOT\232\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ENQ\SOH\DC2\EOT\232\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ENQ\STX\DC2\EOT\232\ETX&'\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\ACK\DC2\EOT\233\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ACK\SOH\DC2\EOT\233\ETX\DLE\RS\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\ACK\STX\DC2\EOT\233\ETX!\"\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\a\DC2\EOT\234\ETX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\a\SOH\DC2\EOT\234\ETX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\a\STX\DC2\EOT\234\ETX !\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\b\DC2\EOT\235\ETX\DLE(\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\b\SOH\DC2\EOT\235\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\b\STX\DC2\EOT\235\ETX&'\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\t\DC2\EOT\236\ETX\DLE'\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\t\SOH\DC2\EOT\236\ETX\DLE\"\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\t\STX\DC2\EOT\236\ETX%&\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\n\
-    \\DC2\EOT\237\ETX\DLE2\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\n\
-    \\SOH\DC2\EOT\237\ETX\DLE,\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\n\
-    \\STX\DC2\EOT\237\ETX/1\n\
-    \\SO\n\
-    \\ACK\EOT-\EOT\NUL\STX\v\DC2\EOT\238\ETX\DLE#\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\v\SOH\DC2\EOT\238\ETX\DLE\GS\n\
-    \\SI\n\
-    \\a\EOT-\EOT\NUL\STX\v\STX\DC2\EOT\238\ETX \"\n\
+    \\ETX\EOT+\SOH\DC2\EOT\202\ETX\b.\n\
     \\f\n\
-    \\EOT\EOT-\STX\NUL\DC2\EOT\241\ETX\bt\n\
+    \\EOT\EOT+\STX\NUL\DC2\EOT\203\ETX\b)\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\EOT\DC2\EOT\241\ETX\b\DLE\n\
+    \\ENQ\EOT+\STX\NUL\EOT\DC2\EOT\203\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\ACK\DC2\EOT\241\ETX\DC1I\n\
+    \\ENQ\EOT+\STX\NUL\ENQ\DC2\EOT\203\ETX\DC1\ETB\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\SOH\DC2\EOT\241\ETXJR\n\
+    \\ENQ\EOT+\STX\NUL\SOH\DC2\EOT\203\ETX\CAN$\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\ETX\DC2\EOT\241\ETXUV\n\
+    \\ENQ\EOT+\STX\NUL\ETX\DC2\EOT\203\ETX'(\n\
+    \\f\n\
+    \\EOT\EOT+\STX\SOH\DC2\EOT\204\ETX\b'\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\b\DC2\EOT\241\ETXWs\n\
+    \\ENQ\EOT+\STX\SOH\EOT\DC2\EOT\204\ETX\b\DLE\n\
     \\r\n\
-    \\ENQ\EOT-\STX\NUL\a\DC2\EOT\241\ETXbr"
+    \\ENQ\EOT+\STX\SOH\ENQ\DC2\EOT\204\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT+\STX\SOH\SOH\DC2\EOT\204\ETX\CAN\"\n\
+    \\r\n\
+    \\ENQ\EOT+\STX\SOH\ETX\DC2\EOT\204\ETX%&\n\
+    \\f\n\
+    \\STX\EOT,\DC2\ACK\207\ETX\NUL\219\ETX\SOH\n\
+    \\v\n\
+    \\ETX\EOT,\SOH\DC2\EOT\207\ETX\b6\n\
+    \\SO\n\
+    \\EOT\EOT,\EOT\NUL\DC2\ACK\208\ETX\b\216\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT,\EOT\NUL\SOH\DC2\EOT\208\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\NUL\DC2\EOT\209\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\NUL\SOH\DC2\EOT\209\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\NUL\STX\DC2\EOT\209\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\SOH\DC2\EOT\210\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\SOH\SOH\DC2\EOT\210\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\SOH\STX\DC2\EOT\210\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\STX\DC2\EOT\211\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\STX\SOH\DC2\EOT\211\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\STX\STX\DC2\EOT\211\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\ETX\DC2\EOT\212\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ETX\SOH\DC2\EOT\212\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ETX\STX\DC2\EOT\212\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\EOT\DC2\EOT\213\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\EOT\SOH\DC2\EOT\213\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\EOT\STX\DC2\EOT\213\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\ENQ\DC2\EOT\214\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ENQ\SOH\DC2\EOT\214\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ENQ\STX\DC2\EOT\214\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT,\EOT\NUL\STX\ACK\DC2\EOT\215\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ACK\SOH\DC2\EOT\215\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT,\EOT\NUL\STX\ACK\STX\DC2\EOT\215\ETX&'\n\
+    \\f\n\
+    \\EOT\EOT,\STX\NUL\DC2\EOT\218\ETX\bu\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\EOT\DC2\EOT\218\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\ACK\DC2\EOT\218\ETX\DC1J\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\SOH\DC2\EOT\218\ETXKS\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\ETX\DC2\EOT\218\ETXVW\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\b\DC2\EOT\218\ETXXt\n\
+    \\r\n\
+    \\ENQ\EOT,\STX\NUL\a\DC2\EOT\218\ETXcs\n\
+    \\f\n\
+    \\STX\EOT-\DC2\ACK\221\ETX\NUL\223\ETX\SOH\n\
+    \\v\n\
+    \\ETX\EOT-\SOH\DC2\EOT\221\ETX\b-\n\
+    \\f\n\
+    \\EOT\EOT-\STX\NUL\DC2\EOT\222\ETX\b)\n\
+    \\r\n\
+    \\ENQ\EOT-\STX\NUL\EOT\DC2\EOT\222\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT-\STX\NUL\ENQ\DC2\EOT\222\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT-\STX\NUL\SOH\DC2\EOT\222\ETX\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT-\STX\NUL\ETX\DC2\EOT\222\ETX'(\n\
+    \\f\n\
+    \\STX\EOT.\DC2\ACK\225\ETX\NUL\237\ETX\SOH\n\
+    \\v\n\
+    \\ETX\EOT.\SOH\DC2\EOT\225\ETX\b5\n\
+    \\SO\n\
+    \\EOT\EOT.\EOT\NUL\DC2\ACK\226\ETX\b\234\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT.\EOT\NUL\SOH\DC2\EOT\226\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\NUL\DC2\EOT\227\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\NUL\SOH\DC2\EOT\227\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\NUL\STX\DC2\EOT\227\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\SOH\DC2\EOT\228\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\SOH\SOH\DC2\EOT\228\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\SOH\STX\DC2\EOT\228\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\STX\DC2\EOT\229\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\STX\SOH\DC2\EOT\229\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\STX\STX\DC2\EOT\229\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\ETX\DC2\EOT\230\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ETX\SOH\DC2\EOT\230\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ETX\STX\DC2\EOT\230\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\EOT\DC2\EOT\231\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\EOT\SOH\DC2\EOT\231\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\EOT\STX\DC2\EOT\231\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\ENQ\DC2\EOT\232\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ENQ\SOH\DC2\EOT\232\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ENQ\STX\DC2\EOT\232\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT.\EOT\NUL\STX\ACK\DC2\EOT\233\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ACK\SOH\DC2\EOT\233\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT.\EOT\NUL\STX\ACK\STX\DC2\EOT\233\ETX&'\n\
+    \\f\n\
+    \\EOT\EOT.\STX\NUL\DC2\EOT\236\ETX\bt\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\EOT\DC2\EOT\236\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\ACK\DC2\EOT\236\ETX\DC1I\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\SOH\DC2\EOT\236\ETXJR\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\ETX\DC2\EOT\236\ETXUV\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\b\DC2\EOT\236\ETXWs\n\
+    \\r\n\
+    \\ENQ\EOT.\STX\NUL\a\DC2\EOT\236\ETXbr\n\
+    \\f\n\
+    \\STX\EOT/\DC2\ACK\239\ETX\NUL\243\ETX\SOH\n\
+    \\v\n\
+    \\ETX\EOT/\SOH\DC2\EOT\239\ETX\b'\n\
+    \\f\n\
+    \\EOT\EOT/\STX\NUL\DC2\EOT\240\ETX\b%\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\NUL\EOT\DC2\EOT\240\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\NUL\ENQ\DC2\EOT\240\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\NUL\SOH\DC2\EOT\240\ETX\CAN \n\
+    \\r\n\
+    \\ENQ\EOT/\STX\NUL\ETX\DC2\EOT\240\ETX#$\n\
+    \\f\n\
+    \\EOT\EOT/\STX\SOH\DC2\EOT\241\ETX\b)\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\SOH\EOT\DC2\EOT\241\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\SOH\ENQ\DC2\EOT\241\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\SOH\SOH\DC2\EOT\241\ETX\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\SOH\ETX\DC2\EOT\241\ETX'(\n\
+    \\f\n\
+    \\EOT\EOT/\STX\STX\DC2\EOT\242\ETX\b%\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\STX\EOT\DC2\EOT\242\ETX\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\STX\ENQ\DC2\EOT\242\ETX\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT/\STX\STX\SOH\DC2\EOT\242\ETX\CAN \n\
+    \\r\n\
+    \\ENQ\EOT/\STX\STX\ETX\DC2\EOT\242\ETX#$\n\
+    \\f\n\
+    \\STX\EOT0\DC2\ACK\245\ETX\NUL\129\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT0\SOH\DC2\EOT\245\ETX\b/\n\
+    \\SO\n\
+    \\EOT\EOT0\EOT\NUL\DC2\ACK\246\ETX\b\254\ETX\t\n\
+    \\r\n\
+    \\ENQ\EOT0\EOT\NUL\SOH\DC2\EOT\246\ETX\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\NUL\DC2\EOT\247\ETX\DLE%\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\NUL\SOH\DC2\EOT\247\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\NUL\STX\DC2\EOT\247\ETX#$\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\SOH\DC2\EOT\248\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\SOH\SOH\DC2\EOT\248\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\SOH\STX\DC2\EOT\248\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\STX\DC2\EOT\249\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\STX\SOH\DC2\EOT\249\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\STX\STX\DC2\EOT\249\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\ETX\DC2\EOT\250\ETX\DLE \n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ETX\SOH\DC2\EOT\250\ETX\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ETX\STX\DC2\EOT\250\ETX\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\EOT\DC2\EOT\251\ETX\DLE\US\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\EOT\SOH\DC2\EOT\251\ETX\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\EOT\STX\DC2\EOT\251\ETX\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\ENQ\DC2\EOT\252\ETX\DLE\"\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ENQ\SOH\DC2\EOT\252\ETX\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ENQ\STX\DC2\EOT\252\ETX !\n\
+    \\SO\n\
+    \\ACK\EOT0\EOT\NUL\STX\ACK\DC2\EOT\253\ETX\DLE(\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ACK\SOH\DC2\EOT\253\ETX\DLE#\n\
+    \\SI\n\
+    \\a\EOT0\EOT\NUL\STX\ACK\STX\DC2\EOT\253\ETX&'\n\
+    \\f\n\
+    \\EOT\EOT0\STX\NUL\DC2\EOT\128\EOT\bn\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\EOT\DC2\EOT\128\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\ACK\DC2\EOT\128\EOT\DC1C\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\SOH\DC2\EOT\128\EOTDL\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\ETX\DC2\EOT\128\EOTOP\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\b\DC2\EOT\128\EOTQm\n\
+    \\r\n\
+    \\ENQ\EOT0\STX\NUL\a\DC2\EOT\128\EOT\\l\n\
+    \\f\n\
+    \\STX\EOT1\DC2\ACK\131\EOT\NUL\135\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT1\SOH\DC2\EOT\131\EOT\b.\n\
+    \\f\n\
+    \\EOT\EOT1\STX\NUL\DC2\EOT\132\EOT\b\"\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\NUL\EOT\DC2\EOT\132\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\NUL\ENQ\DC2\EOT\132\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\NUL\SOH\DC2\EOT\132\EOT\CAN\GS\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\NUL\ETX\DC2\EOT\132\EOT !\n\
+    \\f\n\
+    \\EOT\EOT1\STX\SOH\DC2\EOT\133\EOT\b%\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\SOH\EOT\DC2\EOT\133\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\SOH\ENQ\DC2\EOT\133\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\SOH\SOH\DC2\EOT\133\EOT\CAN \n\
+    \\r\n\
+    \\ENQ\EOT1\STX\SOH\ETX\DC2\EOT\133\EOT#$\n\
+    \\f\n\
+    \\EOT\EOT1\STX\STX\DC2\EOT\134\EOT\b%\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\STX\EOT\DC2\EOT\134\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\STX\ENQ\DC2\EOT\134\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT1\STX\STX\SOH\DC2\EOT\134\EOT\CAN \n\
+    \\r\n\
+    \\ENQ\EOT1\STX\STX\ETX\DC2\EOT\134\EOT#$\n\
+    \\f\n\
+    \\STX\EOT2\DC2\ACK\137\EOT\NUL\153\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT2\SOH\DC2\EOT\137\EOT\b6\n\
+    \\SO\n\
+    \\EOT\EOT2\ETX\NUL\DC2\ACK\138\EOT\b\143\EOT\t\n\
+    \\r\n\
+    \\ENQ\EOT2\ETX\NUL\SOH\DC2\EOT\138\EOT\DLE\NAK\n\
+    \\SO\n\
+    \\ACK\EOT2\ETX\NUL\STX\NUL\DC2\EOT\139\EOT\DLE*\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\NUL\EOT\DC2\EOT\139\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\NUL\ENQ\DC2\EOT\139\EOT\EM\US\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\NUL\SOH\DC2\EOT\139\EOT %\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\NUL\ETX\DC2\EOT\139\EOT()\n\
+    \\SO\n\
+    \\ACK\EOT2\ETX\NUL\STX\SOH\DC2\EOT\140\EOT\DLE+\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\SOH\EOT\DC2\EOT\140\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\SOH\ENQ\DC2\EOT\140\EOT\EM\US\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\SOH\SOH\DC2\EOT\140\EOT &\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\SOH\ETX\DC2\EOT\140\EOT)*\n\
+    \\SO\n\
+    \\ACK\EOT2\ETX\NUL\STX\STX\DC2\EOT\141\EOT\DLE\DEL\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\EOT\DC2\EOT\141\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\ACK\DC2\EOT\141\EOT\EM\\\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\SOH\DC2\EOT\141\EOT]c\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\ETX\DC2\EOT\141\EOTfg\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\b\DC2\EOT\141\EOTh~\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\STX\a\DC2\EOT\141\EOTs}\n\
+    \\SO\n\
+    \\ACK\EOT2\ETX\NUL\STX\ETX\DC2\EOT\142\EOT\DLE/\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\ETX\EOT\DC2\EOT\142\EOT\DLE\CAN\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\ETX\ENQ\DC2\EOT\142\EOT\EM\RS\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\ETX\SOH\DC2\EOT\142\EOT\US*\n\
+    \\SI\n\
+    \\a\EOT2\ETX\NUL\STX\ETX\ETX\DC2\EOT\142\EOT-.\n\
+    \\SO\n\
+    \\EOT\EOT2\EOT\NUL\DC2\ACK\145\EOT\b\149\EOT\t\n\
+    \\r\n\
+    \\ENQ\EOT2\EOT\NUL\SOH\DC2\EOT\145\EOT\r \n\
+    \\SO\n\
+    \\ACK\EOT2\EOT\NUL\STX\NUL\DC2\EOT\146\EOT\DLE\US\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\NUL\SOH\DC2\EOT\146\EOT\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\NUL\STX\DC2\EOT\146\EOT\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT2\EOT\NUL\STX\SOH\DC2\EOT\147\EOT\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\SOH\SOH\DC2\EOT\147\EOT\DLE\SYN\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\SOH\STX\DC2\EOT\147\EOT\EM\SUB\n\
+    \\SO\n\
+    \\ACK\EOT2\EOT\NUL\STX\STX\DC2\EOT\148\EOT\DLE\FS\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\STX\SOH\DC2\EOT\148\EOT\DLE\ETB\n\
+    \\SI\n\
+    \\a\EOT2\EOT\NUL\STX\STX\STX\DC2\EOT\148\EOT\SUB\ESC\n\
+    \\f\n\
+    \\EOT\EOT2\STX\NUL\DC2\EOT\151\EOT\b%\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\NUL\EOT\DC2\EOT\151\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\NUL\ENQ\DC2\EOT\151\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\NUL\SOH\DC2\EOT\151\EOT\CAN \n\
+    \\r\n\
+    \\ENQ\EOT2\STX\NUL\ETX\DC2\EOT\151\EOT#$\n\
+    \\f\n\
+    \\EOT\EOT2\STX\SOH\DC2\EOT\152\EOT\bR\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\SOH\EOT\DC2\EOT\152\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\SOH\ACK\DC2\EOT\152\EOT\DC1F\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\SOH\SOH\DC2\EOT\152\EOTGM\n\
+    \\r\n\
+    \\ENQ\EOT2\STX\SOH\ETX\DC2\EOT\152\EOTPQ\n\
+    \\f\n\
+    \\STX\EOT3\DC2\ACK\155\EOT\NUL\162\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT3\SOH\DC2\EOT\155\EOT\b-\n\
+    \\f\n\
+    \\EOT\EOT3\STX\NUL\DC2\EOT\156\EOT\b)\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\NUL\EOT\DC2\EOT\156\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\NUL\ENQ\DC2\EOT\156\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\NUL\SOH\DC2\EOT\156\EOT\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\NUL\ETX\DC2\EOT\156\EOT'(\n\
+    \\f\n\
+    \\EOT\EOT3\STX\SOH\DC2\EOT\157\EOT\b$\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\SOH\EOT\DC2\EOT\157\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\SOH\ENQ\DC2\EOT\157\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\SOH\SOH\DC2\EOT\157\EOT\CAN\US\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\SOH\ETX\DC2\EOT\157\EOT\"#\n\
+    \\f\n\
+    \\EOT\EOT3\STX\STX\DC2\EOT\158\EOT\be\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\EOT\DC2\EOT\158\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\ACK\DC2\EOT\158\EOT\DC1*\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\SOH\DC2\EOT\158\EOT+1\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\ETX\DC2\EOT\158\EOT45\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\b\DC2\EOT\158\EOT6d\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\STX\a\DC2\EOT\158\EOTAc\n\
+    \\f\n\
+    \\EOT\EOT3\STX\ETX\DC2\EOT\159\EOT\b&\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ETX\EOT\DC2\EOT\159\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ETX\ENQ\DC2\EOT\159\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ETX\SOH\DC2\EOT\159\EOT\CAN!\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ETX\ETX\DC2\EOT\159\EOT$%\n\
+    \\f\n\
+    \\EOT\EOT3\STX\EOT\DC2\EOT\160\EOT\b)\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\EOT\EOT\DC2\EOT\160\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\EOT\ENQ\DC2\EOT\160\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\EOT\SOH\DC2\EOT\160\EOT\CAN$\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\EOT\ETX\DC2\EOT\160\EOT'(\n\
+    \\f\n\
+    \\EOT\EOT3\STX\ENQ\DC2\EOT\161\EOT\b,\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ENQ\EOT\DC2\EOT\161\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ENQ\ENQ\DC2\EOT\161\EOT\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ENQ\SOH\DC2\EOT\161\EOT\CAN'\n\
+    \\r\n\
+    \\ENQ\EOT3\STX\ENQ\ETX\DC2\EOT\161\EOT*+\n\
+    \\f\n\
+    \\STX\EOT4\DC2\ACK\164\EOT\NUL\181\EOT\SOH\n\
+    \\v\n\
+    \\ETX\EOT4\SOH\DC2\EOT\164\EOT\b5\n\
+    \\SO\n\
+    \\EOT\EOT4\EOT\NUL\DC2\ACK\165\EOT\b\178\EOT\t\n\
+    \\r\n\
+    \\ENQ\EOT4\EOT\NUL\SOH\DC2\EOT\165\EOT\r\SYN\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\NUL\DC2\EOT\166\EOT\DLE%\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\NUL\SOH\DC2\EOT\166\EOT\DLE \n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\NUL\STX\DC2\EOT\166\EOT#$\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\SOH\DC2\EOT\167\EOT\DLE\US\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\SOH\SOH\DC2\EOT\167\EOT\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\SOH\STX\DC2\EOT\167\EOT\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\STX\DC2\EOT\168\EOT\DLE\US\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\STX\SOH\DC2\EOT\168\EOT\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\STX\STX\DC2\EOT\168\EOT\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\ETX\DC2\EOT\169\EOT\DLE \n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ETX\SOH\DC2\EOT\169\EOT\DLE\ESC\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ETX\STX\DC2\EOT\169\EOT\RS\US\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\EOT\DC2\EOT\170\EOT\DLE\US\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\EOT\SOH\DC2\EOT\170\EOT\DLE\SUB\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\EOT\STX\DC2\EOT\170\EOT\GS\RS\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\ENQ\DC2\EOT\171\EOT\DLE(\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ENQ\SOH\DC2\EOT\171\EOT\DLE#\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ENQ\STX\DC2\EOT\171\EOT&'\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\ACK\DC2\EOT\172\EOT\DLE#\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ACK\SOH\DC2\EOT\172\EOT\DLE\RS\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\ACK\STX\DC2\EOT\172\EOT!\"\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\a\DC2\EOT\173\EOT\DLE\"\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\a\SOH\DC2\EOT\173\EOT\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\a\STX\DC2\EOT\173\EOT !\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\b\DC2\EOT\174\EOT\DLE(\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\b\SOH\DC2\EOT\174\EOT\DLE#\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\b\STX\DC2\EOT\174\EOT&'\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\t\DC2\EOT\175\EOT\DLE'\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\t\SOH\DC2\EOT\175\EOT\DLE\"\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\t\STX\DC2\EOT\175\EOT%&\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\n\
+    \\DC2\EOT\176\EOT\DLE2\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\n\
+    \\SOH\DC2\EOT\176\EOT\DLE,\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\n\
+    \\STX\DC2\EOT\176\EOT/1\n\
+    \\SO\n\
+    \\ACK\EOT4\EOT\NUL\STX\v\DC2\EOT\177\EOT\DLE#\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\v\SOH\DC2\EOT\177\EOT\DLE\GS\n\
+    \\SI\n\
+    \\a\EOT4\EOT\NUL\STX\v\STX\DC2\EOT\177\EOT \"\n\
+    \\f\n\
+    \\EOT\EOT4\STX\NUL\DC2\EOT\180\EOT\bt\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\EOT\DC2\EOT\180\EOT\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\ACK\DC2\EOT\180\EOT\DC1I\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\SOH\DC2\EOT\180\EOTJR\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\ETX\DC2\EOT\180\EOTUV\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\b\DC2\EOT\180\EOTWs\n\
+    \\r\n\
+    \\ENQ\EOT4\STX\NUL\a\DC2\EOT\180\EOTbr"

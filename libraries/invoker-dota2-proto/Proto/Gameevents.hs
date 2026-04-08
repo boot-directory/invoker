@@ -5,7 +5,8 @@
 {-# OPTIONS_GHC -Wno-dodgy-exports#-}
 module Proto.Gameevents (
         CMsgClearDecalsForEntityEvent(), CMsgClearEntityDecalsEvent(),
-        CMsgClearWorldDecalsEvent(), CMsgPlaceDecalEvent(),
+        CMsgClearWorldDecalsEvent(), CMsgClothEffectAnimEvent(),
+        CMsgClothStiffenAnimEvent(), CMsgPlaceDecalEvent(),
         CMsgSosSetLibraryStackFields(), CMsgSosSetSoundEventParams(),
         CMsgSosStartSoundEvent(), CMsgSosStopSoundEvent(),
         CMsgSosStopSoundEventHash(), CMsgSource1LegacyGameEvent(),
@@ -457,6 +458,747 @@ instance Control.DeepSeq.NFData CMsgClearWorldDecalsEvent where
                 (_CMsgClearWorldDecalsEvent'flagstoclear x__) ())
 {- | Fields :
      
+         * 'Proto.Gameevents_Fields.sourceEntityIndex' @:: Lens' CMsgClothEffectAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'sourceEntityIndex' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.effectNameHash' @:: Lens' CMsgClothEffectAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'effectNameHash' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.operation' @:: Lens' CMsgClothEffectAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'operation' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.flags' @:: Lens' CMsgClothEffectAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'flags' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.tags' @:: Lens' CMsgClothEffectAnimEvent Data.Text.Text@
+         * 'Proto.Gameevents_Fields.maybe'tags' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Data.Text.Text)@
+         * 'Proto.Gameevents_Fields.pte' @:: Lens' CMsgClothEffectAnimEvent Proto.Networkbasetypes.CMsgVector@
+         * 'Proto.Gameevents_Fields.maybe'pte' @:: Lens' CMsgClothEffectAnimEvent (Prelude.Maybe Proto.Networkbasetypes.CMsgVector)@ -}
+data CMsgClothEffectAnimEvent
+  = CMsgClothEffectAnimEvent'_constructor {_CMsgClothEffectAnimEvent'sourceEntityIndex :: !(Prelude.Maybe Data.Int.Int32),
+                                           _CMsgClothEffectAnimEvent'effectNameHash :: !(Prelude.Maybe Data.Int.Int32),
+                                           _CMsgClothEffectAnimEvent'operation :: !(Prelude.Maybe Data.Int.Int32),
+                                           _CMsgClothEffectAnimEvent'flags :: !(Prelude.Maybe Data.Int.Int32),
+                                           _CMsgClothEffectAnimEvent'tags :: !(Prelude.Maybe Data.Text.Text),
+                                           _CMsgClothEffectAnimEvent'pte :: !(Prelude.Maybe Proto.Networkbasetypes.CMsgVector),
+                                           _CMsgClothEffectAnimEvent'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClothEffectAnimEvent where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "sourceEntityIndex" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'sourceEntityIndex
+           (\ x__ y__
+              -> x__ {_CMsgClothEffectAnimEvent'sourceEntityIndex = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'sourceEntityIndex" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'sourceEntityIndex
+           (\ x__ y__
+              -> x__ {_CMsgClothEffectAnimEvent'sourceEntityIndex = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "effectNameHash" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'effectNameHash
+           (\ x__ y__
+              -> x__ {_CMsgClothEffectAnimEvent'effectNameHash = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'effectNameHash" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'effectNameHash
+           (\ x__ y__
+              -> x__ {_CMsgClothEffectAnimEvent'effectNameHash = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "operation" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'operation
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'operation = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'operation" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'operation
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'operation = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "flags" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'flags
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'flags = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'flags" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'flags
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'flags = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "tags" Data.Text.Text where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'tags
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'tags = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'tags" (Prelude.Maybe Data.Text.Text) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'tags
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'tags = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "pte" Proto.Networkbasetypes.CMsgVector where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'pte
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'pte = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.defMessage)
+instance Data.ProtoLens.Field.HasField CMsgClothEffectAnimEvent "maybe'pte" (Prelude.Maybe Proto.Networkbasetypes.CMsgVector) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothEffectAnimEvent'pte
+           (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'pte = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClothEffectAnimEvent where
+  messageName _ = Data.Text.pack "CMsgClothEffectAnimEvent"
+  packedMessageDescriptor _
+    = "\n\
+      \\CANCMsgClothEffectAnimEvent\DC22\n\
+      \\DC3source_entity_index\CAN\SOH \SOH(\ENQ:\STX-1R\DC1sourceEntityIndex\DC2(\n\
+      \\DLEeffect_name_hash\CAN\STX \SOH(\ENQR\SOeffectNameHash\DC2\FS\n\
+      \\toperation\CAN\ETX \SOH(\ENQR\toperation\DC2\DC4\n\
+      \\ENQflags\CAN\EOT \SOH(\ENQR\ENQflags\DC2\DC2\n\
+      \\EOTtags\CAN\ENQ \SOH(\tR\EOTtags\DC2\GS\n\
+      \\ETXpte\CAN\ACK \SOH(\v2\v.CMsgVectorR\ETXpte"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        sourceEntityIndex__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "source_entity_index"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'sourceEntityIndex")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+        effectNameHash__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "effect_name_hash"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'effectNameHash")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+        operation__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "operation"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'operation")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+        flags__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "flags"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'flags")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+        tags__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "tags"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.StringField ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Text.Text)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'tags")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+        pte__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "pte"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor Proto.Networkbasetypes.CMsgVector)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'pte")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothEffectAnimEvent
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, sourceEntityIndex__field_descriptor),
+           (Data.ProtoLens.Tag 2, effectNameHash__field_descriptor),
+           (Data.ProtoLens.Tag 3, operation__field_descriptor),
+           (Data.ProtoLens.Tag 4, flags__field_descriptor),
+           (Data.ProtoLens.Tag 5, tags__field_descriptor),
+           (Data.ProtoLens.Tag 6, pte__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClothEffectAnimEvent'_unknownFields
+        (\ x__ y__ -> x__ {_CMsgClothEffectAnimEvent'_unknownFields = y__})
+  defMessage
+    = CMsgClothEffectAnimEvent'_constructor
+        {_CMsgClothEffectAnimEvent'sourceEntityIndex = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'effectNameHash = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'operation = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'flags = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'tags = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'pte = Prelude.Nothing,
+         _CMsgClothEffectAnimEvent'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClothEffectAnimEvent
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClothEffectAnimEvent
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "source_entity_index"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"sourceEntityIndex") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "effect_name_hash"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"effectNameHash") y x)
+                        24
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "operation"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"operation") y x)
+                        32
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "flags"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"flags") y x)
+                        42
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.getText
+                                             (Prelude.fromIntegral len))
+                                       "tags"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"tags") y x)
+                        50
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.isolate
+                                             (Prelude.fromIntegral len) Data.ProtoLens.parseMessage)
+                                       "pte"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"pte") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "CMsgClothEffectAnimEvent"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'sourceEntityIndex") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'effectNameHash") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'operation") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 24)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'flags") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 32)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'tags") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 42)
+                                   ((Prelude..)
+                                      (\ bs
+                                         -> (Data.Monoid.<>)
+                                              (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                 (Prelude.fromIntegral (Data.ByteString.length bs)))
+                                              (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                      Data.Text.Encoding.encodeUtf8 _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'pte") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 50)
+                                      ((Prelude..)
+                                         (\ bs
+                                            -> (Data.Monoid.<>)
+                                                 (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                    (Prelude.fromIntegral
+                                                       (Data.ByteString.length bs)))
+                                                 (Data.ProtoLens.Encoding.Bytes.putBytes bs))
+                                         Data.ProtoLens.encodeMessage _v))
+                            (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                               (Lens.Family2.view Data.ProtoLens.unknownFields _x)))))))
+instance Control.DeepSeq.NFData CMsgClothEffectAnimEvent where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClothEffectAnimEvent'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClothEffectAnimEvent'sourceEntityIndex x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgClothEffectAnimEvent'effectNameHash x__)
+                   (Control.DeepSeq.deepseq
+                      (_CMsgClothEffectAnimEvent'operation x__)
+                      (Control.DeepSeq.deepseq
+                         (_CMsgClothEffectAnimEvent'flags x__)
+                         (Control.DeepSeq.deepseq
+                            (_CMsgClothEffectAnimEvent'tags x__)
+                            (Control.DeepSeq.deepseq
+                               (_CMsgClothEffectAnimEvent'pte x__) ()))))))
+{- | Fields :
+     
+         * 'Proto.Gameevents_Fields.sourceEntityIndex' @:: Lens' CMsgClothStiffenAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'sourceEntityIndex' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.vertexSetHash' @:: Lens' CMsgClothStiffenAnimEvent Data.Int.Int32@
+         * 'Proto.Gameevents_Fields.maybe'vertexSetHash' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Data.Int.Int32)@
+         * 'Proto.Gameevents_Fields.intensity' @:: Lens' CMsgClothStiffenAnimEvent Prelude.Float@
+         * 'Proto.Gameevents_Fields.maybe'intensity' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Prelude.Float)@
+         * 'Proto.Gameevents_Fields.length' @:: Lens' CMsgClothStiffenAnimEvent Prelude.Float@
+         * 'Proto.Gameevents_Fields.maybe'length' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Prelude.Float)@
+         * 'Proto.Gameevents_Fields.speedIn' @:: Lens' CMsgClothStiffenAnimEvent Prelude.Float@
+         * 'Proto.Gameevents_Fields.maybe'speedIn' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Prelude.Float)@
+         * 'Proto.Gameevents_Fields.speedOut' @:: Lens' CMsgClothStiffenAnimEvent Prelude.Float@
+         * 'Proto.Gameevents_Fields.maybe'speedOut' @:: Lens' CMsgClothStiffenAnimEvent (Prelude.Maybe Prelude.Float)@ -}
+data CMsgClothStiffenAnimEvent
+  = CMsgClothStiffenAnimEvent'_constructor {_CMsgClothStiffenAnimEvent'sourceEntityIndex :: !(Prelude.Maybe Data.Int.Int32),
+                                            _CMsgClothStiffenAnimEvent'vertexSetHash :: !(Prelude.Maybe Data.Int.Int32),
+                                            _CMsgClothStiffenAnimEvent'intensity :: !(Prelude.Maybe Prelude.Float),
+                                            _CMsgClothStiffenAnimEvent'length :: !(Prelude.Maybe Prelude.Float),
+                                            _CMsgClothStiffenAnimEvent'speedIn :: !(Prelude.Maybe Prelude.Float),
+                                            _CMsgClothStiffenAnimEvent'speedOut :: !(Prelude.Maybe Prelude.Float),
+                                            _CMsgClothStiffenAnimEvent'_unknownFields :: !Data.ProtoLens.FieldSet}
+  deriving stock (Prelude.Eq, Prelude.Ord)
+instance Prelude.Show CMsgClothStiffenAnimEvent where
+  showsPrec _ __x __s
+    = Prelude.showChar
+        '{'
+        (Prelude.showString
+           (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "sourceEntityIndex" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'sourceEntityIndex
+           (\ x__ y__
+              -> x__ {_CMsgClothStiffenAnimEvent'sourceEntityIndex = y__}))
+        (Data.ProtoLens.maybeLens (-1))
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'sourceEntityIndex" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'sourceEntityIndex
+           (\ x__ y__
+              -> x__ {_CMsgClothStiffenAnimEvent'sourceEntityIndex = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "vertexSetHash" Data.Int.Int32 where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'vertexSetHash
+           (\ x__ y__
+              -> x__ {_CMsgClothStiffenAnimEvent'vertexSetHash = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'vertexSetHash" (Prelude.Maybe Data.Int.Int32) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'vertexSetHash
+           (\ x__ y__
+              -> x__ {_CMsgClothStiffenAnimEvent'vertexSetHash = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "intensity" Prelude.Float where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'intensity
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'intensity = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'intensity" (Prelude.Maybe Prelude.Float) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'intensity
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'intensity = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "length" Prelude.Float where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'length
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'length = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'length" (Prelude.Maybe Prelude.Float) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'length
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'length = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "speedIn" Prelude.Float where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'speedIn
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'speedIn = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'speedIn" (Prelude.Maybe Prelude.Float) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'speedIn
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'speedIn = y__}))
+        Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "speedOut" Prelude.Float where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'speedOut
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'speedOut = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.fieldDefault)
+instance Data.ProtoLens.Field.HasField CMsgClothStiffenAnimEvent "maybe'speedOut" (Prelude.Maybe Prelude.Float) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgClothStiffenAnimEvent'speedOut
+           (\ x__ y__ -> x__ {_CMsgClothStiffenAnimEvent'speedOut = y__}))
+        Prelude.id
+instance Data.ProtoLens.Message CMsgClothStiffenAnimEvent where
+  messageName _ = Data.Text.pack "CMsgClothStiffenAnimEvent"
+  packedMessageDescriptor _
+    = "\n\
+      \\EMCMsgClothStiffenAnimEvent\DC22\n\
+      \\DC3source_entity_index\CAN\SOH \SOH(\ENQ:\STX-1R\DC1sourceEntityIndex\DC2&\n\
+      \\SIvertex_set_hash\CAN\STX \SOH(\ENQR\rvertexSetHash\DC2\FS\n\
+      \\tintensity\CAN\ETX \SOH(\STXR\tintensity\DC2\SYN\n\
+      \\ACKlength\CAN\EOT \SOH(\STXR\ACKlength\DC2\EM\n\
+      \\bspeed_in\CAN\ENQ \SOH(\STXR\aspeedIn\DC2\ESC\n\
+      \\tspeed_out\CAN\ACK \SOH(\STXR\bspeedOut"
+  packedFileDescriptor _ = packedFileDescriptor
+  fieldsByTag
+    = let
+        sourceEntityIndex__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "source_entity_index"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'sourceEntityIndex")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+        vertexSetHash__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "vertex_set_hash"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.Int32Field ::
+                 Data.ProtoLens.FieldTypeDescriptor Data.Int.Int32)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'vertexSetHash")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+        intensity__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "intensity"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.FloatField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Float)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'intensity")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+        length__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "length"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.FloatField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Float)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'length")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+        speedIn__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "speed_in"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.FloatField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Float)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'speedIn")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+        speedOut__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "speed_out"
+              (Data.ProtoLens.ScalarField Data.ProtoLens.FloatField ::
+                 Data.ProtoLens.FieldTypeDescriptor Prelude.Float)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'speedOut")) ::
+              Data.ProtoLens.FieldDescriptor CMsgClothStiffenAnimEvent
+      in
+        Data.Map.fromList
+          [(Data.ProtoLens.Tag 1, sourceEntityIndex__field_descriptor),
+           (Data.ProtoLens.Tag 2, vertexSetHash__field_descriptor),
+           (Data.ProtoLens.Tag 3, intensity__field_descriptor),
+           (Data.ProtoLens.Tag 4, length__field_descriptor),
+           (Data.ProtoLens.Tag 5, speedIn__field_descriptor),
+           (Data.ProtoLens.Tag 6, speedOut__field_descriptor)]
+  unknownFields
+    = Lens.Family2.Unchecked.lens
+        _CMsgClothStiffenAnimEvent'_unknownFields
+        (\ x__ y__
+           -> x__ {_CMsgClothStiffenAnimEvent'_unknownFields = y__})
+  defMessage
+    = CMsgClothStiffenAnimEvent'_constructor
+        {_CMsgClothStiffenAnimEvent'sourceEntityIndex = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'vertexSetHash = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'intensity = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'length = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'speedIn = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'speedOut = Prelude.Nothing,
+         _CMsgClothStiffenAnimEvent'_unknownFields = []}
+  parseMessage
+    = let
+        loop ::
+          CMsgClothStiffenAnimEvent
+          -> Data.ProtoLens.Encoding.Bytes.Parser CMsgClothStiffenAnimEvent
+        loop x
+          = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
+               if end then
+                   do (let missing = []
+                       in
+                         if Prelude.null missing then
+                             Prelude.return ()
+                         else
+                             Prelude.fail
+                               ((Prelude.++)
+                                  "Missing required fields: "
+                                  (Prelude.show (missing :: [Prelude.String]))))
+                      Prelude.return
+                        (Lens.Family2.over
+                           Data.ProtoLens.unknownFields (\ !t -> Prelude.reverse t) x)
+               else
+                   do tag <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                      case tag of
+                        8 -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "source_entity_index"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"sourceEntityIndex") y x)
+                        16
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Prelude.fromIntegral
+                                          Data.ProtoLens.Encoding.Bytes.getVarInt)
+                                       "vertex_set_hash"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"vertexSetHash") y x)
+                        29
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToFloat
+                                          Data.ProtoLens.Encoding.Bytes.getFixed32)
+                                       "intensity"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"intensity") y x)
+                        37
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToFloat
+                                          Data.ProtoLens.Encoding.Bytes.getFixed32)
+                                       "length"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"length") y x)
+                        45
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToFloat
+                                          Data.ProtoLens.Encoding.Bytes.getFixed32)
+                                       "speed_in"
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"speedIn") y x)
+                        53
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (Prelude.fmap
+                                          Data.ProtoLens.Encoding.Bytes.wordToFloat
+                                          Data.ProtoLens.Encoding.Bytes.getFixed32)
+                                       "speed_out"
+                                loop
+                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"speedOut") y x)
+                        wire
+                          -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
+                                        wire
+                                loop
+                                  (Lens.Family2.over
+                                     Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
+      in
+        (Data.ProtoLens.Encoding.Bytes.<?>)
+          (do loop Data.ProtoLens.defMessage) "CMsgClothStiffenAnimEvent"
+  buildMessage
+    = \ _x
+        -> (Data.Monoid.<>)
+             (case
+                  Lens.Family2.view
+                    (Data.ProtoLens.Field.field @"maybe'sourceEntityIndex") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+             ((Data.Monoid.<>)
+                (case
+                     Lens.Family2.view
+                       (Data.ProtoLens.Field.field @"maybe'vertexSetHash") _x
+                 of
+                   Prelude.Nothing -> Data.Monoid.mempty
+                   (Prelude.Just _v)
+                     -> (Data.Monoid.<>)
+                          (Data.ProtoLens.Encoding.Bytes.putVarInt 16)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral _v))
+                ((Data.Monoid.<>)
+                   (case
+                        Lens.Family2.view
+                          (Data.ProtoLens.Field.field @"maybe'intensity") _x
+                    of
+                      Prelude.Nothing -> Data.Monoid.mempty
+                      (Prelude.Just _v)
+                        -> (Data.Monoid.<>)
+                             (Data.ProtoLens.Encoding.Bytes.putVarInt 29)
+                             ((Prelude..)
+                                Data.ProtoLens.Encoding.Bytes.putFixed32
+                                Data.ProtoLens.Encoding.Bytes.floatToWord _v))
+                   ((Data.Monoid.<>)
+                      (case
+                           Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'length") _x
+                       of
+                         Prelude.Nothing -> Data.Monoid.mempty
+                         (Prelude.Just _v)
+                           -> (Data.Monoid.<>)
+                                (Data.ProtoLens.Encoding.Bytes.putVarInt 37)
+                                ((Prelude..)
+                                   Data.ProtoLens.Encoding.Bytes.putFixed32
+                                   Data.ProtoLens.Encoding.Bytes.floatToWord _v))
+                      ((Data.Monoid.<>)
+                         (case
+                              Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'speedIn") _x
+                          of
+                            Prelude.Nothing -> Data.Monoid.mempty
+                            (Prelude.Just _v)
+                              -> (Data.Monoid.<>)
+                                   (Data.ProtoLens.Encoding.Bytes.putVarInt 45)
+                                   ((Prelude..)
+                                      Data.ProtoLens.Encoding.Bytes.putFixed32
+                                      Data.ProtoLens.Encoding.Bytes.floatToWord _v))
+                         ((Data.Monoid.<>)
+                            (case
+                                 Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'speedOut") _x
+                             of
+                               Prelude.Nothing -> Data.Monoid.mempty
+                               (Prelude.Just _v)
+                                 -> (Data.Monoid.<>)
+                                      (Data.ProtoLens.Encoding.Bytes.putVarInt 53)
+                                      ((Prelude..)
+                                         Data.ProtoLens.Encoding.Bytes.putFixed32
+                                         Data.ProtoLens.Encoding.Bytes.floatToWord _v))
+                            (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                               (Lens.Family2.view Data.ProtoLens.unknownFields _x)))))))
+instance Control.DeepSeq.NFData CMsgClothStiffenAnimEvent where
+  rnf
+    = \ x__
+        -> Control.DeepSeq.deepseq
+             (_CMsgClothStiffenAnimEvent'_unknownFields x__)
+             (Control.DeepSeq.deepseq
+                (_CMsgClothStiffenAnimEvent'sourceEntityIndex x__)
+                (Control.DeepSeq.deepseq
+                   (_CMsgClothStiffenAnimEvent'vertexSetHash x__)
+                   (Control.DeepSeq.deepseq
+                      (_CMsgClothStiffenAnimEvent'intensity x__)
+                      (Control.DeepSeq.deepseq
+                         (_CMsgClothStiffenAnimEvent'length x__)
+                         (Control.DeepSeq.deepseq
+                            (_CMsgClothStiffenAnimEvent'speedIn x__)
+                            (Control.DeepSeq.deepseq
+                               (_CMsgClothStiffenAnimEvent'speedOut x__) ()))))))
+{- | Fields :
+     
          * 'Proto.Gameevents_Fields.position' @:: Lens' CMsgPlaceDecalEvent Proto.Networkbasetypes.CMsgVector@
          * 'Proto.Gameevents_Fields.maybe'position' @:: Lens' CMsgPlaceDecalEvent (Prelude.Maybe Proto.Networkbasetypes.CMsgVector)@
          * 'Proto.Gameevents_Fields.normal' @:: Lens' CMsgPlaceDecalEvent Proto.Networkbasetypes.CMsgVector@
@@ -482,7 +1224,9 @@ instance Control.DeepSeq.NFData CMsgClearWorldDecalsEvent where
          * 'Proto.Gameevents_Fields.materialId' @:: Lens' CMsgPlaceDecalEvent Data.Word.Word64@
          * 'Proto.Gameevents_Fields.maybe'materialId' @:: Lens' CMsgPlaceDecalEvent (Prelude.Maybe Data.Word.Word64)@
          * 'Proto.Gameevents_Fields.sequenceName' @:: Lens' CMsgPlaceDecalEvent Data.Word.Word32@
-         * 'Proto.Gameevents_Fields.maybe'sequenceName' @:: Lens' CMsgPlaceDecalEvent (Prelude.Maybe Data.Word.Word32)@ -}
+         * 'Proto.Gameevents_Fields.maybe'sequenceName' @:: Lens' CMsgPlaceDecalEvent (Prelude.Maybe Data.Word.Word32)@
+         * 'Proto.Gameevents_Fields.positionObjectspace' @:: Lens' CMsgPlaceDecalEvent Proto.Networkbasetypes.CMsgVector@
+         * 'Proto.Gameevents_Fields.maybe'positionObjectspace' @:: Lens' CMsgPlaceDecalEvent (Prelude.Maybe Proto.Networkbasetypes.CMsgVector)@ -}
 data CMsgPlaceDecalEvent
   = CMsgPlaceDecalEvent'_constructor {_CMsgPlaceDecalEvent'position :: !(Prelude.Maybe Proto.Networkbasetypes.CMsgVector),
                                       _CMsgPlaceDecalEvent'normal :: !(Prelude.Maybe Proto.Networkbasetypes.CMsgVector),
@@ -497,6 +1241,7 @@ data CMsgPlaceDecalEvent
                                       _CMsgPlaceDecalEvent'entityhandle :: !(Prelude.Maybe Data.Word.Word32),
                                       _CMsgPlaceDecalEvent'materialId :: !(Prelude.Maybe Data.Word.Word64),
                                       _CMsgPlaceDecalEvent'sequenceName :: !(Prelude.Maybe Data.Word.Word32),
+                                      _CMsgPlaceDecalEvent'positionObjectspace :: !(Prelude.Maybe Proto.Networkbasetypes.CMsgVector),
                                       _CMsgPlaceDecalEvent'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
 instance Prelude.Show CMsgPlaceDecalEvent where
@@ -687,6 +1432,22 @@ instance Data.ProtoLens.Field.HasField CMsgPlaceDecalEvent "maybe'sequenceName" 
            _CMsgPlaceDecalEvent'sequenceName
            (\ x__ y__ -> x__ {_CMsgPlaceDecalEvent'sequenceName = y__}))
         Prelude.id
+instance Data.ProtoLens.Field.HasField CMsgPlaceDecalEvent "positionObjectspace" Proto.Networkbasetypes.CMsgVector where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgPlaceDecalEvent'positionObjectspace
+           (\ x__ y__
+              -> x__ {_CMsgPlaceDecalEvent'positionObjectspace = y__}))
+        (Data.ProtoLens.maybeLens Data.ProtoLens.defMessage)
+instance Data.ProtoLens.Field.HasField CMsgPlaceDecalEvent "maybe'positionObjectspace" (Prelude.Maybe Proto.Networkbasetypes.CMsgVector) where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CMsgPlaceDecalEvent'positionObjectspace
+           (\ x__ y__
+              -> x__ {_CMsgPlaceDecalEvent'positionObjectspace = y__}))
+        Prelude.id
 instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
   messageName _ = Data.Text.pack "CMsgPlaceDecalEvent"
   packedMessageDescriptor _
@@ -707,7 +1468,8 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
       \ \SOH(\r:\b16777215R\fentityhandle\DC2\US\n\
       \\vmaterial_id\CAN\v \SOH(\EOTR\n\
       \materialId\DC2#\n\
-      \\rsequence_name\CAN\f \SOH(\rR\fsequenceName"
+      \\rsequence_name\CAN\f \SOH(\rR\fsequenceName\DC2>\n\
+      \\DC4position_objectspace\CAN\SO \SOH(\v2\v.CMsgVectorR\DC3positionObjectspace"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -815,6 +1577,14 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
               (Data.ProtoLens.OptionalField
                  (Data.ProtoLens.Field.field @"maybe'sequenceName")) ::
               Data.ProtoLens.FieldDescriptor CMsgPlaceDecalEvent
+        positionObjectspace__field_descriptor
+          = Data.ProtoLens.FieldDescriptor
+              "position_objectspace"
+              (Data.ProtoLens.MessageField Data.ProtoLens.MessageType ::
+                 Data.ProtoLens.FieldTypeDescriptor Proto.Networkbasetypes.CMsgVector)
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'positionObjectspace")) ::
+              Data.ProtoLens.FieldDescriptor CMsgPlaceDecalEvent
       in
         Data.Map.fromList
           [(Data.ProtoLens.Tag 1, position__field_descriptor),
@@ -829,7 +1599,8 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
            (Data.ProtoLens.Tag 9, sizeOverride__field_descriptor),
            (Data.ProtoLens.Tag 10, entityhandle__field_descriptor),
            (Data.ProtoLens.Tag 11, materialId__field_descriptor),
-           (Data.ProtoLens.Tag 12, sequenceName__field_descriptor)]
+           (Data.ProtoLens.Tag 12, sequenceName__field_descriptor),
+           (Data.ProtoLens.Tag 14, positionObjectspace__field_descriptor)]
   unknownFields
     = Lens.Family2.Unchecked.lens
         _CMsgPlaceDecalEvent'_unknownFields
@@ -849,6 +1620,7 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
          _CMsgPlaceDecalEvent'entityhandle = Prelude.Nothing,
          _CMsgPlaceDecalEvent'materialId = Prelude.Nothing,
          _CMsgPlaceDecalEvent'sequenceName = Prelude.Nothing,
+         _CMsgPlaceDecalEvent'positionObjectspace = Prelude.Nothing,
          _CMsgPlaceDecalEvent'_unknownFields = []}
   parseMessage
     = let
@@ -972,6 +1744,15 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
                                 loop
                                   (Lens.Family2.set
                                      (Data.ProtoLens.Field.field @"sequenceName") y x)
+                        114
+                          -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
+                                       (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
+                                           Data.ProtoLens.Encoding.Bytes.isolate
+                                             (Prelude.fromIntegral len) Data.ProtoLens.parseMessage)
+                                       "position_objectspace"
+                                loop
+                                  (Lens.Family2.set
+                                     (Data.ProtoLens.Field.field @"positionObjectspace") y x)
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
@@ -1148,9 +1929,32 @@ instance Data.ProtoLens.Message CMsgPlaceDecalEvent where
                                                            ((Prelude..)
                                                               Data.ProtoLens.Encoding.Bytes.putVarInt
                                                               Prelude.fromIntegral _v))
-                                                 (Data.ProtoLens.Encoding.Wire.buildFieldSet
-                                                    (Lens.Family2.view
-                                                       Data.ProtoLens.unknownFields _x))))))))))))))
+                                                 ((Data.Monoid.<>)
+                                                    (case
+                                                         Lens.Family2.view
+                                                           (Data.ProtoLens.Field.field
+                                                              @"maybe'positionObjectspace")
+                                                           _x
+                                                     of
+                                                       Prelude.Nothing -> Data.Monoid.mempty
+                                                       (Prelude.Just _v)
+                                                         -> (Data.Monoid.<>)
+                                                              (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                 114)
+                                                              ((Prelude..)
+                                                                 (\ bs
+                                                                    -> (Data.Monoid.<>)
+                                                                         (Data.ProtoLens.Encoding.Bytes.putVarInt
+                                                                            (Prelude.fromIntegral
+                                                                               (Data.ByteString.length
+                                                                                  bs)))
+                                                                         (Data.ProtoLens.Encoding.Bytes.putBytes
+                                                                            bs))
+                                                                 Data.ProtoLens.encodeMessage _v))
+                                                    (Data.ProtoLens.Encoding.Wire.buildFieldSet
+                                                       (Lens.Family2.view
+                                                          Data.ProtoLens.unknownFields
+                                                          _x)))))))))))))))
 instance Control.DeepSeq.NFData CMsgPlaceDecalEvent where
   rnf
     = \ x__
@@ -1182,7 +1986,10 @@ instance Control.DeepSeq.NFData CMsgPlaceDecalEvent where
                                                  (_CMsgPlaceDecalEvent'materialId x__)
                                                  (Control.DeepSeq.deepseq
                                                     (_CMsgPlaceDecalEvent'sequenceName x__)
-                                                    ())))))))))))))
+                                                    (Control.DeepSeq.deepseq
+                                                       (_CMsgPlaceDecalEvent'positionObjectspace
+                                                          x__)
+                                                       ()))))))))))))))
 {- | Fields :
      
          * 'Proto.Gameevents_Fields.stackHash' @:: Lens' CMsgSosSetLibraryStackFields Data.Word.Word32@
@@ -3056,7 +3863,7 @@ instance Data.ProtoLens.Message CMsgSource1LegacyGameEventList where
       \\fdescriptor_t\DC2\CAN\n\
       \\aeventid\CAN\SOH \SOH(\ENQR\aeventid\DC2\DC2\n\
       \\EOTname\CAN\STX \SOH(\tR\EOTname\DC29\n\
-      \\EOTkeys\CAN\ETX \ETX(\v2%.CMsgSource1LegacyGameEventList.key_tR\EOTkeys:\ACK\128\181\CAN\128\192\SOH"
+      \\EOTkeys\CAN\ETX \ETX(\v2%.CMsgSource1LegacyGameEventList.key_tR\EOTkeys:\ACK\128\181\CAN\128\128\STX"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
     = let
@@ -3977,7 +4784,9 @@ data EBaseGameEvents
     GE_SosStopSoundEvent |
     GE_SosSetSoundEventParams |
     GE_SosSetLibraryStackFields |
-    GE_SosStopSoundEventHash
+    GE_SosStopSoundEventHash |
+    GE_ClothStiffenAnimEvent |
+    GE_ClothEffectAnimEvent
   deriving stock (Prelude.Show, Prelude.Eq, Prelude.Ord)
 instance Data.ProtoLens.MessageEnum EBaseGameEvents where
   maybeToEnum 200 = Prelude.Just GE_VDebugGameSessionIDEvent
@@ -3993,6 +4802,8 @@ instance Data.ProtoLens.MessageEnum EBaseGameEvents where
   maybeToEnum 210 = Prelude.Just GE_SosSetSoundEventParams
   maybeToEnum 211 = Prelude.Just GE_SosSetLibraryStackFields
   maybeToEnum 212 = Prelude.Just GE_SosStopSoundEventHash
+  maybeToEnum 213 = Prelude.Just GE_ClothStiffenAnimEvent
+  maybeToEnum 214 = Prelude.Just GE_ClothEffectAnimEvent
   maybeToEnum _ = Prelude.Nothing
   showEnum GE_VDebugGameSessionIDEvent
     = "GE_VDebugGameSessionIDEvent"
@@ -4012,6 +4823,8 @@ instance Data.ProtoLens.MessageEnum EBaseGameEvents where
   showEnum GE_SosSetLibraryStackFields
     = "GE_SosSetLibraryStackFields"
   showEnum GE_SosStopSoundEventHash = "GE_SosStopSoundEventHash"
+  showEnum GE_ClothStiffenAnimEvent = "GE_ClothStiffenAnimEvent"
+  showEnum GE_ClothEffectAnimEvent = "GE_ClothEffectAnimEvent"
   readEnum k
     | (Prelude.==) k "GE_VDebugGameSessionIDEvent"
     = Prelude.Just GE_VDebugGameSessionIDEvent
@@ -4039,11 +4852,15 @@ instance Data.ProtoLens.MessageEnum EBaseGameEvents where
     = Prelude.Just GE_SosSetLibraryStackFields
     | (Prelude.==) k "GE_SosStopSoundEventHash"
     = Prelude.Just GE_SosStopSoundEventHash
+    | (Prelude.==) k "GE_ClothStiffenAnimEvent"
+    = Prelude.Just GE_ClothStiffenAnimEvent
+    | (Prelude.==) k "GE_ClothEffectAnimEvent"
+    = Prelude.Just GE_ClothEffectAnimEvent
     | Prelude.otherwise
     = (Prelude.>>=) (Text.Read.readMaybe k) Data.ProtoLens.maybeToEnum
 instance Prelude.Bounded EBaseGameEvents where
   minBound = GE_VDebugGameSessionIDEvent
-  maxBound = GE_SosStopSoundEventHash
+  maxBound = GE_ClothEffectAnimEvent
 instance Prelude.Enum EBaseGameEvents where
   toEnum k__
     = Prelude.maybe
@@ -4065,9 +4882,11 @@ instance Prelude.Enum EBaseGameEvents where
   fromEnum GE_SosSetSoundEventParams = 210
   fromEnum GE_SosSetLibraryStackFields = 211
   fromEnum GE_SosStopSoundEventHash = 212
-  succ GE_SosStopSoundEventHash
+  fromEnum GE_ClothStiffenAnimEvent = 213
+  fromEnum GE_ClothEffectAnimEvent = 214
+  succ GE_ClothEffectAnimEvent
     = Prelude.error
-        "EBaseGameEvents.succ: bad argument GE_SosStopSoundEventHash. This value would be out of bounds."
+        "EBaseGameEvents.succ: bad argument GE_ClothEffectAnimEvent. This value would be out of bounds."
   succ GE_VDebugGameSessionIDEvent = GE_PlaceDecalEvent
   succ GE_PlaceDecalEvent = GE_ClearWorldDecalsEvent
   succ GE_ClearWorldDecalsEvent = GE_ClearEntityDecalsEvent
@@ -4080,6 +4899,8 @@ instance Prelude.Enum EBaseGameEvents where
   succ GE_SosStopSoundEvent = GE_SosSetSoundEventParams
   succ GE_SosSetSoundEventParams = GE_SosSetLibraryStackFields
   succ GE_SosSetLibraryStackFields = GE_SosStopSoundEventHash
+  succ GE_SosStopSoundEventHash = GE_ClothStiffenAnimEvent
+  succ GE_ClothStiffenAnimEvent = GE_ClothEffectAnimEvent
   pred GE_VDebugGameSessionIDEvent
     = Prelude.error
         "EBaseGameEvents.pred: bad argument GE_VDebugGameSessionIDEvent. This value would be out of bounds."
@@ -4095,6 +4916,8 @@ instance Prelude.Enum EBaseGameEvents where
   pred GE_SosSetSoundEventParams = GE_SosStopSoundEvent
   pred GE_SosSetLibraryStackFields = GE_SosSetSoundEventParams
   pred GE_SosStopSoundEventHash = GE_SosSetLibraryStackFields
+  pred GE_ClothStiffenAnimEvent = GE_SosStopSoundEventHash
+  pred GE_ClothEffectAnimEvent = GE_ClothStiffenAnimEvent
   enumFrom = Data.ProtoLens.Message.Enum.messageEnumFrom
   enumFromTo = Data.ProtoLens.Message.Enum.messageEnumFromTo
   enumFromThen = Data.ProtoLens.Message.Enum.messageEnumFromThen
@@ -4109,7 +4932,7 @@ packedFileDescriptor
     \\DLEgameevents.proto\SUB\SYNnetworkbasetypes.proto\"`\n\
     \\FSCMsgVDebugGameSessionIDEvent\DC2\SUB\n\
     \\bclientid\CAN\SOH \SOH(\ENQR\bclientid\DC2$\n\
-    \\rgamesessionid\CAN\STX \SOH(\tR\rgamesessionid\"\218\ETX\n\
+    \\rgamesessionid\CAN\STX \SOH(\tR\rgamesessionid\"\154\EOT\n\
     \\DC3CMsgPlaceDecalEvent\DC2'\n\
     \\bposition\CAN\SOH \SOH(\v2\v.CMsgVectorR\bposition\DC2#\n\
     \\ACKnormal\CAN\STX \SOH(\v2\v.CMsgVectorR\ACKnormal\DC2!\n\
@@ -4126,7 +4949,8 @@ packedFileDescriptor
     \ \SOH(\r:\b16777215R\fentityhandle\DC2\US\n\
     \\vmaterial_id\CAN\v \SOH(\EOTR\n\
     \materialId\DC2#\n\
-    \\rsequence_name\CAN\f \SOH(\rR\fsequenceName\"?\n\
+    \\rsequence_name\CAN\f \SOH(\rR\fsequenceName\DC2>\n\
+    \\DC4position_objectspace\CAN\SO \SOH(\v2\v.CMsgVectorR\DC3positionObjectspace\"?\n\
     \\EMCMsgClearWorldDecalsEvent\DC2\"\n\
     \\fflagstoclear\CAN\SOH \SOH(\rR\fflagstoclear\"@\n\
     \\SUBCMsgClearEntityDecalsEvent\DC2\"\n\
@@ -4142,7 +4966,7 @@ packedFileDescriptor
     \\fdescriptor_t\DC2\CAN\n\
     \\aeventid\CAN\SOH \SOH(\ENQR\aeventid\DC2\DC2\n\
     \\EOTname\CAN\STX \SOH(\tR\EOTname\DC29\n\
-    \\EOTkeys\CAN\ETX \ETX(\v2%.CMsgSource1LegacyGameEventList.key_tR\EOTkeys:\ACK\128\181\CAN\128\192\SOH\"g\n\
+    \\EOTkeys\CAN\ETX \ETX(\v2%.CMsgSource1LegacyGameEventList.key_tR\EOTkeys:\ACK\128\181\CAN\128\128\STX\"g\n\
     \\GSCMsgSource1LegacyListenEvents\DC2\RS\n\
     \\n\
     \playerslot\CAN\SOH \SOH(\ENQR\n\
@@ -4186,7 +5010,21 @@ packedFileDescriptor
     \\FSCMsgSosSetLibraryStackFields\DC2\GS\n\
     \\n\
     \stack_hash\CAN\SOH \SOH(\aR\tstackHash\DC2#\n\
-    \\rpacked_fields\CAN\ENQ \SOH(\fR\fpackedFields*\173\ETX\n\
+    \\rpacked_fields\CAN\ENQ \SOH(\fR\fpackedFields\"\229\SOH\n\
+    \\EMCMsgClothStiffenAnimEvent\DC22\n\
+    \\DC3source_entity_index\CAN\SOH \SOH(\ENQ:\STX-1R\DC1sourceEntityIndex\DC2&\n\
+    \\SIvertex_set_hash\CAN\STX \SOH(\ENQR\rvertexSetHash\DC2\FS\n\
+    \\tintensity\CAN\ETX \SOH(\STXR\tintensity\DC2\SYN\n\
+    \\ACKlength\CAN\EOT \SOH(\STXR\ACKlength\DC2\EM\n\
+    \\bspeed_in\CAN\ENQ \SOH(\STXR\aspeedIn\DC2\ESC\n\
+    \\tspeed_out\CAN\ACK \SOH(\STXR\bspeedOut\"\223\SOH\n\
+    \\CANCMsgClothEffectAnimEvent\DC22\n\
+    \\DC3source_entity_index\CAN\SOH \SOH(\ENQ:\STX-1R\DC1sourceEntityIndex\DC2(\n\
+    \\DLEeffect_name_hash\CAN\STX \SOH(\ENQR\SOeffectNameHash\DC2\FS\n\
+    \\toperation\CAN\ETX \SOH(\ENQR\toperation\DC2\DC4\n\
+    \\ENQflags\CAN\EOT \SOH(\ENQR\ENQflags\DC2\DC2\n\
+    \\EOTtags\CAN\ENQ \SOH(\tR\EOTtags\DC2\GS\n\
+    \\ETXpte\CAN\ACK \SOH(\v2\v.CMsgVectorR\ETXpte*\234\ETX\n\
     \\SIEBaseGameEvents\DC2 \n\
     \\ESCGE_VDebugGameSessionIDEvent\DLE\200\SOH\DC2\ETB\n\
     \\DC2GE_PlaceDecalEvent\DLE\201\SOH\DC2\GS\n\
@@ -4200,13 +5038,15 @@ packedFileDescriptor
     \\DC4GE_SosStopSoundEvent\DLE\209\SOH\DC2\RS\n\
     \\EMGE_SosSetSoundEventParams\DLE\210\SOH\DC2 \n\
     \\ESCGE_SosSetLibraryStackFields\DLE\211\SOH\DC2\GS\n\
-    \\CANGE_SosStopSoundEventHash\DLE\212\SOHJ\162&\n\
-    \\ACK\DC2\EOT\NUL\NULw\SOH\n\
+    \\CANGE_SosStopSoundEventHash\DLE\212\SOH\DC2\GS\n\
+    \\CANGE_ClothStiffenAnimEvent\DLE\213\SOH\DC2\FS\n\
+    \\ETBGE_ClothEffectAnimEvent\DLE\214\SOHJ\145/\n\
+    \\a\DC2\ENQ\NUL\NUL\140\SOH\SOH\n\
     \\t\n\
     \\STX\ETX\NUL\DC2\ETX\NUL\NUL \n\
     \\n\
     \\n\
-    \\STX\ENQ\NUL\DC2\EOT\STX\NUL\DLE\SOH\n\
+    \\STX\ENQ\NUL\DC2\EOT\STX\NUL\DC2\SOH\n\
     \\n\
     \\n\
     \\ETX\ENQ\NUL\SOH\DC2\ETX\STX\ENQ\DC4\n\
@@ -4294,665 +5134,824 @@ packedFileDescriptor
     \\ENQ\ENQ\NUL\STX\f\SOH\DC2\ETX\SI\b \n\
     \\f\n\
     \\ENQ\ENQ\NUL\STX\f\STX\DC2\ETX\SI#&\n\
+    \\v\n\
+    \\EOT\ENQ\NUL\STX\r\DC2\ETX\DLE\b'\n\
+    \\f\n\
+    \\ENQ\ENQ\NUL\STX\r\SOH\DC2\ETX\DLE\b \n\
+    \\f\n\
+    \\ENQ\ENQ\NUL\STX\r\STX\DC2\ETX\DLE#&\n\
+    \\v\n\
+    \\EOT\ENQ\NUL\STX\SO\DC2\ETX\DC1\b&\n\
+    \\f\n\
+    \\ENQ\ENQ\NUL\STX\SO\SOH\DC2\ETX\DC1\b\US\n\
+    \\f\n\
+    \\ENQ\ENQ\NUL\STX\SO\STX\DC2\ETX\DC1\"%\n\
     \\n\
     \\n\
-    \\STX\EOT\NUL\DC2\EOT\DC2\NUL\NAK\SOH\n\
+    \\STX\EOT\NUL\DC2\EOT\DC4\NUL\ETB\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\NUL\SOH\DC2\ETX\DC2\b$\n\
+    \\ETX\EOT\NUL\SOH\DC2\ETX\DC4\b$\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\NUL\DC2\ETX\DC3\b$\n\
+    \\EOT\EOT\NUL\STX\NUL\DC2\ETX\NAK\b$\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX\DC3\b\DLE\n\
+    \\ENQ\EOT\NUL\STX\NUL\EOT\DC2\ETX\NAK\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX\DC3\DC1\SYN\n\
+    \\ENQ\EOT\NUL\STX\NUL\ENQ\DC2\ETX\NAK\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX\DC3\ETB\US\n\
+    \\ENQ\EOT\NUL\STX\NUL\SOH\DC2\ETX\NAK\ETB\US\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX\DC3\"#\n\
+    \\ENQ\EOT\NUL\STX\NUL\ETX\DC2\ETX\NAK\"#\n\
     \\v\n\
-    \\EOT\EOT\NUL\STX\SOH\DC2\ETX\DC4\b*\n\
+    \\EOT\EOT\NUL\STX\SOH\DC2\ETX\SYN\b*\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX\DC4\b\DLE\n\
+    \\ENQ\EOT\NUL\STX\SOH\EOT\DC2\ETX\SYN\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX\DC4\DC1\ETB\n\
+    \\ENQ\EOT\NUL\STX\SOH\ENQ\DC2\ETX\SYN\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX\DC4\CAN%\n\
+    \\ENQ\EOT\NUL\STX\SOH\SOH\DC2\ETX\SYN\CAN%\n\
     \\f\n\
-    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX\DC4()\n\
+    \\ENQ\EOT\NUL\STX\SOH\ETX\DC2\ETX\SYN()\n\
     \\n\
     \\n\
-    \\STX\EOT\SOH\DC2\EOT\ETB\NUL%\SOH\n\
+    \\STX\EOT\SOH\DC2\EOT\EM\NUL(\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\SOH\SOH\DC2\ETX\ETB\b\ESC\n\
+    \\ETX\EOT\SOH\SOH\DC2\ETX\EM\b\ESC\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\NUL\DC2\ETX\CAN\b*\n\
+    \\EOT\EOT\SOH\STX\NUL\DC2\ETX\SUB\b*\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX\CAN\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\NUL\EOT\DC2\ETX\SUB\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ACK\DC2\ETX\CAN\DC1\FS\n\
+    \\ENQ\EOT\SOH\STX\NUL\ACK\DC2\ETX\SUB\DC1\FS\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX\CAN\GS%\n\
+    \\ENQ\EOT\SOH\STX\NUL\SOH\DC2\ETX\SUB\GS%\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX\CAN()\n\
+    \\ENQ\EOT\SOH\STX\NUL\ETX\DC2\ETX\SUB()\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\SOH\DC2\ETX\EM\b(\n\
+    \\EOT\EOT\SOH\STX\SOH\DC2\ETX\ESC\b(\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\EOT\DC2\ETX\EM\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\SOH\EOT\DC2\ETX\ESC\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\ACK\DC2\ETX\EM\DC1\FS\n\
+    \\ENQ\EOT\SOH\STX\SOH\ACK\DC2\ETX\ESC\DC1\FS\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\SOH\DC2\ETX\EM\GS#\n\
+    \\ENQ\EOT\SOH\STX\SOH\SOH\DC2\ETX\ESC\GS#\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\SOH\ETX\DC2\ETX\EM&'\n\
+    \\ENQ\EOT\SOH\STX\SOH\ETX\DC2\ETX\ESC&'\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\STX\DC2\ETX\SUB\b'\n\
+    \\EOT\EOT\SOH\STX\STX\DC2\ETX\FS\b'\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\STX\EOT\DC2\ETX\SUB\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\STX\EOT\DC2\ETX\FS\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\STX\ACK\DC2\ETX\SUB\DC1\FS\n\
+    \\ENQ\EOT\SOH\STX\STX\ACK\DC2\ETX\FS\DC1\FS\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\STX\SOH\DC2\ETX\SUB\GS\"\n\
+    \\ENQ\EOT\SOH\STX\STX\SOH\DC2\ETX\FS\GS\"\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\STX\ETX\DC2\ETX\SUB%&\n\
+    \\ENQ\EOT\SOH\STX\STX\ETX\DC2\ETX\FS%&\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\ETX\DC2\ETX\ESC\b%\n\
+    \\EOT\EOT\SOH\STX\ETX\DC2\ETX\GS\b%\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ETX\EOT\DC2\ETX\ESC\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\ETX\EOT\DC2\ETX\GS\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ETX\ENQ\DC2\ETX\ESC\DC1\SYN\n\
+    \\ENQ\EOT\SOH\STX\ETX\ENQ\DC2\ETX\GS\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ETX\SOH\DC2\ETX\ESC\ETB \n\
+    \\ENQ\EOT\SOH\STX\ETX\SOH\DC2\ETX\GS\ETB \n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ETX\ETX\DC2\ETX\ESC#$\n\
+    \\ENQ\EOT\SOH\STX\ETX\ETX\DC2\ETX\GS#$\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\EOT\DC2\ETX\FS\b*\n\
+    \\EOT\EOT\SOH\STX\EOT\DC2\ETX\RS\b*\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\EOT\EOT\DC2\ETX\FS\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\EOT\EOT\DC2\ETX\RS\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\EOT\ENQ\DC2\ETX\FS\DC1\SYN\n\
+    \\ENQ\EOT\SOH\STX\EOT\ENQ\DC2\ETX\RS\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\EOT\SOH\DC2\ETX\FS\ETB$\n\
+    \\ENQ\EOT\SOH\STX\EOT\SOH\DC2\ETX\RS\ETB$\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\EOT\ETX\DC2\ETX\FS')\n\
+    \\ENQ\EOT\SOH\STX\EOT\ETX\DC2\ETX\RS')\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\ENQ\DC2\ETX\GS\b\"\n\
+    \\EOT\EOT\SOH\STX\ENQ\DC2\ETX\US\b\"\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ENQ\EOT\DC2\ETX\GS\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\ENQ\EOT\DC2\ETX\US\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ENQ\ENQ\DC2\ETX\GS\DC1\ETB\n\
+    \\ENQ\EOT\SOH\STX\ENQ\ENQ\DC2\ETX\US\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ENQ\SOH\DC2\ETX\GS\CAN\GS\n\
+    \\ENQ\EOT\SOH\STX\ENQ\SOH\DC2\ETX\US\CAN\GS\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ENQ\ETX\DC2\ETX\GS !\n\
+    \\ENQ\EOT\SOH\STX\ENQ\ETX\DC2\ETX\US !\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\ACK\DC2\ETX\RS\b#\n\
+    \\EOT\EOT\SOH\STX\ACK\DC2\ETX \b#\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ACK\EOT\DC2\ETX\RS\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\ACK\EOT\DC2\ETX \b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ACK\ENQ\DC2\ETX\RS\DC1\CAN\n\
+    \\ENQ\EOT\SOH\STX\ACK\ENQ\DC2\ETX \DC1\CAN\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ACK\SOH\DC2\ETX\RS\EM\RS\n\
+    \\ENQ\EOT\SOH\STX\ACK\SOH\DC2\ETX \EM\RS\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\ACK\ETX\DC2\ETX\RS!\"\n\
+    \\ENQ\EOT\SOH\STX\ACK\ETX\DC2\ETX !\"\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\a\DC2\ETX\US\b'\n\
+    \\EOT\EOT\SOH\STX\a\DC2\ETX!\b'\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\a\EOT\DC2\ETX\US\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\a\EOT\DC2\ETX!\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\a\ENQ\DC2\ETX\US\DC1\SYN\n\
+    \\ENQ\EOT\SOH\STX\a\ENQ\DC2\ETX!\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\a\SOH\DC2\ETX\US\ETB\"\n\
+    \\ENQ\EOT\SOH\STX\a\SOH\DC2\ETX!\ETB\"\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\a\ETX\DC2\ETX\US%&\n\
+    \\ENQ\EOT\SOH\STX\a\ETX\DC2\ETX!%&\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\b\DC2\ETX \b-\n\
+    \\EOT\EOT\SOH\STX\b\DC2\ETX\"\b-\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\b\EOT\DC2\ETX \b\DLE\n\
+    \\ENQ\EOT\SOH\STX\b\EOT\DC2\ETX\"\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\b\ENQ\DC2\ETX \DC1\ETB\n\
+    \\ENQ\EOT\SOH\STX\b\ENQ\DC2\ETX\"\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\b\SOH\DC2\ETX \CAN(\n\
+    \\ENQ\EOT\SOH\STX\b\SOH\DC2\ETX\"\CAN(\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\b\ETX\DC2\ETX +,\n\
+    \\ENQ\EOT\SOH\STX\b\ETX\DC2\ETX\"+,\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\t\DC2\ETX!\b)\n\
+    \\EOT\EOT\SOH\STX\t\DC2\ETX#\b)\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\t\EOT\DC2\ETX!\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\t\EOT\DC2\ETX#\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\t\ENQ\DC2\ETX!\DC1\SYN\n\
+    \\ENQ\EOT\SOH\STX\t\ENQ\DC2\ETX#\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\t\SOH\DC2\ETX!\ETB$\n\
+    \\ENQ\EOT\SOH\STX\t\SOH\DC2\ETX#\ETB$\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\t\ETX\DC2\ETX!'(\n\
+    \\ENQ\EOT\SOH\STX\t\ETX\DC2\ETX#'(\n\
     \\v\n\
     \\EOT\EOT\SOH\STX\n\
-    \\DC2\ETX\"\b?\n\
+    \\DC2\ETX$\b?\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\EOT\DC2\ETX\"\b\DLE\n\
+    \\EOT\DC2\ETX$\b\DLE\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\ENQ\DC2\ETX\"\DC1\ETB\n\
+    \\ENQ\DC2\ETX$\DC1\ETB\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\SOH\DC2\ETX\"\CAN$\n\
+    \\SOH\DC2\ETX$\CAN$\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\ETX\DC2\ETX\"')\n\
+    \\ETX\DC2\ETX$')\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\b\DC2\ETX\"*>\n\
+    \\b\DC2\ETX$*>\n\
     \\f\n\
     \\ENQ\EOT\SOH\STX\n\
-    \\a\DC2\ETX\"5=\n\
+    \\a\DC2\ETX$5=\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\v\DC2\ETX#\b)\n\
+    \\EOT\EOT\SOH\STX\v\DC2\ETX%\b)\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\v\EOT\DC2\ETX#\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\v\EOT\DC2\ETX%\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\v\ENQ\DC2\ETX#\DC1\ETB\n\
+    \\ENQ\EOT\SOH\STX\v\ENQ\DC2\ETX%\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\v\SOH\DC2\ETX#\CAN#\n\
+    \\ENQ\EOT\SOH\STX\v\SOH\DC2\ETX%\CAN#\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\v\ETX\DC2\ETX#&(\n\
+    \\ENQ\EOT\SOH\STX\v\ETX\DC2\ETX%&(\n\
     \\v\n\
-    \\EOT\EOT\SOH\STX\f\DC2\ETX$\b+\n\
+    \\EOT\EOT\SOH\STX\f\DC2\ETX&\b+\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\f\EOT\DC2\ETX$\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\f\EOT\DC2\ETX&\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\f\ENQ\DC2\ETX$\DC1\ETB\n\
+    \\ENQ\EOT\SOH\STX\f\ENQ\DC2\ETX&\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\f\SOH\DC2\ETX$\CAN%\n\
+    \\ENQ\EOT\SOH\STX\f\SOH\DC2\ETX&\CAN%\n\
     \\f\n\
-    \\ENQ\EOT\SOH\STX\f\ETX\DC2\ETX$(*\n\
-    \\n\
-    \\n\
-    \\STX\EOT\STX\DC2\EOT'\NUL)\SOH\n\
-    \\n\
-    \\n\
-    \\ETX\EOT\STX\SOH\DC2\ETX'\b!\n\
+    \\ENQ\EOT\SOH\STX\f\ETX\DC2\ETX&(*\n\
     \\v\n\
-    \\EOT\EOT\STX\STX\NUL\DC2\ETX(\b)\n\
+    \\EOT\EOT\SOH\STX\r\DC2\ETX'\b7\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\ETX(\b\DLE\n\
+    \\ENQ\EOT\SOH\STX\r\EOT\DC2\ETX'\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\ENQ\DC2\ETX(\DC1\ETB\n\
+    \\ENQ\EOT\SOH\STX\r\ACK\DC2\ETX'\DC1\FS\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\ETX(\CAN$\n\
+    \\ENQ\EOT\SOH\STX\r\SOH\DC2\ETX'\GS1\n\
     \\f\n\
-    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\ETX('(\n\
+    \\ENQ\EOT\SOH\STX\r\ETX\DC2\ETX'46\n\
     \\n\
     \\n\
-    \\STX\EOT\ETX\DC2\EOT+\NUL-\SOH\n\
+    \\STX\EOT\STX\DC2\EOT*\NUL,\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ETX\SOH\DC2\ETX+\b\"\n\
+    \\ETX\EOT\STX\SOH\DC2\ETX*\b!\n\
     \\v\n\
-    \\EOT\EOT\ETX\STX\NUL\DC2\ETX,\b)\n\
+    \\EOT\EOT\STX\STX\NUL\DC2\ETX+\b)\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\EOT\DC2\ETX,\b\DLE\n\
+    \\ENQ\EOT\STX\STX\NUL\EOT\DC2\ETX+\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\ENQ\DC2\ETX,\DC1\ETB\n\
+    \\ENQ\EOT\STX\STX\NUL\ENQ\DC2\ETX+\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\SOH\DC2\ETX,\CAN$\n\
+    \\ENQ\EOT\STX\STX\NUL\SOH\DC2\ETX+\CAN$\n\
     \\f\n\
-    \\ENQ\EOT\ETX\STX\NUL\ETX\DC2\ETX,'(\n\
+    \\ENQ\EOT\STX\STX\NUL\ETX\DC2\ETX+'(\n\
     \\n\
     \\n\
-    \\STX\EOT\EOT\DC2\EOT/\NUL2\SOH\n\
+    \\STX\EOT\ETX\DC2\EOT.\NUL0\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\EOT\SOH\DC2\ETX/\b%\n\
+    \\ETX\EOT\ETX\SOH\DC2\ETX.\b\"\n\
     \\v\n\
-    \\EOT\EOT\EOT\STX\NUL\DC2\ETX0\b)\n\
+    \\EOT\EOT\ETX\STX\NUL\DC2\ETX/\b)\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\EOT\DC2\ETX0\b\DLE\n\
+    \\ENQ\EOT\ETX\STX\NUL\EOT\DC2\ETX/\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\ENQ\DC2\ETX0\DC1\ETB\n\
+    \\ENQ\EOT\ETX\STX\NUL\ENQ\DC2\ETX/\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\SOH\DC2\ETX0\CAN$\n\
+    \\ENQ\EOT\ETX\STX\NUL\SOH\DC2\ETX/\CAN$\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\NUL\ETX\DC2\ETX0'(\n\
+    \\ENQ\EOT\ETX\STX\NUL\ETX\DC2\ETX/'(\n\
+    \\n\
+    \\n\
+    \\STX\EOT\EOT\DC2\EOT2\NUL5\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\EOT\SOH\DC2\ETX2\b%\n\
     \\v\n\
-    \\EOT\EOT\EOT\STX\SOH\DC2\ETX1\b>\n\
+    \\EOT\EOT\EOT\STX\NUL\DC2\ETX3\b)\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\EOT\DC2\ETX1\b\DLE\n\
+    \\ENQ\EOT\EOT\STX\NUL\EOT\DC2\ETX3\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\ENQ\DC2\ETX1\DC1\ETB\n\
+    \\ENQ\EOT\EOT\STX\NUL\ENQ\DC2\ETX3\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\SOH\DC2\ETX1\CAN$\n\
+    \\ENQ\EOT\EOT\STX\NUL\SOH\DC2\ETX3\CAN$\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\ETX\DC2\ETX1'(\n\
+    \\ENQ\EOT\EOT\STX\NUL\ETX\DC2\ETX3'(\n\
+    \\v\n\
+    \\EOT\EOT\EOT\STX\SOH\DC2\ETX4\b>\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\b\DC2\ETX1)=\n\
+    \\ENQ\EOT\EOT\STX\SOH\EOT\DC2\ETX4\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\EOT\STX\SOH\a\DC2\ETX14<\n\
+    \\ENQ\EOT\EOT\STX\SOH\ENQ\DC2\ETX4\DC1\ETB\n\
+    \\f\n\
+    \\ENQ\EOT\EOT\STX\SOH\SOH\DC2\ETX4\CAN$\n\
+    \\f\n\
+    \\ENQ\EOT\EOT\STX\SOH\ETX\DC2\ETX4'(\n\
+    \\f\n\
+    \\ENQ\EOT\EOT\STX\SOH\b\DC2\ETX4)=\n\
+    \\f\n\
+    \\ENQ\EOT\EOT\STX\SOH\a\DC2\ETX44<\n\
     \\n\
     \\n\
-    \\STX\EOT\ENQ\DC2\EOT4\NULC\SOH\n\
+    \\STX\EOT\ENQ\DC2\EOT7\NULF\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ENQ\SOH\DC2\ETX4\b&\n\
+    \\ETX\EOT\ENQ\SOH\DC2\ETX7\b&\n\
     \\n\
     \\n\
-    \\ETX\EOT\ENQ\a\DC2\ETX5\b,\n\
+    \\ETX\EOT\ENQ\a\DC2\ETX8\b,\n\
     \\r\n\
-    \\ACK\EOT\ENQ\a\208\134\ETX\DC2\ETX5\b,\n\
+    \\ACK\EOT\ENQ\a\208\134\ETX\DC2\ETX8\b,\n\
     \\f\n\
-    \\EOT\EOT\ENQ\ETX\NUL\DC2\EOT7\b:\t\n\
+    \\EOT\EOT\ENQ\ETX\NUL\DC2\EOT:\b=\t\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\ETX\NUL\SOH\DC2\ETX7\DLE\NAK\n\
+    \\ENQ\EOT\ENQ\ETX\NUL\SOH\DC2\ETX:\DLE\NAK\n\
     \\r\n\
-    \\ACK\EOT\ENQ\ETX\NUL\STX\NUL\DC2\ETX8\DLE(\n\
+    \\ACK\EOT\ENQ\ETX\NUL\STX\NUL\DC2\ETX;\DLE(\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\NUL\EOT\DC2\ETX8\DLE\CAN\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\NUL\EOT\DC2\ETX;\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\NUL\ENQ\DC2\ETX8\EM\RS\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\NUL\ENQ\DC2\ETX;\EM\RS\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\NUL\SOH\DC2\ETX8\US#\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\NUL\SOH\DC2\ETX;\US#\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\NUL\ETX\DC2\ETX8&'\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\NUL\ETX\DC2\ETX;&'\n\
     \\r\n\
-    \\ACK\EOT\ENQ\ETX\NUL\STX\SOH\DC2\ETX9\DLE)\n\
+    \\ACK\EOT\ENQ\ETX\NUL\STX\SOH\DC2\ETX<\DLE)\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\SOH\EOT\DC2\ETX9\DLE\CAN\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\SOH\EOT\DC2\ETX<\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\SOH\ENQ\DC2\ETX9\EM\US\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\SOH\ENQ\DC2\ETX<\EM\US\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\SOH\SOH\DC2\ETX9 $\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\SOH\SOH\DC2\ETX< $\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\NUL\STX\SOH\ETX\DC2\ETX9'(\n\
+    \\a\EOT\ENQ\ETX\NUL\STX\SOH\ETX\DC2\ETX<'(\n\
     \\f\n\
-    \\EOT\EOT\ENQ\ETX\SOH\DC2\EOT<\b@\t\n\
+    \\EOT\EOT\ENQ\ETX\SOH\DC2\EOT?\bC\t\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\ETX\SOH\SOH\DC2\ETX<\DLE\FS\n\
+    \\ENQ\EOT\ENQ\ETX\SOH\SOH\DC2\ETX?\DLE\FS\n\
     \\r\n\
-    \\ACK\EOT\ENQ\ETX\SOH\STX\NUL\DC2\ETX=\DLE+\n\
+    \\ACK\EOT\ENQ\ETX\SOH\STX\NUL\DC2\ETX@\DLE+\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\NUL\EOT\DC2\ETX=\DLE\CAN\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\NUL\EOT\DC2\ETX@\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\NUL\ENQ\DC2\ETX=\EM\RS\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\NUL\ENQ\DC2\ETX@\EM\RS\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\NUL\SOH\DC2\ETX=\US&\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\NUL\SOH\DC2\ETX@\US&\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\NUL\ETX\DC2\ETX=)*\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\NUL\ETX\DC2\ETX@)*\n\
     \\r\n\
-    \\ACK\EOT\ENQ\ETX\SOH\STX\SOH\DC2\ETX>\DLE)\n\
+    \\ACK\EOT\ENQ\ETX\SOH\STX\SOH\DC2\ETXA\DLE)\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\SOH\EOT\DC2\ETX>\DLE\CAN\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\SOH\EOT\DC2\ETXA\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\SOH\ENQ\DC2\ETX>\EM\US\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\SOH\ENQ\DC2\ETXA\EM\US\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\SOH\SOH\DC2\ETX> $\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\SOH\SOH\DC2\ETXA $\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\SOH\ETX\DC2\ETX>'(\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\SOH\ETX\DC2\ETXA'(\n\
     \\r\n\
-    \\ACK\EOT\ENQ\ETX\SOH\STX\STX\DC2\ETX?\DLEH\n\
+    \\ACK\EOT\ENQ\ETX\SOH\STX\STX\DC2\ETXB\DLEH\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\STX\EOT\DC2\ETX?\DLE\CAN\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\STX\EOT\DC2\ETXB\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\STX\ACK\DC2\ETX?\EM>\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\STX\ACK\DC2\ETXB\EM>\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\STX\SOH\DC2\ETX??C\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\STX\SOH\DC2\ETXB?C\n\
     \\SO\n\
-    \\a\EOT\ENQ\ETX\SOH\STX\STX\ETX\DC2\ETX?FG\n\
+    \\a\EOT\ENQ\ETX\SOH\STX\STX\ETX\DC2\ETXBFG\n\
     \\v\n\
-    \\EOT\EOT\ENQ\STX\NUL\DC2\ETXB\bN\n\
+    \\EOT\EOT\ENQ\STX\NUL\DC2\ETXE\bN\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\EOT\DC2\ETXB\b\DLE\n\
+    \\ENQ\EOT\ENQ\STX\NUL\EOT\DC2\ETXE\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\ACK\DC2\ETXB\DC1=\n\
+    \\ENQ\EOT\ENQ\STX\NUL\ACK\DC2\ETXE\DC1=\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\SOH\DC2\ETXB>I\n\
+    \\ENQ\EOT\ENQ\STX\NUL\SOH\DC2\ETXE>I\n\
     \\f\n\
-    \\ENQ\EOT\ENQ\STX\NUL\ETX\DC2\ETXBLM\n\
+    \\ENQ\EOT\ENQ\STX\NUL\ETX\DC2\ETXELM\n\
     \\n\
     \\n\
-    \\STX\EOT\ACK\DC2\EOTE\NULH\SOH\n\
+    \\STX\EOT\ACK\DC2\EOTH\NULK\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\ACK\SOH\DC2\ETXE\b%\n\
+    \\ETX\EOT\ACK\SOH\DC2\ETXH\b%\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\NUL\DC2\ETXF\b&\n\
+    \\EOT\EOT\ACK\STX\NUL\DC2\ETXI\b&\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\EOT\DC2\ETXF\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\NUL\EOT\DC2\ETXI\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\ENQ\DC2\ETXF\DC1\SYN\n\
+    \\ENQ\EOT\ACK\STX\NUL\ENQ\DC2\ETXI\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\SOH\DC2\ETXF\ETB!\n\
+    \\ENQ\EOT\ACK\STX\NUL\SOH\DC2\ETXI\ETB!\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\NUL\ETX\DC2\ETXF$%\n\
+    \\ENQ\EOT\ACK\STX\NUL\ETX\DC2\ETXI$%\n\
     \\v\n\
-    \\EOT\EOT\ACK\STX\SOH\DC2\ETXG\b+\n\
+    \\EOT\EOT\ACK\STX\SOH\DC2\ETXJ\b+\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\EOT\DC2\ETXG\b\DLE\n\
+    \\ENQ\EOT\ACK\STX\SOH\EOT\DC2\ETXJ\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\ENQ\DC2\ETXG\DC1\ETB\n\
+    \\ENQ\EOT\ACK\STX\SOH\ENQ\DC2\ETXJ\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\SOH\DC2\ETXG\CAN&\n\
+    \\ENQ\EOT\ACK\STX\SOH\SOH\DC2\ETXJ\CAN&\n\
     \\f\n\
-    \\ENQ\EOT\ACK\STX\SOH\ETX\DC2\ETXG)*\n\
+    \\ENQ\EOT\ACK\STX\SOH\ETX\DC2\ETXJ)*\n\
     \\n\
     \\n\
-    \\STX\EOT\a\DC2\EOTJ\NUL[\SOH\n\
+    \\STX\EOT\a\DC2\EOTM\NUL^\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\a\SOH\DC2\ETXJ\b\"\n\
+    \\ETX\EOT\a\SOH\DC2\ETXM\b\"\n\
     \\f\n\
-    \\EOT\EOT\a\ETX\NUL\DC2\EOTK\bT\t\n\
+    \\EOT\EOT\a\ETX\NUL\DC2\EOTN\bW\t\n\
     \\f\n\
-    \\ENQ\EOT\a\ETX\NUL\SOH\DC2\ETXK\DLE\NAK\n\
+    \\ENQ\EOT\a\ETX\NUL\SOH\DC2\ETXN\DLE\NAK\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\NUL\DC2\ETXL\DLE(\n\
+    \\ACK\EOT\a\ETX\NUL\STX\NUL\DC2\ETXO\DLE(\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\NUL\EOT\DC2\ETXL\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\NUL\EOT\DC2\ETXO\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\NUL\ENQ\DC2\ETXL\EM\RS\n\
+    \\a\EOT\a\ETX\NUL\STX\NUL\ENQ\DC2\ETXO\EM\RS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\NUL\SOH\DC2\ETXL\US#\n\
+    \\a\EOT\a\ETX\NUL\STX\NUL\SOH\DC2\ETXO\US#\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\NUL\ETX\DC2\ETXL&'\n\
+    \\a\EOT\a\ETX\NUL\STX\NUL\ETX\DC2\ETXO&'\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\SOH\DC2\ETXM\DLE/\n\
+    \\ACK\EOT\a\ETX\NUL\STX\SOH\DC2\ETXP\DLE/\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\SOH\EOT\DC2\ETXM\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\SOH\EOT\DC2\ETXP\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\SOH\ENQ\DC2\ETXM\EM\US\n\
+    \\a\EOT\a\ETX\NUL\STX\SOH\ENQ\DC2\ETXP\EM\US\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\SOH\SOH\DC2\ETXM *\n\
+    \\a\EOT\a\ETX\NUL\STX\SOH\SOH\DC2\ETXP *\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\SOH\ETX\DC2\ETXM-.\n\
+    \\a\EOT\a\ETX\NUL\STX\SOH\ETX\DC2\ETXP-.\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\STX\DC2\ETXN\DLE-\n\
+    \\ACK\EOT\a\ETX\NUL\STX\STX\DC2\ETXQ\DLE-\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\STX\EOT\DC2\ETXN\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\STX\EOT\DC2\ETXQ\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\STX\ENQ\DC2\ETXN\EM\RS\n\
+    \\a\EOT\a\ETX\NUL\STX\STX\ENQ\DC2\ETXQ\EM\RS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\STX\SOH\DC2\ETXN\US(\n\
+    \\a\EOT\a\ETX\NUL\STX\STX\SOH\DC2\ETXQ\US(\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\STX\ETX\DC2\ETXN+,\n\
+    \\a\EOT\a\ETX\NUL\STX\STX\ETX\DC2\ETXQ+,\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\ETX\DC2\ETXO\DLE,\n\
+    \\ACK\EOT\a\ETX\NUL\STX\ETX\DC2\ETXR\DLE,\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ETX\EOT\DC2\ETXO\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\ETX\EOT\DC2\ETXR\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ETX\ENQ\DC2\ETXO\EM\RS\n\
+    \\a\EOT\a\ETX\NUL\STX\ETX\ENQ\DC2\ETXR\EM\RS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ETX\SOH\DC2\ETXO\US'\n\
+    \\a\EOT\a\ETX\NUL\STX\ETX\SOH\DC2\ETXR\US'\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ETX\ETX\DC2\ETXO*+\n\
+    \\a\EOT\a\ETX\NUL\STX\ETX\ETX\DC2\ETXR*+\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\EOT\DC2\ETXP\DLE-\n\
+    \\ACK\EOT\a\ETX\NUL\STX\EOT\DC2\ETXS\DLE-\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\EOT\EOT\DC2\ETXP\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\EOT\EOT\DC2\ETXS\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\EOT\ENQ\DC2\ETXP\EM\RS\n\
+    \\a\EOT\a\ETX\NUL\STX\EOT\ENQ\DC2\ETXS\EM\RS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\EOT\SOH\DC2\ETXP\US(\n\
+    \\a\EOT\a\ETX\NUL\STX\EOT\SOH\DC2\ETXS\US(\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\EOT\ETX\DC2\ETXP+,\n\
+    \\a\EOT\a\ETX\NUL\STX\EOT\ETX\DC2\ETXS+,\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\ENQ\DC2\ETXQ\DLE,\n\
+    \\ACK\EOT\a\ETX\NUL\STX\ENQ\DC2\ETXT\DLE,\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ENQ\EOT\DC2\ETXQ\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\ENQ\EOT\DC2\ETXT\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ENQ\ENQ\DC2\ETXQ\EM\RS\n\
+    \\a\EOT\a\ETX\NUL\STX\ENQ\ENQ\DC2\ETXT\EM\RS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ENQ\SOH\DC2\ETXQ\US'\n\
+    \\a\EOT\a\ETX\NUL\STX\ENQ\SOH\DC2\ETXT\US'\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ENQ\ETX\DC2\ETXQ*+\n\
+    \\a\EOT\a\ETX\NUL\STX\ENQ\ETX\DC2\ETXT*+\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\ACK\DC2\ETXR\DLE+\n\
+    \\ACK\EOT\a\ETX\NUL\STX\ACK\DC2\ETXU\DLE+\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ACK\EOT\DC2\ETXR\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\ACK\EOT\DC2\ETXU\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ACK\ENQ\DC2\ETXR\EM\GS\n\
+    \\a\EOT\a\ETX\NUL\STX\ACK\ENQ\DC2\ETXU\EM\GS\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ACK\SOH\DC2\ETXR\RS&\n\
+    \\a\EOT\a\ETX\NUL\STX\ACK\SOH\DC2\ETXU\RS&\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\ACK\ETX\DC2\ETXR)*\n\
+    \\a\EOT\a\ETX\NUL\STX\ACK\ETX\DC2\ETXU)*\n\
     \\r\n\
-    \\ACK\EOT\a\ETX\NUL\STX\a\DC2\ETXS\DLE/\n\
+    \\ACK\EOT\a\ETX\NUL\STX\a\DC2\ETXV\DLE/\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\a\EOT\DC2\ETXS\DLE\CAN\n\
+    \\a\EOT\a\ETX\NUL\STX\a\EOT\DC2\ETXV\DLE\CAN\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\a\ENQ\DC2\ETXS\EM\US\n\
+    \\a\EOT\a\ETX\NUL\STX\a\ENQ\DC2\ETXV\EM\US\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\a\SOH\DC2\ETXS *\n\
+    \\a\EOT\a\ETX\NUL\STX\a\SOH\DC2\ETXV *\n\
     \\SO\n\
-    \\a\EOT\a\ETX\NUL\STX\a\ETX\DC2\ETXS-.\n\
+    \\a\EOT\a\ETX\NUL\STX\a\ETX\DC2\ETXV-.\n\
     \\v\n\
-    \\EOT\EOT\a\STX\NUL\DC2\ETXV\b'\n\
+    \\EOT\EOT\a\STX\NUL\DC2\ETXY\b'\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\EOT\DC2\ETXV\b\DLE\n\
+    \\ENQ\EOT\a\STX\NUL\EOT\DC2\ETXY\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\ENQ\DC2\ETXV\DC1\ETB\n\
+    \\ENQ\EOT\a\STX\NUL\ENQ\DC2\ETXY\DC1\ETB\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\SOH\DC2\ETXV\CAN\"\n\
+    \\ENQ\EOT\a\STX\NUL\SOH\DC2\ETXY\CAN\"\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\NUL\ETX\DC2\ETXV%&\n\
+    \\ENQ\EOT\a\STX\NUL\ETX\DC2\ETXY%&\n\
     \\v\n\
-    \\EOT\EOT\a\STX\SOH\DC2\ETXW\b#\n\
+    \\EOT\EOT\a\STX\SOH\DC2\ETXZ\b#\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\SOH\EOT\DC2\ETXW\b\DLE\n\
+    \\ENQ\EOT\a\STX\SOH\EOT\DC2\ETXZ\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\SOH\ENQ\DC2\ETXW\DC1\SYN\n\
+    \\ENQ\EOT\a\STX\SOH\ENQ\DC2\ETXZ\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\SOH\SOH\DC2\ETXW\ETB\RS\n\
+    \\ENQ\EOT\a\STX\SOH\SOH\DC2\ETXZ\ETB\RS\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\SOH\ETX\DC2\ETXW!\"\n\
+    \\ENQ\EOT\a\STX\SOH\ETX\DC2\ETXZ!\"\n\
     \\v\n\
-    \\EOT\EOT\a\STX\STX\DC2\ETXX\b<\n\
+    \\EOT\EOT\a\STX\STX\DC2\ETX[\b<\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\STX\EOT\DC2\ETXX\b\DLE\n\
+    \\ENQ\EOT\a\STX\STX\EOT\DC2\ETX[\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\STX\ACK\DC2\ETXX\DC12\n\
+    \\ENQ\EOT\a\STX\STX\ACK\DC2\ETX[\DC12\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\STX\SOH\DC2\ETXX37\n\
+    \\ENQ\EOT\a\STX\STX\SOH\DC2\ETX[37\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\STX\ETX\DC2\ETXX:;\n\
+    \\ENQ\EOT\a\STX\STX\ETX\DC2\ETX[:;\n\
     \\v\n\
-    \\EOT\EOT\a\STX\ETX\DC2\ETXY\b'\n\
+    \\EOT\EOT\a\STX\ETX\DC2\ETX\\\b'\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\ETX\EOT\DC2\ETXY\b\DLE\n\
+    \\ENQ\EOT\a\STX\ETX\EOT\DC2\ETX\\\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\ETX\ENQ\DC2\ETXY\DC1\SYN\n\
+    \\ENQ\EOT\a\STX\ETX\ENQ\DC2\ETX\\\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\ETX\SOH\DC2\ETXY\ETB\"\n\
+    \\ENQ\EOT\a\STX\ETX\SOH\DC2\ETX\\\ETB\"\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\ETX\ETX\DC2\ETXY%&\n\
+    \\ENQ\EOT\a\STX\ETX\ETX\DC2\ETX\\%&\n\
     \\v\n\
-    \\EOT\EOT\a\STX\EOT\DC2\ETXZ\b'\n\
+    \\EOT\EOT\a\STX\EOT\DC2\ETX]\b'\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\EOT\EOT\DC2\ETXZ\b\DLE\n\
+    \\ENQ\EOT\a\STX\EOT\EOT\DC2\ETX]\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\EOT\ENQ\DC2\ETXZ\DC1\SYN\n\
+    \\ENQ\EOT\a\STX\EOT\ENQ\DC2\ETX]\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\EOT\SOH\DC2\ETXZ\ETB\"\n\
+    \\ENQ\EOT\a\STX\EOT\SOH\DC2\ETX]\ETB\"\n\
     \\f\n\
-    \\ENQ\EOT\a\STX\EOT\ETX\DC2\ETXZ%&\n\
+    \\ENQ\EOT\a\STX\EOT\ETX\DC2\ETX]%&\n\
     \\n\
     \\n\
-    \\STX\EOT\b\DC2\EOT]\NULd\SOH\n\
+    \\STX\EOT\b\DC2\EOT`\NULg\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\b\SOH\DC2\ETX]\b\RS\n\
+    \\ETX\EOT\b\SOH\DC2\ETX`\b\RS\n\
     \\v\n\
-    \\EOT\EOT\b\STX\NUL\DC2\ETX^\b+\n\
+    \\EOT\EOT\b\STX\NUL\DC2\ETXa\b+\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\EOT\DC2\ETX^\b\DLE\n\
+    \\ENQ\EOT\b\STX\NUL\EOT\DC2\ETXa\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\ENQ\DC2\ETX^\DC1\SYN\n\
+    \\ENQ\EOT\b\STX\NUL\ENQ\DC2\ETXa\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\SOH\DC2\ETX^\ETB&\n\
+    \\ENQ\EOT\b\STX\NUL\SOH\DC2\ETXa\ETB&\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\NUL\ETX\DC2\ETX^)*\n\
+    \\ENQ\EOT\b\STX\NUL\ETX\DC2\ETXa)*\n\
     \\v\n\
-    \\EOT\EOT\b\STX\SOH\DC2\ETX_\b-\n\
+    \\EOT\EOT\b\STX\SOH\DC2\ETXb\b-\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\EOT\DC2\ETX_\b\DLE\n\
+    \\ENQ\EOT\b\STX\SOH\EOT\DC2\ETXb\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\ENQ\DC2\ETX_\DC1\CAN\n\
+    \\ENQ\EOT\b\STX\SOH\ENQ\DC2\ETXb\DC1\CAN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\SOH\DC2\ETX_\EM(\n\
+    \\ENQ\EOT\b\STX\SOH\SOH\DC2\ETXb\EM(\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\SOH\ETX\DC2\ETX_+,\n\
+    \\ENQ\EOT\b\STX\SOH\ETX\DC2\ETXb+,\n\
     \\v\n\
-    \\EOT\EOT\b\STX\STX\DC2\ETX`\b>\n\
+    \\EOT\EOT\b\STX\STX\DC2\ETXc\b>\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\EOT\DC2\ETX`\b\DLE\n\
+    \\ENQ\EOT\b\STX\STX\EOT\DC2\ETXc\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\ENQ\DC2\ETX`\DC1\SYN\n\
+    \\ENQ\EOT\b\STX\STX\ENQ\DC2\ETXc\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\SOH\DC2\ETX`\ETB*\n\
+    \\ENQ\EOT\b\STX\STX\SOH\DC2\ETXc\ETB*\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\ETX\DC2\ETX`-.\n\
+    \\ENQ\EOT\b\STX\STX\ETX\DC2\ETXc-.\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\b\DC2\ETX`/=\n\
+    \\ENQ\EOT\b\STX\STX\b\DC2\ETXc/=\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\STX\a\DC2\ETX`:<\n\
+    \\ENQ\EOT\b\STX\STX\a\DC2\ETXc:<\n\
     \\v\n\
-    \\EOT\EOT\b\STX\ETX\DC2\ETXa\b \n\
+    \\EOT\EOT\b\STX\ETX\DC2\ETXd\b \n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ETX\EOT\DC2\ETXa\b\DLE\n\
+    \\ENQ\EOT\b\STX\ETX\EOT\DC2\ETXd\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ETX\ENQ\DC2\ETXa\DC1\SYN\n\
+    \\ENQ\EOT\b\STX\ETX\ENQ\DC2\ETXd\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ETX\SOH\DC2\ETXa\ETB\ESC\n\
+    \\ENQ\EOT\b\STX\ETX\SOH\DC2\ETXd\ETB\ESC\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ETX\ETX\DC2\ETXa\RS\US\n\
+    \\ENQ\EOT\b\STX\ETX\ETX\DC2\ETXd\RS\US\n\
     \\v\n\
-    \\EOT\EOT\b\STX\EOT\DC2\ETXb\b)\n\
+    \\EOT\EOT\b\STX\EOT\DC2\ETXe\b)\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\EOT\EOT\DC2\ETXb\b\DLE\n\
+    \\ENQ\EOT\b\STX\EOT\EOT\DC2\ETXe\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\EOT\ENQ\DC2\ETXb\DC1\SYN\n\
+    \\ENQ\EOT\b\STX\EOT\ENQ\DC2\ETXe\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\EOT\SOH\DC2\ETXb\ETB$\n\
+    \\ENQ\EOT\b\STX\EOT\SOH\DC2\ETXe\ETB$\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\EOT\ETX\DC2\ETXb'(\n\
+    \\ENQ\EOT\b\STX\EOT\ETX\DC2\ETXe'(\n\
     \\v\n\
-    \\EOT\EOT\b\STX\ENQ\DC2\ETXc\b&\n\
+    \\EOT\EOT\b\STX\ENQ\DC2\ETXf\b&\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ENQ\EOT\DC2\ETXc\b\DLE\n\
+    \\ENQ\EOT\b\STX\ENQ\EOT\DC2\ETXf\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ENQ\ENQ\DC2\ETXc\DC1\SYN\n\
+    \\ENQ\EOT\b\STX\ENQ\ENQ\DC2\ETXf\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ENQ\SOH\DC2\ETXc\ETB!\n\
+    \\ENQ\EOT\b\STX\ENQ\SOH\DC2\ETXf\ETB!\n\
     \\f\n\
-    \\ENQ\EOT\b\STX\ENQ\ETX\DC2\ETXc$%\n\
+    \\ENQ\EOT\b\STX\ENQ\ETX\DC2\ETXf$%\n\
     \\n\
     \\n\
-    \\STX\EOT\t\DC2\EOTf\NULh\SOH\n\
+    \\STX\EOT\t\DC2\EOTi\NULk\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\t\SOH\DC2\ETXf\b\GS\n\
+    \\ETX\EOT\t\SOH\DC2\ETXi\b\GS\n\
     \\v\n\
-    \\EOT\EOT\t\STX\NUL\DC2\ETXg\b+\n\
+    \\EOT\EOT\t\STX\NUL\DC2\ETXj\b+\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\EOT\DC2\ETXg\b\DLE\n\
+    \\ENQ\EOT\t\STX\NUL\EOT\DC2\ETXj\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\ENQ\DC2\ETXg\DC1\SYN\n\
+    \\ENQ\EOT\t\STX\NUL\ENQ\DC2\ETXj\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\SOH\DC2\ETXg\ETB&\n\
+    \\ENQ\EOT\t\STX\NUL\SOH\DC2\ETXj\ETB&\n\
     \\f\n\
-    \\ENQ\EOT\t\STX\NUL\ETX\DC2\ETXg)*\n\
+    \\ENQ\EOT\t\STX\NUL\ETX\DC2\ETXj)*\n\
     \\n\
     \\n\
     \\STX\EOT\n\
-    \\DC2\EOTj\NULm\SOH\n\
+    \\DC2\EOTm\NULp\SOH\n\
     \\n\
     \\n\
     \\ETX\EOT\n\
-    \\SOH\DC2\ETXj\b!\n\
+    \\SOH\DC2\ETXm\b!\n\
     \\v\n\
     \\EOT\EOT\n\
-    \\STX\NUL\DC2\ETXk\b-\n\
+    \\STX\NUL\DC2\ETXn\b-\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\EOT\DC2\ETXk\b\DLE\n\
+    \\STX\NUL\EOT\DC2\ETXn\b\DLE\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\ENQ\DC2\ETXk\DC1\CAN\n\
+    \\STX\NUL\ENQ\DC2\ETXn\DC1\CAN\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\SOH\DC2\ETXk\EM(\n\
+    \\STX\NUL\SOH\DC2\ETXn\EM(\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\NUL\ETX\DC2\ETXk+,\n\
+    \\STX\NUL\ETX\DC2\ETXn+,\n\
     \\v\n\
     \\EOT\EOT\n\
-    \\STX\SOH\DC2\ETXl\b>\n\
+    \\STX\SOH\DC2\ETXo\b>\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\EOT\DC2\ETXl\b\DLE\n\
+    \\STX\SOH\EOT\DC2\ETXo\b\DLE\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\ENQ\DC2\ETXl\DC1\SYN\n\
+    \\STX\SOH\ENQ\DC2\ETXo\DC1\SYN\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\SOH\DC2\ETXl\ETB*\n\
+    \\STX\SOH\SOH\DC2\ETXo\ETB*\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\ETX\DC2\ETXl-.\n\
+    \\STX\SOH\ETX\DC2\ETXo-.\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\b\DC2\ETXl/=\n\
+    \\STX\SOH\b\DC2\ETXo/=\n\
     \\f\n\
     \\ENQ\EOT\n\
-    \\STX\SOH\a\DC2\ETXl:<\n\
+    \\STX\SOH\a\DC2\ETXo:<\n\
     \\n\
     \\n\
-    \\STX\EOT\v\DC2\EOTo\NULr\SOH\n\
+    \\STX\EOT\v\DC2\EOTr\NULu\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\v\SOH\DC2\ETXo\b\"\n\
+    \\ETX\EOT\v\SOH\DC2\ETXr\b\"\n\
     \\v\n\
-    \\EOT\EOT\v\STX\NUL\DC2\ETXp\b+\n\
+    \\EOT\EOT\v\STX\NUL\DC2\ETXs\b+\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\EOT\DC2\ETXp\b\DLE\n\
+    \\ENQ\EOT\v\STX\NUL\EOT\DC2\ETXs\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\ENQ\DC2\ETXp\DC1\SYN\n\
+    \\ENQ\EOT\v\STX\NUL\ENQ\DC2\ETXs\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\SOH\DC2\ETXp\ETB&\n\
+    \\ENQ\EOT\v\STX\NUL\SOH\DC2\ETXs\ETB&\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\NUL\ETX\DC2\ETXp)*\n\
+    \\ENQ\EOT\v\STX\NUL\ETX\DC2\ETXs)*\n\
     \\v\n\
-    \\EOT\EOT\v\STX\SOH\DC2\ETXq\b)\n\
+    \\EOT\EOT\v\STX\SOH\DC2\ETXt\b)\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\EOT\DC2\ETXq\b\DLE\n\
+    \\ENQ\EOT\v\STX\SOH\EOT\DC2\ETXt\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\ENQ\DC2\ETXq\DC1\SYN\n\
+    \\ENQ\EOT\v\STX\SOH\ENQ\DC2\ETXt\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\SOH\DC2\ETXq\ETB$\n\
+    \\ENQ\EOT\v\STX\SOH\SOH\DC2\ETXt\ETB$\n\
     \\f\n\
-    \\ENQ\EOT\v\STX\SOH\ETX\DC2\ETXq'(\n\
+    \\ENQ\EOT\v\STX\SOH\ETX\DC2\ETXt'(\n\
     \\n\
     \\n\
-    \\STX\EOT\f\DC2\EOTt\NULw\SOH\n\
+    \\STX\EOT\f\DC2\EOTw\NULz\SOH\n\
     \\n\
     \\n\
-    \\ETX\EOT\f\SOH\DC2\ETXt\b$\n\
+    \\ETX\EOT\f\SOH\DC2\ETXw\b$\n\
     \\v\n\
-    \\EOT\EOT\f\STX\NUL\DC2\ETXu\b(\n\
+    \\EOT\EOT\f\STX\NUL\DC2\ETXx\b(\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\EOT\DC2\ETXu\b\DLE\n\
+    \\ENQ\EOT\f\STX\NUL\EOT\DC2\ETXx\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\ENQ\DC2\ETXu\DC1\CAN\n\
+    \\ENQ\EOT\f\STX\NUL\ENQ\DC2\ETXx\DC1\CAN\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\SOH\DC2\ETXu\EM#\n\
+    \\ENQ\EOT\f\STX\NUL\SOH\DC2\ETXx\EM#\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\NUL\ETX\DC2\ETXu&'\n\
+    \\ENQ\EOT\f\STX\NUL\ETX\DC2\ETXx&'\n\
     \\v\n\
-    \\EOT\EOT\f\STX\SOH\DC2\ETXv\b)\n\
+    \\EOT\EOT\f\STX\SOH\DC2\ETXy\b)\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\SOH\EOT\DC2\ETXv\b\DLE\n\
+    \\ENQ\EOT\f\STX\SOH\EOT\DC2\ETXy\b\DLE\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\SOH\ENQ\DC2\ETXv\DC1\SYN\n\
+    \\ENQ\EOT\f\STX\SOH\ENQ\DC2\ETXy\DC1\SYN\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\SOH\SOH\DC2\ETXv\ETB$\n\
+    \\ENQ\EOT\f\STX\SOH\SOH\DC2\ETXy\ETB$\n\
     \\f\n\
-    \\ENQ\EOT\f\STX\SOH\ETX\DC2\ETXv'("
+    \\ENQ\EOT\f\STX\SOH\ETX\DC2\ETXy'(\n\
+    \\v\n\
+    \\STX\EOT\r\DC2\ENQ|\NUL\131\SOH\SOH\n\
+    \\n\
+    \\n\
+    \\ETX\EOT\r\SOH\DC2\ETX|\b!\n\
+    \\v\n\
+    \\EOT\EOT\r\STX\NUL\DC2\ETX}\b>\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\EOT\DC2\ETX}\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\ENQ\DC2\ETX}\DC1\SYN\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\SOH\DC2\ETX}\ETB*\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\ETX\DC2\ETX}-.\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\b\DC2\ETX}/=\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\NUL\a\DC2\ETX}:<\n\
+    \\v\n\
+    \\EOT\EOT\r\STX\SOH\DC2\ETX~\b+\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\SOH\EOT\DC2\ETX~\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\SOH\ENQ\DC2\ETX~\DC1\SYN\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\SOH\SOH\DC2\ETX~\ETB&\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\SOH\ETX\DC2\ETX~)*\n\
+    \\v\n\
+    \\EOT\EOT\r\STX\STX\DC2\ETX\DEL\b%\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\STX\EOT\DC2\ETX\DEL\b\DLE\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\STX\ENQ\DC2\ETX\DEL\DC1\SYN\n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\STX\SOH\DC2\ETX\DEL\ETB \n\
+    \\f\n\
+    \\ENQ\EOT\r\STX\STX\ETX\DC2\ETX\DEL#$\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\ETX\DC2\EOT\128\SOH\b\"\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\EOT\DC2\EOT\128\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\ENQ\DC2\EOT\128\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\SOH\DC2\EOT\128\SOH\ETB\GS\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ETX\ETX\DC2\EOT\128\SOH !\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\EOT\DC2\EOT\129\SOH\b$\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\EOT\DC2\EOT\129\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\ENQ\DC2\EOT\129\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\SOH\DC2\EOT\129\SOH\ETB\US\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\EOT\ETX\DC2\EOT\129\SOH\"#\n\
+    \\f\n\
+    \\EOT\EOT\r\STX\ENQ\DC2\EOT\130\SOH\b%\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\EOT\DC2\EOT\130\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\ENQ\DC2\EOT\130\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\SOH\DC2\EOT\130\SOH\ETB \n\
+    \\r\n\
+    \\ENQ\EOT\r\STX\ENQ\ETX\DC2\EOT\130\SOH#$\n\
+    \\f\n\
+    \\STX\EOT\SO\DC2\ACK\133\SOH\NUL\140\SOH\SOH\n\
+    \\v\n\
+    \\ETX\EOT\SO\SOH\DC2\EOT\133\SOH\b \n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\NUL\DC2\EOT\134\SOH\b>\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\EOT\DC2\EOT\134\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\ENQ\DC2\EOT\134\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\SOH\DC2\EOT\134\SOH\ETB*\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\ETX\DC2\EOT\134\SOH-.\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\b\DC2\EOT\134\SOH/=\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\NUL\a\DC2\EOT\134\SOH:<\n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\SOH\DC2\EOT\135\SOH\b,\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\SOH\EOT\DC2\EOT\135\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\SOH\ENQ\DC2\EOT\135\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\SOH\SOH\DC2\EOT\135\SOH\ETB'\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\SOH\ETX\DC2\EOT\135\SOH*+\n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\STX\DC2\EOT\136\SOH\b%\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\STX\EOT\DC2\EOT\136\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\STX\ENQ\DC2\EOT\136\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\STX\SOH\DC2\EOT\136\SOH\ETB \n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\STX\ETX\DC2\EOT\136\SOH#$\n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\ETX\DC2\EOT\137\SOH\b!\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ETX\EOT\DC2\EOT\137\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ETX\ENQ\DC2\EOT\137\SOH\DC1\SYN\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ETX\SOH\DC2\EOT\137\SOH\ETB\FS\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ETX\ETX\DC2\EOT\137\SOH\US \n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\EOT\DC2\EOT\138\SOH\b!\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\EOT\EOT\DC2\EOT\138\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\EOT\ENQ\DC2\EOT\138\SOH\DC1\ETB\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\EOT\SOH\DC2\EOT\138\SOH\CAN\FS\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\EOT\ETX\DC2\EOT\138\SOH\US \n\
+    \\f\n\
+    \\EOT\EOT\SO\STX\ENQ\DC2\EOT\139\SOH\b%\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ENQ\EOT\DC2\EOT\139\SOH\b\DLE\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ENQ\ACK\DC2\EOT\139\SOH\DC1\FS\n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ENQ\SOH\DC2\EOT\139\SOH\GS \n\
+    \\r\n\
+    \\ENQ\EOT\SO\STX\ENQ\ETX\DC2\EOT\139\SOH#$"

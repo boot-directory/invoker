@@ -37,10 +37,11 @@ import qualified Data.ProtoLens.Runtime.Text.Read as Text.Read
 {- | Fields :
      
          * 'Proto.DotaBroadcastmessages_Fields.type'' @:: Lens' CDOTABroadcastMsg EDotaBroadcastMessages@
+         * 'Proto.DotaBroadcastmessages_Fields.maybe'type'' @:: Lens' CDOTABroadcastMsg (Prelude.Maybe EDotaBroadcastMessages)@
          * 'Proto.DotaBroadcastmessages_Fields.msg' @:: Lens' CDOTABroadcastMsg Data.ByteString.ByteString@
          * 'Proto.DotaBroadcastmessages_Fields.maybe'msg' @:: Lens' CDOTABroadcastMsg (Prelude.Maybe Data.ByteString.ByteString)@ -}
 data CDOTABroadcastMsg
-  = CDOTABroadcastMsg'_constructor {_CDOTABroadcastMsg'type' :: !EDotaBroadcastMessages,
+  = CDOTABroadcastMsg'_constructor {_CDOTABroadcastMsg'type' :: !(Prelude.Maybe EDotaBroadcastMessages),
                                     _CDOTABroadcastMsg'msg :: !(Prelude.Maybe Data.ByteString.ByteString),
                                     _CDOTABroadcastMsg'_unknownFields :: !Data.ProtoLens.FieldSet}
   deriving stock (Prelude.Eq, Prelude.Ord)
@@ -51,6 +52,13 @@ instance Prelude.Show CDOTABroadcastMsg where
         (Prelude.showString
            (Data.ProtoLens.showMessageShort __x) (Prelude.showChar '}' __s))
 instance Data.ProtoLens.Field.HasField CDOTABroadcastMsg "type'" EDotaBroadcastMessages where
+  fieldOf _
+    = (Prelude..)
+        (Lens.Family2.Unchecked.lens
+           _CDOTABroadcastMsg'type'
+           (\ x__ y__ -> x__ {_CDOTABroadcastMsg'type' = y__}))
+        (Data.ProtoLens.maybeLens DOTA_BM_LANLobbyRequest)
+instance Data.ProtoLens.Field.HasField CDOTABroadcastMsg "maybe'type'" (Prelude.Maybe EDotaBroadcastMessages) where
   fieldOf _
     = (Prelude..)
         (Lens.Family2.Unchecked.lens
@@ -76,7 +84,7 @@ instance Data.ProtoLens.Message CDOTABroadcastMsg where
   packedMessageDescriptor _
     = "\n\
       \\DC1CDOTABroadcastMsg\DC2D\n\
-      \\EOTtype\CAN\SOH \STX(\SO2\ETB.EDotaBroadcastMessages:\ETBDOTA_BM_LANLobbyRequestR\EOTtype\DC2\DLE\n\
+      \\EOTtype\CAN\SOH \SOH(\SO2\ETB.EDotaBroadcastMessages:\ETBDOTA_BM_LANLobbyRequestR\EOTtype\DC2\DLE\n\
       \\ETXmsg\CAN\STX \SOH(\fR\ETXmsg"
   packedFileDescriptor _ = packedFileDescriptor
   fieldsByTag
@@ -86,8 +94,8 @@ instance Data.ProtoLens.Message CDOTABroadcastMsg where
               "type"
               (Data.ProtoLens.ScalarField Data.ProtoLens.EnumField ::
                  Data.ProtoLens.FieldTypeDescriptor EDotaBroadcastMessages)
-              (Data.ProtoLens.PlainField
-                 Data.ProtoLens.Required (Data.ProtoLens.Field.field @"type'")) ::
+              (Data.ProtoLens.OptionalField
+                 (Data.ProtoLens.Field.field @"maybe'type'")) ::
               Data.ProtoLens.FieldDescriptor CDOTABroadcastMsg
         msg__field_descriptor
           = Data.ProtoLens.FieldDescriptor
@@ -107,20 +115,18 @@ instance Data.ProtoLens.Message CDOTABroadcastMsg where
         (\ x__ y__ -> x__ {_CDOTABroadcastMsg'_unknownFields = y__})
   defMessage
     = CDOTABroadcastMsg'_constructor
-        {_CDOTABroadcastMsg'type' = DOTA_BM_LANLobbyRequest,
+        {_CDOTABroadcastMsg'type' = Prelude.Nothing,
          _CDOTABroadcastMsg'msg = Prelude.Nothing,
          _CDOTABroadcastMsg'_unknownFields = []}
   parseMessage
     = let
         loop ::
           CDOTABroadcastMsg
-          -> Prelude.Bool
-             -> Data.ProtoLens.Encoding.Bytes.Parser CDOTABroadcastMsg
-        loop x required'type'
+          -> Data.ProtoLens.Encoding.Bytes.Parser CDOTABroadcastMsg
+        loop x
           = do end <- Data.ProtoLens.Encoding.Bytes.atEnd
                if end then
-                   do (let
-                         missing = (if required'type' then (:) "type" else Prelude.id) []
+                   do (let missing = []
                        in
                          if Prelude.null missing then
                              Prelude.return ()
@@ -142,39 +148,37 @@ instance Data.ProtoLens.Message CDOTABroadcastMsg where
                                              Prelude.fromIntegral
                                              Data.ProtoLens.Encoding.Bytes.getVarInt))
                                        "type"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
-                                  Prelude.False
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"type'") y x)
                         18
                           -> do y <- (Data.ProtoLens.Encoding.Bytes.<?>)
                                        (do len <- Data.ProtoLens.Encoding.Bytes.getVarInt
                                            Data.ProtoLens.Encoding.Bytes.getBytes
                                              (Prelude.fromIntegral len))
                                        "msg"
-                                loop
-                                  (Lens.Family2.set (Data.ProtoLens.Field.field @"msg") y x)
-                                  required'type'
+                                loop (Lens.Family2.set (Data.ProtoLens.Field.field @"msg") y x)
                         wire
                           -> do !y <- Data.ProtoLens.Encoding.Wire.parseTaggedValueFromWire
                                         wire
                                 loop
                                   (Lens.Family2.over
                                      Data.ProtoLens.unknownFields (\ !t -> (:) y t) x)
-                                  required'type'
       in
         (Data.ProtoLens.Encoding.Bytes.<?>)
-          (do loop Data.ProtoLens.defMessage Prelude.True)
-          "CDOTABroadcastMsg"
+          (do loop Data.ProtoLens.defMessage) "CDOTABroadcastMsg"
   buildMessage
     = \ _x
         -> (Data.Monoid.<>)
-             ((Data.Monoid.<>)
-                (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
-                ((Prelude..)
-                   ((Prelude..)
-                      Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
-                   Prelude.fromEnum
-                   (Lens.Family2.view (Data.ProtoLens.Field.field @"type'") _x)))
+             (case
+                  Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'type'") _x
+              of
+                Prelude.Nothing -> Data.Monoid.mempty
+                (Prelude.Just _v)
+                  -> (Data.Monoid.<>)
+                       (Data.ProtoLens.Encoding.Bytes.putVarInt 8)
+                       ((Prelude..)
+                          ((Prelude..)
+                             Data.ProtoLens.Encoding.Bytes.putVarInt Prelude.fromIntegral)
+                          Prelude.fromEnum _v))
              ((Data.Monoid.<>)
                 (case
                      Lens.Family2.view (Data.ProtoLens.Field.field @"maybe'msg") _x
@@ -1062,7 +1066,7 @@ packedFileDescriptor
   = "\n\
     \\FSdota_broadcastmessages.proto\"k\n\
     \\DC1CDOTABroadcastMsg\DC2D\n\
-    \\EOTtype\CAN\SOH \STX(\SO2\ETB.EDotaBroadcastMessages:\ETBDOTA_BM_LANLobbyRequestR\EOTtype\DC2\DLE\n\
+    \\EOTtype\CAN\SOH \SOH(\SO2\ETB.EDotaBroadcastMessages:\ETBDOTA_BM_LANLobbyRequestR\EOTtype\DC2\DLE\n\
     \\ETXmsg\CAN\STX \SOH(\fR\ETXmsg\"#\n\
     \!CDOTABroadcastMsg_LANLobbyRequest\"\192\ETX\n\
     \\USCDOTABroadcastMsg_LANLobbyReply\DC2\SO\n\

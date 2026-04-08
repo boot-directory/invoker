@@ -200,6 +200,12 @@ explosionType ::
    Data.ProtoLens.Field.HasField s "explosionType" a) =>
   Lens.Family2.LensLike' f s a
 explosionType = Data.ProtoLens.Field.field @"explosionType"
+explosionTypeName ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "explosionTypeName" a) =>
+  Lens.Family2.LensLike' f s a
+explosionTypeName = Data.ProtoLens.Field.field @"explosionTypeName"
 explosive ::
   forall f s a.
   (Prelude.Functor f,
@@ -481,6 +487,13 @@ maybe'explosionType ::
   Lens.Family2.LensLike' f s a
 maybe'explosionType
   = Data.ProtoLens.Field.field @"maybe'explosionType"
+maybe'explosionTypeName ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'explosionTypeName" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'explosionTypeName
+  = Data.ProtoLens.Field.field @"maybe'explosionTypeName"
 maybe'explosive ::
   forall f s a.
   (Prelude.Functor f,

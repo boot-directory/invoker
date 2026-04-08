@@ -4,3 +4,4 @@ packages:
   ./libraries/invoker-dota2
   ./libraries/invoker-dota2-proto
   ./libraries/invoker-steam
+  ./libraries/invoker-steam-proto

@@ -1318,6 +1318,13 @@ maybe'tier ::
    Data.ProtoLens.Field.HasField s "maybe'tier" a) =>
   Lens.Family2.LensLike' f s a
 maybe'tier = Data.ProtoLens.Field.field @"maybe'tier"
+maybe'tomeUpgraded ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'tomeUpgraded" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'tomeUpgraded
+  = Data.ProtoLens.Field.field @"maybe'tomeUpgraded"
 maybe'totalEarnedGold ::
   forall f s a.
   (Prelude.Functor f,
@@ -1725,6 +1732,12 @@ tier ::
   (Prelude.Functor f, Data.ProtoLens.Field.HasField s "tier" a) =>
   Lens.Family2.LensLike' f s a
 tier = Data.ProtoLens.Field.field @"tier"
+tomeUpgraded ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "tomeUpgraded" a) =>
+  Lens.Family2.LensLike' f s a
+tomeUpgraded = Data.ProtoLens.Field.field @"tomeUpgraded"
 totalEarnedGold ::
   forall f s a.
   (Prelude.Functor f,

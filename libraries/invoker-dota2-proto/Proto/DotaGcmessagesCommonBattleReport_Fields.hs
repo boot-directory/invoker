@@ -343,6 +343,12 @@ maybe'campsStacked ::
   Lens.Family2.LensLike' f s a
 maybe'campsStacked
   = Data.ProtoLens.Field.field @"maybe'campsStacked"
+maybe'category ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'category" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'category = Data.ProtoLens.Field.field @"maybe'category"
 maybe'comparisonDeltaValue ::
   forall f s a.
   (Prelude.Functor f,
@@ -462,6 +468,12 @@ maybe'heroId ::
    Data.ProtoLens.Field.HasField s "maybe'heroId" a) =>
   Lens.Family2.LensLike' f s a
 maybe'heroId = Data.ProtoLens.Field.field @"maybe'heroId"
+maybe'highlightId ::
+  forall f s a.
+  (Prelude.Functor f,
+   Data.ProtoLens.Field.HasField s "maybe'highlightId" a) =>
+  Lens.Family2.LensLike' f s a
+maybe'highlightId = Data.ProtoLens.Field.field @"maybe'highlightId"
 maybe'highlightScore ::
   forall f s a.
   (Prelude.Functor f,
