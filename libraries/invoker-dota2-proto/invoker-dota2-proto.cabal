@@ -18,8 +18,6 @@ Library
   ghc-options:
     -Wall
     -Wunused-packages
-    -ddump-to-file
-    -ddump-timings
   if impl(ghc >= 9.4)
     ghc-prof-options:
       -fprof-late
