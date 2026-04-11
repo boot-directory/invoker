@@ -3,14 +3,15 @@
 module BinaryBuff where
 
 -- GHC included
-import Control.Exception (Exception, SomeException, catch, finally, throwIO, throw, handle)
+import Control.Exception (Exception, SomeException, catch, finally, handle, throw, throwIO)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Bifunctor (first)
-import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput)
+import Data.Binary.Get (Decoder (..), getByteString, getWord8, pushChunk, pushEndOfInput, getRemainingLazyByteString)
 import Data.Binary.Get qualified as Binary (Get, isEmpty, runGetIncremental)
 import Data.Bits
 import Data.ByteString as BS
+import Data.ByteString.Builder (Builder, hPutBuilder, toLazyByteString)
 import Data.IORef (newIORef, readIORef, writeIORef)
 import Data.Int
 import Data.Word
@@ -19,7 +20,8 @@ import System.IO (IOMode (..), hClose, openBinaryFile)
 
 -- External
 import Network.Socket (close, ShutdownCmd (..), shutdown, socket, AddrInfo (..), SocketType (..), defaultProtocol, connect, defaultHints, getAddrInfo, AddrInfoFlag (..), HostName, ServiceName)
-import Network.Socket.ByteString (recv, sendAll)
+import Network.Socket.ByteString (recv)
+import Network.Socket.ByteString.Lazy (sendAll)
 
 -------------------------------------------------------------------------------
 -- * Buffered IO
@@ -28,13 +30,13 @@ import Network.Socket.ByteString (recv, sendAll)
 data Buffer = MkBuffer
   { runReadBuff    :: IO BS.ByteString
   , updateReadBuff :: BS.ByteString -> IO ()
-  , runWriteBuff   :: ByteString -> IO ()
+  , runWriteBuff   :: Builder -> IO ()
   , destroyBuff    :: IO ()
   }
 
 data BufferArgs = MkBufferArgs
   { readChunk     :: IO ByteString
-  , writeChunk    :: ByteString -> IO ()
+  , writeChunk    :: Builder -> IO ()
   , closeResourse :: IO ()
   }
 
@@ -72,15 +74,15 @@ readFromBuffer MkBuffer{runReadBuff, updateReadBuff} parser = runBufferReader (r
     (Done leftover _consumed packet) -> packet <$ updateReadBuff leftover
     (Fail _leftover _consumed msg) -> error msg
 
-writeToBuffer :: Buffer -> ByteString -> IO ()
-writeToBuffer MkBuffer{runWriteBuff} bs = runWriteBuff bs
+writeToBuffer :: Buffer -> Builder -> IO ()
+writeToBuffer MkBuffer{runWriteBuff} builder = runWriteBuff builder
 
 mkFileBufferArgs :: FilePath -> IO BufferArgs
 mkFileBufferArgs fp = do
   h <- openBinaryFile fp ReadMode
   pure MkBufferArgs
     { readChunk     = BS.hGetSome h 4096
-    , writeChunk    = hPut h
+    , writeChunk    = hPutBuilder h
     , closeResourse = hClose h
     }
 
@@ -98,7 +100,7 @@ mkTcpBufferArgs host port = do
       connect sock (addrAddress addr)
       let
         readChunk = recv sock 4096
-        writeChunk = sendAll sock 
+        writeChunk = sendAll sock . toLazyByteString
         closeResourse =
           catch @SomeException
             (finally (shutdown sock ShutdownBoth) (close sock))
@@ -205,6 +207,8 @@ readBits n = BitGet $ do
         }
       fillBits
 
+getRemainingBytes:: Get ByteString
+getRemainingBytes = BitGet $ toStrict <$> lift getRemainingLazyByteString
 
 {-# INLINE readBytes #-}
 readBytes :: Int -> Get ByteString
@@ -293,8 +297,14 @@ getWord64le = do
 getInt32le :: Get Int32
 getInt32le = fromIntegral <$> readBits 32
 
+getInt16le :: Get Int16
+getInt16le = fromIntegral <$> readBits 16
+
 getWord32le :: Get Word32
 getWord32le = readBits 32
+
+getWord16le :: Get Word16
+getWord16le = fromIntegral <$> readBits 16
 
 readCoord :: Get Float
 readCoord = do

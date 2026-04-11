@@ -4,6 +4,7 @@ module Main where
 
 -- GHC included
 import Data.IORef (readIORef)
+import Data.Text as T (pack)
 import System.Environment (getEnv)
 
 -- Internal
@@ -13,17 +14,16 @@ import Invoker
   , MessageType(..)
   , runParserLoop, ParserState(..)
   )
-import Invoker.Steam (initConnectionManager)
+import Invoker.Steam (initConnectionManager, SteamArgs(..))
 
 -- External
 import Network.HTTP.Client
-import Control.Concurrent (threadDelay)
 
 
 main :: IO ()
 main = do
-  !_steamLogin  <- getEnv "STEAM_LOGIN"
-  !_steamPass   <- getEnv "STEAM_PASS"
+  !accountName  <- T.pack <$> getEnv "STEAM_LOGIN"
+  !password     <- T.pack <$> getEnv "STEAM_PASS"
   !_steamApiKey <- getEnv "STEAM_API_KEY"
 
   --------------------------------------------
@@ -31,8 +31,7 @@ main = do
   --------------------------------------------
   manager <- newManager defaultManagerSettings
 
-  _steamGcBuffer <- initConnectionManager manager
-  threadDelay $ 60 * 1_000_000
+  _steamGcBuffer <- initConnectionManager MkSteamArgs{..} manager
 
   --------------------------------------------
   -- Demo parsing

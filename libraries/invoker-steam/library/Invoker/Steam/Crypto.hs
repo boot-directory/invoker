@@ -1,20 +1,24 @@
 module Invoker.Steam.Crypto 
   ( SessionKey(..), generateSessionKey
-  , symmetricEncryptWithHmacIv
+  , generatePrefix
+  , symmetricEncryptWithHmac
   , symmetricDecrypt
   , symmetricDecryptECB
   ) where
 
 -- GHC included
-import Data.ByteString as BS (ByteString, take, splitAt, length)
+import Data.ByteString as BS (ByteString, splitAt, take, takeEnd)
 import Data.ByteString.Char8 as BS8 (pack)
+import Data.Maybe (fromMaybe)
 
 -- External
 import Crypto.Cipher.AES (AES256)
-import Crypto.Cipher.Types (BlockCipher (..), Cipher (..), IV, cbcDecrypt, cbcEncrypt, makeIV)
+import Crypto.Cipher.Types (BlockCipher (..), Cipher (..), cbcDecrypt, cbcEncrypt, makeIV)
+import Crypto.Data.Padding
 import Crypto.Error (CryptoFailable (..))
 import Crypto.Hash.Algorithms (SHA1 (..))
-import Crypto.MAC.HMAC (HMAC, hmac)
+import Crypto.MAC.HMAC (HMAC)
+import Crypto.MAC.HMAC qualified as HMAC (hmac)
 import Crypto.PubKey.RSA (PublicKey)
 import Crypto.PubKey.RSA.OAEP as OAEP (defaultOAEPParams, encrypt)
 import Crypto.Random (getRandomBytes)
@@ -26,48 +30,60 @@ import Data.PEM (PEM (pemContent), pemParseBS)
 import Data.X509 (PubKey (PubKeyRSA))
 
 -------------------------------------------------------------------------------
--- * Steam cryptography
+-- * Encrypt
 -------------------------------------------------------------------------------
 
-data SessionKey = MkSessionKey
-  { plain :: ByteString
-  , encrypted :: ByteString
-  }
+data Prefix = MkPrefix ByteString
 
-generateSessionKey :: ByteString -> IO SessionKey
-generateSessionKey nonce = do
-  plain <- getRandomBytes 32
-  let payload = plain <> nonce
-      params = OAEP.defaultOAEPParams SHA1
+generatePrefix :: IO Prefix
+generatePrefix = MkPrefix <$> getRandomBytes 3
 
-  encrypted <- either (error . show) id <$>
-    OAEP.encrypt params publicKey payload
+symmetricEncryptWithHmac :: SessionKey -> Prefix -> ByteString -> Maybe ByteString
+symmetricEncryptWithHmac key (MkPrefix random3) message =
+  let hmac = (convert . mkHmac key) (random3 <> message)
+      ivBs = BS.take 13 hmac <> random3
+  in symmetricEncryptWithIv key message ivBs
 
-  pure MkSessionKey{plain, encrypted}
+symmetricEncryptWithIv :: SessionKey -> ByteString -> ByteString -> Maybe ByteString
+symmetricEncryptWithIv key message ivBs = do
+  let cipher      = initAES key.plain
+      encryptedIv = ecbEncrypt cipher ivBs
+  iv <- makeIV ivBs
+  let ciphertext = cbcEncrypt @AES256 cipher iv (pad (PKCS7 16) message)
+  pure (encryptedIv <> ciphertext)
 
-symmetricEncryptWithHmacIv :: ByteString -> ByteString -> IO (Maybe ByteString)
-symmetricEncryptWithHmacIv input key = do
-  random3 <- getRandomBytes 3
 
-  let key16 = BS.take 16 key
-      hmacVal = hmac key16 (random3 <> input) :: HMAC SHA1
-      digest = convert hmacVal :: ByteString
+-------------------------------------------------------------------------------
+-- * Decrypt
+-------------------------------------------------------------------------------
 
-      iv = BS.take (16 - 3) digest <> random3
+symmetricDecrypt :: SessionKey -> ByteString -> Maybe ByteString
+symmetricDecrypt key input = do
+  let (encIv, ciphertext) = BS.splitAt 16 input
+      cipher = initAES key.plain
 
-  pure $ symmetricEncrypt input key iv
+      ivBs = ecbDecrypt cipher encIv
 
-symmetricEncrypt :: ByteString -> ByteString -> ByteString -> Maybe ByteString
-symmetricEncrypt input key iv =
-  let cipher = initAES key
+      iv = fromMaybe (error "invalid IV") (makeIV ivBs)
 
-      encIv = ecbEncrypt cipher iv
+  plaintext <- unpad (PKCS7 16) (cbcDecrypt @AES256 cipher iv ciphertext)
 
-      ivObj = makeIV iv :: Maybe (IV AES256)
+  let hmac = (convert . mkHmac key) (BS.takeEnd 3 ivBs <> plaintext)
 
-      ciphertext = (\iv' -> encIv <> cbcEncrypt cipher iv' input) <$> ivObj
+  if BS.take 13 ivBs == BS.take 13 hmac
+     then Just plaintext
+     else error "Invalid HMAC"
 
-  in ciphertext
+symmetricDecryptECB :: ByteString -> ByteString -> ByteString
+symmetricDecryptECB input key = ecbDecrypt (initAES key) input
+
+
+-------------------------------------------------------------------------------
+-- * Args
+-------------------------------------------------------------------------------
+
+mkHmac :: SessionKey -> ByteString -> HMAC SHA1
+mkHmac key = HMAC.hmac (BS.take 16 key.plain)
 
 initAES :: BS.ByteString -> AES256
 initAES key =
@@ -75,37 +91,22 @@ initAES key =
     CryptoPassed a -> a
     CryptoFailed e -> error (show e)
 
-symmetricDecrypt :: SessionKey -> Bool -> ByteString -> ByteString
-symmetricDecrypt key checkHmac input =
-  let (encIv, ciphertext) = BS.splitAt 16 input
-      cipher = initAES key.plain
 
-      iv = ecbDecrypt cipher encIv
+-------------------------------------------------------------------------------
+-- * Session key
+-------------------------------------------------------------------------------
 
-      ivObj = makeIV iv :: Maybe (IV AES256)
+data SessionKey = MkSessionKey
+  { plain :: ByteString
+  , encrypted :: ByteString
+  }
 
-      plaintext =
-        case ivObj of
-          Nothing -> error "invalid IV"
-          Just iv' -> cbcDecrypt cipher iv' ciphertext
-  in if checkHmac
-     then verifyHmac iv plaintext key.plain
-     else plaintext
-
-verifyHmac :: ByteString -> ByteString -> ByteString -> ByteString
-verifyHmac iv plaintext key =
-  let (partial, random3) = BS.splitAt (BS.length iv - 3) iv
-      key16 = BS.take 16 key
-
-      hmacVal = hmac key16 (random3 <> plaintext) :: HMAC SHA1
-      digest = convert hmacVal :: ByteString
-
-  in if partial == BS.take (BS.length partial) digest
-     then plaintext
-     else error "Invalid HMAC"
-
-symmetricDecryptECB :: ByteString -> ByteString -> ByteString
-symmetricDecryptECB input key = ecbDecrypt (initAES key) input
+generateSessionKey :: ByteString -> IO (Either String SessionKey)
+generateSessionKey nonce = do
+  plain <- getRandomBytes 32
+  let mkSessionKey encrypted = Right MkSessionKey{plain, encrypted}
+  either (Left . show) mkSessionKey <$>
+    OAEP.encrypt (defaultOAEPParams SHA1) publicKey (plain <> nonce)
 
 {-# NOINLINE publicKey #-}
 publicKey :: PublicKey

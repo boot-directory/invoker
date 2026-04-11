@@ -2,16 +2,20 @@
 module Invoker.Steam.ConnectionManager where
 
 -- GHC included
-import Control.Exception (Exception, throw, SomeException, catch)
+import Control.Exception (Exception, SomeException, catch, throw)
+import Control.Monad (when)
+import Data.Text (Text)
 import Data.Word (Word32)
 
 -- Internal
 import BinaryBuff
-import Invoker.Steam.Crypto (generateSessionKey, SessionKey(..))
+import Invoker.Steam.Crypto (SessionKey (..), generateSessionKey)
 import Invoker.Steam.Packets.Handshake
+import Invoker.Steam.Packets.LogOn (writeClientLogon, readLogOnResponse)
+import Invoker.Steam.Packets.Internal ()
 
 -- External
-import Data.Aeson (FromJSON (..), withObject, (.:), eitherDecode)
+import Data.Aeson (FromJSON (..), eitherDecode, withObject, (.:))
 import Data.Digest.CRC32
 import Network.HTTP.Client
 
@@ -19,14 +23,21 @@ import Network.HTTP.Client
 -- * Game coordinator connection
 -------------------------------------------------------------------------------
 
-initConnectionManager :: Manager -> IO Buffer
-initConnectionManager manager = do
+data SteamArgs = MkSteamArgs
+  { password :: Text
+  , accountName :: Text
+  }
+
+initConnectionManager :: SteamArgs -> Manager -> IO Buffer
+initConnectionManager MkSteamArgs{..} manager = do
   buffer <- initSteamConnection manager
 
   serverHello <- readFromBuffer buffer readChannelEncryptRequest
-  print serverHello
 
-  sessionKey <- generateSessionKey serverHello.nonce
+  sessionKey <-
+    either (throw . SessionKeyError) pure
+      =<< generateSessionKey serverHello.nonce
+
   writeChannelEncryptResponse buffer
     MkChannelEncryptResponse
       { protocol   = serverHello.protocol
@@ -35,15 +46,21 @@ initConnectionManager manager = do
       }
 
   result <- readFromBuffer buffer readChannelEncryptResult
-  print result
 
-  case result.status of
-    1 -> pure buffer
-    _ -> throw (HandshakeError result.status)
+  when (result.status /= 1) do
+    throw (HandshakeError result.status)
+
+  writeClientLogon buffer sessionKey accountName password
+
+  logOnResponse <- readFromBuffer buffer (readLogOnResponse sessionKey)
+  putStrLn $ "Res packet: " <> show logOnResponse
+
+  pure buffer
 
 data ConnectionError where
   HandshakeError :: Word32 -> ConnectionError
   CmRequestError :: SomeException -> ConnectionError
+  SessionKeyError :: String -> ConnectionError
   UnexpectedCmResult :: String -> ConnectionError
   CmBufferInitError :: BufferInitError -> ConnectionError
   deriving (Show, Exception)

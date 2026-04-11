@@ -28,6 +28,7 @@ Library
   other-modules:
     Invoker.Steam.ConnectionManager
     Invoker.Steam.Crypto
+    Invoker.Steam.SteamID
     Invoker.Steam.Packets.Handshake
     Invoker.Steam.Packets.Internal
     Invoker.Steam.Packets.LogOn
@@ -40,6 +41,7 @@ Library
     -- GHC included libraries
       base >= 4.7 && <5
     , bytestring
+    , text
 
     -- Internal
     , binary-buff
@@ -48,6 +50,8 @@ Library
     -- External
     , aeson
     , http-client
+    , proto-lens
+    , lens-family
 
     , ram
     , crypton >= 1.1

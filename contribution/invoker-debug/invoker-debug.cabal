@@ -30,6 +30,7 @@ executable invoker-debug
     , http-client
     , invoker-dota2
     , invoker-steam
+    , text
   ghc-options:
     -threaded
     -O2
