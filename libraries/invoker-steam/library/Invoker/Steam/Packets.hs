@@ -1,9 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
-module Invoker.Steam.Packets.Internal 
+module Invoker.Steam.Packets 
   (
+  -- Steam API
+    mkSteamApiReq
+  , encodeUrlProtobuf
+
   -- Readers
-    protobufPacket
+  , protobufReader
+  , protobufWriter
 
   -- Packets
   , packetReader
@@ -15,8 +20,9 @@ module Invoker.Steam.Packets.Internal
   , Header(..)
   , readHeader
   , encodeHeader
-  , mkEcryptHeader
+  , mkEncryptHeader
   , mkProtoHeader
+  , mkProtoHeaderWith
   ) where
 
 -- GHC included
@@ -27,23 +33,48 @@ import Data.ByteString as BS (length)
 import Data.ByteString.Builder (Builder, byteString, toLazyByteString, word16LE, word32LE, word64LE, word8)
 import Data.Word (Word32, Word64)
 
--- Internal
-import BinaryBuff
-import Data.ProtoLens (Message (defMessage), decodeMessage, encodeMessage)
+-- External
 import Invoker.Steam.Crypto (SessionKey (..), generatePrefix, symmetricDecrypt, symmetricEncryptWithHmac)
 import Proto.EnumsClientserver (EMsg (..))
 import Proto.SteammessagesBase
+
+-- Internal
+import BinaryBuff
+import Data.ByteArray.Encoding (Base (..), convertToBase)
+import Data.ProtoLens (Message (defMessage), buildMessage, decodeMessage, encodeMessage)
+import Network.HTTP.Client 
+import Network.HTTP.Types (urlEncode)
+
+-------------------------------------------------------------------------------
+-- * Web client
+-------------------------------------------------------------------------------
+
+mkSteamApiReq :: ByteString -> Request
+mkSteamApiReq path =
+  let requestHeaders =
+        [ ("user-agent", "Mozilla/5.0 (Windows; U; Windows NT 10.0; en-US; Valve Steam Client/default/1665786434; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'")
+        , ("origin", "https://steamloopback.host")
+        ]
+  in basicRequest{path, requestHeaders}
+
+basicRequest :: Request
+basicRequest = parseRequest_ "http://api.steampowered.com"
+
+encodeUrlProtobuf :: Message msg => msg -> ByteString
+encodeUrlProtobuf = urlEncode True . convertToBase @ByteString Base64 . encodeMessage
+
 
 -------------------------------------------------------------------------------
 -- * Specialized reader
 -------------------------------------------------------------------------------
 
-protobufPacket :: Message m => Get m
-protobufPacket = do
+protobufReader :: Message m => Get m
+protobufReader = do
   bs <- getRemainingBytes
   either fail pure (decodeMessage bs)
 
-
+protobufWriter :: Message m => m -> Builder
+protobufWriter m = buildMessage m
 
 
 -------------------------------------------------------------------------------
@@ -148,8 +179,8 @@ readHeader = do
   encrypt = map (fromIntegral . fromEnum) [K_EMsgChannelEncryptRequest, K_EMsgChannelEncryptResult]
 
 
-mkEcryptHeader :: Enum packetEnum => packetEnum -> Header
-mkEcryptHeader eMsgEnum =
+mkEncryptHeader :: Enum packetEnum => packetEnum -> Header
+mkEncryptHeader eMsgEnum =
   let eMsg = fromIntegral (fromEnum eMsgEnum)
   in EncryptHeader
     { targetJobID = jobIdNone
@@ -188,6 +219,12 @@ mkProtoHeader :: Enum packetEnum => packetEnum -> Header
 mkProtoHeader eMsgEnum =
   let eMsg = fromIntegral (fromEnum eMsgEnum)
       protoHeader = defMessage
+  in ProtoHeader{..}
+
+mkProtoHeaderWith :: Enum packetEnum => (CMsgProtoBufHeader -> CMsgProtoBufHeader) -> packetEnum -> Header
+mkProtoHeaderWith f eMsgEnum =
+  let eMsg = fromIntegral (fromEnum eMsgEnum)
+      protoHeader = f defMessage
   in ProtoHeader{..}
 
 isProtobuf :: Word32 -> Bool

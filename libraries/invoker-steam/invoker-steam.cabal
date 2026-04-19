@@ -26,12 +26,11 @@ Library
   exposed-modules:
     Invoker.Steam
   other-modules:
+    Invoker.Steam.Actions
+    Invoker.Steam.Auth
     Invoker.Steam.ConnectionManager
     Invoker.Steam.Crypto
-    Invoker.Steam.SteamID
-    Invoker.Steam.Packets.Handshake
-    Invoker.Steam.Packets.Internal
-    Invoker.Steam.Packets.LogOn
+    Invoker.Steam.Packets
   hs-source-dirs:
     ./library/
   ghc-options:
@@ -50,8 +49,10 @@ Library
     -- External
     , aeson
     , http-client
+    , http-types
     , proto-lens
     , lens-family
+    , zlib
 
     , ram
     , crypton >= 1.1

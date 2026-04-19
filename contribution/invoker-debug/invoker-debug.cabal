@@ -31,6 +31,8 @@ executable invoker-debug
     , invoker-dota2
     , invoker-steam
     , text
+    , time
+    , async
   ghc-options:
     -threaded
     -O2

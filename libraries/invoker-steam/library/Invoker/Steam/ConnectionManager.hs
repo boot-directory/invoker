@@ -4,32 +4,36 @@ module Invoker.Steam.ConnectionManager where
 -- GHC included
 import Control.Exception (Exception, SomeException, catch, throw)
 import Control.Monad (when)
-import Data.Text (Text)
+import Data.ByteString (ByteString, fromStrict, toStrict)
+import Data.ByteString qualified as BS
+import Data.ByteString.Builder
 import Data.Word (Word32)
 
 -- Internal
 import BinaryBuff
+import Invoker.Steam.Auth
 import Invoker.Steam.Crypto (SessionKey (..), generateSessionKey)
-import Invoker.Steam.Packets.Handshake
-import Invoker.Steam.Packets.LogOn (writeClientLogon, readLogOnResponse)
-import Invoker.Steam.Packets.Internal ()
+import Invoker.Steam.Packets
+import Proto.EnumsClientserver (EMsg (..))
+import Proto.SteammessagesBase (CMsgMulti, CMsgProtoBufHeader)
+import Proto.SteammessagesBase_Fields qualified as FB
+import Proto.SteammessagesClientserverLogin
+import Proto.SteammessagesClientserverLogin_Fields qualified as F
 
 -- External
+import Codec.Compression.GZip as GZip (decompress)
 import Data.Aeson (FromJSON (..), eitherDecode, withObject, (.:))
 import Data.Digest.CRC32
+import Data.ProtoLens (Message (..))
+import Lens.Family2 ((&), (.~), (^.))
 import Network.HTTP.Client
 
 -------------------------------------------------------------------------------
 -- * Game coordinator connection
 -------------------------------------------------------------------------------
 
-data SteamArgs = MkSteamArgs
-  { password :: Text
-  , accountName :: Text
-  }
-
-initConnectionManager :: SteamArgs -> Manager -> IO Buffer
-initConnectionManager MkSteamArgs{..} manager = do
+initConnectionManager :: Manager -> AuthResult -> IO (Buffer, SessionKey)
+initConnectionManager manager authRes = do
   buffer <- initSteamConnection manager
 
   serverHello <- readFromBuffer buffer readChannelEncryptRequest
@@ -50,43 +54,40 @@ initConnectionManager MkSteamArgs{..} manager = do
   when (result.status /= 1) do
     throw (HandshakeError result.status)
 
-  writeClientLogon buffer sessionKey accountName password
+  writeClientLogon buffer sessionKey authRes
 
-  logOnResponse <- readFromBuffer buffer (readLogOnResponse sessionKey)
-  putStrLn $ "Res packet: " <> show logOnResponse
+  _logOnResponse <- readFromBuffer buffer (readLogOnResponse sessionKey)
+  print _logOnResponse
 
-  pure buffer
+  pure (buffer, sessionKey)
 
 data ConnectionError where
   HandshakeError :: Word32 -> ConnectionError
   CmRequestError :: SomeException -> ConnectionError
   SessionKeyError :: String -> ConnectionError
-  UnexpectedCmResult :: String -> ConnectionError
+  AuthError :: AuthError -> ConnectionError
   CmBufferInitError :: BufferInitError -> ConnectionError
+  CmUnexpectedResult :: String -> ConnectionError
   deriving (Show, Exception)
 
 
-
-
--------------------------------------------------------------------------------
--- * Connection managers list parsing
--------------------------------------------------------------------------------
-
 initSteamConnection :: Manager -> IO Buffer
 initSteamConnection manager = do
+  let req = mkSteamApiReq "/ISteamDirectory/GetCMListForConnect/v1/"
+
   mCmListResp <-
-    httpLbs getCmListReq manager
+    httpLbs req manager
       `catch` \e -> throw (CmRequestError e)
 
   cmList <-
     case eitherDecode @CmList (responseBody mCmListResp) of
       Right res -> pure res.cmList
-      Left err -> throw (UnexpectedCmResult err)
+      Left err -> throw (CmUnexpectedResult err)
 
   cm <-
     case filter (\cm -> cm._type == "netfilter") cmList of
       (cm:_) -> pure cm.endpoint
-      []     -> throw (UnexpectedCmResult "Got empty CMList")
+      []     -> throw (CmUnexpectedResult "Got empty CMList")
 
   let (host, colonPort) =  break (==':') cm
 
@@ -97,10 +98,131 @@ initSteamConnection manager = do
   mkBuffer bufferArgs
 
 
-getCmListReq :: Request
-getCmListReq = parseRequest_ "http://api.steampowered.com/ISteamDirectory/GetCMListForConnect/v1/"
+-------------------------------------------------------------------------------
+-- * ClientLogon
+-------------------------------------------------------------------------------
+
+writeClientLogon :: Buffer -> SessionKey -> AuthResult -> IO ()
+writeClientLogon buf sk authResult = packetWriterEncrypted buf sk body
+  where
+  body :: Builder
+  body =
+    encodeHeader (mkProtoHeaderWith (F.steamid .~ authResult.steamId) K_EMsgClientLogon)
+    <> buildMessage @CMsgClientLogon
+        (defMessage
+          & F.protocolVersion .~ protocolVer
+          & F.accessToken .~ authResult.refreshToken
+          & F.clientLanguage .~ "english"
+          & F.clientOsType .~ 16 -- LinuxUnknown
+          & F.obfuscatedPrivateIp . FB.v4 .~ 0
+          & F.machineId .~ createMachineId authResult.accountName
+        )
+
+  protocolVer :: Word32
+  protocolVer = 65580
 
 
+readLogOnResponse :: SessionKey -> Get [LogOnResponse]
+readLogOnResponse sessionKey = do
+  packetReaderEncrypted sessionKey \header -> do
+    case header.eMsg of
+      1 -> do
+        packet <- protobufReader @CMsgMulti
+        case packet ^. FB.maybe'sizeUnzipped of
+          Just size -> do
+            let zippedBody = (packet ^. FB.messageBody)
+                body = (toStrict . GZip.decompress . fromStrict) zippedBody
+            when (fromIntegral (BS.length body) /= size) $ 
+              fail "Decompression result length unmatched"
+            either fail pure $ runGetInput body (readMulti id)
+          Nothing -> do
+            let body = (packet ^. FB.messageBody)
+            either fail pure $ runGetInput body (readMulti id)
+      _res -> fail $ "Unexpected result " <> show header
+  where
+  readMulti :: ([LogOnResponse] -> [LogOnResponse]) -> Get [LogOnResponse]
+  readMulti cont = do
+    hasNoBytes <- hasNoMoreBytes
+    if hasNoBytes
+    then pure $ cont []
+    else do
+      packetPart <- do
+        len <- getWord32le
+        bytes <- readBytes (fromIntegral len)
+        let mkErrorMsg (msg, bs) = fail $ ("Packet: " <> msg <> ". Bytes: " <> show bs)
+        either mkErrorMsg pure do
+          runGetInputBs bytes do
+            header <- readHeader
+            case header of
+              ProtoHeader 751 protoHeader -> do
+                packet <- protobufReader @CMsgClientLogonResponse
+                pure $ LogOnResult protoHeader packet
+              _ -> do
+                bs <- getRemainingBytes
+                pure $ UnknownPacket header bs
+      readMulti (cont . (packetPart:))
+
+data LogOnResponse where 
+  LogOnResult   :: CMsgProtoBufHeader -> CMsgClientLogonResponse -> LogOnResponse
+  UnknownPacket :: Header -> ByteString -> LogOnResponse
+  deriving (Show)
+
+
+
+-------------------------------------------------------------------------------
+-- * Channel encrypt
+-------------------------------------------------------------------------------
+
+writeChannelEncryptResponse :: Buffer -> ChannelEncryptResponse -> IO ()
+writeChannelEncryptResponse buf resp = packetWriter buf body
+  where
+  body =
+    encodeHeader (mkEncryptHeader K_EMsgChannelEncryptResponse)
+    <> word32LE resp.protocol
+    <> word32LE (fromIntegral $ BS.length resp.sessionKey)
+    <> byteString resp.sessionKey
+    <> word32LE resp.keyCrc
+    <> word32LE 0
+
+data ChannelEncryptResponse = MkChannelEncryptResponse
+  { protocol   :: Word32
+  , sessionKey :: ByteString
+  , keyCrc     :: Word32
+  }
+  deriving (Show)
+
+
+readChannelEncryptRequest :: Get ChannelEncryptRequest
+readChannelEncryptRequest =
+  packetReader \_header -> do
+    protocol <- getWord32le
+    universe <- getWord32le
+    nonce <- readBytes 16
+    pure MkChannelEncryptRequest{..}
+
+data ChannelEncryptRequest = MkChannelEncryptRequest
+  { protocol :: Word32
+  , universe :: Word32
+  , nonce :: ByteString
+  }
+  deriving (Show)
+
+
+readChannelEncryptResult :: Get ChannelEncryptResult
+readChannelEncryptResult =
+  packetReader \_header -> do
+    status <- getWord32le
+    pure MkChannelEncryptResult{..}
+
+data ChannelEncryptResult = MkChannelEncryptResult
+  { status :: Word32
+  }
+  deriving (Show)
+
+
+-------------------------------------------------------------------------------
+-- * Connection managers list parsing
+-------------------------------------------------------------------------------
 data CmList = MkCmList {cmList :: [ConnectionManager]}
   deriving (Show)
 
