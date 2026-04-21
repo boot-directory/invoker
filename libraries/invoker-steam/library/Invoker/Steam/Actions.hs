@@ -8,14 +8,14 @@ import Data.Word (Word64)
 import BinaryBuff
 import Invoker.Steam.Crypto (SessionKey)
 import Invoker.Steam.Packets
-import Proto.EnumsClientserver (EMsg (K_EMsgClientChangeStatus,K_EMsgClientHeartBeat))
+import Proto.EnumsClientserver (EMsg (K_EMsgClientChangeStatus, K_EMsgClientHeartBeat))
 import Proto.SteammessagesClientserverFriends
 import Proto.SteammessagesClientserverFriends_Fields qualified as F
+import Proto.SteammessagesClientserverLogin (CMsgClientHeartBeat)
 
 -- External
 import Data.ProtoLens
 import Lens.Family2
-import Proto.SteammessagesClientserverLogin (CMsgClientHeartBeat)
 
 -------------------------------------------------------------------------------
 -- Set persona
@@ -37,7 +37,7 @@ writeClientChangeStatus buf sk args = do
   
   where
   body =
-    encodeHeader (mkProtoHeaderWith (F.steamid .~ args.steamId) K_EMsgClientChangeStatus)
+    encodeHeader (mkProtoHeader (F.steamid .~ args.steamId) K_EMsgClientChangeStatus)
     <> buildMessage @CMsgClientChangeStatus
         (defMessage
           & F.personaState .~ fromIntegral (fromEnum args.state)
@@ -63,6 +63,6 @@ heartBeat buf sk = do
   packetWriterEncrypted buf sk body
   where
   body = 
-    encodeHeader (mkProtoHeaderWith id K_EMsgClientHeartBeat)
+    encodeHeader (mkProtoHeader id K_EMsgClientHeartBeat)
     <> buildMessage @CMsgClientHeartBeat
         (defMessage)

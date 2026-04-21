@@ -310,8 +310,6 @@ parseSteamId t = parseEither parseSub =<< decodeJwt t
         Just w64 -> pure w64
         Nothing -> fail "Failed to parse steamId Int from String"
 
--- >>> import Data.Aeson
--- >>> encode <$> decodeJwt ""
 decodeJwt :: T.Text -> Either String Value
 decodeJwt jwtText =
   case T.splitOn "." jwtText of 

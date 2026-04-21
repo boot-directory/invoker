@@ -105,9 +105,12 @@ initSteamConnection manager = do
 writeClientLogon :: Buffer -> SessionKey -> AuthResult -> IO ()
 writeClientLogon buf sk authResult = packetWriterEncrypted buf sk body
   where
+  setSteamId :: CMsgProtoBufHeader -> CMsgProtoBufHeader
+  setSteamId = F.steamid .~ authResult.steamId
+
   body :: Builder
   body =
-    encodeHeader (mkProtoHeaderWith (F.steamid .~ authResult.steamId) K_EMsgClientLogon)
+    encodeHeader (mkProtoHeader setSteamId K_EMsgClientLogon)
     <> buildMessage @CMsgClientLogon
         (defMessage
           & F.protocolVersion .~ protocolVer

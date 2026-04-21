@@ -22,7 +22,6 @@ module Invoker.Steam.Packets
   , encodeHeader
   , mkEncryptHeader
   , mkProtoHeader
-  , mkProtoHeaderWith
   ) where
 
 -- GHC included
@@ -107,24 +106,21 @@ readPacketT f reader = do
 -- ** Writing
 
 packetWriter :: Buffer -> Builder -> IO ()
-packetWriter buf bodyBuilder = writePacketT buf bodyBuilder (Just . buidlerToBs)
+packetWriter buf bodyBuilder = writePacketT buf bodyBuilder Just
 
 packetWriterEncrypted :: Buffer -> SessionKey -> Builder -> IO ()
 packetWriterEncrypted buf sk bodyBuilder = do
   random3 <- generatePrefix
   writePacketT buf bodyBuilder
-    (symmetricEncryptWithHmac sk random3 . buidlerToBs)
+    (symmetricEncryptWithHmac sk random3)
 
-writePacketT :: Buffer -> Builder -> (Builder -> Maybe ByteString) -> IO ()
+writePacketT :: Buffer -> Builder -> (ByteString -> Maybe ByteString) -> IO ()
 writePacketT buf bodyBuilder f =
-  case f bodyBuilder of
+  case (f . toStrict . toLazyByteString) bodyBuilder of
     Nothing -> error ""
     Just body -> writeToBuffer buf (len body <> "VT01" <> byteString body)
   where
   len bs = (word32LE . fromIntegral . BS.length) bs
-
-buidlerToBs :: Builder -> ByteString
-buidlerToBs = toStrict . toLazyByteString
 
 
 -------------------------------------------------------------------------------
@@ -215,14 +211,8 @@ encodeHeader header =
     headerBody = byteString msg
     msg = encodeMessage h
 
-mkProtoHeader :: Enum packetEnum => packetEnum -> Header
-mkProtoHeader eMsgEnum =
-  let eMsg = fromIntegral (fromEnum eMsgEnum)
-      protoHeader = defMessage
-  in ProtoHeader{..}
-
-mkProtoHeaderWith :: Enum packetEnum => (CMsgProtoBufHeader -> CMsgProtoBufHeader) -> packetEnum -> Header
-mkProtoHeaderWith f eMsgEnum =
+mkProtoHeader :: Enum packetEnum => (CMsgProtoBufHeader -> CMsgProtoBufHeader) -> packetEnum -> Header
+mkProtoHeader f eMsgEnum =
   let eMsg = fromIntegral (fromEnum eMsgEnum)
       protoHeader = f defMessage
   in ProtoHeader{..}
