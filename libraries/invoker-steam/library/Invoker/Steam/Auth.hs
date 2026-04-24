@@ -189,10 +189,7 @@ data AuthResult =
   AuthSuccess
     { accountName :: Text
     , steamId :: Word64
-    , newClientId :: Word64
     , refreshToken :: Text
-    , accessToken :: Text
-    , hadRemoteInteraction :: Bool
     , newSteamGuardMachineAuth :: Text
     }
   |
@@ -239,11 +236,8 @@ pollStatus manager needsConfirmation@AuthNeedsConfirmation{} = do
       let eMsg = decodeMessage @CAuthentication_PollAuthSessionStatus_Response nonEmptyBody
       case eMsg of
         Right success -> do
-          let hadRemoteInteraction = success ^. F.hadRemoteInteraction
-              accountName = success ^. F.accountName
-              newClientId = success ^. F.newClientId
+          let accountName = success ^. F.accountName
               refreshToken = success ^. F.refreshToken
-              accessToken = success ^. F.accessToken
               newSteamGuardMachineAuth = success ^. F.newGuardData
               steamId = needsConfirmation.steamId
           pure AuthSuccess{..}
