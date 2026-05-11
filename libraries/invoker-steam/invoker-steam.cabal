@@ -9,6 +9,7 @@ license:            BSD-3-Clause
 common exts
   default-extensions:
     BlockArguments
+    DataKinds
     DeriveAnyClass
     DuplicateRecordFields
     RecordWildCards
@@ -39,6 +40,7 @@ Library
   build-depends:
     -- GHC included libraries
       base >= 4.7 && <5
+    , async
     , bytestring
     , text
 

@@ -2,11 +2,9 @@
 module Invoker.Steam.Actions where
 
 -- GHC included
-import Data.Word (Word64)
 
 -- Internal
-import BinaryBuff
-import Invoker.Steam.Crypto (SessionKey)
+import Invoker.Steam.ConnectionManager (SteamConnection (..))
 import Invoker.Steam.Packets
 import Proto.EnumsClientserver (EMsg (K_EMsgClientChangeStatus, K_EMsgClientHeartBeat))
 import Proto.SteammessagesClientserverFriends
@@ -21,26 +19,15 @@ import Lens.Family2
 -- Set persona
 -------------------------------------------------------------------------------
 
-data ClientChangeStatusArgs = MkClientChangeStatusArgs 
-  { state :: EPersonaState
-  , steamId :: Word64
-  }
-
-writeClientChangeStatus :: Buffer -> SessionKey -> ClientChangeStatusArgs -> IO ()
-writeClientChangeStatus buf sk args = do
-  
-  packetWriterEncrypted buf sk body
-  
-  _header <- readFromBuffer buf . packetReaderEncrypted sk $ \header -> do
-    pure header
-  pure ()
-  
+clientChangeStatus :: SteamConnection -> EPersonaState -> IO ()
+clientChangeStatus sb state =
+  packetWriterEncrypted sb.buffer sb.sessionKey body
   where
   body =
-    encodeHeader (mkProtoHeader (F.steamid .~ args.steamId) K_EMsgClientChangeStatus)
+    encodeHeader (mkProtoHeader (F.steamid .~ sb.steamId) K_EMsgClientChangeStatus)
     <> buildMessage @CMsgClientChangeStatus
         (defMessage
-          & F.personaState .~ fromIntegral (fromEnum args.state)
+          & F.personaState .~ fromIntegral (fromEnum state)
         )
 
 data EPersonaState =
@@ -58,9 +45,9 @@ data EPersonaState =
 -- Heart beat
 -------------------------------------------------------------------------------
 
-heartBeat :: Buffer -> SessionKey -> IO ()
-heartBeat buf sk = do
-  packetWriterEncrypted buf sk body
+heartBeat :: SteamConnection -> IO ()
+heartBeat sb = do
+  packetWriterEncrypted sb.buffer sb.sessionKey body
   where
   body = 
     encodeHeader (mkProtoHeader id K_EMsgClientHeartBeat)

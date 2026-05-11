@@ -5,25 +5,28 @@ module Main where
 -- GHC included
 import Control.Concurrent
 import Control.Concurrent.Async
-import Control.Monad (forever)
 import Data.IORef (readIORef)
 import Data.Text as T (pack)
-import Data.Time (getCurrentTime)
 import System.Environment (getEnv, lookupEnv)
 
 -- Internal
 import BinaryBuff
-import Invoker
-  ( OuterMessage(..)
-  , MessageType(..)
-  , runParserLoop, ParserState(..)
+import Invoker (
+    OuterMessage(..),
+    MessageType(..),
+    runParserLoop,
+    ParserState(..)
   )
-import Invoker.Steam
-  ( initConnectionManager
-  , performAuth
-  , AuthArgs(..)
-  , confirmAuthViaEmail
-  , AuthResult(..), writeClientChangeStatus, ClientChangeStatusArgs(..), EPersonaState(..), heartBeat
+import Invoker.Steam (
+    -- Auth
+    performAuth,
+    AuthArgs(..),
+    confirmAuthViaEmail,
+    AuthResult(..),
+    -- Actions
+    clientChangeStatus, EPersonaState(..),
+    defaultSteamBotArgs, initSteamBot,
+    SteamMsg(..), setBotMsgHandler,
   )
 
 -- External
@@ -43,9 +46,9 @@ main = do
   manager <- newManager defaultManagerSettings
 
   authResultStep <- performAuth manager MkAuthArgs{..}
-  authResult <-
+  session <-
     case authResultStep of
-      success@AuthSuccess{} -> do
+      (AuthSuccess success) -> do
         putStrLn "Succesfull auth"
         pure success
       needsConfirmation@AuthNeedsConfirmation{} -> do
@@ -54,8 +57,18 @@ main = do
         authResult <- confirmAuthViaEmail manager needsConfirmation emailCode
         pure authResult
 
-  (steamGcBuffer, sk) <- initConnectionManager manager authResult
-  writeClientChangeStatus steamGcBuffer sk MkClientChangeStatusArgs{state=Online,steamId=authResult.steamId}
+  let
+    setHandler = setBotMsgHandler \msg ->
+      case msg of
+        logOn@LogOnResult{} -> print logOn
+        unkwn@UnknownSteamMsg{} -> print unkwn
+        brkn@BrokenSteamMsg{} -> print brkn
+        _ -> print msg
+
+  (conn, botProcess) <- initSteamBot (setHandler $ defaultSteamBotArgs session)
+
+  threadDelay 5_000_000
+  clientChangeStatus conn Online
 
   _ <-
     race
@@ -63,12 +76,7 @@ main = do
         putStrLn "Press enter to start Dota 2 demo parser"
         getLine
       )
-      (forever do
-        heartBeat steamGcBuffer sk
-        time <- getCurrentTime
-        putStrLn $ show time <> " heartbeat"
-        threadDelay (9 * 1_000_000)
-      )
+      (runConcurrently botProcess)
 
   --------------------------------------------
   -- Demo parsing

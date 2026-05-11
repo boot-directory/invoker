@@ -1,10 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
 module Invoker.Steam.Packets 
   (
   -- Steam API
     mkSteamApiReq
-  , encodeUrlProtobuf
+  , mkHttpRequest
 
   -- Readers
   , protobufReader
@@ -30,37 +31,52 @@ import Data.Bits (complement, (.&.), (.|.))
 import Data.ByteString (ByteString, toStrict)
 import Data.ByteString as BS (length)
 import Data.ByteString.Builder (Builder, byteString, toLazyByteString, word16LE, word32LE, word64LE, word8)
+import Data.ByteString.Char8 as BS8 (pack)
+import Data.Proxy (Proxy (..))
 import Data.Word (Word32, Word64)
+import GHC.TypeLits (symbolVal)
 
 -- External
-import Invoker.Steam.Crypto (SessionKey (..), generatePrefix, symmetricDecrypt, symmetricEncryptWithHmac)
-import Proto.EnumsClientserver (EMsg (..))
-import Proto.SteammessagesBase
+import Data.ByteArray.Encoding (Base (..), convertToBase)
+import Data.ProtoLens (Message (defMessage), buildMessage, decodeMessage, encodeMessage)
+import Data.ProtoLens.Service.Types (HasMethodImpl (..), Service (..))
+import Network.HTTP.Client (Request (..), parseRequest_)
+import Network.HTTP.Types (HeaderName, urlEncode)
 
 -- Internal
 import BinaryBuff
-import Data.ByteArray.Encoding (Base (..), convertToBase)
-import Data.ProtoLens (Message (defMessage), buildMessage, decodeMessage, encodeMessage)
-import Network.HTTP.Client 
-import Network.HTTP.Types (urlEncode)
+import Invoker.Steam.Crypto (SessionKey (..), generatePrefix, symmetricDecrypt, symmetricEncryptWithHmac)
+import Proto.EnumsClientserver (EMsg (..))
+import Proto.SteammessagesBase
 
 -------------------------------------------------------------------------------
 -- * Web client
 -------------------------------------------------------------------------------
 
+mkHttpRequest :: forall s method . HasMethodImpl s method => MethodInput s method -> Request
+mkHttpRequest protobuf =
+  let methodName = BS8.pack (symbolVal @(MethodName s method) Proxy)
+      serviceName = BS8.pack (symbolVal @(ServiceName s) Proxy)
+  in basicRequest{
+    method      = "POST",
+    path        = "/I" <> serviceName <> "Service/" <> methodName <> "/v1/",
+    queryString = "?input_protobuf_encoded=" <> encodeUrlProtobuf protobuf
+  }
+  where
+  encodeUrlProtobuf :: Message msg => msg -> ByteString
+  encodeUrlProtobuf = urlEncode True . convertToBase @ByteString Base64 . encodeMessage
+
 mkSteamApiReq :: ByteString -> Request
-mkSteamApiReq path =
-  let requestHeaders =
-        [ ("user-agent", "Mozilla/5.0 (Windows; U; Windows NT 10.0; en-US; Valve Steam Client/default/1665786434; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'")
-        , ("origin", "https://steamloopback.host")
-        ]
-  in basicRequest{path, requestHeaders}
+mkSteamApiReq path = basicRequest{requestHeaders = basicHeaders, path}
 
 basicRequest :: Request
 basicRequest = parseRequest_ "http://api.steampowered.com"
 
-encodeUrlProtobuf :: Message msg => msg -> ByteString
-encodeUrlProtobuf = urlEncode True . convertToBase @ByteString Base64 . encodeMessage
+basicHeaders :: [(HeaderName, ByteString)]
+basicHeaders = [
+    ("user-agent", "Mozilla/5.0 (Windows; U; Windows NT 10.0; en-US; Valve Steam Client/default/1665786434; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'"),
+    ("origin", "https://steamloopback.host")
+  ]
 
 
 -------------------------------------------------------------------------------
@@ -148,6 +164,23 @@ data Header =
     }
   deriving (Show)
 
+mkEncryptHeader :: Enum packetEnum => packetEnum -> Header
+mkEncryptHeader eMsgEnum =
+  EncryptHeader
+    { targetJobID = jobIdNone
+    , sourceJobID = jobIdNone
+    , eMsg = fromIntegral (fromEnum eMsgEnum)
+    }
+  where
+  jobIdNone :: Word64
+  jobIdNone = 0xFFFFFFFFFFFFFFFF
+
+mkProtoHeader :: Enum packetEnum => (CMsgProtoBufHeader -> CMsgProtoBufHeader) -> packetEnum -> Header
+mkProtoHeader f eMsgEnum =
+  let eMsg = fromIntegral (fromEnum eMsgEnum)
+      protoHeader = f defMessage
+  in ProtoHeader{..}
+
 readHeader :: Get Header
 readHeader = do
   rawEmsg <- getWord32le
@@ -172,17 +205,14 @@ readHeader = do
         sessionID <- getWord32le
         pure ExtendedHeader{..}
   where
+  encrypt :: [Word32]
   encrypt = map (fromIntegral . fromEnum) [K_EMsgChannelEncryptRequest, K_EMsgChannelEncryptResult]
 
+  isProtobuf :: Word32 -> Bool
+  isProtobuf rawEmsg = (rawEmsg .&. proto_mask) /= 0
 
-mkEncryptHeader :: Enum packetEnum => packetEnum -> Header
-mkEncryptHeader eMsgEnum =
-  let eMsg = fromIntegral (fromEnum eMsgEnum)
-  in EncryptHeader
-    { targetJobID = jobIdNone
-    , sourceJobID = jobIdNone
-    , ..
-    }
+  unflagProtobuf :: Word32 -> Word32
+  unflagProtobuf = (.&.) (complement proto_mask)
 
 encodeHeader :: Header -> Builder
 encodeHeader header =
@@ -211,20 +241,5 @@ encodeHeader header =
     headerBody = byteString msg
     msg = encodeMessage h
 
-mkProtoHeader :: Enum packetEnum => (CMsgProtoBufHeader -> CMsgProtoBufHeader) -> packetEnum -> Header
-mkProtoHeader f eMsgEnum =
-  let eMsg = fromIntegral (fromEnum eMsgEnum)
-      protoHeader = f defMessage
-  in ProtoHeader{..}
-
-isProtobuf :: Word32 -> Bool
-isProtobuf rawEmsg = (rawEmsg .&. proto_mask) /= 0
-
-unflagProtobuf :: Word32 -> Word32
-unflagProtobuf = (.&.) (complement proto_mask)
-
 proto_mask :: Word32
 proto_mask = 0x80000000
-
-jobIdNone :: Word64
-jobIdNone = 0xFFFFFFFFFFFFFFFF

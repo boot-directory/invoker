@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds #-}
 module Invoker.Steam.Auth where
 
 -- GHC included
@@ -7,13 +8,13 @@ import Data.ByteString (ByteString, toStrict)
 import Data.ByteString.Builder (Builder, byteString, toLazyByteString, word8)
 import Data.ByteString.Char8 as BS8 (unpack)
 import Data.Text (Text)
-import Data.Text as T (Text, length, pack, replace, replicate, splitOn)
+import Data.Text as T (pack)
 import Data.Text.Encoding (decodeUtf8, encodeUtf8)
 import Data.Word (Word64)
 import Numeric (readDec, readHex)
 
 -- Internal
-import Invoker.Steam.Packets (encodeUrlProtobuf, mkSteamApiReq)
+import Invoker.Steam.Packets (mkSteamApiReq, mkHttpRequest)
 import Proto.Enums (ESessionPersistence (..))
 import Proto.SteammessagesAuth.Steamclient
 import Proto.SteammessagesAuth.Steamclient_Fields qualified as F
@@ -22,14 +23,12 @@ import Proto.SteammessagesAuth.Steamclient_Fields qualified as F
 import Crypto.Hash (SHA1 (..), hashWith)
 import Crypto.PubKey.RSA (PublicKey (..))
 import Crypto.PubKey.RSA.PKCS15 (encrypt)
-import Data.Aeson (FromJSON (..), Value, decodeStrict, eitherDecode, withObject, (.:))
-import Data.Aeson.Types (Parser, parseEither)
-import Data.ByteArray.Encoding (Base (..), convertFromBase, convertToBase)
+import Data.Aeson (FromJSON (..), eitherDecode, withObject, (.:))
+import Data.ByteArray.Encoding (Base (..), convertToBase)
 import Data.ProtoLens
 import Lens.Family2
 import Network.HTTP.Client
 import Network.HTTP.Types.URI (urlEncode)
-import Text.Read (readMaybe)
 
 -------------------------------------------------------------------------------
 -- * Auth
@@ -41,14 +40,11 @@ data AuthArgs = MkAuthArgs
   , steamGuardToken :: Maybe Text 
   }
 
-data AuthStepResult = MkAuthStepResult
+data Session = MkSession
   { accountName :: Text
-  , cliendId :: Word64
-  , requestId :: ByteString
-  , pollInterval :: Float
-  , confirmations :: [CAuthentication_AllowedConfirmation]
   , steamId :: Word64
-  , weakToken :: Text
+  , refreshToken :: Text
+  , newSteamGuardMachineAuth :: Text
   }
   deriving (Show)
 
@@ -72,7 +68,6 @@ performAuth manager MkAuthArgs{..} = do
       Left err -> throw $ PasswordEncryptionError $ "Encryption error: " <> show err
 
   let
-    baseReq = mkSteamApiReq "/IAuthenticationService/BeginAuthSessionViaCredentials/v1/"
     protobuf
       = (defMessage @CAuthentication_BeginAuthSessionViaCredentials_Request
           & F.accountName .~ accountName
@@ -90,9 +85,7 @@ performAuth manager MkAuthArgs{..} = do
               & F.osType .~ 16
             )
         )
-    method = "POST"
-    queryString = "?input_protobuf_encoded=" <> encodeUrlProtobuf protobuf
-    req = baseReq{method,queryString}
+    req = mkHttpRequest @Authentication @"beginAuthSessionViaCredentials" protobuf
   response <-
     httpLbs req manager
       `catch` \(e :: SomeException) -> throw (PerformAuthError $ "HTTP error: " <> show e)
@@ -112,7 +105,7 @@ performAuth manager MkAuthArgs{..} = do
             confirmations = responseProto ^. F.allowedConfirmations
             steamId       = responseProto ^. F.steamid
             weakToken     = responseProto ^. F.weakToken
-        pure AuthNeedsConfirmation{..}
+        pure (AuthNeedsConfirmation MkAuthStepResult{..})
       Left err -> throw . PerformAuthError $ "Result decoding error: " <> err
 
   pollStatus manager authRes
@@ -120,54 +113,41 @@ performAuth manager MkAuthArgs{..} = do
 
 createMachineId :: Text -> ByteString
 createMachineId accountName =
-  let accountNameBs = encodeUtf8 accountName
-  in toStrict . toLazyByteString $
+  toStrict . toLazyByteString $
     mconcat
-      [ word8 0
-      , "MessageObject" <> word8 0
-
-      , word8 1
-      , "BB3" <> word8 0
-      , sha1Hex ("SteamUser Hash BB3 " <> accountNameBs) <> word8 0
-
-      , word8 1
-      , "FF2" <> word8 0
-      , sha1Hex ("SteamUser Hash FF2 " <> accountNameBs) <> word8 0
-
-      , word8 1
-      , "3B3" <> word8 0
-      , sha1Hex ("SteamUser Hash 3B3 " <> accountNameBs) <> word8 0
-
+      [ word8 0, "MessageObject" <> word8 0
+      , mkSection "BB3"
+      , mkSection "FF2"
+      , mkSection "3B3"
       , word8 8
       , word8 8
       ]
   where
-  sha1Hex :: ByteString -> Builder
-  sha1Hex input = byteString $ convertToBase Base16 (hashWith SHA1 input)
+  mkSection :: ByteString -> Builder
+  mkSection code =
+    mconcat
+      [ word8 1
+      , byteString code <> word8 0
+      , (byteString . convertToBase Base16 . hashWith SHA1)
+          ("SteamUser Hash " <> code <> " " <> encodeUtf8 accountName) <> word8 0
+      ]
 
 
 -------------------------------------------------------------------------------
 -- * Confirm Email
 -------------------------------------------------------------------------------
 
-data ConfirmationResult = MkConfirmationResult
-  { accountName :: Text
-  }
-
-confirmAuthViaEmail :: Manager -> AuthResult -> String -> IO AuthResult
-confirmAuthViaEmail _manager success@AuthSuccess{} _code = pure success
-confirmAuthViaEmail manager authRes@AuthNeedsConfirmation{} code = do
-  let baseReq = mkSteamApiReq "/IAuthenticationService/UpdateAuthSessionWithSteamGuardCode/v1"
-      protobuf =
-        defMessage @CAuthentication_UpdateAuthSessionWithSteamGuardCode_Request
-          & F.clientId .~ authRes.cliendId
-          & F.steamid .~ authRes.steamId
-          & F.codeType .~ K_EAuthSessionGuardType_EmailCode
-          & F.code .~ T.pack code
-      queryString = "?input_protobuf_encoded=" <> encodeUrlProtobuf protobuf
-      
-      method = "POST"
-      req = baseReq{queryString,method}
+confirmAuthViaEmail :: Manager -> AuthResult -> String -> IO Session
+confirmAuthViaEmail _manager (AuthSuccess success) _code = pure success
+confirmAuthViaEmail manager (AuthNeedsConfirmation authRes) code = do
+  let
+    protobuf =
+      defMessage @CAuthentication_UpdateAuthSessionWithSteamGuardCode_Request
+        & F.clientId .~ authRes.cliendId
+        & F.steamid .~ authRes.steamId
+        & F.codeType .~ K_EAuthSessionGuardType_EmailCode
+        & F.code .~ T.pack code
+    req = mkHttpRequest @Authentication @"updateAuthSessionWithSteamGuardCode" protobuf
 
   confirmResponse <-
     httpLbs req manager
@@ -178,7 +158,10 @@ confirmAuthViaEmail manager authRes@AuthNeedsConfirmation{} code = do
     Just errStatus -> throw . ConfirmAuthError $ "Confirm unexpected status: " <> BS8.unpack errStatus
     Nothing        -> throw . ConfirmAuthError $ "X-eresult header not found" <> show confirmResponse.responseStatus
   
-  pollStatus manager authRes
+  newAuthRes <- pollStatus manager (AuthNeedsConfirmation authRes)
+  case newAuthRes of
+    AuthNeedsConfirmation _step -> throw $ ConfirmAuthError "Unexpected poll result"
+    AuthSuccess            sess -> pure sess
 
 
 -------------------------------------------------------------------------------
@@ -186,36 +169,30 @@ confirmAuthViaEmail manager authRes@AuthNeedsConfirmation{} code = do
 -------------------------------------------------------------------------------
 
 data AuthResult =
-  AuthSuccess
-    { accountName :: Text
-    , steamId :: Word64
-    , refreshToken :: Text
-    , newSteamGuardMachineAuth :: Text
-    }
-  |
-  AuthNeedsConfirmation
-    { accountName :: Text
-    , cliendId :: Word64
-    , requestId :: ByteString
-    , pollInterval :: Float
-    , confirmations :: [CAuthentication_AllowedConfirmation]
-    , steamId :: Word64
-    , weakToken :: Text
-    }
+    AuthSuccess Session
+  | AuthNeedsConfirmation AuthStepResult
+  deriving (Show)
+
+data AuthStepResult = MkAuthStepResult
+  { accountName :: Text
+  , cliendId :: Word64
+  , requestId :: ByteString
+  , pollInterval :: Float
+  , confirmations :: [CAuthentication_AllowedConfirmation]
+  , steamId :: Word64
+  , weakToken :: Text
+  }
   deriving (Show)
 
 pollStatus :: Manager -> AuthResult -> IO AuthResult
 pollStatus _manager success@AuthSuccess{} = pure success 
-pollStatus manager needsConfirmation@AuthNeedsConfirmation{} = do
-  let baseReq = mkSteamApiReq "/IAuthenticationService/PollAuthSessionStatus/v1"
-      protobuf =
-        defMessage @CAuthentication_PollAuthSessionStatus_Request
-          & F.clientId .~ needsConfirmation.cliendId
-          & F.requestId .~ needsConfirmation.requestId
-      queryString = "?input_protobuf_encoded=" <> encodeUrlProtobuf protobuf
-
-      method = "POST"
-      req = baseReq{queryString,method}
+pollStatus manager (AuthNeedsConfirmation needsConfirmation) = do
+  let
+    protobuf =
+      defMessage @CAuthentication_PollAuthSessionStatus_Request
+        & F.clientId .~ needsConfirmation.cliendId
+        & F.requestId .~ needsConfirmation.requestId
+    req = mkHttpRequest @Authentication @"pollAuthSessionStatus" protobuf
 
   response <-
     httpLbs req manager
@@ -231,7 +208,7 @@ pollStatus manager needsConfirmation@AuthNeedsConfirmation{} = do
 -- >>> decodeMessage @CAuthentication_PollAuthSessionStatus_Response body
 -- Right {had_remote_interaction: false}
   case body of
-    "(\0" -> pure needsConfirmation
+    "(\0" -> pure (AuthNeedsConfirmation needsConfirmation)
     nonEmptyBody -> do
       let eMsg = decodeMessage @CAuthentication_PollAuthSessionStatus_Response nonEmptyBody
       case eMsg of
@@ -240,109 +217,29 @@ pollStatus manager needsConfirmation@AuthNeedsConfirmation{} = do
               refreshToken = success ^. F.refreshToken
               newSteamGuardMachineAuth = success ^. F.newGuardData
               steamId = needsConfirmation.steamId
-          pure AuthSuccess{..}
+          pure (AuthSuccess MkSession{..})
         Left err -> throw . PollStatusError $ err
-
-
--------------------------------------------------------------------------------
--- * generateAccessTokenForApp
--------------------------------------------------------------------------------
-
-type AccessToken = Text
-type RefreshToken = Text
-
-generateAccessTokenForApp :: Manager -> (RefreshToken, Bool) -> IO (AccessToken, Maybe RefreshToken)
-generateAccessTokenForApp manager (refreshToken, renewRefreshToken) = do
-  steamId <-
-    case parseSteamId refreshToken of
-      Left err      -> throw . GenerateTokenError $ "parseSteamId: " <> err
-      Right steamId -> pure steamId
-  let
-    renewalType =
-      if renewRefreshToken
-      then K_ETokenRenewalType_Allow
-      else K_ETokenRenewalType_None
-    protobuf =
-      defMessage @CAuthentication_AccessToken_GenerateForApp_Request
-        & F.refreshToken .~ refreshToken
-        & F.steamid .~ steamId
-        & F.renewalType .~ renewalType
-
-  let
-    baseReq     = mkSteamApiReq "/IAuthenticationService/GenerateAccessTokenForApp/v1"
-    queryString = "?input_protobuf_encoded=" <> encodeUrlProtobuf protobuf
-    method      = "POST"
-    req = baseReq{queryString,method}
-  response <-
-    httpLbs req manager
-      `catch` \(e :: SomeException) -> throw (GenerateTokenError $ "HTTP error: " <> show e)
-
-  body <-
-    case lookup "X-eresult" response.responseHeaders of
-      Just "1"       -> pure (toStrict $ responseBody response)
-      Just errStatus -> throw . GenerateTokenError $ "Unexpected status: " <> BS8.unpack errStatus
-      Nothing        -> throw . GenerateTokenError $ "Result header not found"
-
-  case decodeMessage @CAuthentication_AccessToken_GenerateForApp_Response body of
-    Right responseProto -> do
-      let accessToken   = responseProto ^. F.accessToken
-          mRefreshToken = responseProto ^. F.maybe'refreshToken
-      pure (accessToken, mRefreshToken)
-    Left err -> throw . PerformAuthError $ "Result decoding error: " <> err
-
-
-type SteamId = Word64
-
-parseSteamId :: Text -> Either String SteamId
-parseSteamId t = parseEither parseSub =<< decodeJwt t
-  where
-  parseSub :: Value -> Parser Word64
-  parseSub =
-    withObject "RsaKey" $ \v -> do
-      resp <- v .: "sub"
-      case readMaybe resp of
-        Just w64 -> pure w64
-        Nothing -> fail "Failed to parse steamId Int from String"
-
-decodeJwt :: T.Text -> Either String Value
-decodeJwt jwtText =
-  case T.splitOn "." jwtText of 
-    [_, jwt, _] ->
-      let payloadBase64 = base64UrlToBase64 jwt
-          padding       = T.replicate ((4 - T.length payloadBase64 `mod` 4) `mod` 4) "="
-          payloadPadded = encodeUtf8 (payloadBase64 <> padding)
-          decodedBS     = convertFromBase @ByteString Base64 payloadPadded
-      in case decodedBS of
-        Left err -> Left ("decodeJwt: Base64 decode error: " ++ err)
-        Right bs ->
-         case decodeStrict bs of
-            Nothing -> Left "decodeJwt: JSON decode error"
-            Just val -> Right val
-    _ -> Left "decodeJwt: Invalid format"
-  where
-  base64UrlToBase64 :: T.Text -> T.Text
-  base64UrlToBase64 = T.replace "-" "+" . T.replace "_" "/"
 
 
 -------------------------------------------------------------------------------
 -- * Get RSA key
 -------------------------------------------------------------------------------
 
-mkGetRsaReq :: Text -> Request
-mkGetRsaReq account_name =
-  let req         = mkSteamApiReq "/IAuthenticationService/GetPasswordRSAPublicKey/v1/"
-      queryString = "?account_name=" <> urlEncode True (encodeUtf8 account_name)
-  in req{queryString}
-
 getRsaKey :: Manager -> Text -> IO (RsaKey)
 getRsaKey manager account_name = do
   response <-
-    httpLbs (mkGetRsaReq account_name) manager
+    httpLbs getRsaReq manager
       `catch` \(e :: SomeException) -> throw . GetRsaKeyError $ "HTTP error: " <> show e
 
   case eitherDecode @RsaKey (responseBody response) of 
     Right res -> pure res
     Left err -> throw . GetRsaKeyError $ "Decoding error: " <> err
+  where
+  getRsaReq :: Request
+  getRsaReq =
+    let req         = mkSteamApiReq "/IAuthenticationService/GetPasswordRSAPublicKey/v1/"
+        queryString = "?account_name=" <> urlEncode True (encodeUtf8 account_name)
+    in req{queryString}
 
 
 data RsaKey = MkRsaKey

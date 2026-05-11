@@ -7,7 +7,7 @@ import Control.Monad (when)
 import Data.ByteString (ByteString, fromStrict, toStrict)
 import Data.ByteString qualified as BS
 import Data.ByteString.Builder
-import Data.Word (Word32)
+import Data.Word (Word32, Word64)
 
 -- Internal
 import BinaryBuff
@@ -32,8 +32,14 @@ import Network.HTTP.Client
 -- * Game coordinator connection
 -------------------------------------------------------------------------------
 
-initConnectionManager :: Manager -> AuthResult -> IO (Buffer, SessionKey)
-initConnectionManager manager authRes = do
+data SteamConnection = MkSteamConnection {
+  buffer :: Buffer,
+  sessionKey :: SessionKey,
+  steamId :: Word64
+}
+
+initConnection :: Manager -> Session -> IO SteamConnection
+initConnection manager session = do
   buffer <- initSteamConnection manager
 
   serverHello <- readFromBuffer buffer readChannelEncryptRequest
@@ -54,12 +60,7 @@ initConnectionManager manager authRes = do
   when (result.status /= 1) do
     throw (HandshakeError result.status)
 
-  writeClientLogon buffer sessionKey authRes
-
-  _logOnResponse <- readFromBuffer buffer (readLogOnResponse sessionKey)
-  print _logOnResponse
-
-  pure (buffer, sessionKey)
+  pure MkSteamConnection{buffer, sessionKey, steamId=session.steamId}
 
 data ConnectionError where
   HandshakeError :: Word32 -> ConnectionError
@@ -102,11 +103,12 @@ initSteamConnection manager = do
 -- * ClientLogon
 -------------------------------------------------------------------------------
 
-writeClientLogon :: Buffer -> SessionKey -> AuthResult -> IO ()
-writeClientLogon buf sk authResult = packetWriterEncrypted buf sk body
+writeClientLogon :: SteamConnection -> Session -> IO ()
+writeClientLogon sb session =
+  packetWriterEncrypted sb.buffer sb.sessionKey body
   where
   setSteamId :: CMsgProtoBufHeader -> CMsgProtoBufHeader
-  setSteamId = F.steamid .~ authResult.steamId
+  setSteamId = F.steamid .~ session.steamId
 
   body :: Builder
   body =
@@ -114,19 +116,21 @@ writeClientLogon buf sk authResult = packetWriterEncrypted buf sk body
     <> buildMessage @CMsgClientLogon
         (defMessage
           & F.protocolVersion .~ protocolVer
-          & F.accessToken .~ authResult.refreshToken
+          & F.accessToken .~ session.refreshToken
           & F.clientLanguage .~ "english"
           & F.clientOsType .~ 16 -- LinuxUnknown
           & F.obfuscatedPrivateIp . FB.v4 .~ 0
-          & F.machineId .~ createMachineId authResult.accountName
+          & F.machineId .~ createMachineId session.accountName
         )
 
   protocolVer :: Word32
   protocolVer = 65580
 
 
-readLogOnResponse :: SessionKey -> Get [LogOnResponse]
-readLogOnResponse sessionKey = do
+type SomeMsg = (Header, ByteString)
+
+readMessages :: SessionKey -> Get [SomeMsg]
+readMessages sessionKey = do
   packetReaderEncrypted sessionKey \header -> do
     case header.eMsg of
       1 -> do
@@ -141,35 +145,26 @@ readLogOnResponse sessionKey = do
           Nothing -> do
             let body = (packet ^. FB.messageBody)
             either fail pure $ runGetInput body (readMulti id)
-      _res -> fail $ "Unexpected result " <> show header
-  where
-  readMulti :: ([LogOnResponse] -> [LogOnResponse]) -> Get [LogOnResponse]
-  readMulti cont = do
-    hasNoBytes <- hasNoMoreBytes
-    if hasNoBytes
-    then pure $ cont []
-    else do
-      packetPart <- do
-        len <- getWord32le
-        bytes <- readBytes (fromIntegral len)
-        let mkErrorMsg (msg, bs) = fail $ ("Packet: " <> msg <> ". Bytes: " <> show bs)
-        either mkErrorMsg pure do
-          runGetInputBs bytes do
-            header <- readHeader
-            case header of
-              ProtoHeader 751 protoHeader -> do
-                packet <- protobufReader @CMsgClientLogonResponse
-                pure $ LogOnResult protoHeader packet
-              _ -> do
-                bs <- getRemainingBytes
-                pure $ UnknownPacket header bs
-      readMulti (cont . (packetPart:))
+      _ -> do
+        bs <- getRemainingBytes
+        pure [(header, bs)]
 
-data LogOnResponse where 
-  LogOnResult   :: CMsgProtoBufHeader -> CMsgClientLogonResponse -> LogOnResponse
-  UnknownPacket :: Header -> ByteString -> LogOnResponse
-  deriving (Show)
-
+readMulti :: ([SomeMsg] -> [SomeMsg]) -> Get [SomeMsg]
+readMulti cont = do
+  hasNoBytes <- hasNoMoreBytes
+  if hasNoBytes
+  then pure $ cont []
+  else do
+    packetPart <- do
+      len <- getWord32le
+      bytes <- readBytes (fromIntegral len)
+      let mkErrorMsg (msg, bs) = fail $ ("Packet: " <> msg <> ". Bytes: " <> show bs)
+      either mkErrorMsg pure do
+        runGetInputBs bytes do
+          header <- readHeader
+          bs <- getRemainingBytes
+          pure (header, bs)
+    readMulti (cont . (packetPart:))
 
 
 -------------------------------------------------------------------------------
