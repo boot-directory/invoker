@@ -7,15 +7,14 @@ module Invoker.Steam.Packets
     mkSteamApiReq
   , mkHttpRequest
 
-  -- Readers
-  , protobufReader
-  , protobufWriter
-
-  -- Packets
-  , packetReader
-  , packetReaderEncrypted
+  -- IO
+  , SteamConnection(..)
   , packetWriter
   , packetWriterEncrypted
+  , protobufWriter
+  , packetReader
+  , packetReaderEncrypted
+  , protobufReader
 
   -- Header
   , Header(..)
@@ -95,6 +94,12 @@ protobufWriter m = buildMessage m
 -------------------------------------------------------------------------------
 -- * Packets
 -------------------------------------------------------------------------------
+
+data SteamConnection = MkSteamConnection {
+  buffer :: Buffer,
+  sessionKey :: SessionKey,
+  steamId :: Word64
+}
 
 -- ** Reading
 

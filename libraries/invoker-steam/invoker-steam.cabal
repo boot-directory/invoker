@@ -55,6 +55,7 @@ Library
     , proto-lens
     , lens-family
     , zlib
+    , network
 
     , ram
     , crypton >= 1.1

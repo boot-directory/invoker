@@ -3,7 +3,6 @@
 module Main where
 
 -- GHC included
-import Control.Concurrent
 import Control.Concurrent.Async
 import Data.IORef (readIORef)
 import Data.Text as T (pack)
@@ -23,14 +22,19 @@ import Invoker.Steam (
     AuthArgs(..),
     confirmAuthViaEmail,
     AuthResult(..),
+    defaultSteamBotArgs,
+    -- Init
+    initSteamBot,
+    SteamMsg(..), setBotMsgHandler,
     -- Actions
     clientChangeStatus, EPersonaState(..),
-    defaultSteamBotArgs, initSteamBot,
-    SteamMsg(..), setBotMsgHandler,
+    gamesPlayed,
   )
 
 -- External
 import Network.HTTP.Client
+import GHC.IO.Handle.FD (openBinaryFile)
+import GHC.IO.IOMode (IOMode(..))
 
 
 main :: IO ()
@@ -38,7 +42,6 @@ main = do
   !accountName     <- T.pack <$> getEnv "STEAM_LOGIN"
   !password        <- T.pack <$> getEnv "STEAM_PASS"
   !steamGuardToken <- fmap T.pack <$> lookupEnv "STEAM_GUARD_TOKEN"
-  !_steamApiKey    <- getEnv "STEAM_API_KEY"
 
   --------------------------------------------
   -- Game cordinator communication
@@ -67,8 +70,8 @@ main = do
 
   (conn, botProcess) <- initSteamBot (setHandler $ defaultSteamBotArgs session)
 
-  threadDelay 5_000_000
   clientChangeStatus conn Online
+  gamesPlayed conn [570]
 
   _ <-
     race
@@ -82,7 +85,8 @@ main = do
   -- Demo parsing
   --------------------------------------------
   putStrLn "Starting demo parser"
-  demoBuffer <- mkBuffer =<< mkFileBufferArgs "./libraries/invoker-dota2/demos/8540916823.dem"
+  file <- openBinaryFile "./libraries/invoker-dota2/demos/8540916823.dem" ReadMode
+  demoBuffer <- allocateBuffer (mkFileBufferArgs file)
   runParserLoop demoBuffer onMsg finalizeState
 
 onMsg :: OuterMessage -> IO ()

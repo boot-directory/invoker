@@ -3,7 +3,7 @@
 module BinaryBuff where
 
 -- GHC included
-import Control.Exception (Exception, SomeException, catch, finally, handle, throw, throwIO)
+import Control.Exception (Exception, SomeException, catch, finally, throwIO)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Bifunctor (first)
@@ -16,10 +16,10 @@ import Data.IORef (newIORef, readIORef, writeIORef)
 import Data.Int
 import Data.Word
 import GHC.Float (castWord32ToFloat)
-import System.IO (IOMode (..), hClose, openBinaryFile)
+import System.IO (hClose, Handle)
 
 -- External
-import Network.Socket (close, ShutdownCmd (..), shutdown, socket, AddrInfo (..), SocketType (..), defaultProtocol, connect, defaultHints, getAddrInfo, AddrInfoFlag (..), HostName, ServiceName)
+import Network.Socket (close, ShutdownCmd (..), shutdown, Socket)
 import Network.Socket.ByteString (recv)
 import Network.Socket.ByteString.Lazy (sendAll)
 
@@ -40,8 +40,11 @@ data BufferArgs = MkBufferArgs
   , closeResourse :: IO ()
   }
 
-mkBuffer :: BufferArgs -> IO Buffer
-mkBuffer MkBufferArgs{..} = do
+deallocateBuffer :: Buffer -> IO ()
+deallocateBuffer buff = buff.destroyBuff
+
+allocateBuffer :: BufferArgs -> IO Buffer
+allocateBuffer MkBufferArgs{..} = do
   buff <- newIORef mempty
   let updateReadBuff bs = writeIORef buff bs
 
@@ -77,40 +80,24 @@ readFromBuffer MkBuffer{runReadBuff, updateReadBuff} parser = runBufferReader (r
 writeToBuffer :: Buffer -> Builder -> IO ()
 writeToBuffer MkBuffer{runWriteBuff} builder = runWriteBuff builder
 
-mkFileBufferArgs :: FilePath -> IO BufferArgs
-mkFileBufferArgs fp = do
-  h <- openBinaryFile fp ReadMode
-  pure MkBufferArgs
-    { readChunk     = BS.hGetSome h 4096
-    , writeChunk    = hPutBuilder h
-    , closeResourse = hClose h
-    }
+mkFileBufferArgs :: Handle -> BufferArgs
+mkFileBufferArgs h =
+  let
+    readChunk     = BS.hGetSome h 4096
+    writeChunk    = hPutBuilder h
+    closeResourse = hClose h
+  in MkBufferArgs{..}
 
-mkTcpBufferArgs :: HostName -> ServiceName -> IO BufferArgs
-mkTcpBufferArgs host port = do
-  let hints = defaultHints{addrFlags = [AI_ADDRCONFIG], addrSocketType = Stream}
-  addrs <-
-    handle
-      (throw . GetAddrInfoError)
-      (getAddrInfo (Just hints) (Just host) (Just port))
-  case addrs of
-    []     -> throw NoAddressResolved
-    addr:_ -> do
-      sock <- socket (addrFamily addr) Stream defaultProtocol
-      connect sock (addrAddress addr)
-      let
-        readChunk = recv sock 4096
-        writeChunk = sendAll sock . toLazyByteString
-        closeResourse =
-          catch @SomeException
-            (finally (shutdown sock ShutdownBoth) (close sock))
-            (const $ pure ())
-      pure MkBufferArgs{..}
-
-data BufferInitError where
-  NoAddressResolved :: BufferInitError
-  GetAddrInfoError :: SomeException -> BufferInitError
-  deriving (Show, Exception)
+mkSockBufferArgs :: Socket -> BufferArgs
+mkSockBufferArgs sock =
+  let
+    readChunk     = recv sock 4096
+    writeChunk    = sendAll sock . toLazyByteString
+    closeResourse =
+      catch @SomeException
+        (finally (shutdown sock ShutdownBoth) (close sock))
+        (const $ pure ())
+  in MkBufferArgs{..}
 
 
 -------------------------------------------------------------------------------

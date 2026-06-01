@@ -9,9 +9,7 @@ module Invoker.Steam
   -- Actions
   , clientChangeStatus, EPersonaState(..)
   , heartBeat
-
-  -- Connection
-  , initConnection
+  , gamesPlayed
 
   -- Auth flow 
   , performAuth
@@ -33,7 +31,7 @@ import Network.HTTP.Client (Manager, defaultManagerSettings, newManager)
 -- Internal
 import BinaryBuff (readFromBuffer)
 import Data.ProtoLens (Message, decodeMessage)
-import Invoker.Steam.Actions (clientChangeStatus, EPersonaState(..), heartBeat)
+import Invoker.Steam.Actions (clientChangeStatus, EPersonaState(..), heartBeat, gamesPlayed)
 import Invoker.Steam.Auth (
     performAuth,
     AuthArgs(..),
@@ -41,10 +39,10 @@ import Invoker.Steam.Auth (
     Session(..),
     confirmAuthViaEmail,
   )
-import Invoker.Steam.ConnectionManager (SteamConnection (..), initConnection, readMessages, writeClientLogon)
-import Invoker.Steam.Packets (Header (..))
+import Invoker.Steam.ConnectionManager (initConnection, readMessages, writeClientLogon)
+import Invoker.Steam.Packets (Header (..), SteamConnection(..))
 import Proto.SteammessagesClientserver (CMsgClientServersAvailable, CMsgClientIsLimitedAccount, CMsgClientGameConnectTokens, CMsgClientWalletInfoUpdate, CMsgClientLicenseList)
-import Proto.SteammessagesClientserver2 (CMsgClientEmailAddrInfo)
+import Proto.SteammessagesClientserver2 (CMsgClientEmailAddrInfo, CMsgGCClient)
 import Proto.SteammessagesClientserverFriends (CMsgClientFriendsList, CMsgClientPersonaState, CMsgClientFriendsGroupsList, CMsgClientPlayerNicknameList)
 import Proto.SteammessagesClientserverLogin (CMsgClientAccountInfo, CMsgClientLoggedOff, CMsgClientLogonResponse)
 
@@ -73,18 +71,19 @@ initSteamBot args = do
   manager <- maybe (newManager defaultManagerSettings) (pure) args.httpManager
   conn <- initConnection manager args.session
   writeClientLogon conn args.session
+  msgs <- readFromBuffer conn.buffer (readMessages conn.sessionKey)
   let
     heartBeatLoop = Concurrently do
       forever do
         heartBeat conn
         threadDelay (9 * 1_000_000)
-    dispatcher = do
-      msgs <- readFromBuffer conn.buffer (readMessages conn.sessionKey)
-      forM_ msgs \(header, bodyBs) -> do
+    dispatcher msgsArg = do
+      forM_ msgsArg \(header, bodyBs) -> do
         args.botMsgHandler $ parseBody header bodyBs
-      dispatcher
+      msgs1 <- readFromBuffer conn.buffer (readMessages conn.sessionKey)
+      dispatcher msgs1
   pure
-    (conn, heartBeatLoop *> Concurrently dispatcher)
+    (conn, heartBeatLoop *> Concurrently (dispatcher msgs))
 
 parseBody :: Header -> ByteString -> SteamMsg
 parseBody header bytes =
@@ -98,6 +97,7 @@ parseBody header bytes =
     779  -> orFailed (GameConnectTokens header)
     780  -> orFailed (LicenseList header)
     5430 -> orFailed (IsLimitedAccount header)
+    5453 -> orFailed (FromGC header)
     5456 -> orFailed (EmailAddrInfo header)
     5501 -> orFailed (ServersAvailable header)
     5528 -> orFailed (WalletInfoUpdate header)
@@ -120,6 +120,7 @@ data SteamMsg where
   GameConnectTokens  :: Header -> CMsgClientGameConnectTokens -> SteamMsg
   LicenseList        :: Header -> CMsgClientLicenseList -> SteamMsg
   IsLimitedAccount   :: Header -> CMsgClientIsLimitedAccount -> SteamMsg
+  FromGC             :: Header -> CMsgGCClient -> SteamMsg
   EmailAddrInfo      :: Header -> CMsgClientEmailAddrInfo -> SteamMsg
   ServersAvailable   :: Header -> CMsgClientServersAvailable -> SteamMsg
   WalletInfoUpdate   :: Header -> CMsgClientWalletInfoUpdate -> SteamMsg

@@ -2,12 +2,12 @@
 module Invoker.Steam.ConnectionManager where
 
 -- GHC included
-import Control.Exception (Exception, SomeException, catch, throw)
+import Control.Exception (Exception, SomeException, catch, throw, handle)
 import Control.Monad (when)
 import Data.ByteString (ByteString, fromStrict, toStrict)
 import Data.ByteString qualified as BS
 import Data.ByteString.Builder
-import Data.Word (Word32, Word64)
+import Data.Word (Word32)
 
 -- Internal
 import BinaryBuff
@@ -27,16 +27,11 @@ import Data.Digest.CRC32
 import Data.ProtoLens (Message (..))
 import Lens.Family2 ((&), (.~), (^.))
 import Network.HTTP.Client
+import Network.Socket
 
 -------------------------------------------------------------------------------
 -- * Game coordinator connection
 -------------------------------------------------------------------------------
-
-data SteamConnection = MkSteamConnection {
-  buffer :: Buffer,
-  sessionKey :: SessionKey,
-  steamId :: Word64
-}
 
 initConnection :: Manager -> Session -> IO SteamConnection
 initConnection manager session = do
@@ -72,6 +67,11 @@ data ConnectionError where
   deriving (Show, Exception)
 
 
+data BufferInitError where
+  NoAddressResolved :: BufferInitError
+  GetAddrInfoError :: SomeException -> BufferInitError
+  deriving (Show, Exception)
+
 initSteamConnection :: Manager -> IO Buffer
 initSteamConnection manager = do
   let req = mkSteamApiReq "/ISteamDirectory/GetCMListForConnect/v1/"
@@ -91,12 +91,23 @@ initSteamConnection manager = do
       []     -> throw (CmUnexpectedResult "Got empty CMList")
 
   let (host, colonPort) =  break (==':') cm
+      port = (drop 1 colonPort)
 
-  bufferArgs <-
-    mkTcpBufferArgs host (drop 1 colonPort)
-      `catch` \e -> throw (CmBufferInitError e)
+  let hints = defaultHints{addrFlags = [AI_ADDRCONFIG], addrSocketType = Stream}
 
-  mkBuffer bufferArgs
+  addrs <-
+    handle
+      (throw . CmBufferInitError . GetAddrInfoError)
+      (getAddrInfo (Just hints) (Just host) (Just port))
+  sock <-
+    case addrs of
+      []     -> throw (CmBufferInitError NoAddressResolved)
+      addr:_ -> do
+        sock <- socket (addrFamily addr) Stream defaultProtocol
+        connect sock (addrAddress addr)
+        pure sock
+
+  allocateBuffer (mkSockBufferArgs sock)
 
 
 -------------------------------------------------------------------------------
@@ -141,30 +152,32 @@ readMessages sessionKey = do
                 body = (toStrict . GZip.decompress . fromStrict) zippedBody
             when (fromIntegral (BS.length body) /= size) $ 
               fail "Decompression result length unmatched"
-            either fail pure $ runGetInput body (readMulti id)
+            either fail pure $ runGetInput body readMulti
           Nothing -> do
             let body = (packet ^. FB.messageBody)
-            either fail pure $ runGetInput body (readMulti id)
+            either fail pure $ runGetInput body readMulti
       _ -> do
         bs <- getRemainingBytes
         pure [(header, bs)]
 
-readMulti :: ([SomeMsg] -> [SomeMsg]) -> Get [SomeMsg]
-readMulti cont = do
-  hasNoBytes <- hasNoMoreBytes
-  if hasNoBytes
-  then pure $ cont []
-  else do
-    packetPart <- do
-      len <- getWord32le
-      bytes <- readBytes (fromIntegral len)
-      let mkErrorMsg (msg, bs) = fail $ ("Packet: " <> msg <> ". Bytes: " <> show bs)
-      either mkErrorMsg pure do
-        runGetInputBs bytes do
-          header <- readHeader
-          bs <- getRemainingBytes
-          pure (header, bs)
-    readMulti (cont . (packetPart:))
+readMulti :: Get [SomeMsg]
+readMulti = goReadMulti id
+  where
+  goReadMulti cont = do
+    hasNoBytes <- hasNoMoreBytes
+    if hasNoBytes
+    then pure $ cont []
+    else do
+      packetPart <- do
+        len <- getWord32le
+        bytes <- readBytes (fromIntegral len)
+        let mkErrorMsg (msg, bs) = fail $ ("Packet: " <> msg <> ". Bytes: " <> show bs)
+        either mkErrorMsg pure do
+          runGetInputBs bytes do
+            header <- readHeader
+            bs <- getRemainingBytes
+            pure (header, bs)
+      goReadMulti (cont . (packetPart:))
 
 
 -------------------------------------------------------------------------------
