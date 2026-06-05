@@ -19,7 +19,7 @@ import GHC.Float (castWord32ToFloat)
 import System.IO (hClose, Handle)
 
 -- External
-import Network.Socket (close, ShutdownCmd (..), shutdown, Socket)
+import Network.Socket (close, ShutdownCmd (..), shutdown, Socket, gracefulClose)
 import Network.Socket.ByteString (recv)
 import Network.Socket.ByteString.Lazy (sendAll)
 
@@ -93,10 +93,7 @@ mkSockBufferArgs sock =
   let
     readChunk     = recv sock 4096
     writeChunk    = sendAll sock . toLazyByteString
-    closeResourse =
-      catch @SomeException
-        (finally (shutdown sock ShutdownBoth) (close sock))
-        (const $ pure ())
+    closeResourse = gracefulClose sock 1_000
   in MkBufferArgs{..}
 
 
