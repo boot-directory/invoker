@@ -3,7 +3,7 @@
 module BinaryBuff where
 
 -- GHC included
-import Control.Exception (Exception, throwIO, catch, SomeException)
+import Control.Exception (Exception, throwIO, SomeException, handle)
 import Control.Monad (when)
 import Control.Monad.State (MonadState (..), StateT, evalStateT, lift)
 import Data.Bifunctor (first)
@@ -19,7 +19,7 @@ import GHC.Float (castWord32ToFloat)
 import System.IO (hClose, Handle)
 
 -- External
-import Network.Socket (Socket, gracefulClose)
+import Network.Socket (Socket, close)
 import Network.Socket.ByteString (recv)
 import Network.Socket.ByteString.Lazy (sendAll)
 
@@ -91,9 +91,9 @@ mkFileBufferArgs h =
 mkSockBufferArgs :: Socket -> BufferArgs
 mkSockBufferArgs sock =
   let
-    readChunk     = catch @SomeException (recv sock 4096) (\_ -> pure "")
+    readChunk     = handle @SomeException (\_ -> pure "") (recv sock 4096)
     writeChunk    = sendAll sock . toLazyByteString
-    closeResourse = gracefulClose sock 1_000
+    closeResourse = handle @SomeException (\_ -> pure ()) (close sock)
   in MkBufferArgs{..}
 
 
